@@ -1,0 +1,45 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CardManager : MonoBehaviour
+{
+    private int maxCards = 48;
+
+    public static CardManager instance;
+    public List<GameObject> cards;
+
+    private void Awake()
+    {
+        instance = this;
+        cards = new List<GameObject>();
+    }
+
+    public void ShuffleDeck()
+    {
+        int a, b;
+        GameObject temp;
+        
+        for (int i = 0; i < (maxCards / 2); i++)
+        {
+            a = Random.Range(1, (maxCards / 2) + 1);
+            b = Random.Range((maxCards / 2) + 1, (maxCards + 1));
+            temp = cards[a];
+            cards[a] = cards[b];
+            cards[b] = temp;
+        }
+    }
+
+    public void CreateDeck(GameObject card)
+    {
+        for (int i = 0; i < maxCards; i++) // È­Åõµ¦ ¼ýÀÚ
+        {
+            cards.Add(card);
+        }
+    }
+
+    public void DrawCards()
+    {
+
+    }
+}
