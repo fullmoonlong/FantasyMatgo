@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class OnOff : MonoBehaviour
 {
-    public GameObject Panel1;
-    public GameObject Panel2;
+    public GameObject Panel;
+   
     // Start is called before the first frame update
     public void OnOffPanel()
     {
-        Panel1.SetActive(false);
-        Panel2.SetActive(true);
+        Panel.SetActive(false);
     }
 }

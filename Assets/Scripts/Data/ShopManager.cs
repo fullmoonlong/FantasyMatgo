@@ -30,15 +30,28 @@ public class ShopManager : MonoBehaviour
 
     string Allfilepath;
 
-    public string curType = "노말(N-2)"; // 카드 컬렉션에 존재할 현재 타입
+    //public string curType = "노말(N-2)"; // 카드 컬렉션에 존재할 현재 타입
 
-    string[] Type = { "노말(N-2)", "노말(N-1)", "매직", "레어", "유니크", "에픽" }; // 모든 타입
+    //string[] Type = { "노말(N-2)", "노말(N-1)", "매직", "레어", "유니크", "에픽" }; // 모든 타입
+    enum License
+    {
+        N2,
+        N1,
+        Magic,
+        Rare,
+        Unique,
+        Apic
+    }
+
+    License license = License.N2;
 
     public GameObject[] ShopSlot;
 
     public Sprite Click, UnClick;
 
     public Image[] TabImg;
+
+    public GameObject CanBuyPanel;
     // Start is called before the first frame update
     void Start()
     {
@@ -67,7 +80,7 @@ public class ShopManager : MonoBehaviour
         }
         string data = File.ReadAllText(Allfilepath); // 파일 위치에있는 텍스트 읽어와 데이터에 저장
         AllShopList = JsonUtility.FromJson<Serialization<Shop>>(data).target; // Json을 변환하여 데이터 클래스로 바꾸고 올리스트에 넣음
-        OnClickTab(curType);
+        OnClickTab((int)license);
     }
 
     public void ResetFile()
@@ -84,16 +97,40 @@ public class ShopManager : MonoBehaviour
 
         File.WriteAllText(Allfilepath, jsondata); // 파일 위치에 씀
 
-        OnClickTab(curType);
+        OnClickTab((int)license);
     }
-    public void OnClickTab(string tabname)
+    public void OnClickTab(int tabnum)
     {
+        switch (tabnum)
+        {
+            case 0:
+                license = License.N2;
+                break;
 
-        curType = tabname;
+            case 1:
+                license = License.N1;
+                break;
+
+            case 2:
+                license = License.Magic;
+                break;
+
+            case 3:
+                license = License.Rare;
+                break;
+
+            case 4:
+                license = License.Unique;
+                break;
+
+            case 5:
+                license = License.Apic;
+                break;
+        }
 
         //MyCardList = MyCardList.FindAll(x => x.Type == curType);
         //확인을 위해 전체 카드 리스트로 확인
-        CurShopList = AllShopList.FindAll(x => x.License == curType);
+        CurShopList = AllShopList.FindAll(x => x.License == license.ToString());
 
         for (int i = 0; i < ShopSlot.Length; i++) // 카드 슬롯만큼 돌림
         {
@@ -103,38 +140,36 @@ public class ShopManager : MonoBehaviour
             ShopSlot[i].transform.GetChild(1).GetComponent<Text>().text = i < CurShopList.Count ? CurShopList[i].Name : "";
             ShopSlot[i].transform.GetChild(2).GetComponent<Text>().text = i < CurShopList.Count ? CurShopList[i].Exp : "";
         }
-        int tabnum = 0;
-        switch (tabname)
-        {
-            case "노말(N-2)":
-                tabnum = 0;
-                break;
-
-            case "노말(N-1)":
-                tabnum = 1;
-                break;
-
-            case "매직":
-                tabnum = 2;
-                break;
-
-            case "레어":
-                tabnum = 3;
-                break;
-
-            case "유니크":
-                tabnum = 4;
-                break;
-
-            case "에픽":
-                tabnum = 5;
-                break;
-        }
-
+        
+        
         for (int i = 0; i < TabImg.Length; i++)
         {
             TabImg[i].sprite = (i == tabnum) ? Click : UnClick;
         }
 
+    }
+
+    public void CheckLicense()
+    {
+        CanBuyPanel.SetActive(true);
+        //만약 라이센스가 없다면
+        if(PlayerPrefs.GetInt("License") < (int)license)
+        {
+            CanBuyPanel.transform.GetChild(0).GetComponent<Text>().text = "라이센스가 없습니다.";
+            CanBuyPanel.transform.GetChild(1).gameObject.SetActive(false);
+        }
+
+        //만약 가지고 있다면
+        else
+        {
+            CanBuyPanel.transform.GetChild(0).GetComponent<Text>().text = "구매하시겠습니까?";
+        }
+
+    }
+
+    public void PurchaseCheck()
+    {
+        //만약 구매가 된다면
+        CanBuyPanel.transform.GetChild(0).GetComponent<Text>().text = "구매가 완료되었습니다."; 
     }
 }
