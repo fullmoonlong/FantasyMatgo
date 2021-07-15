@@ -27,7 +27,6 @@ public class CardManager : MonoBehaviour
 
     private void Start()
     {
-
         CreateDeck(); /// 플레이어가 준비한 카드 12장, 적이 준비한 카드 12장 을 더해 총 48장의 카드를 덱에 넣는다.
         ShuffleDeck();
     }
@@ -41,7 +40,7 @@ public class CardManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.K))
         {
             Debug.Log("Count : " + cardDeck.Count);
-            Debug.Log("element : " + cardDeck[46].ToString() + ", " + cardDeck[47].ToString());
+            Debug.Log("element : " + cardDeck[0].GetComponent<SpriteRenderer>().sprite.name);
         }
     }
 

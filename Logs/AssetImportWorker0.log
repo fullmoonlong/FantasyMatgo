@@ -15,11 +15,11 @@ C:/DimensionDefense/FantasyMatgo
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-65208
+52953
 Successfully changed project path to: C:/DimensionDefense/FantasyMatgo
 C:/DimensionDefense/FantasyMatgo
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 31.86 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 31.80 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2020.3.11f1 (99c7afb366b3)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.3.11f1/Editor/Data/Resources/UnitySubsystems
@@ -35,172 +35,72 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.11f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.11f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.11f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56988
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56616
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.11f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.001333 seconds.
+Registered in 0.001364 seconds.
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 30.43 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 31.71 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.748 seconds
+- Completed reload, in  0.787 seconds
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.002952 seconds.
+Registered in 0.003064 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 30.73 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 34.31 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.780 seconds
+- Completed reload, in  0.814 seconds
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
 Launched and connected shader compiler UnityShaderCompiler.exe after 0.03 seconds
-Refreshing native plugins compatible for Editor in 0.42 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 0.44 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 2083 Unused Serialized files (Serialized files now loaded: 0)
 System memory in use before: 92.9 MB.
 System memory in use after: 92.9 MB.
 
 Unloading 33 unused Assets to reduce memory usage. Loaded Objects now: 2517.
-Total: 2.077200 ms (FindLiveObjects: 0.191000 ms CreateObjectMapping: 0.049700 ms MarkObjects: 1.720400 ms  DeleteObjects: 0.114800 ms)
-
-========================================================================
-Received Import Request.
-  path: Assets/Scripts/CardManager.cs
-  artifactKey: Guid(a935e401b129efe4091bb31f57ed1dff) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scripts/CardManager.cs using Guid(a935e401b129efe4091bb31f57ed1dff) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b670f1638b7d3138899e637c14fe24c8') in 0.024704 seconds
-  Import took 0.027510 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 493.057157 seconds.
-  path: Assets/Scripts/CardManager.cs
-  artifactKey: Guid(a935e401b129efe4091bb31f57ed1dff) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scripts/CardManager.cs using Guid(a935e401b129efe4091bb31f57ed1dff) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e4a1f5ab609e947f0c40806a47dc40f2') in 0.002440 seconds
-  Import took 0.005602 seconds .
+Total: 2.085600 ms (FindLiveObjects: 0.174400 ms CreateObjectMapping: 0.049600 ms MarkObjects: 1.713000 ms  DeleteObjects: 0.147500 ms)
 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.002723 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.45 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.680 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.44 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2078 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 92.9 MB.
-System memory in use after: 92.9 MB.
-
-Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 2521.
-Total: 2.210800 ms (FindLiveObjects: 0.158900 ms CreateObjectMapping: 0.059600 ms MarkObjects: 1.891600 ms  DeleteObjects: 0.099900 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002808 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.45 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.679 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.45 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2078 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 92.9 MB.
-System memory in use after: 92.9 MB.
-
-Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 2525.
-Total: 2.240400 ms (FindLiveObjects: 0.158100 ms CreateObjectMapping: 0.061900 ms MarkObjects: 1.928700 ms  DeleteObjects: 0.090800 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002921 seconds.
+Registered in 0.002823 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
 Refreshing native plugins compatible for Editor in 0.44 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.681 seconds
+- Completed reload, in  0.702 seconds
 Platform modules already initialized, skipping
 Refreshing native plugins compatible for Editor in 0.43 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 2078 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 93.0 MB.
-System memory in use after: 92.9 MB.
-
-Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 2529.
-Total: 2.200200 ms (FindLiveObjects: 0.160300 ms CreateObjectMapping: 0.060400 ms MarkObjects: 1.885700 ms  DeleteObjects: 0.093200 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002730 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.45 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.704 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.44 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2078 Unused Serialized files (Serialized files now loaded: 0)
 System memory in use before: 92.9 MB.
-System memory in use after: 92.9 MB.
+System memory in use after: 92.8 MB.
 
-Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 2533.
-Total: 2.196700 ms (FindLiveObjects: 0.184800 ms CreateObjectMapping: 0.083100 ms MarkObjects: 1.833000 ms  DeleteObjects: 0.094900 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.003376 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.77 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.863 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.52 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2078 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 93.0 MB.
-System memory in use after: 92.9 MB.
-
-Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 2537.
-Total: 2.899500 ms (FindLiveObjects: 0.276800 ms CreateObjectMapping: 0.057500 ms MarkObjects: 2.446400 ms  DeleteObjects: 0.117600 ms)
+Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 2521.
+Total: 2.210300 ms (FindLiveObjects: 0.167000 ms CreateObjectMapping: 0.065400 ms MarkObjects: 1.881300 ms  DeleteObjects: 0.095800 ms)
 
 ========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.003080 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.52 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.896 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.47 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2078 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 93.0 MB.
-System memory in use after: 92.9 MB.
+Received Import Request.
+  path: Assets/Scripts/CardManager.cs
+  artifactKey: Guid(a935e401b129efe4091bb31f57ed1dff) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/CardManager.cs using Guid(a935e401b129efe4091bb31f57ed1dff) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f5c522c08577b77ecad7ffabbd270c13') in 0.026702 seconds
+  Import took 0.029949 seconds .
 
-Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 2541.
-Total: 2.354200 ms (FindLiveObjects: 0.204400 ms CreateObjectMapping: 0.101800 ms MarkObjects: 1.946800 ms  DeleteObjects: 0.100200 ms)
+========================================================================
+Received Import Request.
+  Time since last request: 0.008343 seconds.
+  path: Assets/Scripts/CardManager.cs
+  artifactKey: Guid(a935e401b129efe4091bb31f57ed1dff) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/CardManager.cs using Guid(a935e401b129efe4091bb31f57ed1dff) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f5c522c08577b77ecad7ffabbd270c13') in 0.003003 seconds
+  Import took 0.005877 seconds .
 
 ========================================================================
 Received Prepare
@@ -208,1120 +108,24 @@ Registering precompiled user dll's ...
 Registered in 0.002842 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.45 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 0.39 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.709 seconds
+- Completed reload, in  0.730 seconds
 Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.44 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 0.47 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 2078 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 93.0 MB.
-System memory in use after: 93.0 MB.
+System memory in use before: 92.9 MB.
+System memory in use after: 92.9 MB.
 
-Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 2545.
-Total: 2.386300 ms (FindLiveObjects: 0.186400 ms CreateObjectMapping: 0.072500 ms MarkObjects: 2.028500 ms  DeleteObjects: 0.098000 ms)
+Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 2525.
+Total: 2.248100 ms (FindLiveObjects: 0.198000 ms CreateObjectMapping: 0.043600 ms MarkObjects: 1.901000 ms  DeleteObjects: 0.104800 ms)
 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.002812 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.44 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.707 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.45 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2078 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 93.0 MB.
-System memory in use after: 93.0 MB.
-
-Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 2549.
-Total: 2.329500 ms (FindLiveObjects: 0.203700 ms CreateObjectMapping: 0.092700 ms MarkObjects: 1.936500 ms  DeleteObjects: 0.095500 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002812 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.45 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.691 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.46 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2078 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 93.0 MB.
-System memory in use after: 93.0 MB.
-
-Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 2553.
-Total: 2.183400 ms (FindLiveObjects: 0.157600 ms CreateObjectMapping: 0.061000 ms MarkObjects: 1.869400 ms  DeleteObjects: 0.093900 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002934 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.48 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.683 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.43 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2078 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 93.0 MB.
-System memory in use after: 93.0 MB.
-
-Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 2557.
-Total: 2.232400 ms (FindLiveObjects: 0.164300 ms CreateObjectMapping: 0.076600 ms MarkObjects: 1.894700 ms  DeleteObjects: 0.096000 ms)
-
-========================================================================
-Received Import Request.
-  Time since last request: 3141.274857 seconds.
-  path: Assets/Resources
-  artifactKey: Guid(6459a2e81e419e047afee299def5d1bc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources using Guid(6459a2e81e419e047afee299def5d1bc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1864b01c6ce007ade66978333a7da2e0') in 0.010090 seconds
-  Import took 0.013454 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 6.799852 seconds.
-  path: Assets/Resources/Images
-  artifactKey: Guid(6258336837caaf847894f7c3e79f5f05) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images using Guid(6258336837caaf847894f7c3e79f5f05) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6203c8140b84684aae27cb93004985ec') in 0.006959 seconds
-  Import took 0.010033 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 21.701718 seconds.
-  path: Assets/Resources/Images/2021060301_카드 복사.png
-  artifactKey: Guid(7530781e474bd294bab8ef4cff55fcbc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060301_카드 복사.png using Guid(7530781e474bd294bab8ef4cff55fcbc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e812613759b4fcb56023ab0411f5f789') in 0.079751 seconds
-  Import took 0.082811 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.677482 seconds.
-  path: Assets/Resources/Images/2021060300_카드 복사.png
-  artifactKey: Guid(7342f0618a91bc341a47e59de6bc38e0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060300_카드 복사.png using Guid(7342f0618a91bc341a47e59de6bc38e0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd6b58a772a3db523d5aea0999a6ab6ec') in 0.033441 seconds
-  Import took 0.036544 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 2.812401 seconds.
-  path: Assets/Resources/Images/card1.png
-  artifactKey: Guid(7342f0618a91bc341a47e59de6bc38e0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/card1.png using Guid(7342f0618a91bc341a47e59de6bc38e0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '82d5e6b86c7ec9b27c70dcd11bb28b26') in 0.023245 seconds
-  Import took 0.026091 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.854844 seconds.
-  path: Assets/Resources/Images/2021060340_카드 복사.png
-  artifactKey: Guid(bd41d3695ca384e4b929b74c26429739) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060340_카드 복사.png using Guid(bd41d3695ca384e4b929b74c26429739) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f15f60cd37251290cb011a34fe93703f') in 0.023541 seconds
-  Import took 0.026502 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 2.167573 seconds.
-  path: Assets/Resources/Images/card2.png
-  artifactKey: Guid(bd41d3695ca384e4b929b74c26429739) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/card2.png using Guid(bd41d3695ca384e4b929b74c26429739) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '96afbf2ff9b29e70489e4c2b6df33831') in 0.015841 seconds
-  Import took 0.018864 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.666239 seconds.
-  path: Assets/Resources/Images/2021060339_카드 복사.png
-  artifactKey: Guid(93d4131672d5c0f41aa07c68078c5f0d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060339_카드 복사.png using Guid(93d4131672d5c0f41aa07c68078c5f0d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'eb17af0253d88dc1c1c5e8c96663b4ee') in 0.022668 seconds
-  Import took 0.025597 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 11.373024 seconds.
-  path: Assets/Resources/Images/card3.png
-  artifactKey: Guid(7530781e474bd294bab8ef4cff55fcbc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/card3.png using Guid(7530781e474bd294bab8ef4cff55fcbc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '955fa1a8f7cd3a2426345145c48634f3') in 0.026595 seconds
-  Import took 0.029551 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 3.395083 seconds.
-  path: Assets/Resources/Images/card4.png
-  artifactKey: Guid(93d4131672d5c0f41aa07c68078c5f0d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/card4.png using Guid(93d4131672d5c0f41aa07c68078c5f0d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '65025fba273892eac1883180b1c813bb') in 0.024149 seconds
-  Import took 0.027510 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.030872 seconds.
-  path: Assets/Resources/Images/2021060338_카드 복사.png
-  artifactKey: Guid(50c0ac692d271314aa51a9e315aaf128) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060338_카드 복사.png using Guid(50c0ac692d271314aa51a9e315aaf128) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e60c429cbfc6bbcd4d1d4eafcf8ee862') in 0.017321 seconds
-  Import took 0.020370 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 2.295594 seconds.
-  path: Assets/Resources/Images/card5.png
-  artifactKey: Guid(50c0ac692d271314aa51a9e315aaf128) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/card5.png using Guid(50c0ac692d271314aa51a9e315aaf128) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b26939bc254d4788dfa16d170f84c252') in 0.014158 seconds
-  Import took 0.016980 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 4.742692 seconds.
-  path: Assets/Resources/Images/card6.png
-  artifactKey: Guid(50c0ac692d271314aa51a9e315aaf128) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/card6.png using Guid(50c0ac692d271314aa51a9e315aaf128) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '98eb369e5a8be4b96b929beb70df5e73') in 0.016007 seconds
-  Import took 0.019424 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 4.643377 seconds.
-  path: Assets/Resources/Images/2021060337_카드 복사.png
-  artifactKey: Guid(23d5dd0e5a647f94489dfd54efd167cb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060337_카드 복사.png using Guid(23d5dd0e5a647f94489dfd54efd167cb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9e7f584bd38e76ea290fc573afb25823') in 0.022978 seconds
-  Import took 0.025900 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 3.092013 seconds.
-  path: Assets/Resources/Images/card6.png
-  artifactKey: Guid(23d5dd0e5a647f94489dfd54efd167cb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/card6.png using Guid(23d5dd0e5a647f94489dfd54efd167cb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '79eaa20102f044a169be57d9ff4ba5e9') in 0.024438 seconds
-  Import took 0.027829 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.174471 seconds.
-  path: Assets/Resources/Images/2021060336_카드 복사.png
-  artifactKey: Guid(f6e828b5d69668346b6cb8e6ffe4488d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060336_카드 복사.png using Guid(f6e828b5d69668346b6cb8e6ffe4488d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0d7dba2b2c7a298a80ad80b66b8c6b0b') in 0.022843 seconds
-  Import took 0.025711 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.003908 seconds.
-  path: Assets/Resources/Images/2021060335_카드 복사.png
-  artifactKey: Guid(6cb35cd3ef1ecb24ba33c3556ac343eb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060335_카드 복사.png using Guid(6cb35cd3ef1ecb24ba33c3556ac343eb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '82feec41546a60bb3c04b96c7c61c584') in 0.021723 seconds
-  Import took 0.024827 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.023000 seconds.
-  path: Assets/Resources/Images/2021060334_카드 복사.png
-  artifactKey: Guid(f88b94de64f0c2a4ab2f5c5b2f20ccde) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060334_카드 복사.png using Guid(f88b94de64f0c2a4ab2f5c5b2f20ccde) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f25c4d79ce3ffcb7db27387e1c8eff74') in 0.019423 seconds
-  Import took 0.026866 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 3.642267 seconds.
-  path: Assets/Resources/Images/card7.png
-  artifactKey: Guid(f6e828b5d69668346b6cb8e6ffe4488d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/card7.png using Guid(f6e828b5d69668346b6cb8e6ffe4488d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'be80442d1fa8a6c6a19f4dd8d51d1d35') in 0.024117 seconds
-  Import took 0.027462 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 7.675316 seconds.
-  path: Assets/Resources/Images/card8.png
-  artifactKey: Guid(6cb35cd3ef1ecb24ba33c3556ac343eb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/card8.png using Guid(6cb35cd3ef1ecb24ba33c3556ac343eb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '769586ca8ac8e6901fa051d596dd5a59') in 0.026690 seconds
-  Import took 0.029893 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 7.098153 seconds.
-  path: Assets/Resources/Images/card9.png
-  artifactKey: Guid(f88b94de64f0c2a4ab2f5c5b2f20ccde) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/card9.png using Guid(f88b94de64f0c2a4ab2f5c5b2f20ccde) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '871d43b93330b26152772da1a5ba44c2') in 0.024602 seconds
-  Import took 0.028044 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.019766 seconds.
-  path: Assets/Resources/Images/2021060333_카드 복사.png
-  artifactKey: Guid(4e4cbf1ffdd5f094c988faef592fe903) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060333_카드 복사.png using Guid(4e4cbf1ffdd5f094c988faef592fe903) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e217feea4140eecbdd0d7ec32bf84bc9') in 0.022222 seconds
-  Import took 0.025568 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 2.302385 seconds.
-  path: Assets/Resources/Images/card10.png
-  artifactKey: Guid(4e4cbf1ffdd5f094c988faef592fe903) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/card10.png using Guid(4e4cbf1ffdd5f094c988faef592fe903) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ec5a3e8d57b95256782d529e36636dd0') in 0.022942 seconds
-  Import took 0.026114 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 4.843182 seconds.
-  path: Assets/Resources/Images/2021060302_카드 복사.png
-  artifactKey: Guid(5dd216f7126592f499e82544fb64a237) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060302_카드 복사.png using Guid(5dd216f7126592f499e82544fb64a237) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4c72dfbf98b081bf9010582ed8f8f994') in 0.021040 seconds
-  Import took 0.024192 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.554514 seconds.
-  path: Assets/Resources/Images/2021060324_카드 복사.png
-  artifactKey: Guid(0e4ef55224395434595de3eab0fcae20) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060324_카드 복사.png using Guid(0e4ef55224395434595de3eab0fcae20) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a3a3712e96c9e46a1b9fbea7ccb9e669') in 0.026023 seconds
-  Import took 0.029006 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.001415 seconds.
-  path: Assets/Resources/Images/2021060324_카드 복사.png
-  artifactKey: Guid(0e4ef55224395434595de3eab0fcae20) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060324_카드 복사.png using Guid(0e4ef55224395434595de3eab0fcae20) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a3a3712e96c9e46a1b9fbea7ccb9e669') in 0.024121 seconds
-  Import took 0.026956 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 4.828268 seconds.
-  path: Assets/Resources/Images/2021060332_카드 복사.png
-  artifactKey: Guid(508b6ebd744966848be3aa0a2c311dcb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060332_카드 복사.png using Guid(508b6ebd744966848be3aa0a2c311dcb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6b61024115e7b960c308e8e4dae25996') in 0.023588 seconds
-  Import took 0.026606 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 7.619934 seconds.
-  path: Assets/Resources/Images/2021060307_카드 복사.png
-  artifactKey: Guid(a61d1cee38c86ca479dc878415cdbdbf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060307_카드 복사.png using Guid(a61d1cee38c86ca479dc878415cdbdbf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c456b2a346e64d57e6cece9dba42fa80') in 0.022945 seconds
-  Import took 0.026258 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 6.602845 seconds.
-  path: Assets/Resources/Images/10.png
-  artifactKey: Guid(5dd216f7126592f499e82544fb64a237) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/10.png using Guid(5dd216f7126592f499e82544fb64a237) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4ca69be2d3db24e1c19749296a390ce7') in 0.019112 seconds
-  Import took 0.022063 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.516824 seconds.
-  path: Assets/Resources/Images/2021060304_카드 복사.png
-  artifactKey: Guid(bac9f4288fb8ec445ac011d544566671) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060304_카드 복사.png using Guid(bac9f4288fb8ec445ac011d544566671) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ab5e8b47dbc73edb8a73e32a0443eec8') in 0.018742 seconds
-  Import took 0.022035 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.477955 seconds.
-  path: Assets/Resources/Images/2021060303_카드 복사.png
-  artifactKey: Guid(af47660b6095bb5449c8970e4cc1264c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060303_카드 복사.png using Guid(af47660b6095bb5449c8970e4cc1264c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9f8ddaf1b8b3d8c6f64c771da385ce2e') in 0.028791 seconds
-  Import took 0.031956 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.638693 seconds.
-  path: Assets/Resources/Images/11.png
-  artifactKey: Guid(af47660b6095bb5449c8970e4cc1264c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/11.png using Guid(af47660b6095bb5449c8970e4cc1264c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '591727723723e56c9cb1fa39c10aceac') in 0.027297 seconds
-  Import took 0.030710 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.900288 seconds.
-  path: Assets/Resources/Images/12.png
-  artifactKey: Guid(bac9f4288fb8ec445ac011d544566671) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/12.png using Guid(bac9f4288fb8ec445ac011d544566671) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0cf4dc8b5d47eb286ec08cd07e4c3a30') in 0.015069 seconds
-  Import took 0.018236 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.394718 seconds.
-  path: Assets/Resources/Images/2021060305_카드 복사.png
-  artifactKey: Guid(7ed556f7afd42b8419f23eaed00695e3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060305_카드 복사.png using Guid(7ed556f7afd42b8419f23eaed00695e3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3d238ef4e4acbe2a4f6f019183f1745b') in 0.015243 seconds
-  Import took 0.018471 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.451397 seconds.
-  path: Assets/Resources/Images/13.png
-  artifactKey: Guid(7ed556f7afd42b8419f23eaed00695e3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/13.png using Guid(7ed556f7afd42b8419f23eaed00695e3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b933b703a54ddcae6ac73445c1ebf295') in 0.014928 seconds
-  Import took 0.018297 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.403795 seconds.
-  path: Assets/Resources/Images/2021060306_카드 복사.png
-  artifactKey: Guid(4e7253d49eca8154abef5920d6e7f13d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060306_카드 복사.png using Guid(4e7253d49eca8154abef5920d6e7f13d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6463fb99be5a3f0b0ce8545c1008661b') in 0.015897 seconds
-  Import took 0.019271 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.502329 seconds.
-  path: Assets/Resources/Images/14.png
-  artifactKey: Guid(4e7253d49eca8154abef5920d6e7f13d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/14.png using Guid(4e7253d49eca8154abef5920d6e7f13d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f0a3128227c5184786dda16dc0dc7c16') in 0.021045 seconds
-  Import took 0.024363 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.824381 seconds.
-  path: Assets/Resources/Images/15.png
-  artifactKey: Guid(a61d1cee38c86ca479dc878415cdbdbf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/15.png using Guid(a61d1cee38c86ca479dc878415cdbdbf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'af9220a13fbb29600a98b69dbf97798d') in 0.024929 seconds
-  Import took 0.027992 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.320162 seconds.
-  path: Assets/Resources/Images/2021060308_카드 복사.png
-  artifactKey: Guid(a2845490852a89e459a3e829359da15d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060308_카드 복사.png using Guid(a2845490852a89e459a3e829359da15d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '65303994f183610ab8fb6d407ed8f056') in 0.017548 seconds
-  Import took 0.021066 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 2.960063 seconds.
-  path: Assets/Resources/Images/16.png
-  artifactKey: Guid(a2845490852a89e459a3e829359da15d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/16.png using Guid(a2845490852a89e459a3e829359da15d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e5f5df1c21b4b50157f1e6541686ac72') in 0.021499 seconds
-  Import took 0.024575 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.401306 seconds.
-  path: Assets/Resources/Images/2021060309_카드 복사.png
-  artifactKey: Guid(22344a08bfb936b4ba2622f9a10003ce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060309_카드 복사.png using Guid(22344a08bfb936b4ba2622f9a10003ce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cb75d94e113642e947a984eddec2630a') in 0.023284 seconds
-  Import took 0.026691 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 4.314585 seconds.
-  path: Assets/Resources/Images/17.png
-  artifactKey: Guid(22344a08bfb936b4ba2622f9a10003ce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/17.png using Guid(22344a08bfb936b4ba2622f9a10003ce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '56318db8e5ea55534d73463691d3e6cd') in 0.019429 seconds
-  Import took 0.022788 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.477477 seconds.
-  path: Assets/Resources/Images/2021060310_카드 복사.png
-  artifactKey: Guid(df4452ab06bf2b04c97c5d8f0a80376d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060310_카드 복사.png using Guid(df4452ab06bf2b04c97c5d8f0a80376d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fb3778453aec8f9556ebaab484cfc9ee') in 0.029038 seconds
-  Import took 0.031978 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 2.205806 seconds.
-  path: Assets/Resources/Images/18.png
-  artifactKey: Guid(df4452ab06bf2b04c97c5d8f0a80376d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/18.png using Guid(df4452ab06bf2b04c97c5d8f0a80376d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6bbb601e6e6c7d4bea4a476a1b29d517') in 0.024840 seconds
-  Import took 0.027818 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.510734 seconds.
-  path: Assets/Resources/Images/2021060311_카드 복사.png
-  artifactKey: Guid(3e5ba8ca18f097e43aeedb7621ad4f24) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060311_카드 복사.png using Guid(3e5ba8ca18f097e43aeedb7621ad4f24) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8b23b03fea2534df9f088a164fc74211') in 0.023706 seconds
-  Import took 0.031374 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.699540 seconds.
-  path: Assets/Resources/Images/19.png
-  artifactKey: Guid(3e5ba8ca18f097e43aeedb7621ad4f24) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/19.png using Guid(3e5ba8ca18f097e43aeedb7621ad4f24) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2c4147207c5c9e36049c32c456565fbc') in 0.019831 seconds
-  Import took 0.022942 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.518294 seconds.
-  path: Assets/Resources/Images/2021060313_카드 복사.png
-  artifactKey: Guid(24de6fbe238b8c344bfdd01689fd5ba1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060313_카드 복사.png using Guid(24de6fbe238b8c344bfdd01689fd5ba1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0a95f15b96f5cf9b5e93937d4e0ddbab') in 0.022220 seconds
-  Import took 0.025322 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.428021 seconds.
-  path: Assets/Resources/Images/2021060312_카드 복사.png
-  artifactKey: Guid(6172538aa3cf3b6498c9bed9493ef127) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060312_카드 복사.png using Guid(6172538aa3cf3b6498c9bed9493ef127) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7b4956842be516e0f215d3b21893bedf') in 0.023167 seconds
-  Import took 0.026565 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.736224 seconds.
-  path: Assets/Resources/Images/20.png
-  artifactKey: Guid(6172538aa3cf3b6498c9bed9493ef127) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/20.png using Guid(6172538aa3cf3b6498c9bed9493ef127) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cf949047eabb4fd7ad44f925442d711d') in 0.025635 seconds
-  Import took 0.028667 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 3.223628 seconds.
-  path: Assets/Resources/Images/21.png
-  artifactKey: Guid(24de6fbe238b8c344bfdd01689fd5ba1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/21.png using Guid(24de6fbe238b8c344bfdd01689fd5ba1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7efc638e230db956951d4a75df6a39ce') in 0.021600 seconds
-  Import took 0.024805 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.579029 seconds.
-  path: Assets/Resources/Images/2021060314_카드 복사.png
-  artifactKey: Guid(438aed287b2f4e44a9bcaa98cf2ed98b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060314_카드 복사.png using Guid(438aed287b2f4e44a9bcaa98cf2ed98b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '98dc03de0adfe185a2c6bb0713ba410a') in 0.015589 seconds
-  Import took 0.018757 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.819262 seconds.
-  path: Assets/Resources/Images/22.png
-  artifactKey: Guid(438aed287b2f4e44a9bcaa98cf2ed98b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/22.png using Guid(438aed287b2f4e44a9bcaa98cf2ed98b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0cb815ed413e66af420b6431711f7eb3') in 0.018003 seconds
-  Import took 0.021201 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.529287 seconds.
-  path: Assets/Resources/Images/2021060315_카드 복사.png
-  artifactKey: Guid(872ccac34b9554e46893557363315797) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060315_카드 복사.png using Guid(872ccac34b9554e46893557363315797) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fe44c9d9f174f161c2e0963a7b45775b') in 0.015382 seconds
-  Import took 0.018499 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.825632 seconds.
-  path: Assets/Resources/Images/23.png
-  artifactKey: Guid(872ccac34b9554e46893557363315797) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/23.png using Guid(872ccac34b9554e46893557363315797) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'afc6a6ad13ccc85f45af23dd7c5c2587') in 0.015938 seconds
-  Import took 0.019538 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.526763 seconds.
-  path: Assets/Resources/Images/2021060316_카드 복사.png
-  artifactKey: Guid(056787df0a39b5341a41a20d0ba86c76) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060316_카드 복사.png using Guid(056787df0a39b5341a41a20d0ba86c76) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '053c55d2571b8fa4f8c7321b6d0f2126') in 0.015100 seconds
-  Import took 0.018314 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 2.045281 seconds.
-  path: Assets/Resources/Images/24.png
-  artifactKey: Guid(056787df0a39b5341a41a20d0ba86c76) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/24.png using Guid(056787df0a39b5341a41a20d0ba86c76) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '67cf7f7571e96e0a4f554259e3ee6dbd') in 0.019585 seconds
-  Import took 0.022849 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.601939 seconds.
-  path: Assets/Resources/Images/2021060317_카드 복사.png
-  artifactKey: Guid(ddf11cf289d47c447bf7bd46beb37ad3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060317_카드 복사.png using Guid(ddf11cf289d47c447bf7bd46beb37ad3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'be1450da2f0d8aa0e3e3fed261e9d1f9') in 0.013905 seconds
-  Import took 0.021478 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 2.082100 seconds.
-  path: Assets/Resources/Images/25.png
-  artifactKey: Guid(ddf11cf289d47c447bf7bd46beb37ad3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/25.png using Guid(ddf11cf289d47c447bf7bd46beb37ad3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '203ec5dcbeb34229ee75518aff169888') in 0.014575 seconds
-  Import took 0.017670 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.539874 seconds.
-  path: Assets/Resources/Images/2021060319_카드 복사.png
-  artifactKey: Guid(59c6658c66ac1044abf33baacefa7bd8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060319_카드 복사.png using Guid(59c6658c66ac1044abf33baacefa7bd8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cbabb731feade7a697bbe546b9f95c0c') in 0.016150 seconds
-  Import took 0.019427 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.661699 seconds.
-  path: Assets/Resources/Images/2021060318_카드 복사.png
-  artifactKey: Guid(c6447e99c5437b6438ca83ed2f76a27f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060318_카드 복사.png using Guid(c6447e99c5437b6438ca83ed2f76a27f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6ed00e51bd54da78960f3fc6742c3e1a') in 0.020299 seconds
-  Import took 0.023528 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 2.751896 seconds.
-  path: Assets/Resources/Images/26.png
-  artifactKey: Guid(c6447e99c5437b6438ca83ed2f76a27f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/26.png using Guid(c6447e99c5437b6438ca83ed2f76a27f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '75f7088c7e4c2efafa6a6dbb15fccca8') in 0.025230 seconds
-  Import took 0.028234 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.507541 seconds.
-  path: Assets/Resources/Images/2021060320_카드 복사.png
-  artifactKey: Guid(0dec622f493e2764e90c11fdf2887dcc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060320_카드 복사.png using Guid(0dec622f493e2764e90c11fdf2887dcc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '700ea3e6ab5ea31dc230e9b4da707612') in 0.022491 seconds
-  Import took 0.025719 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 4.765205 seconds.
-  path: Assets/Resources/Images/27.png
-  artifactKey: Guid(59c6658c66ac1044abf33baacefa7bd8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/27.png using Guid(59c6658c66ac1044abf33baacefa7bd8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '564bd9d771a5d50bd2003e610721a30f') in 0.026615 seconds
-  Import took 0.029840 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 4.384312 seconds.
-  path: Assets/Resources/Images/28.png
-  artifactKey: Guid(0dec622f493e2764e90c11fdf2887dcc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/28.png using Guid(0dec622f493e2764e90c11fdf2887dcc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ed8a29c21ae17635a6d13ab6be55f63e') in 0.023600 seconds
-  Import took 0.026682 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.860154 seconds.
-  path: Assets/Resources/Images/2021060321_카드 복사.png
-  artifactKey: Guid(2b268f058ab57514093bb4295fabb211) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060321_카드 복사.png using Guid(2b268f058ab57514093bb4295fabb211) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6c984176eb06c9d19f8e0a1d1ac8ee64') in 0.022859 seconds
-  Import took 0.025902 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 3.236439 seconds.
-  path: Assets/Resources/Images/29.png
-  artifactKey: Guid(2b268f058ab57514093bb4295fabb211) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/29.png using Guid(2b268f058ab57514093bb4295fabb211) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'eacdbd3e58ea948a0a6866f7fa992985') in 0.024123 seconds
-  Import took 0.027444 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.473123 seconds.
-  path: Assets/Resources/Images/2021060322_카드 복사.png
-  artifactKey: Guid(3c55106710808554f946ab9ff74bed24) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060322_카드 복사.png using Guid(3c55106710808554f946ab9ff74bed24) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '108ad6db44ca4ba14440a2143c22f01c') in 0.024349 seconds
-  Import took 0.027704 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 3.191056 seconds.
-  path: Assets/Resources/Images/30.png
-  artifactKey: Guid(3c55106710808554f946ab9ff74bed24) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/30.png using Guid(3c55106710808554f946ab9ff74bed24) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6db5310211387611e6c46e439bcd702b') in 0.027021 seconds
-  Import took 0.030123 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.439373 seconds.
-  path: Assets/Resources/Images/2021060323_카드 복사.png
-  artifactKey: Guid(00724feb03ef4a948992939da68a7130) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060323_카드 복사.png using Guid(00724feb03ef4a948992939da68a7130) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c773e71ae5f267f04adf72da0cd3510c') in 0.022572 seconds
-  Import took 0.025881 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 2.063815 seconds.
-  path: Assets/Resources/Images/31.png
-  artifactKey: Guid(00724feb03ef4a948992939da68a7130) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/31.png using Guid(00724feb03ef4a948992939da68a7130) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dc1a78f39e7ac0cbf9ac371cd9934009') in 0.023660 seconds
-  Import took 0.026771 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 2.417961 seconds.
-  path: Assets/Resources/Images/32.png
-  artifactKey: Guid(0e4ef55224395434595de3eab0fcae20) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/32.png using Guid(0e4ef55224395434595de3eab0fcae20) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0a29925b085180025e1246e2dc582823') in 0.013795 seconds
-  Import took 0.017146 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.656515 seconds.
-  path: Assets/Resources/Images/2021060325_카드 복사.png
-  artifactKey: Guid(43f4329783c877e4392b4c884487a779) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060325_카드 복사.png using Guid(43f4329783c877e4392b4c884487a779) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '518a909e32b6e56c338782f9659f2151') in 0.014045 seconds
-  Import took 0.017194 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.404791 seconds.
-  path: Assets/Resources/Images/33.png
-  artifactKey: Guid(43f4329783c877e4392b4c884487a779) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/33.png using Guid(43f4329783c877e4392b4c884487a779) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd4245c31996d46fadf17112d11494d69') in 0.015999 seconds
-  Import took 0.019273 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.431499 seconds.
-  path: Assets/Resources/Images/2021060326_카드 복사.png
-  artifactKey: Guid(1716621bd421cbe45ac2e854e7550cab) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060326_카드 복사.png using Guid(1716621bd421cbe45ac2e854e7550cab) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cb0fd7faa789bbd71da27dc890cb5adf') in 0.023752 seconds
-  Import took 0.026972 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.724039 seconds.
-  path: Assets/Resources/Images/34.png
-  artifactKey: Guid(1716621bd421cbe45ac2e854e7550cab) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/34.png using Guid(1716621bd421cbe45ac2e854e7550cab) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '276bdf2ec71dbd81ee6a5a8ebbbcea82') in 0.018171 seconds
-  Import took 0.021546 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.276170 seconds.
-  path: Assets/Resources/Images/2021060327_카드 복사.png
-  artifactKey: Guid(36fb29246f00faa4197f6bdc3c1a8b6e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060327_카드 복사.png using Guid(36fb29246f00faa4197f6bdc3c1a8b6e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0a90aaa68200e87bee9a6f9c569c8c92') in 0.021955 seconds
-  Import took 0.025079 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 2.349397 seconds.
-  path: Assets/Resources/Images/35.png
-  artifactKey: Guid(36fb29246f00faa4197f6bdc3c1a8b6e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/35.png using Guid(36fb29246f00faa4197f6bdc3c1a8b6e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ad9517733147c4eb3eb6081c95ef8689') in 0.024612 seconds
-  Import took 0.027648 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.535485 seconds.
-  path: Assets/Resources/Images/2021060328_카드 복사.png
-  artifactKey: Guid(a05517b2deddb1547aea356b909e93bf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060328_카드 복사.png using Guid(a05517b2deddb1547aea356b909e93bf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6436e3ebe91431f2e0d77c27f2ea6534') in 0.019274 seconds
-  Import took 0.022767 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 2.677013 seconds.
-  path: Assets/Resources/Images/36.png
-  artifactKey: Guid(a05517b2deddb1547aea356b909e93bf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/36.png using Guid(a05517b2deddb1547aea356b909e93bf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8f588ae2bc22d4c118ff3c6b5a4fc1ff') in 0.026327 seconds
-  Import took 0.030019 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.058089 seconds.
-  path: Assets/Resources/Images/2021060329_카드 복사.png
-  artifactKey: Guid(1529261ace5199b4c9d72476cf4b6353) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060329_카드 복사.png using Guid(1529261ace5199b4c9d72476cf4b6353) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f7d1b1c98f9f2949f6225bf8ddab2997') in 0.032374 seconds
-  Import took 0.035412 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 5.267988 seconds.
-  path: Assets/Resources/Images/37.png
-  artifactKey: Guid(1529261ace5199b4c9d72476cf4b6353) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/37.png using Guid(1529261ace5199b4c9d72476cf4b6353) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '11365eef8550b3ae6442080694d2d58e') in 0.017942 seconds
-  Import took 0.021459 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.932856 seconds.
-  path: Assets/Resources/Images/2021060330_카드 복사.png
-  artifactKey: Guid(ae94dc28191a7d0428138274ccea3307) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060330_카드 복사.png using Guid(ae94dc28191a7d0428138274ccea3307) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e7efb5e040a984a9bfe7673912f71f2c') in 0.022594 seconds
-  Import took 0.025730 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 6.533035 seconds.
-  path: Assets/Resources/Images/38.png
-  artifactKey: Guid(ae94dc28191a7d0428138274ccea3307) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/38.png using Guid(ae94dc28191a7d0428138274ccea3307) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '94e59f96e49c37c3a8a36cf404cd29c2') in 0.015355 seconds
-  Import took 0.018585 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.393904 seconds.
-  path: Assets/Resources/Images/2021060331_카드 복사.png
-  artifactKey: Guid(f4e0920ff0c482342ac2027580aba750) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2021060331_카드 복사.png using Guid(f4e0920ff0c482342ac2027580aba750) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '55c13b3ce2e184aff400915f8118960b') in 0.014075 seconds
-  Import took 0.017184 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 2.673574 seconds.
-  path: Assets/Resources/Images/39.png
-  artifactKey: Guid(f4e0920ff0c482342ac2027580aba750) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/39.png using Guid(f4e0920ff0c482342ac2027580aba750) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c178e4c6f473c93376f2143ddc8bac87') in 0.027615 seconds
-  Import took 0.030623 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.909155 seconds.
-  path: Assets/Resources/Images/40.png
-  artifactKey: Guid(508b6ebd744966848be3aa0a2c311dcb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/40.png using Guid(508b6ebd744966848be3aa0a2c311dcb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c35ae6d91947d655a86f1ed061e9d03b') in 0.023596 seconds
-  Import took 0.027132 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 5.275929 seconds.
-  path: Assets/Resources/Images/1.png
-  artifactKey: Guid(7342f0618a91bc341a47e59de6bc38e0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/1.png using Guid(7342f0618a91bc341a47e59de6bc38e0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1cf8cda335e251cb20675316adecc36e') in 0.024967 seconds
-  Import took 0.028569 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 4.000216 seconds.
-  path: Assets/Resources/Images/2.png
-  artifactKey: Guid(bd41d3695ca384e4b929b74c26429739) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/2.png using Guid(bd41d3695ca384e4b929b74c26429739) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '52114615f69c219719e3bb2ab302c659') in 0.019779 seconds
-  Import took 0.022801 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 2.833593 seconds.
-  path: Assets/Resources/Images/3.png
-  artifactKey: Guid(7530781e474bd294bab8ef4cff55fcbc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/3.png using Guid(7530781e474bd294bab8ef4cff55fcbc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '61d55231b3215c5689433e8e8d63cdb7') in 0.019874 seconds
-  Import took 0.022918 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 2.546744 seconds.
-  path: Assets/Resources/Images/4.png
-  artifactKey: Guid(93d4131672d5c0f41aa07c68078c5f0d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/4.png using Guid(93d4131672d5c0f41aa07c68078c5f0d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '602a262b106ee4368f6f282a06673aff') in 0.022902 seconds
-  Import took 0.026283 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 3.843546 seconds.
-  path: Assets/Resources/Images/5.png
-  artifactKey: Guid(50c0ac692d271314aa51a9e315aaf128) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/5.png using Guid(50c0ac692d271314aa51a9e315aaf128) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '95182d409d16efbf6dc32759723e30b4') in 0.018991 seconds
-  Import took 0.022537 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 11.564748 seconds.
-  path: Assets/Resources/Images/41.png
-  artifactKey: Guid(4e4cbf1ffdd5f094c988faef592fe903) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/41.png using Guid(4e4cbf1ffdd5f094c988faef592fe903) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9668010aefd74d45256de4db24a25990') in 0.023450 seconds
-  Import took 0.026798 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 3.191840 seconds.
-  path: Assets/Resources/Images/9.png
-  artifactKey: Guid(f88b94de64f0c2a4ab2f5c5b2f20ccde) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/9.png using Guid(f88b94de64f0c2a4ab2f5c5b2f20ccde) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7920a5d51b4378dc4e6c6757e2c615f4') in 0.022987 seconds
-  Import took 0.026014 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 3.488332 seconds.
-  path: Assets/Resources/Images/8.png
-  artifactKey: Guid(6cb35cd3ef1ecb24ba33c3556ac343eb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/8.png using Guid(6cb35cd3ef1ecb24ba33c3556ac343eb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6b9186c74364c146c2c55f7aa75437c4') in 0.013809 seconds
-  Import took 0.017227 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 3.268204 seconds.
-  path: Assets/Resources/Images/6.png
-  artifactKey: Guid(23d5dd0e5a647f94489dfd54efd167cb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/6.png using Guid(23d5dd0e5a647f94489dfd54efd167cb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6e9ac01831dd579571c09de7eae4a512') in 0.025246 seconds
-  Import took 0.028250 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 2.872415 seconds.
-  path: Assets/Resources/Images/7.png
-  artifactKey: Guid(f6e828b5d69668346b6cb8e6ffe4488d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/7.png using Guid(f6e828b5d69668346b6cb8e6ffe4488d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e9d361b582c31e4ecd4a5a1b823b5aa2') in 0.023071 seconds
-  Import took 0.026277 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 41.484303 seconds.
-  path: Assets/Resources/Images/0.png
-  artifactKey: Guid(4e4cbf1ffdd5f094c988faef592fe903) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/0.png using Guid(4e4cbf1ffdd5f094c988faef592fe903) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8f8683192696ef8422e912403ed47997') in 0.021027 seconds
-  Import took 0.024368 seconds .
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002751 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.45 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.667 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.46 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2078 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 96.0 MB.
-System memory in use after: 96.0 MB.
-
-Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 2567.
-Total: 2.042400 ms (FindLiveObjects: 0.211400 ms CreateObjectMapping: 0.043800 ms MarkObjects: 1.690500 ms  DeleteObjects: 0.095700 ms)
-
-========================================================================
-Received Import Request.
-  Time since last request: 1443.689304 seconds.
-  path: Assets/Resources/Images/32.png
-  artifactKey: Guid(0e4ef55224395434595de3eab0fcae20) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/32.png using Guid(0e4ef55224395434595de3eab0fcae20) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bdcb6e89b4504a3218fd6cd9fc3698d0') in 0.049983 seconds
-  Import took 0.053196 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.001088 seconds.
-  path: Assets/Resources/Images/32.png
-  artifactKey: Guid(0e4ef55224395434595de3eab0fcae20) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/32.png using Guid(0e4ef55224395434595de3eab0fcae20) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bdcb6e89b4504a3218fd6cd9fc3698d0') in 0.013452 seconds
-  Import took 0.016341 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.906525 seconds.
-  path: Assets/Resources/Images/1.png
-  artifactKey: Guid(7342f0618a91bc341a47e59de6bc38e0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/1.png using Guid(7342f0618a91bc341a47e59de6bc38e0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '78b28eae82f7183a61269438638adc30') in 0.013801 seconds
-  Import took 0.017268 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.661966 seconds.
-  path: Assets/Resources/Images/0.png
-  artifactKey: Guid(4e4cbf1ffdd5f094c988faef592fe903) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/0.png using Guid(4e4cbf1ffdd5f094c988faef592fe903) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5130cabed7581d8569c16a401e30d567') in 0.014891 seconds
-  Import took 0.018101 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000543 seconds.
-  path: Assets/Resources/Images/0.png
-  artifactKey: Guid(4e4cbf1ffdd5f094c988faef592fe903) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Images/0.png using Guid(4e4cbf1ffdd5f094c988faef592fe903) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5130cabed7581d8569c16a401e30d567') in 0.016346 seconds
-  Import took 0.019475 seconds .
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002890 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.44 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.694 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.44 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2078 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 96.0 MB.
-System memory in use after: 96.0 MB.
-
-Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 2572.
-Total: 2.262600 ms (FindLiveObjects: 0.216700 ms CreateObjectMapping: 0.088700 ms MarkObjects: 1.861200 ms  DeleteObjects: 0.095200 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002908 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.45 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.710 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.43 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2078 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 96.0 MB.
-System memory in use after: 96.0 MB.
-
-Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 2576.
-Total: 2.310500 ms (FindLiveObjects: 0.201900 ms CreateObjectMapping: 0.075200 ms MarkObjects: 1.941800 ms  DeleteObjects: 0.090800 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002776 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.45 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.705 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.52 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2078 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 96.1 MB.
-System memory in use after: 96.0 MB.
-
-Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 2580.
-Total: 2.183100 ms (FindLiveObjects: 0.204800 ms CreateObjectMapping: 0.057400 ms MarkObjects: 1.816000 ms  DeleteObjects: 0.104200 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002705 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.45 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.684 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.45 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2078 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 96.1 MB.
-System memory in use after: 96.0 MB.
-
-Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 2584.
-Total: 2.185700 ms (FindLiveObjects: 0.177400 ms CreateObjectMapping: 0.067900 ms MarkObjects: 1.838000 ms  DeleteObjects: 0.101500 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002753 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.50 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.681 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.45 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2078 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 96.1 MB.
-System memory in use after: 96.1 MB.
-
-Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 2588.
-Total: 2.221300 ms (FindLiveObjects: 0.163800 ms CreateObjectMapping: 0.049000 ms MarkObjects: 1.915200 ms  DeleteObjects: 0.092300 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002690 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.41 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.705 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.45 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2078 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 96.1 MB.
-System memory in use after: 96.1 MB.
-
-Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 2592.
-Total: 2.339500 ms (FindLiveObjects: 0.207200 ms CreateObjectMapping: 0.086900 ms MarkObjects: 1.942800 ms  DeleteObjects: 0.101300 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002755 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.41 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.716 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.44 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2078 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 96.1 MB.
-System memory in use after: 96.1 MB.
-
-Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 2596.
-Total: 2.232100 ms (FindLiveObjects: 0.179800 ms CreateObjectMapping: 0.087100 ms MarkObjects: 1.864400 ms  DeleteObjects: 0.099500 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002888 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.46 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.725 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.45 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2078 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 96.1 MB.
-System memory in use after: 96.1 MB.
-
-Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 2600.
-Total: 2.306500 ms (FindLiveObjects: 0.180300 ms CreateObjectMapping: 0.075700 ms MarkObjects: 1.952500 ms  DeleteObjects: 0.097000 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002729 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.41 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.716 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.48 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2078 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 96.1 MB.
-System memory in use after: 96.1 MB.
-
-Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 2604.
-Total: 2.367900 ms (FindLiveObjects: 0.215100 ms CreateObjectMapping: 0.088400 ms MarkObjects: 1.968300 ms  DeleteObjects: 0.095300 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002786 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.40 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.705 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.44 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2078 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 96.1 MB.
-System memory in use after: 96.1 MB.
-
-Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 2608.
-Total: 2.296900 ms (FindLiveObjects: 0.191400 ms CreateObjectMapping: 0.070500 ms MarkObjects: 1.933000 ms  DeleteObjects: 0.101100 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002745 seconds.
+Registered in 0.002840 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
 Refreshing native plugins compatible for Editor in 0.40 ms, found 3 plugins.
@@ -1329,41 +133,105 @@ Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
 - Completed reload, in  0.719 seconds
 Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.45 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 0.44 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 2078 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 96.1 MB.
-System memory in use after: 96.1 MB.
+System memory in use before: 93.0 MB.
+System memory in use after: 92.9 MB.
 
-Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 2612.
-Total: 2.385200 ms (FindLiveObjects: 0.187900 ms CreateObjectMapping: 0.070400 ms MarkObjects: 2.022300 ms  DeleteObjects: 0.103500 ms)
+Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 2529.
+Total: 2.306900 ms (FindLiveObjects: 0.155800 ms CreateObjectMapping: 0.058600 ms MarkObjects: 1.984200 ms  DeleteObjects: 0.107200 ms)
 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.003101 seconds.
+Registered in 0.002797 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
 Refreshing native plugins compatible for Editor in 0.45 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.681 seconds
+- Completed reload, in  0.735 seconds
 Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.43 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 0.45 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 2078 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 96.1 MB.
-System memory in use after: 96.1 MB.
+System memory in use before: 92.9 MB.
+System memory in use after: 92.9 MB.
 
-Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 2616.
-Total: 2.340500 ms (FindLiveObjects: 0.217300 ms CreateObjectMapping: 0.104800 ms MarkObjects: 1.920100 ms  DeleteObjects: 0.096900 ms)
+Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 2533.
+Total: 2.095500 ms (FindLiveObjects: 0.179700 ms CreateObjectMapping: 0.049100 ms MarkObjects: 1.756700 ms  DeleteObjects: 0.109000 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002890 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.52 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.806 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.65 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2078 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 93.0 MB.
+System memory in use after: 92.9 MB.
+
+Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 2537.
+Total: 3.910300 ms (FindLiveObjects: 0.253100 ms CreateObjectMapping: 0.122300 ms MarkObjects: 3.368400 ms  DeleteObjects: 0.165400 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.003373 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.46 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.725 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.44 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2078 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 93.0 MB.
+System memory in use after: 92.9 MB.
+
+Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 2541.
+Total: 2.197500 ms (FindLiveObjects: 0.161100 ms CreateObjectMapping: 0.058700 ms MarkObjects: 1.870000 ms  DeleteObjects: 0.106800 ms)
 
 ========================================================================
 Received Import Request.
-  Time since last request: 6005.098108 seconds.
-  path: Assets/Scenes/Game.unity
-  artifactKey: Guid(2cda990e2423bbf4892e6590ba056729) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scenes/Game.unity using Guid(2cda990e2423bbf4892e6590ba056729) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7aeb1eb0c09c681aa6727182c7d16b72') in 0.016836 seconds
-  Import took 0.019722 seconds .
+  Time since last request: 5956.452619 seconds.
+  path: Assets/Resources/Images/3.png
+  artifactKey: Guid(7530781e474bd294bab8ef4cff55fcbc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Images/3.png using Guid(7530781e474bd294bab8ef4cff55fcbc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b1c5afe4951ff0dd4cd9d7e706032e13') in 0.103101 seconds
+  Import took 0.106129 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 41.159565 seconds.
+  path: Assets/Resources/Images/31.png
+  artifactKey: Guid(00724feb03ef4a948992939da68a7130) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Images/31.png using Guid(00724feb03ef4a948992939da68a7130) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '845c2f96e6804deed4f479e69e88da6d') in 0.021344 seconds
+  Import took 0.024491 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 39.789237 seconds.
+  path: Assets/Resources/Images/35.png
+  artifactKey: Guid(36fb29246f00faa4197f6bdc3c1a8b6e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Images/35.png using Guid(36fb29246f00faa4197f6bdc3c1a8b6e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '033b00c4df10093024bf3937a43af897') in 0.023230 seconds
+  Import took 0.026370 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 14.808993 seconds.
+  path: Assets/Resources/Images/2.png
+  artifactKey: Guid(bd41d3695ca384e4b929b74c26429739) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Images/2.png using Guid(bd41d3695ca384e4b929b74c26429739) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c963efc6e825613b2a08dbe048e21f14') in 0.017120 seconds
+  Import took 0.024772 seconds .
 
 AssetImportWorkerClient::OnTransportError - code=2 error=End of file
