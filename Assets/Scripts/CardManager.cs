@@ -7,7 +7,7 @@ public class CardManager : MonoBehaviour
 {
     private int maxCards = 48;
     private int firstHand = 6;
-
+    public bool isMyTurn;
     public static CardManager instance;
 
     public GameObject cardPrefab;
@@ -16,6 +16,10 @@ public class CardManager : MonoBehaviour
     public List<GameObject> cardDeck; // 필드에 놓일 카드 덱 리스트 생성
     public List<GameObject> myHand; // 플레이어 자신의 패를 담당
     public List<GameObject> opponentHand; // 상대의 패를 담당
+
+    public GameObject[] cardPostion;
+    public GameObject[] myPosition;
+    public GameObject[] opponentPostion;
 
     private void Awake()
     {
@@ -27,21 +31,34 @@ public class CardManager : MonoBehaviour
 
     private void Start()
     {
+        //각 카드의 위치 설정
         CreateDeck(); /// 플레이어가 준비한 카드 12장, 적이 준비한 카드 12장 을 더해 총 48장의 카드를 덱에 넣는다.
-        ShuffleDeck();
+        ShuffleDeck(); //덱을 섞는다
+        DrawCard(myHand, 10); // 내손에 10장씩 뽑는다.
+        DrawCard(opponentHand, 10);  // 상대손에 10장 씩 뽑는다.
+        //DrawCard(cardDeck, 8); // 필드에 8장씩 놓는다.
     }
 
     private void Update()
     {
-        if(GameManager.instance.myTurn == true)
-        {
-            DrawCard();
-        }
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            Debug.Log("Count : " + cardDeck.Count);
-            Debug.Log("element : " + cardDeck[0].GetComponent<SpriteRenderer>().sprite.name);
-        }
+        //if(GameManager.instance.myTurn == true)
+        //{
+        //    DrawCard(myHand, 1);
+        //    //카드를 하나 낸다.
+        //    //만약 맞으면 자기의 패에 놓는다.
+
+        //}
+
+        //else if(GameManager.instance.myTurn == false)
+        //{
+        //    DrawCard(opponentHand, 1);
+        //}
+
+        //if (Input.GetKeyDown(KeyCode.K))
+        //{
+        //    Debug.Log("Count : " + cardDeck.Count);
+        //    Debug.Log("element : " + cardDeck[0].GetComponent<SpriteRenderer>().sprite.name);
+        //}
     }
 
     public void ShuffleDeck()
@@ -83,8 +100,30 @@ public class CardManager : MonoBehaviour
         }
     }
 
-    public void DrawCard()
+    public void DrawCard(List<GameObject> hand, int num)
     {
-        myHand.Add(cardDeck[0]);
+        if (num > cardDeck.Count)
+        {
+            num = cardDeck.Count;
+        }
+
+        for (int i = 0; i < num; i++)
+        {
+            SetCardPosition(hand, i);
+            hand.Add(cardDeck[i]);
+            cardDeck.RemoveAt(i);
+        }
+    }
+
+    public void SetCardPosition(List<GameObject> hand, int num)
+    {
+        if(hand == myHand)
+        {
+            cardDeck[num].transform.position = myPosition[num].transform.position;
+        }
+        else if(hand == opponentHand)
+        {
+            cardDeck[num].transform.position = opponentPostion[num].transform.position;
+        }
     }
 }
