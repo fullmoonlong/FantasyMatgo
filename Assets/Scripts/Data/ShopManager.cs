@@ -30,9 +30,7 @@ public class ShopManager : MonoBehaviour
 
     string Allfilepath;
 
-    //public string curType = "노말(N-2)"; // 카드 컬렉션에 존재할 현재 타입
-
-    //string[] Type = { "노말(N-2)", "노말(N-1)", "매직", "레어", "유니크", "에픽" }; // 모든 타입
+    int curNum;
     enum License
     {
         N2,
@@ -46,6 +44,7 @@ public class ShopManager : MonoBehaviour
     License license = License.N2;
 
     public GameObject[] ShopSlot;
+    public GameObject[] CollectionSlot;
 
     public Sprite Click, UnClick;
 
@@ -69,6 +68,8 @@ public class ShopManager : MonoBehaviour
         print(Allfilepath);
 
         AllLoadFile(); // 내 리스트 저장
+
+        LoadCollection();
     }
 
     public void AllLoadFile()
@@ -93,7 +94,7 @@ public class ShopManager : MonoBehaviour
 
     public void SaveFile()
     {
-        string jsondata = JsonUtility.ToJson(new Serialization<Shop>(MyShopList)); //내 카드리스트 Json으로 변환
+        string jsondata = JsonUtility.ToJson(new Serialization<Shop>(AllShopList)); //Json으로 변환
 
         File.WriteAllText(Allfilepath, jsondata); // 파일 위치에 씀
 
@@ -138,7 +139,7 @@ public class ShopManager : MonoBehaviour
 
             ShopSlot[i].SetActive(i < CurShopList.Count); // 내 카드리스트 수보다 적으면 슬롯을 안보이게함
             ShopSlot[i].transform.GetChild(1).GetComponent<Text>().text = i < CurShopList.Count ? CurShopList[i].Name : "";
-            ShopSlot[i].transform.GetChild(2).GetComponent<Text>().text = i < CurShopList.Count ? CurShopList[i].Exp : "";
+            ShopSlot[i].transform.GetChild(2).GetComponent<Text>().text = i < CurShopList.Count ? CurShopList[i].Cost : "";
         }
         
         
@@ -148,12 +149,15 @@ public class ShopManager : MonoBehaviour
         }
 
     }
-
+    public void SlotNumCheck(int slotnum)
+    {
+        curNum = slotnum;
+    }
     public void CheckLicense()
     {
         CanBuyPanel.SetActive(true);
         //만약 라이센스가 없다면
-        if(PlayerPrefs.GetInt("License") < (int)license)
+        if (PlayerPrefs.GetInt("License") < (int)license)
         {
             CanBuyPanel.transform.GetChild(0).GetComponent<Text>().text = "라이센스가 없습니다.";
             CanBuyPanel.transform.GetChild(1).gameObject.SetActive(false);
@@ -169,7 +173,34 @@ public class ShopManager : MonoBehaviour
 
     public void PurchaseCheck()
     {
-        //만약 구매가 된다면
-        CanBuyPanel.transform.GetChild(0).GetComponent<Text>().text = "구매가 완료되었습니다."; 
+        if (CanBuyPanel.transform.GetChild(0).GetComponent<Text>().text == "가격이 부족합니다." || CanBuyPanel.transform.GetChild(0).GetComponent<Text>().text == "구매가 완료되었습니다.")
+        {
+            CanBuyPanel.SetActive(false);
+            return;
+        }
+        //만약 구매가 안된다면
+        if (PlayerPrefs.GetInt("Coin") < Int32.Parse(CurShopList[curNum].Cost))
+            CanBuyPanel.transform.GetChild(0).GetComponent<Text>().text = "가격이 부족합니다.";
+
+        //만약 구매가 안된다면
+        if (PlayerPrefs.GetInt("Coin") >= Int32.Parse(CurShopList[curNum].Cost))
+        {
+            CanBuyPanel.transform.GetChild(0).GetComponent<Text>().text = "구매가 완료되었습니다.";
+            CurShopList[curNum].IsHaving = true;
+            SaveFile();
+        }
+    }
+
+    public void LoadCollection()
+    {
+        MyShopList = AllShopList.FindAll(x => x.IsHaving);
+        
+        for (int i = 0; i < CollectionSlot.Length; i++) // 카드 슬롯만큼 돌림
+        {
+            //슬롯은 이미지, 이름, 설명 순으로 가지고 있음
+
+            CollectionSlot[i].SetActive(i < MyShopList.Count); // 내 카드리스트 수보다 적으면 슬롯을 안보이게함
+            CollectionSlot[i].transform.GetChild(0).GetComponent<Text>().text = i < MyShopList.Count ? CurShopList[i].Name : "";
+        }
     }
 }

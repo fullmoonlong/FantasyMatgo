@@ -12,6 +12,10 @@ public class GameScript : MonoBehaviour
         {
             PlayerPrefs.SetInt("License", 0);
         }
+        if(!PlayerPrefs.HasKey("Coin"))
+        {
+            PlayerPrefs.SetInt("Coin", 0);
+        }
     }
 
     // Update is called once per frame
