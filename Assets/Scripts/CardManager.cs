@@ -1,27 +1,26 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class CardManager : MonoBehaviour
 {
-    private int maxCards = 48;
-    public bool isMyTurn;
+    #region INSTANCE
     public static CardManager instance;
+    #endregion
+
+    private int maxCards = 48;
 
     public Transform parentDeck; // Instantiate 할 대상(보기 좋게 묶기 용)
 
     private List<GameObject> cardPrefabs; // 카드의 프리팹 화
     private List<GameObject> cardDeck; // 필드에 놓일 카드 덱 리스트 생성
-    private List<GameObject> myHand; // 플레이어 자신의 패 리스트
-    private List<GameObject> opponentHand; // 상대의 패 리스트
-    private List<GameObject> field; // 필드 리스트
+    public List<GameObject> myHand; // 플레이어 자신의 패 리스트
+    public List<GameObject> opponentHand; // 상대의 패 리스트
+    public List<GameObject> field; // 필드 리스트
 
     public GameObject[] fieldPostion; // 카드를 내려놓을 필드 위치
     public GameObject[] myHandPosition; // 자신 패의 위치
     public GameObject[] opponentHandPosition; // 상대 패의 위치
 
-    public Text WhoTurn;
     private void Awake()
     {
         instance = this;
@@ -41,7 +40,6 @@ public class CardManager : MonoBehaviour
         DrawCard(myHand, 10); // 내손에 10장씩 뽑는다.
         DrawCard(opponentHand, 10);  // 상대손에 10장 씩 뽑는다.
         DrawCard(field, 8);
-        Invoke("Texting", 5f);
     }
 
     private void Update()
@@ -66,13 +64,6 @@ public class CardManager : MonoBehaviour
         //}
     }
 
-    void FirstTurn()
-    {
-        WhoTurn.text = "Player Turn";
-        WhoTurn.enabled = true;
-        GameManager.instance.myTurn = true;
-        DrawCard(myHand, 1);
-    }
     public void ShuffleDeck()
     {
         int a, b;
@@ -114,7 +105,7 @@ public class CardManager : MonoBehaviour
         for (int i = 0; i < drawAmount; i++)
         {
             cardList.Add(cardDeck[i]);
-            SetCardPosition(cardList, cardList.Count-1);
+            SetCardPosition(cardList, cardList.Count - 1);
             cardDeck.RemoveAt(i);
         }
     }
@@ -124,14 +115,23 @@ public class CardManager : MonoBehaviour
         if(cardList == myHand)
         {
             cardDeck[index].transform.position = myHandPosition[index].transform.position;
+            cardDeck[index].transform.SetParent(myHandPosition[index].transform.parent);
         }
         else if(cardList == opponentHand)
         {
             cardDeck[index].transform.position = opponentHandPosition[index].transform.position;
+            cardDeck[index].transform.SetParent(opponentHandPosition[index].transform.parent);
+
         }
         else if(cardList == field)
         {
             cardDeck[index].transform.position = fieldPostion[index].transform.position;
+            cardDeck[index].transform.SetParent(fieldPostion[index].transform.parent);
         }
+    }
+
+    public void SelectCardInHand()
+    {
+
     }
 }

@@ -5,6 +5,18 @@ TagManager:
   serializedVersion: 2
   tags:
   - Cards
+  - Rat
+  - Cow
+  - Tiger
+  - Rabbit
+  - Dragon
+  - Snake
+  - Horse
+  - Sheep
+  - Monkey
+  - Cock
+  - Dog
+  - Pig
   layers:
   - Default
   - TransparentFX
