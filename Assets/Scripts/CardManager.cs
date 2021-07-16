@@ -21,6 +21,7 @@ public class CardManager : MonoBehaviour
     public GameObject[] myHandPosition; // 자신 패의 위치
     public GameObject[] opponentHandPosition; // 상대 패의 위치
 
+    public Text WhoTurn;
     private void Awake()
     {
         instance = this;
@@ -40,19 +41,20 @@ public class CardManager : MonoBehaviour
         DrawCard(myHand, 10); // 내손에 10장씩 뽑는다.
         DrawCard(opponentHand, 10);  // 상대손에 10장 씩 뽑는다.
         DrawCard(field, 8);
+        Invoke("Texting", 5f);
     }
 
     private void Update()
     {
-        //if(GameManager.instance.myTurn == true)
+        //if (GameManager.instance.myTurn == true)
         //{
         //    DrawCard(myHand, 1);
+        //    GameManager.instance.myTurn = false;
         //    //카드를 하나 낸다.
         //    //만약 맞으면 자기의 패에 놓는다.
-
         //}
 
-        //else if(GameManager.instance.myTurn == false)
+        //else if (GameManager.instance.myTurn == false)
         //{
         //    DrawCard(opponentHand, 1);
         //}
@@ -64,6 +66,13 @@ public class CardManager : MonoBehaviour
         //}
     }
 
+    void FirstTurn()
+    {
+        WhoTurn.text = "Player Turn";
+        WhoTurn.enabled = true;
+        GameManager.instance.myTurn = true;
+        DrawCard(myHand, 1);
+    }
     public void ShuffleDeck()
     {
         int a, b;
@@ -104,8 +113,8 @@ public class CardManager : MonoBehaviour
 
         for (int i = 0; i < drawAmount; i++)
         {
-            SetCardPosition(cardList, i);
             cardList.Add(cardDeck[i]);
+            SetCardPosition(cardList, cardList.Count-1);
             cardDeck.RemoveAt(i);
         }
     }
