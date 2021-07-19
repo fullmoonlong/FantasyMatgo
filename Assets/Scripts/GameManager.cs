@@ -15,17 +15,26 @@ public class GameManager : MonoBehaviour
     public Text turnText; // 누구의 턴인지 표시하는 텍스트
     public int turnCount; // 현재까지 진행된 턴 수
     public bool isMyTurn; // 턴을 판정하는 bool 변수
+    public bool initialTurn = false;
+    private float drawShow;
 
     private void Start()
     {
-        Invoke("FirstTurn", 5f);
+        isMyTurn = true;
     }
 
-    void FirstTurn()
+    private void Update()
     {
-        turnText.text = "Player Turn";
-        turnText.enabled = true;
-        isMyTurn = true;
-        CardManager.instance.DrawCard(CardManager.instance.myHand, 1);
+        if (isMyTurn == true)
+        {
+            drawShow += Time.deltaTime;
+            if (drawShow > 3f)
+            {
+                if(initialTurn == true)
+                {
+
+                }
+            }
+        }
     }
 }

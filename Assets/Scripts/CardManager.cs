@@ -20,7 +20,6 @@ public class CardManager : MonoBehaviour
     public GameObject[] myHandPosition; // 자신 패의 위치
     public GameObject[] opponentHandPosition; // 상대 패의 위치
 
-    string CurCardType = "";
     private void Awake()
     {
         instance = this;
@@ -28,36 +27,20 @@ public class CardManager : MonoBehaviour
         cardDeck = new List<GameObject>(); // 덱 리스트 할당
         myHand = new List<GameObject>(); // 패 리스트 할당
         opponentHand = new List<GameObject>(); // 패 리스트 할당
-        field = new List<GameObject>(); // 패 리스트 할당
+        field = new List<GameObject>(); // 필드 리스트 할당
     }
 
     private void Start()
     {
         //각 카드의 위치 설정
         PrefabToCard(); // 프리팹 폴더에 존재하는 카드를 리스트에 담아 생성준비를 한다.
-        CreateDeck(); /// 플레이어가 준비한 카드 12장, 적이 준비한 카드 12장 을 더해 총 48장의 카드를 덱에 넣는다.
+        CreateDeck(); // 플레이어가 준비한 카드 12장, 적이 준비한 카드 12장 을 더해 총 48장의 카드를 덱에 넣는다.
         ShuffleDeck(); //덱을 섞는다
-        DrawCard(myHand, 10); // 내손에 10장씩 뽑는다.
-        DrawCard(opponentHand, 10);  // 상대손에 10장 씩 뽑는다.
-        DrawCard(field, 8);
+        DrawCard(myHand, 6); // 내손에 10장 씩 뽑는다.
+        DrawCard(opponentHand, 6);  // 상대손에 10장 씩 뽑는다.
+        DrawCard(field, 6);
     }
 
-    //public string CheckType(List<GameObject> list, GameObject card)
-    //{
-    //    int type = list.FindIndex(x => x.Equals(card));
-    //    switch (type)
-    //    {
-    //        case 1:
-    //        case 2:
-    //        case 3:
-    //        case 4:
-    //        case 5:
-    //            CurCardType = "광";
-    //            break;
-
-    //    }
-    //    return CurCardType;
-    //}
     public void ShuffleDeck()
     {
         int a, b;

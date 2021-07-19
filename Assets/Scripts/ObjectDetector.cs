@@ -8,7 +8,6 @@ public class ObjectDetector : MonoBehaviour
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            Physics.Raycast(ray, out hit);
             Debug.Log("Clicked");
             if (Physics.Raycast(ray, out hit))
             {
