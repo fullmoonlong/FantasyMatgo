@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-
 public class CardManager : MonoBehaviour
 {
     #region INSTANCE
@@ -21,6 +20,7 @@ public class CardManager : MonoBehaviour
     public GameObject[] myHandPosition; // 자신 패의 위치
     public GameObject[] opponentHandPosition; // 상대 패의 위치
 
+    string CurCardType = "";
     private void Awake()
     {
         instance = this;
@@ -42,28 +42,22 @@ public class CardManager : MonoBehaviour
         DrawCard(field, 8);
     }
 
-    private void Update()
-    {
-        //if (GameManager.instance.myTurn == true)
-        //{
-        //    DrawCard(myHand, 1);
-        //    GameManager.instance.myTurn = false;
-        //    //카드를 하나 낸다.
-        //    //만약 맞으면 자기의 패에 놓는다.
-        //}
+    //public string CheckType(List<GameObject> list, GameObject card)
+    //{
+    //    int type = list.FindIndex(x => x.Equals(card));
+    //    switch (type)
+    //    {
+    //        case 1:
+    //        case 2:
+    //        case 3:
+    //        case 4:
+    //        case 5:
+    //            CurCardType = "광";
+    //            break;
 
-        //else if (GameManager.instance.myTurn == false)
-        //{
-        //    DrawCard(opponentHand, 1);
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.K))
-        //{
-        //    Debug.Log("Count : " + cardDeck.Count);
-        //    Debug.Log("element : " + cardDeck[0].GetComponent<SpriteRenderer>().sprite.name);
-        //}
-    }
-
+    //    }
+    //    return CurCardType;
+    //}
     public void ShuffleDeck()
     {
         int a, b;
@@ -134,4 +128,5 @@ public class CardManager : MonoBehaviour
     {
 
     }
+
 }
