@@ -6,9 +6,10 @@ using UnityEngine.UI;
 
 public class CardClick : MonoBehaviour
 {
+    public static int score = 0;
     public string type = "";
-    List<int> sameTagInex;
-    List<int> drawsameTagInex;
+    List<int> sameTagIndex;
+    List<int> drawSameTagIndex;
     int fieldCount;
     private void Start()
     {
@@ -52,17 +53,15 @@ public class CardClick : MonoBehaviour
                 type = "피";
                 break;
         }
-        sameTagInex = new List<int>();
+        sameTagIndex = new List<int>();
         fieldCount = CardManager.instance.field.Count;
-        drawsameTagInex = new List<int>();
+        drawSameTagIndex = new List<int>();
     }
 
     public void OnMouseUp()
     {
-        Debug.Log(GameManager.instance.isMyTurn);
         if (GameManager.instance.isMyTurn == true)//만약 플레이어 턴이면
         {
-            Debug.Log(gameObject.tag);
             for(int i = 0; i < fieldCount; i++)
             {
                 if (CardManager.instance.myHand.Contains(gameObject)) // 내손에 이 게임오브젝트가 있을 때
@@ -80,33 +79,36 @@ public class CardClick : MonoBehaviour
                         int index = CardManager.instance.myHand.IndexOf(gameObject);//내손에서 낸 카드는 리스트에서 삭제
                         CardManager.instance.myHand.RemoveAt(index);
 
-                        sameTagInex.Add(i);//필드에 넣은 오브젝트 인덱스 저장
+                        sameTagIndex.Add(i);//필드에 넣은 오브젝트 인덱스 저장
                     }
                 }
             }
 
-            print("start");
-            CardManager.instance.DrawCard(CardManager.instance.field, 1);// 카드 드로우
-            print("end");
+            CardManager.instance.FlipCard();// 카드 드로우
 
+            print(CardManager.instance.field[CardManager.instance.field.Count - 1].tag);
             for (int i = 0; i < fieldCount; i++) // 또 같은거 있는지 체크
             {
                 //전체 태그에서 뽑은 태그와 똑같은게 있다면
                 if (CardManager.instance.field[i].tag == CardManager.instance.field[CardManager.instance.field.Count - 1].tag) 
                 {
-                    if(CardManager.instance.field[CardManager.instance.field.Count - 1].tag == gameObject.tag)
+                    print("same");
+                    CardManager.instance.field[CardManager.instance.field.Count - 1].transform.position = new Vector3(CardManager.instance.field[i].transform.position.x + 0.5f, CardManager.instance.field[i].transform.position.y, CardManager.instance.field[i].transform.position.z);
+                    if (CardManager.instance.field[CardManager.instance.field.Count - 1].tag == gameObject.tag)
                     {
-                        sameTagInex.Add(i);
+                        sameTagIndex.Add(i);
+
                     }
                     else
                     {
-                        drawsameTagInex.Add(i);
+                        
+                        drawSameTagIndex.Add(i);
                     }
                
                 }
             }
-            CheckAction(sameTagInex);
-            CheckAction(drawsameTagInex);
+            //CheckAction(sameTagInex);
+            //CheckAction(drawsameTagInex);
 
             //얻은 카드들은 플레이어 점수 필드에 넣음
 
@@ -138,9 +140,9 @@ public class CardClick : MonoBehaviour
         {
             case 1://내손에 두개 가져가기
                 CardManager.instance.myHandScore.Add(gameObject); // 내 점수 필드에 넣음
-                CardManager.instance.SetNextPosition(CheckTag(gameObject)); // 포지션 미리 지정해 주기
+                CardManager.instance.SetNextPosition(CheckTag()); // 포지션 미리 지정해 주기
                 CardManager.instance.myHandScore.Add(CardManager.instance.field[list[0]]); // 필드꺼 내 점수 필드에 넣음
-                CardManager.instance.SetNextPosition(CheckTag(CardManager.instance.field[list[0]]));
+                CardManager.instance.SetNextPosition(CheckTag());
                 CardManager.instance.field.Remove(CardManager.instance.field[list[0]]);//필드 삭제
                 print("끝");
                 break;
@@ -155,6 +157,7 @@ public class CardClick : MonoBehaviour
             case 3:
                 //뻑
                 //못가져감
+                CardManager.instance.SetNextPosition(CheckTag()); // 뻑된 카드 옆으로 이동
                 break;
 
             case 4:
@@ -165,27 +168,41 @@ public class CardClick : MonoBehaviour
                 break;
         }
     }
-    Vector3 CheckTag(GameObject obj) //오브젝트 태그 체크
+
+    public void CheckBomb()
     {
-        switch (obj.tag)
+        if (sameTagIndex.Count == 4)
+        {
+            CardManager.instance.myHandScore.Add(gameObject); // 내 점수 필드에 넣음
+            CardManager.instance.SetNextPosition(CheckTag()); // 포지션 미리 지정해 주기
+            CardManager.instance.myHandScore.Add(CardManager.instance.field[sameTagIndex[0]]); // 필드꺼 내 점수 필드에 넣음
+            CardManager.instance.SetNextPosition(CheckTag());
+            CardManager.instance.myHandScore.Add(CardManager.instance.field[sameTagIndex[1]]); // 필드꺼 내 점수 필드에 넣음
+            CardManager.instance.SetNextPosition(CheckTag());
+            CardManager.instance.myHandScore.Add(CardManager.instance.field[sameTagIndex[2]]); // 필드꺼 내 점수 필드에 넣음
+            CardManager.instance.SetNextPosition(CheckTag());
+            CardManager.instance.field.Remove(CardManager.instance.field[sameTagIndex[0]]);//필드 삭제
+            CardManager.instance.field.Remove(CardManager.instance.field[sameTagIndex[1]]);//필드 삭제
+            CardManager.instance.field.Remove(CardManager.instance.field[sameTagIndex[2]]);//필드 삭제
+        }
+    }
+    Vector3 CheckTag() //오브젝트 태그 체크
+    {
+        switch (type)
         {
             case "광":
-                print("광");
                 return CardManager.instance.scoreKingPosition;
             case "홍단":
           
             case "청단":
             
             case "초단":
-                print("flag");
                 return CardManager.instance.scoreFlagPosition;
 
             case "새":
-                print("동물");
                 return CardManager.instance.scoreAnimalPosition;
 
             default:
-                print("pee");
                 return CardManager.instance.scoreSoldierPosition;
         }
     }

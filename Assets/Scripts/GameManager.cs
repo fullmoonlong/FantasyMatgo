@@ -30,10 +30,26 @@ public class GameManager : MonoBehaviour
             drawShow += Time.deltaTime;
             if (drawShow > 3f)
             {
-                if(initialTurn == true)
+                if (initialTurn == true)
                 {
 
                 }
+            }
+        }
+        WinDecision();
+    }
+
+    private void WinDecision()
+    {
+        if (CardClick.score >= 7)
+        {
+            if (isMyTurn == true)
+            {
+                Debug.Log("I Won! (6'o clock)");
+            }
+            else
+            {
+                Debug.Log("Opponent Won! (12'o clock)");
             }
         }
     }

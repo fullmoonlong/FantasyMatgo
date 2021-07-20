@@ -30,8 +30,10 @@ public class CardManager : MonoBehaviour
     public Vector3 scoreSoldierPosition;
 
     public GameObject ChociePanel;//두개 중 하나 고를 때 판넬
+
     int choiceNum; // 고른 카드
 
+    public int emptyCount;
     private void Awake()
     {
         instance = this;
@@ -44,6 +46,7 @@ public class CardManager : MonoBehaviour
 
         myHandScore = new List<GameObject>(); // 점수 리스트 할당
         opponentHandScore = new List<GameObject>(); // 점수 리스트 할당
+        
     }
 
     private void Start()
@@ -60,7 +63,10 @@ public class CardManager : MonoBehaviour
                                 new Vector3(-3,0,0),
                                 new Vector3(3,0,0),
                                 new Vector3(-2,-2,0),
-                                new Vector3(2,-2,0) };
+                                new Vector3(2,-2,0),
+                                new Vector3(5, 2, 0)};
+
+        emptyCount = fieldPosition.Length - 1;
 
         scoreKingPosition = new Vector3(-8f, -3f, 0f); // 5개
         scoreAnimalPosition = new Vector3(-4f, -3f, 0f); // 9개 멍따
@@ -120,6 +126,12 @@ public class CardManager : MonoBehaviour
             cardDeck.RemoveAt(i);
         }
     }
+    public void FlipCard()
+    {
+        field.Add(cardDeck[0]);// 뒤집기
+        field[field.Count - 1].transform.position = fieldPosition[emptyCount]; //마지막 포지션은 비어있는 필드 포지션
+        cardDeck.RemoveAt(0);//카드 덱 삭제
+    }
 
     public void SetCardPosition(List<GameObject> cardList, int index)
     {
@@ -163,10 +175,9 @@ public class CardManager : MonoBehaviour
         ChociePanel.SetActive(false);
     }
 
-    public Vector3 SetNextPosition(Vector3 position)
+    public void SetNextPosition(Vector3 position)
     {
         position = new Vector3(position.x + 0.5f, position.y, position.z);
-        return position;
     }
 
 }
