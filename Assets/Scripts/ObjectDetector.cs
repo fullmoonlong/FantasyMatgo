@@ -12,7 +12,7 @@ public class ObjectDetector : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
                 string parentName = hit.collider.transform.parent.name;
-                if (parentName.Substring(parentName.Length - 4) == "Hand")
+                if (CardManager.instance.myHand.Contains(hit.collider.gameObject) || CardManager.instance.opponentHand.Contains(hit.collider.gameObject))
                 {
                     CardMatching.instance.FindMatch(hit.collider.tag);
                 }
