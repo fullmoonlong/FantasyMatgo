@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -21,7 +22,6 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         isMyTurn = true;
-        Time.timeScale = 0.0f;
     }
 
     private void Update()
@@ -57,7 +57,6 @@ public class GameManager : MonoBehaviour
 
     public void GameStart()
     {
-        Time.timeScale = 1.0f;
-        GameObject.Find("GameStart").SetActive(false);
+        SceneManager.LoadScene("Game");
     }
 }
