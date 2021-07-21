@@ -15,9 +15,10 @@ public class CardClick : MonoBehaviour
     List<int> sameTagCount;
     private List<GameObject> storage;
 
-    List<List<GameObject>> fieldjj;
 
     bool IsPair = false;
+    bool IsPairTwo = false;
+
     private void Start()
     {
         switch (name)
@@ -127,7 +128,6 @@ public class CardClick : MonoBehaviour
                 // 맞는 카드가 있는지 포문 돌림
                 for (int i = 0; i < fieldCount; i++)
                 {
-
                     if (gameObject.CompareTag(CardManager.instance.field[i].tag))//카드가 맞다면
                     {
                         print(IsPair);
@@ -147,7 +147,6 @@ public class CardClick : MonoBehaviour
 
                         //sameTagIndex.Add(i);//필드에 넣은 오브젝트 인덱스 저장
                         //태그의 위치에 같은 카드 1 입력
-
                     }
                 }
 
@@ -165,37 +164,47 @@ public class CardClick : MonoBehaviour
                 CardManager.instance.FlipCard();// 카드 드로우
 
                 fieldCount = CardManager.instance.field.Count;// 필드 카운트 업뎃
-                
-                IsPair = false;
+
+                IsPairTwo = false;
                 for (int i = 0; i < fieldCount -1; i++) // 또 같은거 있는지 체크
                 {
-                    //전체 태그에서 뽑은 태그와 똑같은게 있다면
-                    if (CardManager.instance.field[i].tag == CardManager.instance.field[CardManager.instance.field.Count - 1].tag)
-                    {
-                        if(CardManager.instance.field[i].tag != gameObject.tag) // 다른 카드 맞춤
+                    ///일하는중 20210721
+                    //if (IsPair) // 전에 맞은게 있다면 뻑 체크
+                    //{
+                        if (CardManager.instance.field[i].tag == CardManager.instance.field[CardManager.instance.field.Count - 1].tag)//전체 태그에서 뽑은 태그와 똑같은게 있다면
                         {
-                            IsPair = true;
-                            CardManager.instance.field[CardManager.instance.field.Count - 1].transform.position = new Vector3(CardManager.instance.field[i].transform.position.x + 0.5f , CardManager.instance.field[i].transform.position.y, CardManager.instance.field[i].transform.position.z);
-                            //마지막 카드랑, 태그 카드 내 점수패로 들고옴
+                            if (CardManager.instance.field[i].tag != gameObject.tag) // 다른 카드 맞춤
+                            {
+                                IsPairTwo = true;
+
+                                CardManager.instance.field[CardManager.instance.field.Count - 1].transform.position = new Vector3(CardManager.instance.field[i].transform.position.x + 0.5f, CardManager.instance.field[i].transform.position.y, CardManager.instance.field[i].transform.position.z);
+
+
+                                //마지막 카드랑, 태그 카드 내 점수패로 들고옴
+
+                            }
+
+                            else // 뻑
+                            {
+                                print("뻑");
+                            }
+                            //if (CardManager.instance.field[CardManager.instance.field.Count - 1].tag == gameObject.tag)
+                            //{
+                            //    sameTagIndex.Add(i);
+
+                            //}
+                            //else
+                            //{
+                            //    drawSameTagIndex.Add(i);
+                            //}
 
                         }
-                        
-                        //if (CardManager.instance.field[CardManager.instance.field.Count - 1].tag == gameObject.tag)
-                        //{
-                        //    sameTagIndex.Add(i);
-
-                        //}
-                        //else
-                        //{
-                        //    drawSameTagIndex.Add(i);
-                        //}
-
-                    }
+                    //}
                 }
 
-                if(!IsPair)
+                if(!IsPairTwo)
                 {
-                    IsPair = false;
+                    IsPairTwo = false;
                     CardManager.instance.field[CardManager.instance.field.Count - 1].transform.position = CardManager.instance.fieldPosition[CardManager.instance.emptyIndex[0]]; // 마지막 필드포지션은 빈곳에 넣음
                     CardManager.instance.emptyIndex.RemoveAt(0);
                     CardManager.instance.myHand.Remove(gameObject); // 내손에서 지움
@@ -256,21 +265,21 @@ public class CardClick : MonoBehaviour
                 CardManager.instance.FlipCard();// 카드 드로우
                 fieldCount = CardManager.instance.field.Count;// 필드 카운트 업뎃
 
-                IsPair = false;
-                for (int i = 0; i < fieldCount; i++) // 또 같은거 있는지 체크
+                IsPairTwo = false;
+                for (int i = 0; i < fieldCount -1; i++) // 또 같은거 있는지 체크
                 {
                     //전체 태그에서 뽑은 태그와 똑같은게 있다면
                     if (CardManager.instance.field[i].tag == CardManager.instance.field[CardManager.instance.field.Count - 1].tag)
                     {
-                        IsPair = true;
+                        IsPairTwo = true;
                         CardManager.instance.field[CardManager.instance.field.Count - 1].transform.position = new Vector3(CardManager.instance.field[i].transform.position.x + 0.5f, CardManager.instance.field[i].transform.position.y, CardManager.instance.field[i].transform.position.z);
                         //마지막 카드랑, 태그 카드 내 점수패로 들고옴
                     }
                 }
 
-                if (!IsPair)
+                if (!IsPairTwo)
                 {
-                    IsPair = false;
+                    IsPairTwo = false;
                     CardManager.instance.field[CardManager.instance.field.Count - 1].transform.position = CardManager.instance.fieldPosition[CardManager.instance.emptyIndex[0]]; // 마지막 필드포지션은 빈곳에 넣음
                     CardManager.instance.emptyIndex.RemoveAt(0);
                     CardManager.instance.opponentHand.Remove(gameObject); // 내손에서 지움
