@@ -14,6 +14,10 @@ public class CardClick : MonoBehaviour
     int fieldCount;
     List<int> sameTagCount;
     private List<GameObject> storage;
+
+    List<List<GameObject>> fieldjj;
+
+    bool IsPair = false;
     private void Start()
     {
         switch (name)
@@ -61,7 +65,7 @@ public class CardClick : MonoBehaviour
         drawSameTagIndex = new List<int>();
         sameTagCount = new List<int>(12) { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         storage = new List<GameObject>();
-
+        
         FieldSameCard();
     }
 
@@ -112,15 +116,22 @@ public class CardClick : MonoBehaviour
     }
     public void OnMouseUp()
     {
+        IsPair = false;
+        fieldCount = CardManager.instance.field.Count;
+
         if (GameManager.instance.isMyTurn == true)//만약 플레이어 턴이면
         {
             if (CardManager.instance.myHand.Contains(gameObject)) // 내손에 이 게임오브젝트가 있을 때
             {
+                // 맞는 카드가 있는지 포문 돌림
                 for (int i = 0; i < fieldCount; i++)
                 {
 
                     if (gameObject.CompareTag(CardManager.instance.field[i].tag))//카드가 맞다면
                     {
+                        print(IsPair);
+                        IsPair = true;
+
                         //러프 필드에 카드 놓기
                         gameObject.transform.position =
                             new Vector3(CardManager.instance.field[i].transform.position.x + 0.5f,
@@ -135,28 +146,57 @@ public class CardClick : MonoBehaviour
 
                         //sameTagIndex.Add(i);//필드에 넣은 오브젝트 인덱스 저장
                         //태그의 위치에 같은 카드 1 입력
+
                     }
+                }
+
+                if (!IsPair)
+                {
+                    print("플레이어 안맞음");
+                    IsPair = false;
+                    CardManager.instance.field.Add(gameObject); //내손에 있는 카드 필드에 넣기
+                    CardManager.instance.EmptyIndexSort();//빈곳 인덱스 오름차순 정렬
+                    CardManager.instance.field[CardManager.instance.field.Count - 1].transform.position = CardManager.instance.fieldPosition[CardManager.instance.emptyIndex[0]]; // 마지막 필드포지션은 빈곳에 넣음
+                    CardManager.instance.emptyIndex.RemoveAt(0);
+                    CardManager.instance.myHand.Remove(gameObject); // 내손에서 지움
                 }
 
                 CardManager.instance.FlipCard();// 카드 드로우
 
-                for (int i = 0; i < fieldCount; i++) // 또 같은거 있는지 체크
+                fieldCount = CardManager.instance.field.Count;// 필드 카운트 업뎃
+
+                for (int i = 0; i < fieldCount -1; i++) // 또 같은거 있는지 체크
                 {
                     //전체 태그에서 뽑은 태그와 똑같은게 있다면
                     if (CardManager.instance.field[i].tag == CardManager.instance.field[CardManager.instance.field.Count - 1].tag)
                     {
-                        CardManager.instance.field[CardManager.instance.field.Count - 1].transform.position = new Vector3(CardManager.instance.fieldPosition[i].x + 0.5f * (sameTagCount[GetCardTagNum(CardManager.instance.field[i])]), CardManager.instance.fieldPosition[i].y, CardManager.instance.fieldPosition[i].z);
-                        if (CardManager.instance.field[CardManager.instance.field.Count - 1].tag == gameObject.tag)
+                        if(CardManager.instance.field[i].tag != gameObject.tag) // 다른 카드 맞춤
                         {
-                            sameTagIndex.Add(i);
+                            IsPair = true;
+                            CardManager.instance.field[CardManager.instance.field.Count - 1].transform.position = new Vector3(CardManager.instance.field[i].transform.position.x + 0.5f , CardManager.instance.field[i].transform.position.y, CardManager.instance.field[i].transform.position.z);
+                            //마지막 카드랑, 태그 카드 내 점수패로 들고옴
 
                         }
-                        else
-                        {
-                            drawSameTagIndex.Add(i);
-                        }
+                        
+                        //if (CardManager.instance.field[CardManager.instance.field.Count - 1].tag == gameObject.tag)
+                        //{
+                        //    sameTagIndex.Add(i);
+
+                        //}
+                        //else
+                        //{
+                        //    drawSameTagIndex.Add(i);
+                        //}
 
                     }
+                }
+
+                if(!IsPair)
+                {
+                    IsPair = false;
+                    CardManager.instance.field[CardManager.instance.field.Count - 1].transform.position = CardManager.instance.fieldPosition[CardManager.instance.emptyIndex[0]]; // 마지막 필드포지션은 빈곳에 넣음
+                    CardManager.instance.emptyIndex.RemoveAt(0);
+                    CardManager.instance.myHand.Remove(gameObject); // 내손에서 지움
                 }
 
                 GameManager.instance.isMyTurn = false;
@@ -193,11 +233,15 @@ public class CardClick : MonoBehaviour
         {
             if (CardManager.instance.opponentHand.Contains(gameObject)) // 내손에 이 게임오브젝트가 있을 때
             {
+                print(fieldCount);
                 for (int i = 0; i < fieldCount; i++)
                 {
 
                     if (gameObject.CompareTag(CardManager.instance.field[i].tag))//카드가 맞다면
                     {
+                        print(IsPair);
+                        IsPair = true;
+
                         //러프 필드에 카드 놓기
                         gameObject.transform.position =
                             new Vector3(CardManager.instance.field[i].transform.position.x + 0.5f,
@@ -206,14 +250,25 @@ public class CardClick : MonoBehaviour
 
                         CardManager.instance.field.Add(gameObject); //내손에 있는 카드 필드에 넣기
 
-                        int index = CardManager.instance.opponentHand.IndexOf(gameObject);//내손에서 낸 카드는 리스트에서 삭제
-                        CardManager.instance.opponentHand.RemoveAt(index);
+                        CardManager.instance.opponentHand.Remove(gameObject);
 
                         sameTagCount[GetCardTagNum(gameObject)]++;//맞는 태그 ++
 
                         //sameTagIndex.Add(i);//필드에 넣은 오브젝트 인덱스 저장
                         //태그의 위치에 같은 카드 1 입력
+
                     }
+                }
+                print(IsPair);
+                if (!IsPair)
+                {
+                    print("상대 안맞음");
+                    IsPair = false;
+                    CardManager.instance.field.Add(gameObject); //내손에 있는 카드 필드에 넣기
+                    CardManager.instance.EmptyIndexSort();//빈곳 인덱스 오름차순 정렬
+                    CardManager.instance.field[CardManager.instance.field.Count - 1].transform.position = CardManager.instance.fieldPosition[CardManager.instance.emptyIndex[0]]; // 마지막 필드포지션은 빈곳에 넣음
+                    CardManager.instance.emptyIndex.RemoveAt(0);
+                    CardManager.instance.opponentHand.Remove(gameObject); // 내손에서 지움
                 }
 
                 CardManager.instance.FlipCard();// 카드 드로우
@@ -223,18 +278,18 @@ public class CardClick : MonoBehaviour
                     //전체 태그에서 뽑은 태그와 똑같은게 있다면
                     if (CardManager.instance.field[i].tag == CardManager.instance.field[CardManager.instance.field.Count - 1].tag)
                     {
+                        IsPair = true;
                         CardManager.instance.field[CardManager.instance.field.Count - 1].transform.position = new Vector3(CardManager.instance.fieldPosition[i].x + 0.5f * (sameTagCount[GetCardTagNum(CardManager.instance.field[i])]), CardManager.instance.fieldPosition[i].y, CardManager.instance.fieldPosition[i].z);
-                        if (CardManager.instance.field[CardManager.instance.field.Count - 1].tag == gameObject.tag)
-                        {
-                            sameTagIndex.Add(i);
-
-                        }
-                        else
-                        {
-                            drawSameTagIndex.Add(i);
-                        }
-
+                
                     }
+                }
+
+                if (!IsPair)
+                {
+                    IsPair = false;
+                    CardManager.instance.field[CardManager.instance.field.Count - 1].transform.position = CardManager.instance.fieldPosition[CardManager.instance.emptyIndex[0]]; // 마지막 필드포지션은 빈곳에 넣음
+                    CardManager.instance.emptyIndex.RemoveAt(0);
+                    CardManager.instance.opponentHand.Remove(gameObject); // 내손에서 지움
                 }
 
                 GameManager.instance.isMyTurn = true;
@@ -246,19 +301,19 @@ public class CardClick : MonoBehaviour
             }
 
         }
-
     }
 
     void FieldSameCard()
     {
 
-        for (int i = 0; i < CardManager.instance.field.Count; i++) // 필드 돌리기
+        
+        for (int j = 0; j < 12; j++) // 태그 12개 다 돌리기
         {
-            for (int j = 0; j < 12; j++) // 태그 12개 다 돌리기
+            for (int i = 0; i < CardManager.instance.field.Count; i++) // 필드 돌리기
             {
-                if (GetCardTagNum(CardManager.instance.field[i]) == j) // 필드 i의 태그가 j와 같다면
+                if (j == GetCardTagNum(CardManager.instance.field[i])) // 필드 i의 태그가 j와 같다면
                 {
-                    sameTagCount[GetCardTagNum(CardManager.instance.field[i])]++; // 태그 값 더하기
+                    sameTagCount[j]++; // 태그 값 더하기
                     if (sameTagCount[j] == 1) // 필드 태그가 하나밖에 없다면
                     {
                         storage.Add(CardManager.instance.field[i]);
@@ -268,31 +323,33 @@ public class CardClick : MonoBehaviour
             }
         }
 
+        int count = 0;
+
         for (int i = 0; i < storage.Count; i++)
         {
             for (int j = 0; j < CardManager.instance.field.Count; j++)
             {
                 if (storage[i].CompareTag(CardManager.instance.field[j].tag) && storage[i].transform.position != CardManager.instance.field[j].transform.position)// 태그는 같고 포지션은 다를 때
                 {
-                    print(sameTagCount[GetCardTagNum(storage[i])] - 1);
+                    count++;
+                    print(count);
 
+                    //원래 친구 포지션
                     print(CardManager.instance.field[j].transform.position);
 
                     //같은 카드 다음 포지션은 같은 태그의 갯수 * 0.5 만큼 x축을 더해준다.
-                    CardManager.instance.field[j].transform.position = new Vector3(storage[i].transform.position.x + 0.5f * (sameTagCount[GetCardTagNum(storage[i])] - 1), storage[i].transform.position.y, storage[i].transform.position.z);
+                    CardManager.instance.field[j].transform.position = new Vector3(storage[i].transform.position.x + 0.5f * count, storage[i].transform.position.y, storage[i].transform.position.z + 0.1f * count);
 
-                    //카드 카운트
-                    sameTagCount[GetCardTagNum(storage[i])]++;
-
-                    //만약 카드 카운트가 2 이상이면 -> 같은 카드의 자리가 비기 때문에
-                    if (sameTagCount[GetCardTagNum(storage[i])] > 1)
+                    //만약 카드 카운트가 0 이상이면 -> 같은 카드의 자리가 비기 때문에
+                    if (count > 0)
                     {
-                        CardManager.instance.emptyCount = j;
-
+                        CardManager.instance.emptyIndex.Add(j);
+                        print(CardManager.instance.emptyIndex);
                     }
                 }
+                //엠티 카운트가 없으면 어저지,,
             }
-
+            count = 0;
         }
     }
 
