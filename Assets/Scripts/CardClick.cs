@@ -123,6 +123,7 @@ public class CardClick : MonoBehaviour
         {
             if (CardManager.instance.myHand.Contains(gameObject)) // 내손에 이 게임오브젝트가 있을 때
             {
+                IsPair = false;
                 // 맞는 카드가 있는지 포문 돌림
                 for (int i = 0; i < fieldCount; i++)
                 {
@@ -164,7 +165,8 @@ public class CardClick : MonoBehaviour
                 CardManager.instance.FlipCard();// 카드 드로우
 
                 fieldCount = CardManager.instance.field.Count;// 필드 카운트 업뎃
-
+                
+                IsPair = false;
                 for (int i = 0; i < fieldCount -1; i++) // 또 같은거 있는지 체크
                 {
                     //전체 태그에서 뽑은 태그와 똑같은게 있다면
@@ -206,27 +208,6 @@ public class CardClick : MonoBehaviour
             {
                 print("실행안됨");
             }
-
-
-
-
-
-            /// WIP ---- 만약 필드위에 같은 태그의 카드가 두개 있다면 어떻게 다룰지 생각해야함.
-            /// 또한 카드가 두개이상일경우 첫째카드말고 마지막으로 붙어있는카드 옆에 카드를 배치해야함.
-
-            //점수계산
-            //계속, 전투 고를 수 있다면
-            //계속 시
-            //추가 규칙 시행
-            //멈춤 시
-            //전투 시작 
-
-            //카드가 맞기 않다면
-            //필드에 카드놓기
-
-            //필드에 카드하나 뒤집기
-
-
         }
 
         else//만약 상대 턴이면
@@ -234,6 +215,7 @@ public class CardClick : MonoBehaviour
             if (CardManager.instance.opponentHand.Contains(gameObject)) // 내손에 이 게임오브젝트가 있을 때
             {
                 print(fieldCount);
+                IsPair = false;
                 for (int i = 0; i < fieldCount; i++)
                 {
 
@@ -272,15 +254,17 @@ public class CardClick : MonoBehaviour
                 }
 
                 CardManager.instance.FlipCard();// 카드 드로우
+                fieldCount = CardManager.instance.field.Count;// 필드 카운트 업뎃
 
+                IsPair = false;
                 for (int i = 0; i < fieldCount; i++) // 또 같은거 있는지 체크
                 {
                     //전체 태그에서 뽑은 태그와 똑같은게 있다면
                     if (CardManager.instance.field[i].tag == CardManager.instance.field[CardManager.instance.field.Count - 1].tag)
                     {
                         IsPair = true;
-                        CardManager.instance.field[CardManager.instance.field.Count - 1].transform.position = new Vector3(CardManager.instance.fieldPosition[i].x + 0.5f * (sameTagCount[GetCardTagNum(CardManager.instance.field[i])]), CardManager.instance.fieldPosition[i].y, CardManager.instance.fieldPosition[i].z);
-                
+                        CardManager.instance.field[CardManager.instance.field.Count - 1].transform.position = new Vector3(CardManager.instance.field[i].transform.position.x + 0.5f, CardManager.instance.field[i].transform.position.y, CardManager.instance.field[i].transform.position.z);
+                        //마지막 카드랑, 태그 카드 내 점수패로 들고옴
                     }
                 }
 
