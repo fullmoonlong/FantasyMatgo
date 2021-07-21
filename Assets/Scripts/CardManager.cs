@@ -1,5 +1,8 @@
+ï»¿//ë‚´êº¼
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
+
 public class CardManager : MonoBehaviour
 {
     #region INSTANCE
@@ -8,51 +11,52 @@ public class CardManager : MonoBehaviour
 
     private int maxCards = 48;
 
-    public Transform parentDeck; // Instantiate ÇÒ ´ë»ó(º¸±â ÁÁ°Ô ¹­±â ¿ë)
+    public Transform parentDeck; // Instantiate í•  ëŒ€ìƒ(ë³´ê¸° ì¢‹ê²Œ ë¬¶ê¸° ìš©)
 
-    private List<GameObject> cardPrefabs; // Ä«µåÀÇ ÇÁ¸®ÆÕ È­
-    private List<GameObject> cardDeck; // ÇÊµå¿¡ ³õÀÏ Ä«µå µ¦ ¸®½ºÆ® »ı¼º
+    private List<GameObject> cardPrefabs; // ì¹´ë“œì˜ í”„ë¦¬íŒ¹ í™”
+    private List<GameObject> cardDeck; // í•„ë“œì— ë†“ì¼ ì¹´ë“œ ë± ë¦¬ìŠ¤íŠ¸ ìƒì„±
 
-    public List<GameObject> myHand; // ÇÃ·¹ÀÌ¾î ÀÚ½ÅÀÇ ÆĞ ¸®½ºÆ®
-    public List<GameObject> opponentHand; // »ó´ëÀÇ ÆĞ ¸®½ºÆ®
-    public List<GameObject> field; // ÇÊµå ¸®½ºÆ®
+    public List<GameObject> myHand; // í”Œë ˆì´ì–´ ìì‹ ì˜ íŒ¨ ë¦¬ìŠ¤íŠ¸
+    public List<GameObject> opponentHand; // ìƒëŒ€ì˜ íŒ¨ ë¦¬ìŠ¤íŠ¸
+    public List<GameObject> field; // í•„ë“œ ë¦¬ìŠ¤íŠ¸
 
-    public List<GameObject> myHandScore; // ³» Á¡¼ö ¸®½ºÆ®
-    public List<GameObject> opponentHandScore; // »ó´ë Á¡¼ö ¸®½ºÆ®
+    public List<GameObject> myHandScore; // ë‚´ ì ìˆ˜ ë¦¬ìŠ¤íŠ¸
+    public List<GameObject> opponentHandScore; // ìƒëŒ€ ì ìˆ˜ ë¦¬ìŠ¤íŠ¸
 
-    public List<Vector3> myHandPosition; // ÀÚ½Å ÆĞÀÇ À§Ä¡
-    public List<Vector3> opponentHandPosition; // »ó´ë ÆĞÀÇ À§Ä¡
-    public Vector3[] fieldPosition; // Ä«µå¸¦ ³»·Á³õÀ» ÇÊµå À§Ä¡
+    public List<Vector3> myHandPosition; // ìì‹  íŒ¨ì˜ ìœ„ì¹˜
+    public List<Vector3> opponentHandPosition; // ìƒëŒ€ íŒ¨ì˜ ìœ„ì¹˜
+    public Vector3[] fieldPosition; // ì¹´ë“œë¥¼ ë‚´ë ¤ë†“ì„ í•„ë“œ ìœ„ì¹˜
 
-    public Vector3 scoreKingPosition; // 5°³
-    public Vector3 scoreAnimalPosition; // 9°³ ¸Ûµû
+    public Vector3 scoreKingPosition; // 5ê°œ
+    public Vector3 scoreAnimalPosition; // 9ê°œ ë©ë”°
     public Vector3 scoreFlagPosition;
     public Vector3 scoreSoldierPosition;
 
-    public GameObject ChociePanel;//µÎ°³ Áß ÇÏ³ª °í¸¦ ¶§ ÆÇ³Ú
+    public GameObject ChociePanel;//ë‘ê°œ ì¤‘ í•˜ë‚˜ ê³ ë¥¼ ë•Œ íŒë„¬
 
-    int choiceNum; // °í¸¥ Ä«µå
+    int choiceNum; // ê³ ë¥¸ ì¹´ë“œ
 
     public int emptyCount;
     private void Awake()
     {
         instance = this;
-        cardPrefabs = new List<GameObject>(); // ÇÁ¸®ÆÕ ¸®½ºÆ® ÇÒ´ç
-        cardDeck = new List<GameObject>(); // µ¦ ¸®½ºÆ® ÇÒ´ç
+        cardPrefabs = new List<GameObject>(); // í”„ë¦¬íŒ¹ ë¦¬ìŠ¤íŠ¸ í• ë‹¹
+        cardDeck = new List<GameObject>(); // ë± ë¦¬ìŠ¤íŠ¸ í• ë‹¹
 
-        myHand = new List<GameObject>(); // ÆĞ ¸®½ºÆ® ÇÒ´ç
-        opponentHand = new List<GameObject>(); // ÆĞ ¸®½ºÆ® ÇÒ´ç
-        field = new List<GameObject>(); // ÇÊµå ¸®½ºÆ® ÇÒ´ç
+        myHand = new List<GameObject>(); // íŒ¨ ë¦¬ìŠ¤íŠ¸ í• ë‹¹
+        opponentHand = new List<GameObject>(); // íŒ¨ ë¦¬ìŠ¤íŠ¸ í• ë‹¹
+        field = new List<GameObject>(); // í•„ë“œ ë¦¬ìŠ¤íŠ¸ í• ë‹¹
 
-        myHandScore = new List<GameObject>(); // Á¡¼ö ¸®½ºÆ® ÇÒ´ç
-        opponentHandScore = new List<GameObject>(); // Á¡¼ö ¸®½ºÆ® ÇÒ´ç
-        
+        myHandScore = new List<GameObject>(); // ì ìˆ˜ ë¦¬ìŠ¤íŠ¸ í• ë‹¹
+        opponentHandScore = new List<GameObject>(); // ì ìˆ˜ ë¦¬ìŠ¤íŠ¸ í• ë‹¹
+
     }
 
     private void Start()
     {
-        //°¢ Ä«µåÀÇ À§Ä¡ ¼³Á¤
-        for(int i = 0; i < 8; i++)
+
+        //ê° ì¹´ë“œì˜ ìœ„ì¹˜ ì„¤ì •
+        for (int i = 0; i < 8; i++)
         {
             myHandPosition.Add(new Vector3(i - 4, -4.3f, 0));
             opponentHandPosition.Add(new Vector3(i - 4, 4.3f, 0));
@@ -68,16 +72,16 @@ public class CardManager : MonoBehaviour
 
         emptyCount = fieldPosition.Length - 1;
 
-        scoreKingPosition = new Vector3(-8f, -3f, 0f); // 5°³
-        scoreAnimalPosition = new Vector3(-4f, -3f, 0f); // 9°³ ¸Ûµû
+        scoreKingPosition = new Vector3(-8f, -3f, 0f); // 5ê°œ
+        scoreAnimalPosition = new Vector3(-4f, -3f, 0f); // 9ê°œ ë©ë”°
         scoreFlagPosition = new Vector3(-4f, -1.5f, 0f);
         scoreSoldierPosition = new Vector3(2.5f, -3f, 0f);
 
-        PrefabToCard(); // ÇÁ¸®ÆÕ Æú´õ¿¡ Á¸ÀçÇÏ´Â Ä«µå¸¦ ¸®½ºÆ®¿¡ ´ã¾Æ »ı¼ºÁØºñ¸¦ ÇÑ´Ù.
-        CreateDeck(); // ÇÃ·¹ÀÌ¾î°¡ ÁØºñÇÑ Ä«µå 12Àå, ÀûÀÌ ÁØºñÇÑ Ä«µå 12Àå À» ´õÇØ ÃÑ 48ÀåÀÇ Ä«µå¸¦ µ¦¿¡ ³Ö´Â´Ù.
-        ShuffleDeck(); //µ¦À» ¼¯´Â´Ù
-        DrawCard(myHand, 6); // ³»¼Õ¿¡ 6Àå ¾¿ »Ì´Â´Ù.
-        DrawCard(opponentHand, 6);  // »ó´ë¼Õ¿¡ 6Àå ¾¿ »Ì´Â´Ù.
+        PrefabToCard(); // í”„ë¦¬íŒ¹ í´ë”ì— ì¡´ì¬í•˜ëŠ” ì¹´ë“œë¥¼ ë¦¬ìŠ¤íŠ¸ì— ë‹´ì•„ ìƒì„±ì¤€ë¹„ë¥¼ í•œë‹¤.
+        CreateDeck(); // í”Œë ˆì´ì–´ê°€ ì¤€ë¹„í•œ ì¹´ë“œ 12ì¥, ì ì´ ì¤€ë¹„í•œ ì¹´ë“œ 12ì¥ ì„ ë”í•´ ì´ 48ì¥ì˜ ì¹´ë“œë¥¼ ë±ì— ë„£ëŠ”ë‹¤.
+        ShuffleDeck(); //ë±ì„ ì„ëŠ”ë‹¤
+        DrawCard(myHand, 6); // ë‚´ì†ì— 6ì¥ ì”© ë½‘ëŠ”ë‹¤.
+        DrawCard(opponentHand, 6);  // ìƒëŒ€ì†ì— 6ì¥ ì”© ë½‘ëŠ”ë‹¤.
         DrawCard(field, 6);
     }
 
@@ -85,7 +89,7 @@ public class CardManager : MonoBehaviour
     {
         int a, b;
         GameObject temp;
-        
+
         for (int i = 0; i < (maxCards / 2); i++)
         {
             a = Random.Range(0, maxCards / 2);
@@ -98,7 +102,7 @@ public class CardManager : MonoBehaviour
 
     public void CreateDeck()
     {
-        for (int i = 0; i < maxCards; i++) // È­Åõµ¦ ¼ıÀÚ
+        for (int i = 0; i < maxCards; i++) // í™”íˆ¬ë± ìˆ«ì
         {
             cardDeck.Add(Instantiate(cardPrefabs[i], parentDeck));
         }
@@ -122,46 +126,49 @@ public class CardManager : MonoBehaviour
         for (int i = 0; i < drawAmount; i++)
         {
             cardList.Add(cardDeck[i]);
-            SetCardPosition(cardList, cardList.Count - 1);
+            CardInitialPosition(cardList, cardList.Count - 1);
             cardDeck.RemoveAt(i);
         }
     }
     public void FlipCard()
     {
-        field.Add(cardDeck[0]);// µÚÁı±â
-        field[field.Count - 1].transform.position = fieldPosition[emptyCount]; //¸¶Áö¸· Æ÷Áö¼ÇÀº ºñ¾îÀÖ´Â ÇÊµå Æ÷Áö¼Ç
-        cardDeck.RemoveAt(0);//Ä«µå µ¦ »èÁ¦
+        Debug.Log(cardDeck.Count);
+        if (cardDeck.Count == 0)
+        {
+            return;
+        }
+        field.Add(cardDeck[0]);// ë’¤ì§‘ê¸°
+        field[field.Count - 1].transform.position = fieldPosition[emptyCount]; //ë§ˆì§€ë§‰ í¬ì§€ì…˜ì€ ë¹„ì–´ìˆëŠ” í•„ë“œ í¬ì§€ì…˜
+        cardDeck.RemoveAt(0);//ì¹´ë“œ ë± ì‚­ì œ
     }
 
-    public void SetCardPosition(List<GameObject> cardList, int index)
+    public void CardInitialPosition(List<GameObject> cardList, int index)
     {
-        Debug.Log(index);
-        if(cardList == myHand)
+        if (cardList == myHand)
         {
-            cardDeck[index].transform.position = myHandPosition[index];
+            //cardDeck[index].transform.position = myHandPosition[index];
+            cardDeck[index].transform.DOMove(myHandPosition[index], 1f).SetEase(Ease.OutQuint);
             cardDeck[index].transform.SetParent(GameObject.Find("MyHand").transform);
         }
-        else if(cardList == opponentHand)
+        else if (cardList == opponentHand)
         {
-            cardDeck[index].transform.position = opponentHandPosition[index];
+            //cardDeck[index].transform.position = opponentHandPosition[index];
+            cardDeck[index].transform.DOMove(opponentHandPosition[index], 1f).SetEase(Ease.OutQuint);
             cardDeck[index].transform.SetParent(GameObject.Find("OpponentHand").transform);
 
         }
-        else if(cardList == field)
+        else if (cardList == field)
         {
             cardDeck[index].transform.position = fieldPosition[index];
+            //cardDeck[index].transform.DOMove(fieldPosition[index], 0.7f).SetEase(Ease.OutQuint);
             cardDeck[index].transform.SetParent(GameObject.Find("Field").transform);
         }
     }
 
-    public void SelectCardInHand()
-    {
-
-    }
-    
     public void SetPosition(List<GameObject> list, GameObject obj)
     {
-        obj.transform.position = new Vector3(list[list.Count].transform.position.x + 0.5f, list[list.Count].transform.position.y, list[list.Count].transform.position.z);
+        obj.transform.position =
+            new Vector3(list[list.Count].transform.position.x + 0.5f, list[list.Count].transform.position.y, list[list.Count].transform.position.z);
     }
 
     public void ChoicePanel()
@@ -179,5 +186,4 @@ public class CardManager : MonoBehaviour
     {
         position = new Vector3(position.x + 0.5f, position.y, position.z);
     }
-
 }
