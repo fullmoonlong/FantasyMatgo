@@ -21,22 +21,10 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         isMyTurn = true;
-        Time.timeScale = 0.0f;
     }
 
     private void Update()
-    {
-        if (isMyTurn == true)
-        {
-            drawShow += Time.deltaTime;
-            if (drawShow > 3f)
-            {
-                if (initialTurn == true)
-                {
-
-                }
-            }
-        }
+    { 
         WinDecision();
     }
 
@@ -53,11 +41,5 @@ public class GameManager : MonoBehaviour
                 Debug.Log("Opponent Won! (12'o clock)");
             }
         }
-    }
-
-    public void GameStart()
-    {
-        Time.timeScale = 1.0f;
-        GameObject.Find("GameStart").SetActive(false);
     }
 }

@@ -28,16 +28,21 @@ public class CardManager : MonoBehaviour
     public List<Vector3> opponentHandPosition; // 상대 패의 위치
     public Vector3[] fieldPosition; // 카드를 내려놓을 필드 위치
 
-    public Vector3 scoreKingPosition; // 5개
-    public Vector3 scoreAnimalPosition; // 9개 멍따
-    public Vector3 scoreFlagPosition;
-    public Vector3 scoreSoldierPosition;
+    public Vector3[] scoreKingPosition; // 5개
+    public Vector3[] scoreAnimalPosition; // 9개 멍따
+    public Vector3[] scoreFlagPosition;
+    public Vector3[] scoreSoldierPosition;
 
     public GameObject ChociePanel;//두개 중 하나 고를 때 판넬
 
     int choiceNum; // 고른 카드
 
     public List<int> emptyIndex;
+
+    public int kingEmptyIndex;
+    public int animalEmptyIndex;
+    public int flagEmptyIndex;
+    public int soldierEmptyIndex;
     private void Awake()
     {
         instance = this;
@@ -51,11 +56,16 @@ public class CardManager : MonoBehaviour
         myHandScore = new List<GameObject>(); // 점수 리스트 할당
         opponentHandScore = new List<GameObject>(); // 점수 리스트 할당
         emptyIndex = new List<int>(3) { 6, 7, 8 };
+
+        kingEmptyIndex = 0;
+        animalEmptyIndex = 0;
+        flagEmptyIndex = 0;
+        soldierEmptyIndex = 0;
     }
 
     private void Start()
     {
-
+        scoreSoldierPosition = new Vector3[24];
         //각 카드의 위치 설정
         for (int i = 0; i < 8; i++)
         {
@@ -73,10 +83,44 @@ public class CardManager : MonoBehaviour
                                 new Vector3(-5, 2, 0),
                                 new Vector3(5, -2, 0)};
 
-        scoreKingPosition = new Vector3(-8f, -3f, 0f); // 5개
-        scoreAnimalPosition = new Vector3(-4f, -3f, 0f); // 9개 멍따
-        scoreFlagPosition = new Vector3(-4f, -1.5f, 0f);
-        scoreSoldierPosition = new Vector3(2.5f, -3f, 0f);
+        scoreKingPosition = new[]
+        {
+            new Vector3(-8f, -3f, 0f),
+            new Vector3(-7.7f, -3f, 0f),
+            new Vector3(-7.4f, -3f, 0f),
+            new Vector3(-7.1f, -3f, 0f),
+            new Vector3(-6.8f, -3f, 0f),
+        };
+        scoreAnimalPosition = new[]
+        {
+            new Vector3(-6.5f, -3f, 0f),
+            new Vector3(-6.2f, -3f, 0f),
+            new Vector3(-5.9f, -3f, 0f),
+            new Vector3(-5.6f, -3f, 0f),
+            new Vector3(-5.3f, -3f, 0f),
+            new Vector3(-5.0f, -3f, 0f),
+            new Vector3(-4.7f, -3f, 0f),
+            new Vector3(-4.4f, -3f, 0f),
+            new Vector3(-4.1f, -3f, 0f)
+        };
+        scoreFlagPosition = new[]
+        {
+            new Vector3(-3.8f, -3f, 0f),
+            new Vector3(-3.5f, -3f, 0f),
+            new Vector3(-3.2f, -3f, 0f),
+            new Vector3(-2.9f, -3f, 0f),
+            new Vector3(-2.6f, -3f, 0f),
+            new Vector3(-2.3f, -3f, 0f),
+            new Vector3(-2.0f, -3f, 0f),
+            new Vector3(-1.7f, -3f, 0f),
+            new Vector3(-1.4f, -3f, 0f),
+            new Vector3(-1.1f, -3f, 0f),
+        };
+
+        for (int i = 0; i < 24; i++)
+        {
+            scoreSoldierPosition[i] = new Vector3(-0.8f + (0.3f * i), -3f, 0f);
+        }
 
         PrefabToCard(); // 프리팹 폴더에 존재하는 카드를 리스트에 담아 생성준비를 한다.
         CreateDeck(); // 플레이어가 준비한 카드 12장, 적이 준비한 카드 12장 을 더해 총 48장의 카드를 덱에 넣는다.
@@ -192,5 +236,41 @@ public class CardManager : MonoBehaviour
     {
         emptyIndex = emptyIndex.Distinct().ToList();
         emptyIndex.Sort();
+    }
+    public Vector3 ScoreField(GameObject clickedObject)
+    {
+        Vector3 destination;
+        switch (clickedObject.GetComponent<CardClick>().type)
+        {
+            case "광":
+                destination = CardManager.instance.scoreKingPosition[CardManager.instance.kingEmptyIndex];
+                CardManager.instance.kingEmptyIndex++;
+                return destination;
+            case "새":
+                destination = CardManager.instance.scoreAnimalPosition[CardManager.instance.animalEmptyIndex];
+                CardManager.instance.animalEmptyIndex++;
+                return destination;
+            case "홍단":
+                destination = CardManager.instance.scoreFlagPosition[CardManager.instance.flagEmptyIndex];
+                CardManager.instance.flagEmptyIndex++;
+                return destination;
+            case "청단":
+                destination = CardManager.instance.scoreFlagPosition[CardManager.instance.flagEmptyIndex];
+                CardManager.instance.flagEmptyIndex++;
+                return destination;
+            case "초단":
+                destination = CardManager.instance.scoreFlagPosition[CardManager.instance.flagEmptyIndex];
+                CardManager.instance.flagEmptyIndex++;
+                return destination;
+            default:
+                destination = CardManager.instance.scoreSoldierPosition[CardManager.instance.soldierEmptyIndex];
+                CardManager.instance.soldierEmptyIndex++;
+                return destination;
+        }
+    }
+
+    public void ChoiceTwoCard(int num)
+    {
+
     }
 }
