@@ -52,6 +52,10 @@ public class CardManager : MonoBehaviour
     public int soldierEmptyIndex;
     public int enemySoldierEmptyIndex;
 
+
+    public List<int> sameTagCount;
+    private List<GameObject> storage;
+
     private void Awake()
     {
         instance = this;
@@ -75,6 +79,9 @@ public class CardManager : MonoBehaviour
         enemyFlagEmptyIndex = 0;
         soldierEmptyIndex = 0;
         enemySoldierEmptyIndex = 0;
+
+        sameTagCount = new List<int>(12) { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        storage = new List<GameObject>();
     }
 
     private void Start()
@@ -183,8 +190,100 @@ public class CardManager : MonoBehaviour
         DrawCard(myHand, 6); // 내손에 6장 씩 뽑는다.
         DrawCard(opponentHand, 6);  // 상대손에 6장 씩 뽑는다.
         DrawCard(field, 6);
+        FieldSameCard();
     }
 
+
+    public int GetCardTagNum(GameObject obj)
+    {
+        switch (obj.tag)
+        {
+            case "Rat":
+                return 0;
+
+            case "Cow":
+                return 1;
+
+            case "Tiger":
+                return 2;
+
+            case "Rabbit":
+                return 3;
+
+            case "Dragon":
+                return 4;
+
+            case "Snake":
+                return 5;
+
+            case "Horse":
+                return 6;
+
+            case "Sheep":
+                return 7;
+
+            case "Monkey":
+                return 8;
+
+            case "Cock":
+                return 9;
+
+            case "Dog":
+                return 10;
+
+            case "Pig":
+                return 11;
+
+            default:
+                return 13;
+
+        }
+    }
+
+    void FieldSameCard()
+    {
+        print("fieldCount : " + field.Count);
+        for (int j = 0; j < 12; j++) // 태그 12개 다 돌리기
+        {
+            for (int i = 0; i < field.Count; i++) // 필드 돌리기
+            {
+                if (j == GetCardTagNum(field[i])) // 필드 i의 태그가 j와 같다면
+                {
+                    sameTagCount[j]++; // 태그 값 더하기
+                    if (sameTagCount[j] == 1) // 필드 태그가 하나밖에 없다면
+                    {
+                        storage.Add(field[i]);
+                    }
+                }
+
+            }
+            print("Tag : " + j + " " + sameTagCount[j]);
+        }
+
+        int count = 0;
+
+        for (int i = 0; i < storage.Count; i++)
+        {
+            for (int j = 0; j < field.Count; j++)
+            {
+                if (storage[i].CompareTag(field[j].tag) && storage[i].transform.position != field[j].transform.position)// 태그는 같고 포지션은 다를 때
+                {
+                    count++;
+
+                    //같은 카드 다음 포지션은 같은 태그의 갯수 * 0.5 만큼 x축을 더해준다.
+                    field[j].transform.position = new Vector3(storage[i].transform.position.x + 0.5f * count, storage[i].transform.position.y, storage[i].transform.position.z - 0.1f * count);
+
+                    //만약 카드 카운트가 0 이상이면 -> 같은 카드의 자리가 비기 때문에
+                    if (count > 0)
+                    {
+                        emptyIndex.Add(j);
+                    }
+                }
+                //엠티 카운트가 없으면 어저지,,
+            }
+            count = 0;
+        }
+    }
     public void ShuffleDeck()
     {
         int a, b;

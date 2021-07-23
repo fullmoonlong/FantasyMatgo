@@ -9,9 +9,7 @@ public class CardClick : MonoBehaviour
 {
     public static int score = 0;
     public string type = "";
-    List<int> sameTagCount;
-    private List<GameObject> storage;
-
+    
     public GameObject ChoicePanel;
 
     GameObject hittedCard;
@@ -59,60 +57,18 @@ public class CardClick : MonoBehaviour
                 type = "피";
                 break;
         }
-        sameTagCount = new List<int>(12) { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-        storage = new List<GameObject>();
+        
         myCardCount = 0;
         BombObj = new GameObject[3];
-        FieldSameCard();
+        
     }
 
-    public int GetCardTagNum(GameObject obj)
-    {
-        switch (obj.tag)
-        {
-            case "Rat":
-                return 0;
-
-            case "Cow":
-                return 1;
-
-            case "Tiger":
-                return 2;
-
-            case "Rabbit":
-                return 3;
-
-            case "Dragon":
-                return 4;
-
-            case "Snake":
-                return 5;
-
-            case "Horse":
-                return 6;
-
-            case "Sheep":
-                return 7;
-
-            case "Monkey":
-                return 8;
-
-            case "Cock":
-                return 9;
-
-            case "Dog":
-                return 10;
-
-            case "Pig":
-                return 11;
-
-            default:
-                return 13;
-
-        }
-    }
+    
     public void OnMouseUp()
     {
+        print(CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(gameObject)]);
+
+        print(CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(gameObject)]);
         if (GameManager.instance.isMyTurn == true)//만약 플레이어 턴이면
         {
             WhoTurn(CardManager.instance.myHand, CardManager.instance.myHandScore, false);
@@ -124,68 +80,21 @@ public class CardClick : MonoBehaviour
         }
     }
 
-    void FieldSameCard()
-    {
-
-        
-        for (int j = 0; j < 12; j++) // 태그 12개 다 돌리기
-        {
-            for (int i = 0; i < CardManager.instance.field.Count; i++) // 필드 돌리기
-            {
-                if (j == GetCardTagNum(CardManager.instance.field[i])) // 필드 i의 태그가 j와 같다면
-                {
-                    sameTagCount[j]++; // 태그 값 더하기
-                    if (sameTagCount[j] == 1) // 필드 태그가 하나밖에 없다면
-                    {
-                        storage.Add(CardManager.instance.field[i]);
-                    }
-                }
-
-            }
-        }
-
-        int count = 0;
-
-        for (int i = 0; i < storage.Count; i++)
-        {
-            for (int j = 0; j < CardManager.instance.field.Count; j++)
-            {
-                if (storage[i].CompareTag(CardManager.instance.field[j].tag) && storage[i].transform.position != CardManager.instance.field[j].transform.position)// 태그는 같고 포지션은 다를 때
-                {
-                    count++;
-                    print(count);
-
-                    //원래 친구 포지션
-                    print(CardManager.instance.field[j].transform.position);
-
-                    //같은 카드 다음 포지션은 같은 태그의 갯수 * 0.5 만큼 x축을 더해준다.
-                    CardManager.instance.field[j].transform.position = new Vector3(storage[i].transform.position.x + 0.5f * count, storage[i].transform.position.y, storage[i].transform.position.z - 0.1f * count);
-
-                    //만약 카드 카운트가 0 이상이면 -> 같은 카드의 자리가 비기 때문에
-                    if (count > 0)
-                    {
-                        CardManager.instance.emptyIndex.Add(j);
-                        print(CardManager.instance.emptyIndex);
-                    }
-                }
-                //엠티 카운트가 없으면 어저지,,
-            }
-            count = 0;
-        }
-    }
+    
 
     void WhoTurn(List<GameObject> hand, List<GameObject> handscore, bool isPlayer)
     {
+        //print(CardManager.instance.sameTagCount[GetCardTagNum(gameObject)]);
         if (hand.Contains(gameObject)) // 내손에 이 게임오브젝트가 있을 때
         {
             print("내 손에 있음");
 
-            sameTagCount[GetCardTagNum(gameObject)]++; // 내가 낸 카드 ++ 해줌
-            myCardCount = sameTagCount[GetCardTagNum(gameObject)];
+            CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(gameObject)]++; // 내가 낸 카드 ++ 해줌
+            myCardCount = CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(gameObject)];
             CardManager.instance.field.Add(gameObject); //내손에 있는 카드 필드에 넣기
             hand.Remove(gameObject);//내손에서 지우기
 
-            print(myCardCount);
+            //print(myCardCount);
             switch (myCardCount) // 2, 3, 4개 맞췄을 시 다름
             {
                 //카드가 안맞았을 때
@@ -199,7 +108,7 @@ public class CardClick : MonoBehaviour
 
                         //카드 플립함
                         CardManager.instance.FlipCard();
-                        sameTagCount[GetCardTagNum(CardManager.instance.field[CardManager.instance.field.Count - 1])]++;
+                        CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(CardManager.instance.field[CardManager.instance.field.Count - 1])]++;
 
                         if (CardManager.instance.field[CardManager.instance.field.Count - 1].CompareTag(gameObject.tag)) // 뒤집은 카드랑 내가 냈던 카드랑 같으면
                         {
@@ -212,7 +121,7 @@ public class CardClick : MonoBehaviour
 
                         else
                         {
-                            switch (sameTagCount[GetCardTagNum(CardManager.instance.field[CardManager.instance.field.Count - 1])]) // 뒤집은 카드의 같은 태그 개수 별
+                            switch (CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(CardManager.instance.field[CardManager.instance.field.Count - 1])]) // 뒤집은 카드의 같은 태그 개수 별
                             {
                                 case 1:
                                     {
@@ -230,8 +139,8 @@ public class CardClick : MonoBehaviour
                                         /*다른거 두개 맞았을 때 -> 무조건 같은 태그 오브젝트 1개 존재*/
                                         hittedCard = GetHitCard(CardManager.instance.field[CardManager.instance.field.Count - 1]); // 뒤집은 카드와 맞은 카드 찾음
 
-                                        sameTagCount[GetCardTagNum(hittedCard)]--;
-                                        sameTagCount[GetCardTagNum(CardManager.instance.field[CardManager.instance.field.Count - 1])]--;
+                                        CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(hittedCard)]--;
+                                        CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(CardManager.instance.field[CardManager.instance.field.Count - 1])]--;
 
                                         EmptyFieldPosition(hittedCard); // 친 카드 필드포지션 비운거 체크
                                         print("피 이동");
@@ -284,8 +193,9 @@ public class CardClick : MonoBehaviour
                         hittedCard = GetHitCard(gameObject); // 자리만 옮기기
 
                         CardManager.instance.FlipCard();
-                        sameTagCount[GetCardTagNum(CardManager.instance.field[CardManager.instance.field.Count - 1])]++;
-
+                        print("flip num : " + CardManager.instance.GetCardTagNum(CardManager.instance.field[CardManager.instance.field.Count - 1]));
+                        CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(CardManager.instance.field[CardManager.instance.field.Count - 1])]++;
+                        print("flip : " + CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(CardManager.instance.field[CardManager.instance.field.Count - 1])]);
                         if (CardManager.instance.field[CardManager.instance.field.Count - 1].CompareTag(gameObject.tag)) // 같은거 맞음
                         {
                             //뻑
@@ -297,15 +207,16 @@ public class CardClick : MonoBehaviour
 
                         else
                         {
-                            switch (sameTagCount[GetCardTagNum(CardManager.instance.field[CardManager.instance.field.Count - 1])]) // 뒤집은 카드의 같은 태그 개수 별
+                            print(CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(gameObject)]);
+                            switch (CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(CardManager.instance.field[CardManager.instance.field.Count - 1])]) // 뒤집은 카드의 같은 태그 개수 별
                             {
                                 case 1:
                                     {
                                         print("내가 낸 카드만 맞음");
                                         //게임 오브젝트가 가지고 있는 모든 같은 태그 카드 들고가기
 
-                                        sameTagCount[GetCardTagNum(hittedCard)]--;
-                                        sameTagCount[GetCardTagNum(gameObject)]--;
+                                        CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(hittedCard)]--;
+                                        CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(gameObject)]--;
 
                                         EmptyFieldPosition(hittedCard);
 
@@ -330,8 +241,8 @@ public class CardClick : MonoBehaviour
                                         print("내가 낸 카드, 뒤집은 카드도 맞음");
                                         //게임 오브젝트가 가지고 있는 모든 같은 태그 카드 들고가기
                                         //카드 뒤집는게 끝났다면
-                                        sameTagCount[GetCardTagNum(hittedCard)]--;
-                                        sameTagCount[GetCardTagNum(gameObject)]--;
+                                        CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(hittedCard)]--;
+                                        CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(gameObject)]--;
 
 
 
@@ -353,8 +264,8 @@ public class CardClick : MonoBehaviour
 
                                         EmptyFieldPosition(hittedCard);
 
-                                        sameTagCount[GetCardTagNum(hittedCard)]--;
-                                        sameTagCount[GetCardTagNum(CardManager.instance.field[CardManager.instance.field.Count - 1])]--;
+                                        CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(hittedCard)]--;
+                                        CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(CardManager.instance.field[CardManager.instance.field.Count - 1])]--;
 
 
                                         print("피 이동");
@@ -389,7 +300,7 @@ public class CardClick : MonoBehaviour
                                 case 4:
                                     {
                                         print("내가 낸 카드, 뒤집은 카드 폭탄");
-                                        sameTagCount[GetCardTagNum(hittedCard)]--;
+                                        CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(hittedCard)]--;
 
                                         EmptyFieldPosition(hittedCard);
 
@@ -415,7 +326,7 @@ public class CardClick : MonoBehaviour
                 case 3:
                     {
                         CardManager.instance.FlipCard();
-                        sameTagCount[GetCardTagNum(CardManager.instance.field[CardManager.instance.field.Count - 1])]++;
+                        CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(CardManager.instance.field[CardManager.instance.field.Count - 1])]++;
 
                         if (CardManager.instance.field[CardManager.instance.field.Count - 1].CompareTag(gameObject.tag)) // 같은거 맞음
                         {
@@ -434,7 +345,7 @@ public class CardClick : MonoBehaviour
                         else
                         {
                             //2개중 한개 고르기 // 뒤집은 카드의 갯수가 1개이면 안맞은거
-                            switch (sameTagCount[GetCardTagNum(CardManager.instance.field[CardManager.instance.field.Count - 1])]) // 뒤집은 카드의 같은 태그 개수 별
+                            switch (CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(CardManager.instance.field[CardManager.instance.field.Count - 1])]) // 뒤집은 카드의 같은 태그 개수 별
                             {
                                 case 1:
                                     {
@@ -486,11 +397,11 @@ public class CardClick : MonoBehaviour
                         //폭탄
                         print("폭탄");
                         CardManager.instance.FlipCard();
-                        sameTagCount[GetCardTagNum(CardManager.instance.field[CardManager.instance.field.Count - 1])]++;
+                        CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(CardManager.instance.field[CardManager.instance.field.Count - 1])]++;
 
                         if (!(CardManager.instance.field[CardManager.instance.field.Count - 1].CompareTag(gameObject.tag))) // 다른거 맞음
                         {
-                            switch (sameTagCount[GetCardTagNum(CardManager.instance.field[CardManager.instance.field.Count - 1])]) // 뒤집은 카드의 같은 태그 개수 별
+                            switch (CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(CardManager.instance.field[CardManager.instance.field.Count - 1])]) // 뒤집은 카드의 같은 태그 개수 별
                             {
                                 case 1:
                                     {
@@ -681,8 +592,8 @@ public class CardClick : MonoBehaviour
 
     void Chu(List<GameObject> score)
     {
-        sameTagCount[GetCardTagNum(gameObject)]--; // 내가 낸 카드
-        sameTagCount[GetCardTagNum(CardManager.instance.field[CardManager.instance.field.Count - 1])]--; //뒤집은 카드랑
+        CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(gameObject)]--; // 내가 낸 카드
+        CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(CardManager.instance.field[CardManager.instance.field.Count - 1])]--; //뒤집은 카드랑
 
         EmptyFieldPosition(gameObject);
         CardManager.instance.field[CardManager.instance.field.Count - 1].transform.position = new Vector3(gameObject.transform.position.x + 0.5f, gameObject.transform.position.y, gameObject.transform.position.z - 0.1f); //맞춘 오브젝트 옆으로 이동
@@ -726,7 +637,7 @@ public class CardClick : MonoBehaviour
 
             //필드에서 삭제
             CardManager.instance.field.Remove(bombObj[i]);//필드에서 제거
-            sameTagCount[GetCardTagNum(bombObj[i])]--;//필드에서 제거
+            CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(bombObj[i])]--;//필드에서 제거
         }
 
 
@@ -738,14 +649,19 @@ public class CardClick : MonoBehaviour
 
         //필드에서 삭제
         CardManager.instance.field.Remove(card);//필드에서 제거
-        sameTagCount[GetCardTagNum(card)]--;//필드에서 제거
+        CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(card)]--;//필드에서 제거
 
     }
 
     void EmptyFieldPosition(GameObject obj)
     {
         int index = Array.IndexOf(CardManager.instance.fieldPosition, obj.transform.position);
-        CardManager.instance.emptyIndex.Add(index);
+
+        if(!CardManager.instance.emptyIndex.Contains(index)) // 원래 가지고 있는 값이 아니면
+        {
+            print("Empty index : " + index);
+            CardManager.instance.emptyIndex.Add(index);
+        }
     }
 
     GameObject OrignFieldPosition(GameObject[] obj)
@@ -755,7 +671,7 @@ public class CardClick : MonoBehaviour
         {
             for(int j=0;j<CardManager.instance.fieldPosition.Length;i++)
             {
-                if(obj[i].transform.position.x == CardManager.instance.fieldPosition[j].x)
+                if(obj[i].transform.position == CardManager.instance.fieldPosition[j])
                 {
                     index = i;
                 }
