@@ -191,6 +191,7 @@ public class CardManager : MonoBehaviour
         DrawCard(opponentHand, 6);  // 상대손에 6장 씩 뽑는다.
         DrawCard(field, 6);
         FieldSameCard();
+
     }
 
 
@@ -466,5 +467,20 @@ public class CardManager : MonoBehaviour
 
     }
 
-    
+    public void ArrangeHand(List<GameObject> hand)
+    {
+        print(hand.Count);
+        for (int i = 0; i < hand.Count; i++)
+        {
+            if(hand == myHand)
+            {
+                hand[i].transform.position = myHandPosition[i];
+            }
+
+            if(hand == opponentHand)
+            {
+                hand[i].transform.position = opponentHandPosition[i];
+            }
+        }
+    }
 }
