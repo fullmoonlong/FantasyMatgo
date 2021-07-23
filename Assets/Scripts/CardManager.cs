@@ -295,64 +295,65 @@ public class CardManager : MonoBehaviour
     public Vector3 ScoreField(GameObject clickedObject, List<GameObject> list)
     {
         Vector3 destination = new Vector3 ( 0, 0, 0 );
-        if(list == CardManager.instance.myHandScore)
+        if(list == myHandScore)
         {
             switch (clickedObject.GetComponent<CardClick>().type)
             {
                 case "광":
-                    destination = CardManager.instance.scoreKingPosition[CardManager.instance.kingEmptyIndex];
-                    CardManager.instance.kingEmptyIndex++;
+                    destination = scoreKingPosition[kingEmptyIndex];
+                    kingEmptyIndex++;
                     return destination;
                 case "새":
-                    destination = CardManager.instance.scoreAnimalPosition[CardManager.instance.animalEmptyIndex];
-                    CardManager.instance.animalEmptyIndex++;
+                    destination = scoreAnimalPosition[animalEmptyIndex];
+                    animalEmptyIndex++;
                     return destination;
                 case "홍단":
-                    destination = CardManager.instance.scoreFlagPosition[CardManager.instance.flagEmptyIndex];
-                    CardManager.instance.flagEmptyIndex++;
+                    destination = scoreFlagPosition[flagEmptyIndex];
+                    flagEmptyIndex++;
                     return destination;
                 case "청단":
-                    destination = CardManager.instance.scoreFlagPosition[CardManager.instance.flagEmptyIndex];
-                    CardManager.instance.flagEmptyIndex++;
+                    destination = scoreFlagPosition[flagEmptyIndex];
+                    flagEmptyIndex++;
                     return destination;
                 case "초단":
-                    destination = CardManager.instance.scoreFlagPosition[CardManager.instance.flagEmptyIndex];
-                    CardManager.instance.flagEmptyIndex++;
+                    destination = scoreFlagPosition[flagEmptyIndex];
+                    flagEmptyIndex++;
                     return destination;
                 default:
-                    destination = CardManager.instance.scoreSoldierPosition[CardManager.instance.soldierEmptyIndex];
-                    CardManager.instance.soldierEmptyIndex++;
+                    destination = scoreSoldierPosition[soldierEmptyIndex];
+                    soldierEmptyIndex++;
                     return destination;
             }
         }
 
-        if (list == CardManager.instance.opponentHandScore)
+        if (list == opponentHandScore)
         {
+            print("상대손");
             switch (clickedObject.GetComponent<CardClick>().type)
             {
                 case "광":
-                    destination = CardManager.instance.scoreKingPosition[CardManager.instance.kingEmptyIndex];
-                    CardManager.instance.kingEmptyIndex++;
+                    destination = scoreEnemyKingPosition[enemyKingEmptyIndex];
+                    enemyKingEmptyIndex++;
                     return destination;
                 case "새":
-                    destination = CardManager.instance.scoreAnimalPosition[CardManager.instance.animalEmptyIndex];
-                    CardManager.instance.animalEmptyIndex++;
+                    destination = scoreEnemyAnimalPosition[enemyAnimalEmptyIndex];
+                    enemyAnimalEmptyIndex++;
                     return destination;
                 case "홍단":
-                    destination = CardManager.instance.scoreFlagPosition[CardManager.instance.flagEmptyIndex];
-                    CardManager.instance.flagEmptyIndex++;
+                    destination = scoreEnemyFlagPosition[enemyFlagEmptyIndex];
+                    enemyFlagEmptyIndex++;
                     return destination;
                 case "청단":
-                    destination = CardManager.instance.scoreFlagPosition[CardManager.instance.flagEmptyIndex];
-                    CardManager.instance.flagEmptyIndex++;
+                    destination = scoreEnemyFlagPosition[enemyFlagEmptyIndex];
+                    enemyFlagEmptyIndex++;
                     return destination;
                 case "초단":
-                    destination = CardManager.instance.scoreFlagPosition[CardManager.instance.flagEmptyIndex];
-                    CardManager.instance.flagEmptyIndex++;
+                    destination = scoreEnemyFlagPosition[enemyFlagEmptyIndex];
+                    enemyFlagEmptyIndex++;
                     return destination;
                 default:
-                    destination = CardManager.instance.scoreSoldierPosition[CardManager.instance.soldierEmptyIndex];
-                    CardManager.instance.soldierEmptyIndex++;
+                    destination = scoreEnemySoldierPosition[enemySoldierEmptyIndex];
+                    enemySoldierEmptyIndex++;
                     return destination;
             }
         }
