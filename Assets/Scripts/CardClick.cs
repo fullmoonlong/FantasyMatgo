@@ -13,6 +13,13 @@ public class CardClick : MonoBehaviour
     GameObject hittedCard;
     GameObject[] BombObj;
     int myCardCount;
+
+    private int gwangCount;
+    private int redFlagCount;
+    private int blueFlagCount;
+    private int normalFlagCount;
+    private int animalCount;
+    private int peeCount;
     //private bool initialTurn = true;
 
     private void Start()
@@ -62,7 +69,52 @@ public class CardClick : MonoBehaviour
         BombObj = new GameObject[3];
     }
 
-    
+    private void Update()
+    {
+        if(gwangCount >= 3)
+        {
+
+        }
+    }
+
+    public void CalculateScore(List<GameObject> scoreList)
+    {
+        foreach (var item in scoreList)
+        {
+            switch (item.GetComponent<CardClick>().type)
+            {
+                case "광":
+                    gwangCount++;
+                    break;
+                case "홍단":
+                    redFlagCount++;
+                    break;
+                case "청단":
+                    blueFlagCount++;
+                    break;
+                case "초단":
+                    normalFlagCount++;
+                    break;
+                case "새":
+                    animalCount++;
+                    break;
+                case "피":
+                    peeCount++;
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    public void CardCountToScore()
+    {
+        if(gwangCount >= 3)
+        {
+
+        }
+    }
+
     public void OnMouseUp()
     {
         //int count = 0;
@@ -83,11 +135,13 @@ public class CardClick : MonoBehaviour
             //    //CardManager.instance.ArrangeHand(CardManager.instance.opponentHand);
             //    initialTurn = false;
             //}
+            CalculateScore(CardManager.instance.myHandScore);
         }
 
         else//만약 상대 턴이면
         {
             WhoTurn(CardManager.instance.opponentHand, CardManager.instance.opponentHandScore, true);
+            CalculateScore(CardManager.instance.opponentHandScore);
         }
     }
 
@@ -217,7 +271,10 @@ public class CardClick : MonoBehaviour
                         {
                             //뻑
                             //CardManager.instance.field[CardManager.instance.field.Count - 1].transform.position = new Vector3(gameObject.transform.position.x + 0.5f, gameObject.transform.position.y, gameObject.transform.position.z - 0.1f);//뒤집은 카드는 내가 냈던 카드 옆으로 위치 이동
-                            CardManager.instance.field[CardManager.instance.field.Count - 1].transform.DOMove(new Vector3(gameObject.transform.position.x + 0.5f, gameObject.transform.position.y, gameObject.transform.position.z - 0.1f),0.5f).SetEase(Ease.OutQuint);//뒤집은 카드는 내가 냈던 카드 옆으로 위치 이동
+                            CardManager.instance.field[CardManager.instance.field.Count - 1].transform.DOMove
+                                (new Vector3(gameObject.transform.position.x + 0.5f, 
+                                gameObject.transform.position.y, 
+                                gameObject.transform.position.z - 0.1f), 0.5f).SetEase(Ease.OutQuint).onComplete();//뒤집은 카드는 내가 냈던 카드 옆으로 위치 이동
                             print("뻑");
 
                             GameManager.instance.isMyTurn = isPlayer;
@@ -498,44 +555,6 @@ public class CardClick : MonoBehaviour
         {
             print("실행안됨");
         }
-    }
-    public int ScoreLight()
-    {
-        //광 4장 왕비 1장 15점
-
-        //광 4장 4
-        //광 3장 왕비 1장 4
-        //광 3장 3
-        //광 2장 왕비 1장 2
-
-        //아니면 리턴 0
-        return 0;
-    }
-    public int ScoreAnimal()
-    {
-        //새동물 3종 5점
-        //동물카드 7장 3
-        //동물카드 6장 2
-        //동물카드 5장 1
-        //7장 이후 하나당 1점씩
-        return 0;
-    }
-    public int ScoreFlag()
-    {
-        //홍단 3개 3점
-        //청단 3개
-        //초단 3개
-        //깃발카드 6장 2점
-        //깃발카드 5장 1점
-        //7장 이후 하나당 1점씩
-        return 0;
-    }
-
-    public int ScoreArmy()
-    {
-        //병사카드 10장 1점
-        //10장이후 하나당 1점
-        return 0;
     }
 
     GameObject GetHitCard(GameObject obj)

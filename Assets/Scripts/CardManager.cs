@@ -69,7 +69,7 @@ public class CardManager : MonoBehaviour
         myHandScore = new List<GameObject>(); // 점수 리스트 할당
         opponentHandScore = new List<GameObject>(); // 점수 리스트 할당
         
-        emptyIndex = new List<int>(3) { 6, 7, 8 };
+        emptyIndex = new List<int>(6) { 6, 7, 8, 9, 10, 11 };
         
         kingEmptyIndex = 0;
         enemyKingEmptyIndex = 0;
@@ -104,7 +104,11 @@ public class CardManager : MonoBehaviour
                                 new Vector3(2,-2,0),
                                 new Vector3(5, 2, 0),
                                 new Vector3(-5, 2, 0),
-                                new Vector3(5, -2, 0)};
+                                new Vector3(5, -2, 0),
+                                new Vector3(7, 2, 0),
+                                new Vector3(7, -2, 0),
+                                new Vector3(-7, 2, 0)
+        };
         //
         scoreKingPosition = new[]
         {
