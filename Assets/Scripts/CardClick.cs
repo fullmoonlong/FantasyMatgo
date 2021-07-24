@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using System.Linq;
+using DG.Tweening;
 
 public class CardClick : MonoBehaviour
 {
@@ -15,7 +13,7 @@ public class CardClick : MonoBehaviour
     GameObject hittedCard;
     GameObject[] BombObj;
     int myCardCount;
-    private bool initialTurn = true;
+    //private bool initialTurn = true;
 
     private void Start()
     {
@@ -218,7 +216,8 @@ public class CardClick : MonoBehaviour
                         if (CardManager.instance.field[CardManager.instance.field.Count - 1].CompareTag(gameObject.tag)) // 같은거 맞음
                         {
                             //뻑
-                            CardManager.instance.field[CardManager.instance.field.Count - 1].transform.position = new Vector3(gameObject.transform.position.x + 0.5f, gameObject.transform.position.y, gameObject.transform.position.z - 0.1f);//뒤집은 카드는 내가 냈던 카드 옆으로 위치 이동
+                            //CardManager.instance.field[CardManager.instance.field.Count - 1].transform.position = new Vector3(gameObject.transform.position.x + 0.5f, gameObject.transform.position.y, gameObject.transform.position.z - 0.1f);//뒤집은 카드는 내가 냈던 카드 옆으로 위치 이동
+                            CardManager.instance.field[CardManager.instance.field.Count - 1].transform.DOMove(new Vector3(gameObject.transform.position.x + 0.5f, gameObject.transform.position.y, gameObject.transform.position.z - 0.1f),0.5f).SetEase(Ease.OutQuint);//뒤집은 카드는 내가 냈던 카드 옆으로 위치 이동
                             print("뻑");
 
                             GameManager.instance.isMyTurn = isPlayer;
@@ -550,7 +549,8 @@ public class CardClick : MonoBehaviour
             {
                 index = i;
                 print("index : " + index);
-                obj.transform.position = new Vector3(CardManager.instance.field[i].transform.position.x + 0.5f, CardManager.instance.field[i].transform.position.y, CardManager.instance.field[i].transform.position.z - 0.1f);
+                //obj.transform.position = new Vector3(CardManager.instance.field[i].transform.position.x + 0.5f, CardManager.instance.field[i].transform.position.y, CardManager.instance.field[i].transform.position.z - 0.1f);
+                obj.transform.DOMove(new Vector3(CardManager.instance.field[i].transform.position.x + 0.5f, CardManager.instance.field[i].transform.position.y, CardManager.instance.field[i].transform.position.z - 0.1f), 0.5f).SetEase(Ease.OutQuint);
             }
         }
         return CardManager.instance.field[index];
@@ -575,7 +575,8 @@ public class CardClick : MonoBehaviour
         }
 
         //같은 카드 다음 포지션은 같은 태그의 갯수 * 0.5 만큼 x축을 더해준다.
-        CardManager.instance.field[CardManager.instance.field.Count - 1].transform.position = new Vector3(Math.Max(sameTagObj[0].transform.position.x, sameTagObj[1].transform.position.x) + 0.5f, sameTagObj[0].transform.position.y, sameTagObj[0].transform.position.z - 0.1f * 3);
+        //CardManager.instance.field[CardManager.instance.field.Count - 1].transform.position = new Vector3(Math.Max(sameTagObj[0].transform.position.x, sameTagObj[1].transform.position.x) + 0.5f, sameTagObj[0].transform.position.y, sameTagObj[0].transform.position.z - 0.1f * 3);
+        CardManager.instance.field[CardManager.instance.field.Count - 1].transform.DOMove(new Vector3(Math.Max(sameTagObj[0].transform.position.x, sameTagObj[1].transform.position.x) + 0.5f, sameTagObj[0].transform.position.y, sameTagObj[0].transform.position.z - 0.1f * 3), 0.5f).SetEase(Ease.OutQuint);
 
         //뒤집은 카드랑 같은 태그 2개중 한개 고르기
         print("둘중 하나 고르기");
@@ -604,8 +605,10 @@ public class CardClick : MonoBehaviour
 
         }
 
-        obj.transform.position = new Vector3(Math.Max(Math.Max(BombObj[0].transform.position.x, BombObj[1].transform.position.x), BombObj[2].transform.position.x) + 0.5f,
-                                                                                    BombObj[0].transform.position.y, BombObj[0].transform.position.z - 0.1f * 3);// 필드에 먼저 놔둠
+        //obj.transform.position = new Vector3(Math.Max(Math.Max(BombObj[0].transform.position.x, BombObj[1].transform.position.x), BombObj[2].transform.position.x) + 0.5f,
+        //                                                                            BombObj[0].transform.position.y, BombObj[0].transform.position.z - 0.1f * 3);// 필드에 먼저 놔둠
+        obj.transform.DOMove(new Vector3(Math.Max(Math.Max(BombObj[0].transform.position.x, BombObj[1].transform.position.x), BombObj[2].transform.position.x) + 0.5f,
+                                                                                    BombObj[0].transform.position.y, BombObj[0].transform.position.z - 0.1f * 3), 0.5f).SetEase(Ease.OutQuint);// 필드에 먼저 놔둠
 
         return BombObj;
     }
@@ -616,12 +619,15 @@ public class CardClick : MonoBehaviour
         CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(CardManager.instance.field[CardManager.instance.field.Count - 1])]--; //뒤집은 카드랑
 
         EmptyFieldPosition(gameObject);
-        CardManager.instance.field[CardManager.instance.field.Count - 1].transform.position = new Vector3(gameObject.transform.position.x + 0.5f, gameObject.transform.position.y, gameObject.transform.position.z - 0.1f); //맞춘 오브젝트 옆으로 이동
+        //CardManager.instance.field[CardManager.instance.field.Count - 1].transform.position = new Vector3(gameObject.transform.position.x + 0.5f, gameObject.transform.position.y, gameObject.transform.position.z - 0.1f); //맞춘 오브젝트 옆으로 이동
+        CardManager.instance.field[CardManager.instance.field.Count - 1].transform.DOMove(new Vector3(gameObject.transform.position.x + 0.5f, gameObject.transform.position.y, gameObject.transform.position.z - 0.1f), 0.5f).SetEase(Ease.OutQuint); //맞춘 오브젝트 옆으로 이동
 
 
         //점수판으로 이동
-        CardManager.instance.field[CardManager.instance.field.Count - 1].transform.position = CardManager.instance.ScoreField(CardManager.instance.field[CardManager.instance.field.Count - 1], score); // 점수판위치로 이동
-        gameObject.transform.position = CardManager.instance.ScoreField(gameObject, score); // 점수판위치로 이동
+        //CardManager.instance.field[CardManager.instance.field.Count - 1].transform.position = CardManager.instance.ScoreField(CardManager.instance.field[CardManager.instance.field.Count - 1], score); // 점수판위치로 이동
+        CardManager.instance.field[CardManager.instance.field.Count - 1].transform.DOMove(CardManager.instance.ScoreField(CardManager.instance.field[CardManager.instance.field.Count - 1], score), 0.5f).SetEase(Ease.OutQuint); // 점수판위치로 이동
+        //gameObject.transform.position = CardManager.instance.ScoreField(gameObject, score); // 점수판위치로 이동
+        gameObject.transform.DOMove(CardManager.instance.ScoreField(gameObject, score), 0.5f).SetEase(Ease.OutQuint); // 점수판위치로 이동
 
         //얻은 카드
         score.Add(CardManager.instance.field[CardManager.instance.field.Count - 1]);
@@ -634,13 +640,15 @@ public class CardClick : MonoBehaviour
     void NoMatchField(GameObject obj)
     {
         CardManager.instance.EmptyIndexSort();//빈곳 인덱스 오름차순 정렬
-        obj.transform.position = CardManager.instance.fieldPosition[CardManager.instance.emptyIndex[0]]; // 마지막 필드포지션은 빈곳에 넣음
+        //obj.transform.position = CardManager.instance.fieldPosition[CardManager.instance.emptyIndex[0]]; // 마지막 필드포지션은 빈곳에 넣음
+        obj.transform.DOMove(CardManager.instance.fieldPosition[CardManager.instance.emptyIndex[0]], 0.5f).SetEase(Ease.OutQuint); // 마지막 필드포지션은 빈곳에 넣음
         CardManager.instance.emptyIndex.RemoveAt(0);
     }
 
     void MoveFieldScoreField(GameObject moveObj, List<GameObject> score)
     {
-        moveObj.transform.position = CardManager.instance.ScoreField(moveObj, score); // 점수판 위치 이동
+        //moveObj.transform.position = CardManager.instance.ScoreField(moveObj, score); // 점수판 위치 이동
+        moveObj.transform.DOMove(CardManager.instance.ScoreField(moveObj, score), 0.5f).SetEase(Ease.OutQuint); // 점수판 위치 이동
 
         score.Add(moveObj); // 점수에 더해주기 
         CardManager.instance.field.Remove(moveObj); // 필드에서 지우기
@@ -650,7 +658,8 @@ public class CardClick : MonoBehaviour
     {
         for (int i = 0; i < bombObj.Length; i++)
         {
-            bombObj[i].transform.position = CardManager.instance.ScoreField(card, score); // 점수 필드로 위치 옮김
+            //bombObj[i].transform.position = CardManager.instance.ScoreField(card, score); // 점수 필드로 위치 옮김
+            bombObj[i].transform.DOMove(CardManager.instance.ScoreField(card, score), 0.5f).SetEase(Ease.OutQuint); // 점수 필드로 위치 옮김
 
             //내 점수리스트 add 
             score.Add(bombObj[i]);//내 점수필드 리스트에 추가
@@ -662,7 +671,8 @@ public class CardClick : MonoBehaviour
 
 
 
-        card.transform.position = CardManager.instance.ScoreField(card, score);
+        //card.transform.position = CardManager.instance.ScoreField(card, score);
+        card.transform.DOMove(CardManager.instance.ScoreField(card, score), 0.5f).SetEase(Ease.OutQuint);
 
         //내 점수리스트 add 
         score.Add(card);//내 점수필드 리스트에 추가
