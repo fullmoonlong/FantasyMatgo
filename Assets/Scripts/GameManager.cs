@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
 
     private void WinDecision()
     {
-        if (CardClick.score >= 7)
+        if (CardClick.myScore >= 7)
         {
             if (isMyTurn == true)
             {
