@@ -182,6 +182,7 @@ public class CardClick : MonoBehaviour
 
         if (GameManager.instance.isMyTurn == true)//만약 플레이어 턴이면
         {
+            
             WhoTurn(CardManager.instance.myHand, CardManager.instance.myHandScore, false);
             //if (initialTurn == true)
             //{
@@ -193,12 +194,19 @@ public class CardClick : MonoBehaviour
             //    initialTurn = false;
             //}
             CalculateScore(CardManager.instance.myHandScore);
+            CardManager.instance.ResetPosition(CardManager.instance.myHand);
+            CardManager.instance.DrawCard(CardManager.instance.opponentHand, 1);
+            print(CardManager.instance.opponentHand[CardManager.instance.opponentHand.Count - 1].name);
+            //print(CardManager.instance.opponentHand[CardManager.instance.opponentHand.Count - 1].name);
         }
 
         else//만약 상대 턴이면
         {
             WhoTurn(CardManager.instance.opponentHand, CardManager.instance.opponentHandScore, true);
             CalculateScore(CardManager.instance.opponentHandScore);
+            CardManager.instance.ResetPosition(CardManager.instance.opponentHand);
+            CardManager.instance.DrawCard(CardManager.instance.myHand, 1);
+            //print(CardManager.instance.myHand[CardManager.instance.myHand.Count - 1].name);
         }
     }
 
@@ -206,13 +214,17 @@ public class CardClick : MonoBehaviour
 
     void WhoTurn(List<GameObject> hand, List<GameObject> handscore, bool isPlayer)
     {
-
+        //for(int i=0;i<hand.Count;i++)
+        //{
+        //    print(hand[i].name);
+        //}
         //카드 뽑는 애니메이션
         //print(CardManager.instance.sameTagCount[GetCardTagNum(gameObject)]);
         if (hand.Contains(gameObject)) // 내손에 이 게임오브젝트가 있을 때
         {
+            
             print("내 손에 있음");
-
+            
             CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(gameObject)]++; // 내가 낸 카드 ++ 해줌
             myCardCount = CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(gameObject)];
             CardManager.instance.field.Add(gameObject); //내손에 있는 카드 필드에 넣기
@@ -331,7 +343,7 @@ public class CardClick : MonoBehaviour
                             CardManager.instance.field[CardManager.instance.field.Count - 1].transform.DOMove
                                 (new Vector3(gameObject.transform.position.x + 0.5f,
                                 gameObject.transform.position.y,
-                                gameObject.transform.position.z - 0.1f), 0.5f).SetEase(Ease.OutQuint).onComplete();//뒤집은 카드는 내가 냈던 카드 옆으로 위치 이동
+                                gameObject.transform.position.z - 0.1f), 0.5f).SetEase(Ease.OutQuint);//뒤집은 카드는 내가 냈던 카드 옆으로 위치 이동
                             print("뻑");
 
                             GameManager.instance.isMyTurn = isPlayer;
@@ -717,6 +729,7 @@ public class CardClick : MonoBehaviour
     {
         CardManager.instance.EmptyIndexSort();//빈곳 인덱스 오름차순 정렬
         //obj.transform.position = CardManager.instance.fieldPosition[CardManager.instance.emptyIndex[0]]; // 마지막 필드포지션은 빈곳에 넣음
+        print(CardManager.instance.emptyIndex[0]);
         obj.transform.DOMove(CardManager.instance.fieldPosition[CardManager.instance.emptyIndex[0]], 0.5f).SetEase(Ease.OutQuint); // 마지막 필드포지션은 빈곳에 넣음
         CardManager.instance.emptyIndex.RemoveAt(0);
     }
@@ -764,10 +777,13 @@ public class CardClick : MonoBehaviour
 
         int index = Array.IndexOf(CardManager.instance.fieldPosition, obj.transform.position);
 
-        if (!CardManager.instance.emptyIndex.Contains(index)) // 원래 가지고 있는 값이 아니면
+        if (!CardManager.instance.emptyIndex.Contains(index)) // 원래 가지고 있는 값이 아니면 // 값이 없으면 음수로 들어가서 음수는 빼줘야함
         {
+            if(index >= 0)
+            {
+                CardManager.instance.emptyIndex.Add(index);
+            }
             //print("Empty index : " + index);
-            CardManager.instance.emptyIndex.Add(index);
         }
 
         for (int i = 0; i < CardManager.instance.emptyIndex.Count; i++)
@@ -781,7 +797,7 @@ public class CardClick : MonoBehaviour
         int index = -1;
         for (int i = 0; i < obj.Length; i++)
         {
-            for (int j = 0; j < CardManager.instance.fieldPosition.Length; i++)
+            for (int j = 0; j < CardManager.instance.fieldPosition.Length; j++)
             {
                 if (obj[i].transform.position == CardManager.instance.fieldPosition[j])
                 {

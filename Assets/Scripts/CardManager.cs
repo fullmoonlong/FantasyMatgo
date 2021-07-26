@@ -15,7 +15,7 @@ public class CardManager : MonoBehaviour
     public Transform parentDeck; // Instantiate 할 대상(보기 좋게 묶기 용)
 
     private List<GameObject> cardPrefabs; // 카드의 프리팹 화
-    private List<GameObject> cardDeck; // 필드에 놓일 카드 덱 리스트 생성
+    public List<GameObject> cardDeck; // 필드에 놓일 카드 덱 리스트 생성
 
     public List<GameObject> myHand; // 플레이어 자신의 패 리스트
     public List<GameObject> opponentHand; // 상대의 패 리스트
@@ -56,6 +56,8 @@ public class CardManager : MonoBehaviour
     public List<int> sameTagCount;
     private List<GameObject> storage;
 
+    public bool oneTime;
+
     private void Awake()
     {
         instance = this;
@@ -82,6 +84,8 @@ public class CardManager : MonoBehaviour
 
         sameTagCount = new List<int>(12) { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         storage = new List<GameObject>();
+
+        oneTime = true;
     }
 
     private void Start()
@@ -197,7 +201,6 @@ public class CardManager : MonoBehaviour
         FieldSameCard();
 
     }
-
 
     public int GetCardTagNum(GameObject obj)
     {
@@ -329,6 +332,7 @@ public class CardManager : MonoBehaviour
 
         for (int i = 0; i < drawAmount; i++)
         {
+            print(cardList.Count - 1);
             cardList.Add(cardDeck[i]);
             CardInitialPosition(cardList, cardList.Count - 1);
             cardDeck.RemoveAt(i);
@@ -348,27 +352,46 @@ public class CardManager : MonoBehaviour
 
     public void CardInitialPosition(List<GameObject> cardList, int index)
     {
+        print(index);
+        print(myHand.Count - 1);
         if (cardList == myHand)
         {
             //cardDeck[index].transform.position = myHandPosition[index];
-            cardDeck[index].transform.DOMove(myHandPosition[index], 1f).SetEase(Ease.OutQuint);
-            cardDeck[index].transform.SetParent(GameObject.Find("MyHand").transform);
+            cardList[index].transform.DOMove(myHandPosition[index], 1f).SetEase(Ease.OutQuint);
+            cardList[index].transform.SetParent(GameObject.Find("MyHand").transform);
         }
         else if (cardList == opponentHand)
         {
             //cardDeck[index].transform.position = opponentHandPosition[index];
-            cardDeck[index].transform.DOMove(opponentHandPosition[index], 1f).SetEase(Ease.OutQuint);
-            cardDeck[index].transform.SetParent(GameObject.Find("OpponentHand").transform);
-
+            cardList[index].transform.DOMove(opponentHandPosition[index], 1f).SetEase(Ease.OutQuint);
+            cardList[index].transform.SetParent(GameObject.Find("OpponentHand").transform);
+            print(cardList[index].name);
         }
         else if (cardList == field)
         {
-            cardDeck[index].transform.position = fieldPosition[index];
+            cardList[index].transform.position = fieldPosition[index];
             //cardDeck[index].transform.DOMove(fieldPosition[index], 0.7f).SetEase(Ease.OutQuint);
-            cardDeck[index].transform.SetParent(GameObject.Find("Field").transform);
+            cardList[index].transform.SetParent(GameObject.Find("Field").transform);
         }
     }
 
+    public void ResetPosition(List<GameObject> cardList)
+    {
+        if (cardList == myHand)
+        {
+            for(int i=0;i<myHand.Count;i++)
+            {
+                myHand[i].transform.position = myHandPosition[i];
+            }
+        }
+        else if (cardList == opponentHand)
+        {
+            for (int i = 0; i < opponentHand.Count; i++)
+            {
+                opponentHand[i].transform.position = opponentHandPosition[i];
+            }
+        }
+    }
     public void SetPosition(List<GameObject> list, GameObject obj)
     {
         obj.transform.position =
