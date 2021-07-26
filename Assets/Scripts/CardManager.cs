@@ -60,6 +60,8 @@ public class CardManager : MonoBehaviour
 
     public List<GameObject> ChoiceObj;
     public List<GameObject> BombObj;
+
+    public bool isFlip;
     private void Awake()
     {
         instance = this;
@@ -91,6 +93,8 @@ public class CardManager : MonoBehaviour
 
         ChoiceObj = new List<GameObject>();
         BombObj = new List<GameObject>();
+
+        isFlip = false;
     }
 
     private void Start()
@@ -346,8 +350,10 @@ public class CardManager : MonoBehaviour
     {
         if (cardDeck.Count == 0)
         {
+            isFlip = false;
             return;
         }
+        isFlip = true;
         field.Add(cardDeck[0]);// 뒤집기
         field[field.Count - 1].transform.position = fieldPosition[emptyIndex[0]]; //마지막 포지션은 비어있는 필드 포지션
         field[field.Count - 1].transform.SetParent(GameObject.Find("Field").transform);
@@ -398,17 +404,6 @@ public class CardManager : MonoBehaviour
     {
         obj.transform.position =
             new Vector3(list[list.Count].transform.position.x + 0.5f, list[list.Count].transform.position.y, list[list.Count].transform.position.z);
-    }
-
-    public void ChoicePanel()
-    {
-        ChociePanel.SetActive(true);
-    }
-
-    public void SelectTwoCard(int num)
-    {
-        choiceNum = num;
-        ChociePanel.SetActive(false);
     }
 
     public void SetNextPosition(Vector3 position)
@@ -489,11 +484,6 @@ public class CardManager : MonoBehaviour
 
         else
             return destination;
-    }
-
-    public void ChoiceTwoCard(int num)
-    {
-
     }
 
     public void ArrangeHand(List<GameObject> hand)
