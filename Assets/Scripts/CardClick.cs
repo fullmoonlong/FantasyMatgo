@@ -73,15 +73,9 @@ public class CardClick : MonoBehaviour
         }
 
         myCardCount = 0;
+        myScore = 0;
+        opponentScore = 0;
         BombObj = new GameObject[3];
-    }
-
-    private void Update()
-    {
-        if (gwangCount >= 3)
-        {
-
-        }
     }
 
     public void CalculateScore(List<GameObject> scoreList)
@@ -158,55 +152,106 @@ public class CardClick : MonoBehaviour
 
     public void CardCountToScore()
     {
+        #region MyScore
         if (gwangCount == 3)
         {
-            myScore = 3;
+            myScore += 3;
         }
-        else if (gwangCount == 4)
+        if (gwangCount == 4)
         {
-            myScore = 4;
+            myScore += 1;
         }
-        else if (gwangCount == 5)
+        if (gwangCount == 5)
         {
-            myScore = 5;
+            myScore += 11;
         }
+        if (redFlagCount == 3)
+        {
+            myScore += 3;
+        }
+        if (blueFlagCount == 3)
+        {
+            myScore += 3;
+        }
+        if (normalFlagCount == 3)
+        {
+            myScore += 3;
+        }
+        if (redFlagCount + blueFlagCount + normalFlagCount >= 5)
+        {
+            myScore += 1;
+        }
+        if (peeCount >= 10)
+        {
+            myScore += 1;
+        }
+        if (animalCount == 3)
+        {
+            myScore += 5;
+        }
+        #endregion
+
+        #region OpponentScore
+        if (enemyGwangCount == 3)
+        {
+            opponentScore += 3;
+        }
+        if (enemyGwangCount == 4)
+        {
+            opponentScore += 1;
+        }
+        if (enemyGwangCount == 5)
+        {
+            opponentScore += 11;
+        }
+        if (enemyRedFlagCount == 3)
+        {
+            opponentScore += 3;
+        }
+        if (enemyBlueFlagCount == 3)
+        {
+            opponentScore += 3;
+        }
+        if (enemyNormalFlagCount == 3)
+        {
+            opponentScore += 3;
+        }
+        if (enemyRedFlagCount + enemyBlueFlagCount + enemyNormalFlagCount >= 5)
+        {
+            opponentScore += 1;
+        }
+        if (enemyPeeCount >= 10)
+        {
+            opponentScore += 1;
+        }
+        if (enemyAnimalCount == 3)
+        {
+            opponentScore += 5;
+        }
+        #endregion
     }
 
     public void OnMouseUp()
     {
-        //int count = 0;
-        print(CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(gameObject)]);
-
-        print(CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(gameObject)]);
-
-
         if (GameManager.instance.isMyTurn == true)//만약 플레이어 턴이면
         {
             
             WhoTurn(CardManager.instance.myHand, CardManager.instance.myHandScore, false);
-            //if (initialTurn == true)
-            //{
-            //    count++;
-            //    print(count);
-
-            //    CardManager.instance.DrawCard(CardManager.instance.opponentHand, 1);
-            //    //CardManager.instance.ArrangeHand(CardManager.instance.opponentHand);
-            //    initialTurn = false;
-            //}
             CalculateScore(CardManager.instance.myHandScore);
+            CardCountToScore();
+            Debug.Log("MYSCORE : " + myScore);
             CardManager.instance.ResetPosition(CardManager.instance.myHand);
             CardManager.instance.DrawCard(CardManager.instance.opponentHand, 1);
-            print(CardManager.instance.opponentHand[CardManager.instance.opponentHand.Count - 1].name);
-            //print(CardManager.instance.opponentHand[CardManager.instance.opponentHand.Count - 1].name);
         }
 
         else//만약 상대 턴이면
         {
             WhoTurn(CardManager.instance.opponentHand, CardManager.instance.opponentHandScore, true);
             CalculateScore(CardManager.instance.opponentHandScore);
+            CardCountToScore();
+            Debug.Log("OPSCORE : " + opponentScore);
             CardManager.instance.ResetPosition(CardManager.instance.opponentHand);
             CardManager.instance.DrawCard(CardManager.instance.myHand, 1);
-            //print(CardManager.instance.myHand[CardManager.instance.myHand.Count - 1].name);
         }
     }
 
@@ -214,12 +259,7 @@ public class CardClick : MonoBehaviour
 
     void WhoTurn(List<GameObject> hand, List<GameObject> handscore, bool isPlayer)
     {
-        //for(int i=0;i<hand.Count;i++)
-        //{
-        //    print(hand[i].name);
-        //}
         //카드 뽑는 애니메이션
-        //print(CardManager.instance.sameTagCount[GetCardTagNum(gameObject)]);
         if (hand.Contains(gameObject)) // 내손에 이 게임오브젝트가 있을 때
         {
             
@@ -729,7 +769,6 @@ public class CardClick : MonoBehaviour
     {
         CardManager.instance.EmptyIndexSort();//빈곳 인덱스 오름차순 정렬
         //obj.transform.position = CardManager.instance.fieldPosition[CardManager.instance.emptyIndex[0]]; // 마지막 필드포지션은 빈곳에 넣음
-        print(CardManager.instance.emptyIndex[0]);
         obj.transform.DOMove(CardManager.instance.fieldPosition[CardManager.instance.emptyIndex[0]], 0.5f).SetEase(Ease.OutQuint); // 마지막 필드포지션은 빈곳에 넣음
         CardManager.instance.emptyIndex.RemoveAt(0);
     }

@@ -332,7 +332,6 @@ public class CardManager : MonoBehaviour
 
         for (int i = 0; i < drawAmount; i++)
         {
-            print(cardList.Count - 1);
             cardList.Add(cardDeck[i]);
             CardInitialPosition(cardList, cardList.Count - 1);
             cardDeck.RemoveAt(i);
@@ -340,7 +339,6 @@ public class CardManager : MonoBehaviour
     }
     public void FlipCard()
     {
-        Debug.Log(cardDeck.Count);
         if (cardDeck.Count == 0)
         {
             return;
@@ -352,8 +350,6 @@ public class CardManager : MonoBehaviour
 
     public void CardInitialPosition(List<GameObject> cardList, int index)
     {
-        print(index);
-        print(myHand.Count - 1);
         if (cardList == myHand)
         {
             //cardDeck[index].transform.position = myHandPosition[index];
@@ -365,7 +361,6 @@ public class CardManager : MonoBehaviour
             //cardDeck[index].transform.position = opponentHandPosition[index];
             cardList[index].transform.DOMove(opponentHandPosition[index], 1f).SetEase(Ease.OutQuint);
             cardList[index].transform.SetParent(GameObject.Find("OpponentHand").transform);
-            print(cardList[index].name);
         }
         else if (cardList == field)
         {
