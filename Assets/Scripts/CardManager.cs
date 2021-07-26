@@ -58,6 +58,8 @@ public class CardManager : MonoBehaviour
 
     public bool oneTime;
 
+    public List<GameObject> ChoiceObj;
+
     private void Awake()
     {
         instance = this;
@@ -86,6 +88,8 @@ public class CardManager : MonoBehaviour
         storage = new List<GameObject>();
 
         oneTime = true;
+
+        ChoiceObj = new List<GameObject>();
     }
 
     private void Start()
