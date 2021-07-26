@@ -59,7 +59,7 @@ public class CardManager : MonoBehaviour
     public bool oneTime;
 
     public List<GameObject> ChoiceObj;
-
+    public List<GameObject> BombObj;
     private void Awake()
     {
         instance = this;
@@ -90,6 +90,7 @@ public class CardManager : MonoBehaviour
         oneTime = true;
 
         ChoiceObj = new List<GameObject>();
+        BombObj = new List<GameObject>();
     }
 
     private void Start()
@@ -349,6 +350,8 @@ public class CardManager : MonoBehaviour
         }
         field.Add(cardDeck[0]);// 뒤집기
         field[field.Count - 1].transform.position = fieldPosition[emptyIndex[0]]; //마지막 포지션은 비어있는 필드 포지션
+        field[field.Count - 1].transform.SetParent(GameObject.Find("Field").transform);
+        sameTagCount[GetCardTagNum(field[field.Count - 1])]++;
         cardDeck.RemoveAt(0);//카드 덱 삭제
     }
 
