@@ -452,7 +452,6 @@ public class CardManager : MonoBehaviour
 
         if (list == opponentHandScore)
         {
-            print("상대손");
             switch (clickedObject.GetComponent<CardClick>().type)
             {
                 case "광":
