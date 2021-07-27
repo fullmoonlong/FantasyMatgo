@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+
 public class CardClick : MonoBehaviour
 {
     #region SINGLETON
@@ -151,15 +153,23 @@ public class CardClick : MonoBehaviour
 
     public void OnMouseUp()
     {
-        if (GameManager.instance.isMyTurn == true)//만약 플레이어 턴이면
+        if (!EventSystem.current.IsPointerOverGameObject())
         {
-            WhoTurn(CardManager.instance.myHand, CardManager.instance.myHandScore, false);
-            CalculateScore(CardManager.instance.myHandScore);
-        }
-        else//만약 상대 턴이면
-        {
-            WhoTurn(CardManager.instance.opponentHand, CardManager.instance.opponentHandScore, true);
-            CalculateScore(CardManager.instance.opponentHandScore);
+            #region PlayerTurn
+            if (GameManager.instance.isMyTurn == true)//만약 플레이어 턴이면
+            {
+                WhoTurn(CardManager.instance.myHand, CardManager.instance.myHandScore, false);
+                CalculateScore(CardManager.instance.myHandScore);
+            }
+            #endregion
+
+            #region OpponentTurn
+            else//만약 상대 턴이면
+            {
+                WhoTurn(CardManager.instance.opponentHand, CardManager.instance.opponentHandScore, true);
+                CalculateScore(CardManager.instance.opponentHandScore);
+            }
+            #endregion
         }
     }
 
@@ -245,7 +255,7 @@ public class CardClick : MonoBehaviour
                                             //뒤집은 칻으가 폭탄
                                             print("폭탄");
                                             GameObject[] temp = new GameObject[3];
-                                            temp = FlipBombCard(CardManager.instance.field[CardManager.instance.field.Count - 1], handscore);
+                                            temp = FlipBombCard(CardManager.instance.field[CardManager.instance.field.Count - 1]);
 
                                             EmptyFieldPosition(OrignFieldPosition(temp));
 
@@ -367,7 +377,7 @@ public class CardClick : MonoBehaviour
                                             GameObject[] temp = new GameObject[3];
 
                                             //폭탄
-                                            temp = FlipBombCard(CardManager.instance.field[CardManager.instance.field.Count - 1], handscore);
+                                            temp = FlipBombCard(CardManager.instance.field[CardManager.instance.field.Count - 1]);
 
                                             EmptyFieldPosition(OrignFieldPosition(temp));
 
@@ -399,7 +409,7 @@ public class CardClick : MonoBehaviour
                                 print("폭탄입니다.");
 
                                 GameObject[] temp = new GameObject[3];
-                                temp = FlipBombCard(CardManager.instance.field[CardManager.instance.field.Count - 1], handscore);
+                                temp = FlipBombCard(CardManager.instance.field[CardManager.instance.field.Count - 1]);
 
                                 EmptyFieldPosition(OrignFieldPosition(temp));
 
@@ -454,7 +464,7 @@ public class CardClick : MonoBehaviour
                                             //폭탄
                                             //FlipChoiceCard(); // 낸카드 중하나 뽑기
                                             GameObject[] temp = new GameObject[3];
-                                            temp = FlipBombCard(CardManager.instance.field[CardManager.instance.field.Count - 1], handscore); // 뒤집은 폭탄
+                                            temp = FlipBombCard(CardManager.instance.field[CardManager.instance.field.Count - 1]); // 뒤집은 폭탄
                                             EmptyFieldPosition(OrignFieldPosition(temp));
 
                                             MoveBombFieldScoreField(temp, CardManager.instance.field[CardManager.instance.field.Count - 1], handscore);
@@ -478,7 +488,7 @@ public class CardClick : MonoBehaviour
                             //이건 됨
                             GameObject[] temp = new GameObject[3];
 
-                            temp = FlipBombCard(gameObject, handscore);
+                            temp = FlipBombCard(gameObject);
 
                             EmptyFieldPosition(OrignFieldPosition(temp));
 
@@ -498,7 +508,7 @@ public class CardClick : MonoBehaviour
 
                                             GameObject[] temp = new GameObject[3];
 
-                                            temp = FlipBombCard(gameObject, handscore);
+                                            temp = FlipBombCard(gameObject);
 
                                             EmptyFieldPosition(OrignFieldPosition(temp));
 
@@ -513,7 +523,7 @@ public class CardClick : MonoBehaviour
                                             GameObject[] temp = new GameObject[3];
 
                                             //뒤집은 카드랑 같은 태그 카드 들고가기
-                                            temp = FlipBombCard(gameObject, handscore);
+                                            temp = FlipBombCard(gameObject);
 
                                             EmptyFieldPosition(OrignFieldPosition(temp));
 
@@ -535,7 +545,7 @@ public class CardClick : MonoBehaviour
                                         {
                                             GameObject[] temp = new GameObject[3];
 
-                                            temp = FlipBombCard(gameObject, handscore);
+                                            temp = FlipBombCard(gameObject);
 
                                             EmptyFieldPosition(OrignFieldPosition(temp));
 
@@ -553,11 +563,11 @@ public class CardClick : MonoBehaviour
                                             GameObject[] temp = new GameObject[3];
 
                                             //폭탄
-                                            temp = FlipBombCard(gameObject, handscore);
+                                            temp = FlipBombCard(gameObject);
 
                                             EmptyFieldPosition(OrignFieldPosition(temp));
 
-                                            GameObject[] temp2 = FlipBombCard(CardManager.instance.field[CardManager.instance.field.Count - 1], handscore);
+                                            GameObject[] temp2 = FlipBombCard(CardManager.instance.field[CardManager.instance.field.Count - 1]);
 
                                             EmptyFieldPosition(OrignFieldPosition(temp2));
 
@@ -646,11 +656,11 @@ public class CardClick : MonoBehaviour
 
         OpenChoicePanel = GameObject.Find("Canvas").transform.Find("Panel").gameObject;
         OpenChoicePanel.SetActive(true);
-        OpenChoicePanel.transform.GetChild(0).GetComponent<Image>().sprite = CardManager.instance.ChoiceObj[0].GetComponent<SpriteRenderer>().sprite;
-        OpenChoicePanel.transform.GetChild(1).GetComponent<Image>().sprite = CardManager.instance.ChoiceObj[1].GetComponent<SpriteRenderer>().sprite;
+        OpenChoicePanel.transform.GetChild(1).GetComponent<Image>().sprite = CardManager.instance.ChoiceObj[0].GetComponent<SpriteRenderer>().sprite;
+        OpenChoicePanel.transform.GetChild(2).GetComponent<Image>().sprite = CardManager.instance.ChoiceObj[1].GetComponent<SpriteRenderer>().sprite;
     }
 
-    GameObject[] FlipBombCard(GameObject obj, List<GameObject> score)//뒤집은 카든
+    GameObject[] FlipBombCard(GameObject obj)//뒤집은 카든
     {
         for (int i = 0; i < CardManager.instance.field.Count - 1; i++) // 카운트에서 1빼는 이유 -> 비교할 태그가 있음
         {
