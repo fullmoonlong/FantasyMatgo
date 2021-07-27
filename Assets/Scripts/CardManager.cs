@@ -257,6 +257,7 @@ public class CardManager : MonoBehaviour
             Debug.Log("OpGwang : " + isOpGwang3);
             Debug.Log("OpChodan : " + isOpNormalFlag);
         }
+
     }
 
     public int GetCardTagNum(GameObject obj)
@@ -546,6 +547,24 @@ public class CardManager : MonoBehaviour
             {
                 hand[i].transform.position = opponentHandPosition[i];
             }
+        }
+    }
+
+    public void PrintList()
+    {
+        for (int i = 0; i < myHand.Count; i++)
+        {
+            myHand[i].transform.SetParent(GameObject.Find("MyHand").transform);
+        }
+
+        for (int i = 0; i < opponentHand.Count; i++)
+        {
+            opponentHand[i].transform.SetParent(GameObject.Find("OpponentHand").transform);
+        }
+
+        for (int i = 0; i < field.Count; i++)
+        {
+            field[i].transform.SetParent(GameObject.Find("Field").transform);
         }
     }
 }
