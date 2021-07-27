@@ -21,12 +21,12 @@ public class GameManager : MonoBehaviour
     public int turnCount; // 현재까지 진행된 턴 수
     public bool isMyTurn; // 턴을 판정하는 bool 변수
 
-    private void Start()
+    public void Start()
     {
         isMyTurn = true;
     }
 
-    private void Update()
+    public void Update()
     {
         ScoreTextSet();
         TurnTextSet();
@@ -35,12 +35,12 @@ public class GameManager : MonoBehaviour
 
     private void WinDecision()
     {
-        if (CardClick.myScore >= 7)
+        if (CardClick.instance.myScore >= 7)
         {
             gameOverText.text = "1P(6시) 승리!";
             GameOver();
         }
-        else if (CardClick.opponentScore >= 7)
+        else if (CardClick.instance.opponentScore >= 7)
         {
             gameOverText.text = "2P(12시) 승리!";
             GameOver();
@@ -53,8 +53,8 @@ public class GameManager : MonoBehaviour
 
     public void ScoreTextSet()
     {
-        myScoreText.text = "1P (6시) 점수 : " + CardClick.myScore.ToString();
-        opScoreText.text = "2P(12시) 점수 : " + CardClick.opponentScore.ToString();
+        myScoreText.text = "1P (6시) 점수 : " + CardClick.instance.myScore.ToString();
+        opScoreText.text = "2P(12시) 점수 : " + CardClick.instance.opponentScore.ToString();
     }
 
     public void TurnTextSet()

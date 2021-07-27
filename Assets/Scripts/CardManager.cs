@@ -1,5 +1,4 @@
-﻿//내꺼
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using System.Linq;
@@ -26,8 +25,8 @@ public class CardManager : MonoBehaviour
 
     public List<Vector3> myHandPosition; // 자신 패의 위치
     public List<Vector3> opponentHandPosition; // 상대 패의 위치
-    public Vector3[] fieldPosition; // 카드를 내려놓을 필드 위치
 
+    public Vector3[] fieldPosition; // 카드를 내려놓을 필드 위치
     public Vector3[] scoreKingPosition; // 5개
     public Vector3[] scoreEnemyKingPosition; // 5개
     public Vector3[] scoreAnimalPosition; // 9개 멍따
@@ -41,7 +40,6 @@ public class CardManager : MonoBehaviour
 
     int choiceNum; // 고른 카드
 
-    public List<int> emptyIndex;
 
     public int kingEmptyIndex;
     public int enemyKingEmptyIndex;
@@ -52,16 +50,51 @@ public class CardManager : MonoBehaviour
     public int soldierEmptyIndex;
     public int enemySoldierEmptyIndex;
 
-
-    public List<int> sameTagCount;
-    private List<GameObject> storage;
-
+    public bool isFlip;
     public bool oneTime;
 
+    public List<int> emptyIndex;
+    public List<int> sameTagCount;
     public List<GameObject> ChoiceObj;
     public List<GameObject> BombObj;
+    private List<GameObject> storage;
 
-    public bool isFlip;
+    #region SCORE
+    // my
+    [HideInInspector] public int gwangCount;
+    [HideInInspector] public int redFlagCount;
+    [HideInInspector] public int blueFlagCount;
+    [HideInInspector] public int normalFlagCount;
+    [HideInInspector] public int animalCount;
+    [HideInInspector] public int peeCount;
+    // op
+    [HideInInspector] public int enemyGwangCount;
+    [HideInInspector] public int enemyRedFlagCount;
+    [HideInInspector] public int enemyBlueFlagCount;
+    [HideInInspector] public int enemyNormalFlagCount;
+    [HideInInspector] public int enemyAnimalCount;
+    [HideInInspector] public int enemyPeeCount;
+    // my
+    [HideInInspector] public bool isGwang3 = true;
+    [HideInInspector] public bool isGwang4 = true;
+    [HideInInspector] public bool isGwang5 = true;
+    [HideInInspector] public bool isRedFlag = true;
+    [HideInInspector] public bool isBlueFlag = true;
+    [HideInInspector] public bool isNormalFlag = true;
+    [HideInInspector] public bool isAnimal = true;
+    [HideInInspector] public bool isPee = true;
+    // Oppo
+    [HideInInspector] public bool isOpGwang3 = true;
+    [HideInInspector] public bool isOpGwang4 = true;
+    [HideInInspector] public bool isOpGwang5 = true;
+    [HideInInspector] public bool isOpRedFlag = true;
+    [HideInInspector] public bool isOpBlueFlag = true;
+    [HideInInspector] public bool isOpNormalFlag = true;
+    [HideInInspector] public bool isOpAnimal = true;
+    [HideInInspector] public bool isOpPee = true;
+    #endregion
+
+
     private void Awake()
     {
         instance = this;
@@ -74,9 +107,9 @@ public class CardManager : MonoBehaviour
 
         myHandScore = new List<GameObject>(); // 점수 리스트 할당
         opponentHandScore = new List<GameObject>(); // 점수 리스트 할당
-        
+
         emptyIndex = new List<int>(6) { 6, 7, 8, 9, 10, 11 };
-        
+
         kingEmptyIndex = 0;
         enemyKingEmptyIndex = 0;
         animalEmptyIndex = 0;
@@ -208,7 +241,22 @@ public class CardManager : MonoBehaviour
         DrawCard(opponentHand, 6);  // 상대손에 6장 씩 뽑는다.
         DrawCard(field, 6);
         FieldSameCard();
+    }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            Debug.Log("Pee : " + isPee);
+            Debug.Log("Gwang : " + isGwang3);
+            Debug.Log("Chodan : " + isNormalFlag);
+        }
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            Debug.Log("OpPee" + isOpPee);
+            Debug.Log("OpGwang : " + isOpGwang3);
+            Debug.Log("OpChodan : " + isOpNormalFlag);
+        }
     }
 
     public int GetCardTagNum(GameObject obj)
@@ -387,7 +435,7 @@ public class CardManager : MonoBehaviour
     {
         if (cardList == myHand)
         {
-            for(int i=0;i<myHand.Count;i++)
+            for (int i = 0; i < myHand.Count; i++)
             {
                 myHand[i].transform.position = myHandPosition[i];
             }
@@ -418,8 +466,8 @@ public class CardManager : MonoBehaviour
     }
     public Vector3 ScoreField(GameObject clickedObject, List<GameObject> list)
     {
-        Vector3 destination = new Vector3 ( 0, 0, 0 );
-        if(list == myHandScore)
+        Vector3 destination = new Vector3(0, 0, 0);
+        if (list == myHandScore)
         {
             switch (clickedObject.GetComponent<CardClick>().type)
             {
@@ -487,15 +535,14 @@ public class CardManager : MonoBehaviour
 
     public void ArrangeHand(List<GameObject> hand)
     {
-        print(hand.Count);
         for (int i = 0; i < hand.Count; i++)
         {
-            if(hand == myHand)
+            if (hand == myHand)
             {
                 hand[i].transform.position = myHandPosition[i];
             }
 
-            if(hand == opponentHand)
+            if (hand == opponentHand)
             {
                 hand[i].transform.position = opponentHandPosition[i];
             }
