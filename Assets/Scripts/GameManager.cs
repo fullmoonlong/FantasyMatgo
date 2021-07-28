@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,52 +19,89 @@ public class GameManager : MonoBehaviour
     public Text opScoreText;
     public Text gameOverText;
     public GameObject gameOverPanel;
-    public GameObject artifactPanelMe;
-    public GameObject artifactPanelOp;
+    public GameObject artifactPanel;
     public int turnCount; // 현재까지 진행된 턴 수
     public bool isMyTurn; // 턴을 판정하는 bool 변수
     public bool isGameEnd = false;
+    public bool oneTime;
+    public bool first;
+
+    private string Who;
+    public Image[] ArtifactMe;
+    public Image[] ArtifactOp;
+
+    public int ArtifactNumMe;
+    public int ArtifactNumOp;
 
     public void Start()
     {
-        gameOverPanel.SetActive(false);
-        artifactPanelMe.SetActive(false);
-        artifactPanelOp.SetActive(false);
         isMyTurn = true;
+        oneTime = false;
+        first = true;
+
+        Who = "Player";
+            
+        ArtifactNumMe = 0;
+        ArtifactNumOp = 0;
     }
 
     public void Update()
     {
         ScoreTextSet();
         TurnTextSet();
-        ScoreCheck();
+
+        if (CardManager.instance.myHand.Count == 0 || CardManager.instance.opponentHand.Count == 0)
+        {
+            GameOver();
+        }
+
+        if (oneTime)
+        {
+            if (isMyTurn)
+            {
+                CardManager.instance.DrawCard(CardManager.instance.myHand, 1);
+                oneTime = false;
+            }
+
+            else
+            {
+                CardManager.instance.DrawCard(CardManager.instance.opponentHand, 1);
+                oneTime = false;
+            }
+        }
     }
 
-    private void ScoreCheck()
+    public void ScoreCheck()
     {
         if (MatgoScore.myScore >= 3)
         {
-            ChooseMyArtifact();
+            Who = "Player";
+            ChooseArtifact();
         }
         if (MatgoScore.opScore >= 3)
         {
-            ChooseOpponentArtifact();
+            Who = "Opponent";
+            ChooseArtifact();
         }
         if (MatgoScore.myScore >= 6)
         {
-            ChooseMyArtifact();
+            Who = "Player";
+            ChooseArtifact();
         }
         if (MatgoScore.opScore >= 6)
         {
-            ChooseOpponentArtifact();
+            Who = "Opponent";
+            ChooseArtifact();
         }
         if (MatgoScore.myScore >= 7)
         {
-            ChooseMyArtifact();
+            Who = "Player";
+            ChooseArtifact();
         }
         if (MatgoScore.opScore >= 7)
         {
-            ChooseOpponentArtifact();
+            Who = "Opponent";
+            ChooseArtifact();
         }
     }
 
@@ -85,13 +123,35 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void ChooseMyArtifact()
+    public void ChooseArtifact()
     {
-        artifactPanelMe.SetActive(true);
+        artifactPanel.SetActive(true);
     }
-    public void ChooseOpponentArtifact()
+
+    public void ApplyArtifact()
     {
-        artifactPanelOp.SetActive(true);
+        artifactPanel.SetActive(false);
+
+        GameObject btn = EventSystem.current.currentSelectedGameObject;
+        
+        if(ArtifactNumMe <= 3 && ArtifactNumOp <= 3)
+        {
+            if (Who == "Player")
+            {
+                
+                ArtifactMe[ArtifactNumMe].sprite = btn.GetComponent<Image>().sprite;
+                ArtifactMe[ArtifactNumMe].gameObject.SetActive(true);
+                ArtifactNumMe++;
+            }
+
+            else if (Who == "Opponent")
+            {
+                ArtifactOp[ArtifactNumOp].sprite = btn.GetComponent<Image>().sprite;
+                ArtifactMe[ArtifactNumMe].gameObject.SetActive(true);
+                ArtifactNumOp++;
+            }
+        }
+       
     }
 
     public void GameOver()

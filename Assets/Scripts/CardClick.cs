@@ -635,19 +635,20 @@ public class CardClick : MonoBehaviour
             #region End
             CardManager.instance.ResetPosition(hand);
 
-            if (hand == CardManager.instance.myHand)
-            {
-                CardManager.instance.DrawCard(CardManager.instance.opponentHand, 1);
-
-            }
-            if (hand == CardManager.instance.opponentHand)
-            {
-                CardManager.instance.DrawCard(CardManager.instance.myHand, 1);
-
-            }
-
             GameManager.instance.isMyTurn = isPlayer;
             #endregion
+
+            if (GameManager.instance.first)
+            {
+                CardManager.instance.DrawCard(hand, 1);
+                GameManager.instance.first = false;
+            }
+
+            MatgoScore.instance.MyCardCountToScore();
+            MatgoScore.instance.OpCardCountToScore();
+            MatgoScore.instance.ScoreCalculate();
+            GameManager.instance.ScoreCheck();
+            GameManager.instance.oneTime = true;
 
             print("--------시작----------");
             for (int i = 0; i < CardManager.instance.field.Count; i++)
@@ -710,6 +711,8 @@ public class CardClick : MonoBehaviour
     }
     GameObject[] FlipBombCard(GameObject obj)//뒤집은 카든
     {
+        CardManager.instance.BombObj.Clear();
+
         for (int i = 0; i < CardManager.instance.field.Count - 1; i++) // 카운트에서 1빼는 이유 -> 비교할 태그가 있음
         {
             if (CardManager.instance.field[i].CompareTag(obj.tag)) // 태그가 같을 때 

@@ -59,7 +59,6 @@ public class CardManager : MonoBehaviour
     public int enemySoldierEmptyIndex;
 
     public bool isFlip;
-    public bool oneTime;
 
     public List<int> emptyIndex;
     public List<int> sameTagCount;
@@ -133,8 +132,6 @@ public class CardManager : MonoBehaviour
 
         sameTagCount = new List<int>(12) { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         storage = new List<GameObject>();
-
-        oneTime = true;
 
         ChoiceObj = new List<GameObject>();
         BombObj = new List<GameObject>();

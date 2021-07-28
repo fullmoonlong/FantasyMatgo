@@ -2,6 +2,15 @@
 
 public class MatgoScore : MonoBehaviour
 {
+    #region Singleton
+    public static MatgoScore instance;
+
+    private void Awake()
+    {
+        instance = this;
+    }
+    #endregion
+
     public static int myScore = 0;
     public static int opScore = 0;
 
@@ -37,9 +46,7 @@ public class MatgoScore : MonoBehaviour
             return;
         }
 
-        MyCardCountToScore();
-        OpCardCountToScore();
-        ScoreCalculate();
+       
     }
 
     public void ScoreCalculate()
