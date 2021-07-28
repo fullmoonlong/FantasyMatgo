@@ -18,12 +18,17 @@ public class GameManager : MonoBehaviour
     public Text opScoreText;
     public Text gameOverText;
     public GameObject gameOverPanel;
+    public GameObject artifactPanelMe;
+    public GameObject artifactPanelOp;
     public int turnCount; // 현재까지 진행된 턴 수
     public bool isMyTurn; // 턴을 판정하는 bool 변수
     public bool isGameEnd = false;
 
     public void Start()
     {
+        gameOverPanel.SetActive(false);
+        artifactPanelMe.SetActive(false);
+        artifactPanelOp.SetActive(false);
         isMyTurn = true;
     }
 
@@ -31,24 +36,34 @@ public class GameManager : MonoBehaviour
     {
         ScoreTextSet();
         TurnTextSet();
-        WinDecision();
+        ScoreCheck();
     }
 
-    private void WinDecision()
+    private void ScoreCheck()
     {
+        if (MatgoScore.myScore >= 3)
+        {
+            ChooseMyArtifact();
+        }
+        if (MatgoScore.opScore >= 3)
+        {
+            ChooseOpponentArtifact();
+        }
+        if (MatgoScore.myScore >= 6)
+        {
+            ChooseMyArtifact();
+        }
+        if (MatgoScore.opScore >= 6)
+        {
+            ChooseOpponentArtifact();
+        }
         if (MatgoScore.myScore >= 7)
         {
-            gameOverText.text = "1P(6시) 승리!";
-            GameOver();
+            ChooseMyArtifact();
         }
-        else if (MatgoScore.opScore >= 7)
+        if (MatgoScore.opScore >= 7)
         {
-            gameOverText.text = "2P(12시) 승리!";
-            GameOver();
-        }
-        else
-        {
-            gameOverPanel.SetActive(false);
+            ChooseOpponentArtifact();
         }
     }
 
@@ -68,6 +83,15 @@ public class GameManager : MonoBehaviour
         {
             turnText.text = "2P 턴 (12시)";
         }
+    }
+
+    public void ChooseMyArtifact()
+    {
+        artifactPanelMe.SetActive(true);
+    }
+    public void ChooseOpponentArtifact()
+    {
+        artifactPanelOp.SetActive(true);
     }
 
     public void GameOver()
