@@ -652,12 +652,7 @@ public class CardClick : MonoBehaviour
                 GameManager.instance.first = false;
             }
 
-            MatgoScore.instance.MyCardCountToScore();
-            MatgoScore.instance.OpCardCountToScore();
-            MatgoScore.instance.ScoreCalculate();
-            GameManager.instance.ScoreCheck();
             GameManager.instance.oneTime = true;
-
           
             print("--------시작----------");
             for (int i = 0; i < CardManager.instance.field.Count; i++)

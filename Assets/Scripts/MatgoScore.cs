@@ -36,6 +36,10 @@ public class MatgoScore : MonoBehaviour
 
     private void Update()
     {
+        MyCardCountToScore();
+        OpCardCountToScore();
+        ScoreCalculate();
+
         if (Input.GetKeyDown(KeyCode.G))
         {
             Debug.Log("내 광 점수 : " + myGwangScore + "\n" + "적 광 점수 : " + opponentGwangScore);
@@ -45,8 +49,6 @@ public class MatgoScore : MonoBehaviour
         {
             return;
         }
-
-       
     }
 
     public void ScoreCalculate()
