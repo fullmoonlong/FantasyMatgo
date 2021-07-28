@@ -30,7 +30,11 @@ public class GameManager : MonoBehaviour
     public bool oneTime;
     public bool first;
     public bool isMyFirstArtifact;
+    public bool isMySecondArtifact;
+    public bool isMyThirdArtifact;
     public bool isOppoFirstArtifact;
+    public bool isOppoSecondArtifact;
+    public bool isOppoThirdArtifact;
     public bool isSetting;
     public bool isMoving;
 
@@ -47,7 +51,10 @@ public class GameManager : MonoBehaviour
         artifactNumOpponent = 0;
 
         isMyFirstArtifact = true;
+        isMySecondArtifact = true;
+
         isOppoFirstArtifact = true;
+        isOppoSecondArtifact = true;
 
         isSetting = false;
         isMoving = false;
@@ -116,13 +123,19 @@ public class GameManager : MonoBehaviour
         }
         if (MatgoScore.myScore >= 6)
         {
-            Debug.Log(MatgoScore.myScore);
-            ChooseMyArtifact();
+            if (isMySecondArtifact == true)
+            {
+                ChooseMyArtifact();
+            }
+            isMySecondArtifact = false;
         }
         if (MatgoScore.opScore >= 6)
         {
-            Debug.Log(MatgoScore.opScore);
-            ChooseOpponentArtifact();
+            if (isOppoSecondArtifact == true)
+            {
+                ChooseOpponentArtifact();
+            }
+            isOppoSecondArtifact = false;
         }
         if (MatgoScore.myScore >= 7)
         {
