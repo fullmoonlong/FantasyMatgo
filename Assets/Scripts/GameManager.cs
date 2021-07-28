@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
@@ -26,6 +27,9 @@ public class GameManager : MonoBehaviour
     public bool oneTime;
     public bool first;
     public bool artiOneTime;
+
+    public bool isSetting;
+    public bool isMoving;
     private string Who;
     public Image[] ArtifactMe;
     public Image[] ArtifactOp;
@@ -45,6 +49,10 @@ public class GameManager : MonoBehaviour
         ArtifactNumOp = 0;
 
         artiOneTime = true;
+
+        isSetting = false;
+        isMoving = false;
+        StartCoroutine(CompleteSetting());
     }
 
     public void Update()
@@ -61,18 +69,33 @@ public class GameManager : MonoBehaviour
         {
             if (isMyTurn)
             {
+                CardManager.instance.ResetPosition(CardManager.instance.myHand);
+
                 CardManager.instance.DrawCard(CardManager.instance.myHand, 1);
                 oneTime = false;
             }
 
             else
             {
+                CardManager.instance.ResetPosition(CardManager.instance.opponentHand);
                 CardManager.instance.DrawCard(CardManager.instance.opponentHand, 1);
                 oneTime = false;
             }
         }
     }
 
+
+    public IEnumerator CompleteSetting()
+    {
+        yield return new WaitForSeconds(1f);
+        isSetting = true;
+    }
+
+    public IEnumerator CompleteMoving()
+    {
+        yield return new WaitForSeconds(1f);
+        isMoving = false;
+    }
     public void ScoreCheck()
     {
         if (MatgoScore.myScore >= 3)

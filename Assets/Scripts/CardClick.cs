@@ -4,7 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-
+using System.Collections;
 public class CardClick : MonoBehaviour
 {
     #region SINGLETON	
@@ -18,6 +18,7 @@ public class CardClick : MonoBehaviour
     GameObject hittedCard;
     int myCardCount;
     private GameObject OpenChoicePanel;
+
     //private bool initialTurn = true;	
     private void Start()
     {
@@ -147,20 +148,26 @@ public class CardClick : MonoBehaviour
     {
         if (!EventSystem.current.IsPointerOverGameObject())
         {
-            #region PlayerTurn	
-            if (GameManager.instance.isMyTurn == true)//만약 플레이어 턴이면	
+            print("in");
+            if (GameManager.instance.isSetting && !GameManager.instance.isMoving)
             {
-                WhoTurn(CardManager.instance.myHand, CardManager.instance.myHandScore, false);
-                CalculateScore(CardManager.instance.myHandScore);
+                #region PlayerTurn	
+                if (GameManager.instance.isMyTurn == true)//만약 플레이어 턴이면	
+                {
+                    
+                    WhoTurn(CardManager.instance.myHand, CardManager.instance.myHandScore, false);
+                    CalculateScore(CardManager.instance.myHandScore);
+                }
+                #endregion
+                #region OpponentTurn	
+                else//만약 상대 턴이면	
+                {
+                    WhoTurn(CardManager.instance.opponentHand, CardManager.instance.opponentHandScore, true);
+                    CalculateScore(CardManager.instance.opponentHandScore);
+                }
+                #endregion
             }
-            #endregion
-            #region OpponentTurn	
-            else//만약 상대 턴이면	
-            {
-                WhoTurn(CardManager.instance.opponentHand, CardManager.instance.opponentHandScore, true);
-                CalculateScore(CardManager.instance.opponentHandScore);
-            }
-            #endregion
+
         }
     }
 
@@ -168,6 +175,7 @@ public class CardClick : MonoBehaviour
 
     void WhoTurn(List<GameObject> hand, List<GameObject> handscore, bool isPlayer)
     {
+        
         //카드 뽑는 애니메이션
         if (hand.Contains(gameObject)) // 내손에 이 게임오브젝트가 있을 때
         {
@@ -175,7 +183,7 @@ public class CardClick : MonoBehaviour
             myCardCount = CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(gameObject)];
             CardManager.instance.field.Add(gameObject); //내손에 있는 카드 필드에 넣기
             hand.Remove(gameObject);//내손에서 지우기
-
+            CardManager.instance.ResetPosition(hand);
             switch (myCardCount) // 2, 3, 4개 맞췄을 시 다름
             {
                 //카드가 안맞았을 때
@@ -633,13 +641,13 @@ public class CardClick : MonoBehaviour
             }
 
             #region End
-            CardManager.instance.ResetPosition(hand);
-
             GameManager.instance.isMyTurn = isPlayer;
             #endregion
 
             if (GameManager.instance.first)
             {
+                CardManager.instance.ResetPosition(hand);
+
                 CardManager.instance.DrawCard(hand, 1);
                 GameManager.instance.first = false;
             }
@@ -650,6 +658,7 @@ public class CardClick : MonoBehaviour
             GameManager.instance.ScoreCheck();
             GameManager.instance.oneTime = true;
 
+          
             print("--------시작----------");
             for (int i = 0; i < CardManager.instance.field.Count; i++)
             {
@@ -748,12 +757,20 @@ public class CardClick : MonoBehaviour
     {
 
         EmptyFieldPosition(gameObject);
+        GameManager.instance.isMoving = true;
         CardManager.instance.field[CardManager.instance.field.Count - 1].transform.DOMove(new Vector3(gameObject.transform.position.x + 0.5f, gameObject.transform.position.y, gameObject.transform.position.z - 0.1f), 0.5f).SetEase(Ease.OutQuint); //맞춘 오브젝트 옆으로 이동
-
+        StartCoroutine(GameManager.instance.CompleteMoving());
 
         //점수판으로 이동
+
+
+        GameManager.instance.isMoving = true;
         CardManager.instance.field[CardManager.instance.field.Count - 1].transform.DOMove(CardManager.instance.ScoreField(CardManager.instance.field[CardManager.instance.field.Count - 1], score), 0.5f).SetEase(Ease.OutQuint); // 점수판위치로 이동
+        StartCoroutine(GameManager.instance.CompleteMoving());
+
+        GameManager.instance.isMoving = true;
         gameObject.transform.DOMove(CardManager.instance.ScoreField(gameObject, score), 0.5f).SetEase(Ease.OutQuint); // 점수판위치로 이동
+        StartCoroutine(GameManager.instance.CompleteMoving());
 
         //얻은 카드
         score.Add(CardManager.instance.field[CardManager.instance.field.Count - 1]);
@@ -766,13 +783,17 @@ public class CardClick : MonoBehaviour
     void NoMatchField(GameObject obj)
     {
         CardManager.instance.EmptyIndexSort();//빈곳 인덱스 오름차순 정렬
+        GameManager.instance.isMoving = true;
         obj.transform.DOMove(CardManager.instance.fieldPosition[CardManager.instance.emptyIndex[0]], 0.5f).SetEase(Ease.OutQuint); // 마지막 필드포지션은 빈곳에 넣음
+        StartCoroutine(GameManager.instance.CompleteMoving());
         CardManager.instance.emptyIndex.RemoveAt(0);
     }
 
     void MoveFieldScoreField(GameObject moveObj, List<GameObject> score)
     {
+        GameManager.instance.isMoving = true;
         moveObj.transform.DOMove(CardManager.instance.ScoreField(moveObj, score), 0.5f).SetEase(Ease.OutQuint); // 점수판 위치 이동
+        StartCoroutine(GameManager.instance.CompleteMoving());
         print(score.Count);
         score.Add(moveObj); // 점수에 더해주기 
         print(score.Count);
@@ -786,7 +807,9 @@ public class CardClick : MonoBehaviour
     {
         for (int i = 0; i < bombObj.Length; i++)
         {
+            GameManager.instance.isMoving = true;
             bombObj[i].transform.DOMove(CardManager.instance.ScoreField(bombObj[i], score), 0.5f).SetEase(Ease.OutQuint); // 점수 필드로 위치 옮김
+            StartCoroutine(GameManager.instance.CompleteMoving());
             //내 점수리스트 add 
             score.Add(bombObj[i]);//내 점수필드 리스트에 추가
 
@@ -796,8 +819,9 @@ public class CardClick : MonoBehaviour
         }
 
         //card.transform.position = CardManager.instance.ScoreField(card, score);
+        GameManager.instance.isMoving = true;
         card.transform.DOMove(CardManager.instance.ScoreField(card, score), 0.5f).SetEase(Ease.OutQuint);
-
+        StartCoroutine(GameManager.instance.CompleteMoving());
         //내 점수리스트 add 
         score.Add(card);//내 점수필드 리스트에 추가
 
@@ -908,4 +932,5 @@ public class CardClick : MonoBehaviour
 
         return temp;
     }
+
 }

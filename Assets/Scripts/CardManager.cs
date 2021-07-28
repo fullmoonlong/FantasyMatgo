@@ -42,9 +42,6 @@ public class CardManager : MonoBehaviour
 
     public GameObject ChociePanel;//두개 중 하나 고를 때 판넬
 
-    int choiceNum; // 고른 카드
-
-
     public int kingEmptyIndex;
     public int enemyKingEmptyIndex;
     public int animalEmptyIndex;
@@ -430,7 +427,6 @@ public class CardManager : MonoBehaviour
         isFlip = true;
         field.Add(cardDeck[0]);// 뒤집기
         field[field.Count - 1].transform.position = fieldPosition[emptyIndex[0]]; //마지막 포지션은 비어있는 필드 포지션
-        field[field.Count - 1].transform.SetParent(GameObject.Find("Field").transform);
         sameTagCount[GetCardTagNum(field[field.Count - 1])]++;
         cardDeck.RemoveAt(0);//카드 덱 삭제
     }
@@ -440,6 +436,7 @@ public class CardManager : MonoBehaviour
         if (cardList == myHand)
         {
             //cardDeck[index].transform.position = myHandPosition[index];
+            //cardList[index].transform.position = Vector3.Lerp(cardList[index].transform.position, myHandPosition[index], 3f);
             cardList[index].transform.DOMove(myHandPosition[index], 1f).SetEase(Ease.OutQuint);
             cardList[index].transform.SetParent(GameObject.Find("MyHand").transform);
         }
@@ -455,12 +452,14 @@ public class CardManager : MonoBehaviour
             //cardDeck[index].transform.DOMove(fieldPosition[index], 0.7f).SetEase(Ease.OutQuint);
             cardList[index].transform.SetParent(GameObject.Find("Field").transform);
         }
+
     }
 
     public void ResetPosition(List<GameObject> cardList)
     {
         if (cardList == myHand)
         {
+            print(myHand.Count);
             for (int i = 0; i < myHand.Count; i++)
             {
                 myHand[i].transform.position = myHandPosition[i];
