@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     public bool isGameEnd = false;
     public bool oneTime;
     public bool first;
-
+    public bool artiOneTime;
     private string Who;
     public Image[] ArtifactMe;
     public Image[] ArtifactOp;
@@ -43,13 +43,15 @@ public class GameManager : MonoBehaviour
             
         ArtifactNumMe = 0;
         ArtifactNumOp = 0;
+
+        artiOneTime = true;
     }
 
     public void Update()
     {
         ScoreTextSet();
-        TurnTextSet();
 
+        TurnTextSet();
         if (CardManager.instance.myHand.Count == 0 || CardManager.instance.opponentHand.Count == 0)
         {
             GameOver();
@@ -125,7 +127,10 @@ public class GameManager : MonoBehaviour
 
     public void ChooseArtifact()
     {
-        artifactPanel.SetActive(true);
+        if (ArtifactNumMe < 3 && ArtifactNumOp < 3)
+        {
+            artifactPanel.SetActive(true);
+        }
     }
 
     public void ApplyArtifact()
@@ -134,29 +139,25 @@ public class GameManager : MonoBehaviour
 
         GameObject btn = EventSystem.current.currentSelectedGameObject;
         
-        if(ArtifactNumMe <= 3 && ArtifactNumOp <= 3)
+        if (Who == "Player")
         {
-            if (Who == "Player")
-            {
                 
-                ArtifactMe[ArtifactNumMe].sprite = btn.GetComponent<Image>().sprite;
-                ArtifactMe[ArtifactNumMe].gameObject.SetActive(true);
-                ArtifactNumMe++;
-            }
-
-            else if (Who == "Opponent")
-            {
-                ArtifactOp[ArtifactNumOp].sprite = btn.GetComponent<Image>().sprite;
-                ArtifactMe[ArtifactNumMe].gameObject.SetActive(true);
-                ArtifactNumOp++;
-            }
+            ArtifactMe[ArtifactNumMe].sprite = btn.GetComponent<Image>().sprite;
+            ArtifactMe[ArtifactNumMe].gameObject.SetActive(true);
+            ArtifactNumMe++;
         }
-       
+
+        else if (Who == "Opponent")
+        {
+            ArtifactOp[ArtifactNumOp].sprite = btn.GetComponent<Image>().sprite;
+            ArtifactOp[ArtifactNumOp].gameObject.SetActive(true);
+            ArtifactNumOp++;
+        }
     }
 
     public void GameOver()
     {
-        if (gameOverPanel.activeInHierarchy == false)
+        if (!gameOverPanel.activeSelf)
         {
             gameOverPanel.SetActive(true);
             isGameEnd = true;
