@@ -1,62 +1,115 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 
 public class MatgoScore : MonoBehaviour
 {
+    public static int myScore = 0;
+    public static int opScore = 0;
+
+    public int myGwangScore = 0;
+    public int myRedFlagScore = 0;
+    public int myBlueFlagScore = 0;
+    public int myNormalFlagScore = 0;
+    public int myAnimalScore = 0;
+    public int myPeeScore = 0;
+
+    public int opponentGwangScore = 0;
+    public int opponentRedFlagScore = 0;
+    public int opponentBlueFlagScore = 0;
+    public int opponentNormalFlagScore = 0;
+    public int opponentAnimalScore = 0;
+    public int opponentPeeScore = 0;
+
+    private void Start()
+    {
+        myScore = 0;
+        opScore = 0;
+    }
+
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            Debug.Log("ÎÇ¥ Í¥ë Ï†êÏàò : " + myGwangScore + "\n" + "Ï†Å Í¥ë Ï†êÏàò : " + opponentGwangScore);
+            Debug.Log("ÎÇ¥ Ìîº Ï†êÏàò : " + myPeeScore + "\n" + "Ï†Å Ìîº Ï†êÏàò : " + opponentPeeScore);
+        }
+        if (GameManager.instance.isGameEnd)
+        {
+            return;
+        }
+
         MyCardCountToScore();
         OpCardCountToScore();
+        ScoreCalculate();
     }
+
+    public void ScoreCalculate()
+    {
+        #region SCORESUM
+        myScore = myGwangScore +
+            myRedFlagScore +
+            myBlueFlagScore +
+            myNormalFlagScore +
+            myAnimalScore +
+            myPeeScore;
+        opScore = opponentGwangScore +
+            opponentRedFlagScore +
+            opponentBlueFlagScore +
+            opponentNormalFlagScore +
+            opponentAnimalScore +
+            opponentPeeScore;
+        #endregion
+    }
+
     public void MyCardCountToScore()
     {
         #region MyScore
-        if (CardManager.instance.gwangCount == 3 && CardManager.instance.isGwang3)
+        if (CardManager.instance.kingEmptyIndex == 3 && CardManager.instance.isGwang3)
         {
             CardManager.instance.isGwang3 = false;
-            CardClick.instance.myScore += 3;
-            Debug.Log("±§3∞≥");
+            myGwangScore = 3;
+            Debug.Log("Í¥ë3Í∞ú");
         }
-        if (CardManager.instance.gwangCount == 4 && CardManager.instance.isGwang4)
+        if (CardManager.instance.kingEmptyIndex == 4 && CardManager.instance.isGwang4)
         {
             CardManager.instance.isGwang4 = false;
-            CardClick.instance.myScore += 1;
-            Debug.Log("±§4∞≥");
+            myGwangScore = 4;
+            Debug.Log("Í¥ë4Í∞ú");
         }
-        if (CardManager .instance.gwangCount == 5 && CardManager.instance.isGwang5)
+        if (CardManager.instance.kingEmptyIndex == 5 && CardManager.instance.isGwang5)
         {
             CardManager.instance.isGwang5 = false;
-            CardClick.instance.myScore += 11;
-            Debug.Log("±§5∞≥");
+            myGwangScore = 15;
+            Debug.Log("Í¥ë5Í∞ú");
         }
-        if (CardManager.instance.redFlagCount == 3 && CardManager.instance.isRedFlag)
+        if (CardManager.instance.redFlagEmptyIndex == 3 && CardManager.instance.isRedFlag)
         {
             CardManager.instance.isRedFlag = false;
-            CardClick.instance.myScore += 3;
-            print("»´¥‹");
+            myRedFlagScore = 3;
+            print("ÌôçÎã®");
         }
-        if (CardManager.instance.blueFlagCount == 3 && CardManager.instance.isBlueFlag)
+        if (CardManager.instance.blueFlagEmptyIndex == 3 && CardManager.instance.isBlueFlag)
         {
             CardManager.instance.isBlueFlag = false;
-            CardClick.instance.myScore += 3;
-            print("√ª¥‹");
+            myBlueFlagScore = 3;
+            print("Ï≤≠Îã®");
         }
-        if (CardManager.instance.normalFlagCount == 3 && CardManager.instance.isNormalFlag)
+        if (CardManager.instance.normalFlagEmptyIndex == 3 && CardManager.instance.isNormalFlag)
         {
             CardManager.instance.isNormalFlag = false;
-            CardClick.instance.myScore += 3;
-            Debug.Log("√ ¥‹");
+            myNormalFlagScore = 3;
+            Debug.Log("Ï¥àÎã®");
         }
-        if (CardManager.instance.peeCount >= 10 & CardManager.instance.isPee)
+        if (CardManager.instance.soldierEmptyIndex >= 10 & CardManager.instance.isPee)
         {
             CardManager.instance.isPee = false;
-            CardClick.instance.myScore += 1;
+            myPeeScore = (CardManager.instance.soldierEmptyIndex - 10);
             Debug.Log("PEE over 10 from now +1 every pee");
         }
-        if (CardManager.instance.animalCount == 3 && CardManager.instance.isAnimal)
+        if (CardManager.instance.animalEmptyIndex == 3 && CardManager.instance.isAnimal)
         {
             CardManager.instance.isAnimal = false;
-            CardClick.instance.myScore += 5;
-            Debug.Log("∞Ìµµ∏Æ");
+            myAnimalScore = 5;
+            Debug.Log("Í≥†ÎèÑÎ¶¨");
         }
         #endregion
     }
@@ -64,53 +117,53 @@ public class MatgoScore : MonoBehaviour
     public void OpCardCountToScore()
     {
         #region OpponentScore
-        if (CardManager.instance.enemyGwangCount == 3 && CardManager.instance.isOpGwang3)
+        if (CardManager.instance.enemyKingEmptyIndex == 3 && CardManager.instance.isOpGwang3)
         {
             CardManager.instance.isOpGwang3 = false;
-            CardClick.instance.opponentScore += 3;
-            Debug.Log("±§3∞≥");
+            opponentGwangScore = 3;
+            Debug.Log("Í¥ë3Í∞ú");
         }
-        if (CardManager.instance.enemyGwangCount == 4 && CardManager.instance.isOpGwang4)
+        if (CardManager.instance.enemyKingEmptyIndex == 4 && CardManager.instance.isOpGwang4)
         {
             CardManager.instance.isOpGwang4 = false;
-            CardClick.instance.opponentScore += 1;
-            Debug.Log("±§4∞≥");
+            opponentGwangScore = 4;
+            Debug.Log("Í¥ë4Í∞ú");
         }
-        if (CardManager.instance.enemyGwangCount == 5 && CardManager.instance.isOpGwang5)
+        if (CardManager.instance.enemyKingEmptyIndex == 5 && CardManager.instance.isOpGwang5)
         {
             CardManager.instance.isOpGwang5 = false;
-            CardClick.instance.opponentScore += 11;
-            Debug.Log("±§5∞≥");
+            opponentGwangScore = 15;
+            Debug.Log("Í¥ë5Í∞ú");
         }
-        if (CardManager.instance.enemyRedFlagCount == 3 && CardManager.instance.isOpRedFlag)
+        if (CardManager.instance.enemyRedFlagEmptyIndex == 3 && CardManager.instance.isOpRedFlag)
         {
             CardManager.instance.isOpRedFlag = false;
-            CardClick.instance.opponentScore += 3;
-            print("»´¥‹");
+            opponentRedFlagScore = 3;
+            print("ÌôçÎã®");
         }
-        if (CardManager.instance.enemyBlueFlagCount == 3 && CardManager.instance.isOpBlueFlag)
+        if (CardManager.instance.enemyBlueFlagEmptyIndex == 3 && CardManager.instance.isOpBlueFlag)
         {
             CardManager.instance.isOpBlueFlag = false;
-            CardClick.instance.opponentScore += 3;
-            print("√ª¥‹");
+            opponentBlueFlagScore = 3;
+            print("Ï≤≠Îã®");
         }
-        if (CardManager.instance.enemyNormalFlagCount == 3 && CardManager.instance.isOpNormalFlag)
+        if (CardManager.instance.enemyNormalFlagEmptyIndex == 3 && CardManager.instance.isOpNormalFlag)
         {
             CardManager.instance.isOpNormalFlag = false;
-            CardClick.instance.opponentScore += 3;
-            Debug.Log("√ ¥‹");
+            opponentNormalFlagScore = 3;
+            Debug.Log("Ï¥àÎã®");
         }
-        if (CardManager.instance.enemyPeeCount >= 10)
+        if (CardManager.instance.enemySoldierEmptyIndex >= 10)
         {
             CardManager.instance.isOpPee = false;
-            CardClick.instance.opponentScore += 1;
+            opponentPeeScore = (CardManager.instance.enemySoldierEmptyIndex - 10);
             Debug.Log("PEE over 10 from now +1 every pee");
         }
-        if (CardManager.instance.enemyAnimalCount == 3 && CardManager.instance.isOpAnimal)
+        if (CardManager.instance.enemyAnimalEmptyIndex == 3 && CardManager.instance.isOpAnimal)
         {
             CardManager.instance.isOpAnimal = false;
-            CardClick.instance.opponentScore += 5;
-            Debug.Log("∞Ìµµ∏Æ");
+            opponentAnimalScore = 5;
+            Debug.Log("Í≥†ÎèÑÎ¶¨");
         }
         #endregion
     }

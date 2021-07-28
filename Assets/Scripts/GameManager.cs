@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverPanel;
     public int turnCount; // 현재까지 진행된 턴 수
     public bool isMyTurn; // 턴을 판정하는 bool 변수
+    public bool isGameEnd = false;
 
     public void Start()
     {
@@ -35,12 +36,12 @@ public class GameManager : MonoBehaviour
 
     private void WinDecision()
     {
-        if (CardClick.instance.myScore >= 7)
+        if (MatgoScore.myScore >= 7)
         {
             gameOverText.text = "1P(6시) 승리!";
             GameOver();
         }
-        else if (CardClick.instance.opponentScore >= 7)
+        else if (MatgoScore.opScore >= 7)
         {
             gameOverText.text = "2P(12시) 승리!";
             GameOver();
@@ -53,13 +54,13 @@ public class GameManager : MonoBehaviour
 
     public void ScoreTextSet()
     {
-        myScoreText.text = "1P (6시) 점수 : " + CardClick.instance.myScore.ToString();
-        opScoreText.text = "2P(12시) 점수 : " + CardClick.instance.opponentScore.ToString();
+        myScoreText.text = "1P (6시) 점수 : " + MatgoScore.myScore.ToString();
+        opScoreText.text = "2P(12시) 점수 : " + MatgoScore.opScore.ToString();
     }
 
     public void TurnTextSet()
     {
-        if(isMyTurn == true)
+        if (isMyTurn == true)
         {
             turnText.text = "1P 턴 (6시)";
         }
@@ -74,6 +75,7 @@ public class GameManager : MonoBehaviour
         if (gameOverPanel.activeInHierarchy == false)
         {
             gameOverPanel.SetActive(true);
+            isGameEnd = true;
         }
     }
 

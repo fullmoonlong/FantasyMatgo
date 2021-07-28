@@ -31,8 +31,12 @@ public class CardManager : MonoBehaviour
     public Vector3[] scoreEnemyKingPosition; // 5개
     public Vector3[] scoreAnimalPosition; // 9개 멍따
     public Vector3[] scoreEnemyAnimalPosition; // 9개 멍따
-    public Vector3[] scoreFlagPosition;
-    public Vector3[] scoreEnemyFlagPosition;
+    public Vector3[] scoreRedFlagPosition;
+    public Vector3[] scoreBlueFlagPosition;
+    public Vector3[] scoreNormalFlagPosition;
+    public Vector3[] scoreEnemyRedFlagPosition;
+    public Vector3[] scoreEnemyBlueFlagPosition;
+    public Vector3[] scoreEnemyNormalFlagPosition;
     public Vector3[] scoreSoldierPosition;
     public Vector3[] scoreEnemySoldierPosition;
 
@@ -45,8 +49,12 @@ public class CardManager : MonoBehaviour
     public int enemyKingEmptyIndex;
     public int animalEmptyIndex;
     public int enemyAnimalEmptyIndex;
-    public int flagEmptyIndex;
-    public int enemyFlagEmptyIndex;
+    public int redFlagEmptyIndex;
+    public int blueFlagEmptyIndex;
+    public int normalFlagEmptyIndex;
+    public int enemyRedFlagEmptyIndex;
+    public int enemyBlueFlagEmptyIndex;
+    public int enemyNormalFlagEmptyIndex;
     public int soldierEmptyIndex;
     public int enemySoldierEmptyIndex;
 
@@ -114,8 +122,12 @@ public class CardManager : MonoBehaviour
         enemyKingEmptyIndex = 0;
         animalEmptyIndex = 0;
         enemyAnimalEmptyIndex = 0;
-        flagEmptyIndex = 0;
-        enemyFlagEmptyIndex = 0;
+        redFlagEmptyIndex = 0;
+        blueFlagEmptyIndex = 0;
+        normalFlagEmptyIndex = 0;
+        enemyRedFlagEmptyIndex = 0;
+        enemyBlueFlagEmptyIndex = 0;
+        enemyNormalFlagEmptyIndex = 0;
         soldierEmptyIndex = 0;
         enemySoldierEmptyIndex = 0;
 
@@ -198,32 +210,49 @@ public class CardManager : MonoBehaviour
             new Vector3(-4.1f, 3f, -0.8f)
         };
         //
-        scoreFlagPosition = new[]
+        scoreRedFlagPosition = new[]
         {
             new Vector3(-3.8f, -3f, 0f),
             new Vector3(-3.5f, -3f, -0.1f),
             new Vector3(-3.2f, -3f, -0.2f),
+        };
+        scoreBlueFlagPosition = new[]
+        {
             new Vector3(-2.9f, -3f, -0.3f),
             new Vector3(-2.6f, -3f, -0.4f),
             new Vector3(-2.3f, -3f, -0.5f),
+        };
+
+        scoreNormalFlagPosition = new[]
+        {
             new Vector3(-2.0f, -3f, -0.6f),
             new Vector3(-1.7f, -3f, -0.7f),
             new Vector3(-1.4f, -3f, -0.8f),
             new Vector3(-1.1f, -3f, -0.9f),
         };
-        scoreEnemyFlagPosition = new[]
+
+        scoreEnemyRedFlagPosition = new[]
         {
             new Vector3(-3.8f, 3f, 0f),
             new Vector3(-3.5f, 3f, -0.1f),
             new Vector3(-3.2f, 3f, -0.2f),
+        };
+
+        scoreEnemyBlueFlagPosition = new[]
+        {
             new Vector3(-2.9f, 3f, -0.3f),
             new Vector3(-2.6f, 3f, -0.4f),
             new Vector3(-2.3f, 3f, -0.5f),
+        };
+
+        scoreEnemyNormalFlagPosition = new[]
+        {
             new Vector3(-2.0f, 3f, -0.6f),
             new Vector3(-1.7f, 3f, -0.7f),
             new Vector3(-1.4f, 3f, -0.8f),
             new Vector3(-1.1f, 3f, -0.9f),
         };
+
         //
         for (int i = 0; i < 24; i++)
         {
@@ -257,7 +286,6 @@ public class CardManager : MonoBehaviour
             Debug.Log("OpGwang : " + isOpGwang3);
             Debug.Log("OpChodan : " + isOpNormalFlag);
         }
-
     }
 
     public int GetCardTagNum(GameObject obj)
@@ -481,16 +509,16 @@ public class CardManager : MonoBehaviour
                     animalEmptyIndex++;
                     return destination;
                 case "홍단":
-                    destination = scoreFlagPosition[flagEmptyIndex];
-                    flagEmptyIndex++;
+                    destination = scoreRedFlagPosition[redFlagEmptyIndex];
+                    redFlagEmptyIndex++;
                     return destination;
                 case "청단":
-                    destination = scoreFlagPosition[flagEmptyIndex];
-                    flagEmptyIndex++;
+                    destination = scoreBlueFlagPosition[blueFlagEmptyIndex];
+                    blueFlagEmptyIndex++;
                     return destination;
                 case "초단":
-                    destination = scoreFlagPosition[flagEmptyIndex];
-                    flagEmptyIndex++;
+                    destination = scoreNormalFlagPosition[normalFlagEmptyIndex];
+                    normalFlagEmptyIndex++;
                     return destination;
                 default:
                     destination = scoreSoldierPosition[soldierEmptyIndex];
@@ -512,16 +540,16 @@ public class CardManager : MonoBehaviour
                     enemyAnimalEmptyIndex++;
                     return destination;
                 case "홍단":
-                    destination = scoreEnemyFlagPosition[enemyFlagEmptyIndex];
-                    enemyFlagEmptyIndex++;
+                    destination = scoreEnemyRedFlagPosition[enemyRedFlagEmptyIndex];
+                    enemyRedFlagEmptyIndex++;
                     return destination;
                 case "청단":
-                    destination = scoreEnemyFlagPosition[enemyFlagEmptyIndex];
-                    enemyFlagEmptyIndex++;
+                    destination = scoreEnemyBlueFlagPosition[enemyBlueFlagEmptyIndex];
+                    enemyBlueFlagEmptyIndex++;
                     return destination;
                 case "초단":
-                    destination = scoreEnemyFlagPosition[enemyFlagEmptyIndex];
-                    enemyFlagEmptyIndex++;
+                    destination = scoreEnemyNormalFlagPosition[enemyNormalFlagEmptyIndex];
+                    enemyNormalFlagEmptyIndex++;
                     return destination;
                 default:
                     destination = scoreEnemySoldierPosition[enemySoldierEmptyIndex];
@@ -547,24 +575,6 @@ public class CardManager : MonoBehaviour
             {
                 hand[i].transform.position = opponentHandPosition[i];
             }
-        }
-    }
-
-    public void PrintList()
-    {
-        for (int i = 0; i < myHand.Count; i++)
-        {
-            myHand[i].transform.SetParent(GameObject.Find("MyHand").transform);
-        }
-
-        for (int i = 0; i < opponentHand.Count; i++)
-        {
-            opponentHand[i].transform.SetParent(GameObject.Find("OpponentHand").transform);
-        }
-
-        for (int i = 0; i < field.Count; i++)
-        {
-            field[i].transform.SetParent(GameObject.Find("Field").transform);
         }
     }
 }

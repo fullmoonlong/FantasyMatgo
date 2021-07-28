@@ -7,32 +7,23 @@ using UnityEngine.EventSystems;
 
 public class CardClick : MonoBehaviour
 {
-    #region SINGLETON
+    #region SINGLETON	
     public static CardClick instance;
     private void Awake()
     {
         instance = this;
     }
     #endregion
-
-    public int myScore = 0;
-    public int opponentScore = 0;
     public string type = "";
-
-    public GameObject ChoicePanel;
-
     GameObject hittedCard;
     int myCardCount;
-
     private GameObject OpenChoicePanel;
-
-    //private bool initialTurn = true;
-
+    //private bool initialTurn = true;	
     private void Start()
     {
         switch (name)
         {
-            //광
+            //광	
             case "0(Clone)":
             case "8(Clone)":
             case "28(Clone)":
@@ -40,43 +31,33 @@ public class CardClick : MonoBehaviour
             case "44(Clone)":
                 type = "광";
                 break;
-
             case "1(Clone)":
             case "5(Clone)":
             case "9(Clone)":
                 type = "홍단";
                 break;
-
             case "21(Clone)":
             case "33(Clone)":
             case "37(Clone)":
                 type = "청단";
                 break;
-
             case "13(Clone)":
             case "17(Clone)":
             case "25(Clone)":
             case "46(Clone)":
                 type = "초단";
                 break;
-
             case "4(Clone)":
             case "12(Clone)":
             case "29(Clone)":
                 type = "새";
                 break;
-
             default:
                 type = "피";
                 break;
         }
-
         myCardCount = 0;
-        myScore = 0;
-        opponentScore = 0;
-
     }
-
     public void CalculateScore(List<GameObject> scoreList)
     {
         foreach (var item in scoreList)
@@ -87,61 +68,73 @@ public class CardClick : MonoBehaviour
                     if (scoreList == CardManager.instance.myHandScore)
                     {
                         CardManager.instance.gwangCount++;
+                        Debug.Log("내 광 : " + CardManager.instance.kingEmptyIndex);
                     }
-                    else
+                    else if (scoreList == CardManager.instance.opponentHandScore)
                     {
                         CardManager.instance.enemyGwangCount++;
+                        Debug.Log("상대 광 : " + CardManager.instance.enemyKingEmptyIndex);
                     }
                     break;
                 case "홍단":
                     if (scoreList == CardManager.instance.myHandScore)
                     {
                         CardManager.instance.redFlagCount++;
+                        Debug.Log("내 홍단 : " + CardManager.instance.redFlagEmptyIndex);
                     }
-                    else
+                    else if (scoreList == CardManager.instance.opponentHandScore)
                     {
                         CardManager.instance.enemyRedFlagCount++;
+                        Debug.Log("상대 홍단 : " + CardManager.instance.enemyRedFlagEmptyIndex);
                     }
                     break;
                 case "청단":
                     if (scoreList == CardManager.instance.myHandScore)
                     {
                         CardManager.instance.blueFlagCount++;
+                        Debug.Log("내 청단 : " + CardManager.instance.blueFlagEmptyIndex);
                     }
-                    else
+                    else if (scoreList == CardManager.instance.opponentHandScore)
                     {
                         CardManager.instance.enemyBlueFlagCount++;
+                        Debug.Log("상대 청단 : " + CardManager.instance.enemyBlueFlagEmptyIndex);
                     }
                     break;
                 case "초단":
                     if (scoreList == CardManager.instance.myHandScore)
                     {
                         CardManager.instance.normalFlagCount++;
+                        Debug.Log("내 초단 : " + CardManager.instance.normalFlagEmptyIndex);
                     }
-                    else
+                    else if (scoreList == CardManager.instance.opponentHandScore)
                     {
                         CardManager.instance.enemyNormalFlagCount++;
+                        Debug.Log("상대 초단 : " + CardManager.instance.enemyNormalFlagEmptyIndex);
                     }
                     break;
                 case "새":
                     if (scoreList == CardManager.instance.myHandScore)
                     {
                         CardManager.instance.animalCount++;
+                        Debug.Log("내 고돌위 : " + CardManager.instance.animalEmptyIndex);
                     }
-                    else
+                    else if (scoreList == CardManager.instance.opponentHandScore)
                     {
                         CardManager.instance.enemyAnimalCount++;
+                        Debug.Log("상대 고돌위 : " + CardManager.instance.enemyAnimalEmptyIndex);
                     }
                     break;
                 case "피":
                     if (scoreList == CardManager.instance.myHandScore)
                     {
                         CardManager.instance.peeCount++;
+                        Debug.Log("내 피 : " + CardManager.instance.soldierEmptyIndex);
                         CardManager.instance.isPee = true;
                     }
-                    else
+                    else if (scoreList == CardManager.instance.opponentHandScore)
                     {
                         CardManager.instance.enemyPeeCount++;
+                        Debug.Log("상대 피 : " + CardManager.instance.enemySoldierEmptyIndex);
                         CardManager.instance.isOpPee = true;
                     }
                     break;
@@ -150,24 +143,22 @@ public class CardClick : MonoBehaviour
             }
         }
     }
-
     public void OnMouseUp()
     {
         if (!EventSystem.current.IsPointerOverGameObject())
         {
-            #region PlayerTurn
-            if (GameManager.instance.isMyTurn == true)//만약 플레이어 턴이면
+            #region PlayerTurn	
+            if (GameManager.instance.isMyTurn == true)//만약 플레이어 턴이면	
             {
                 WhoTurn(CardManager.instance.myHand, CardManager.instance.myHandScore, false);
-                //CalculateScore(CardManager.instance.myHandScore);
+                CalculateScore(CardManager.instance.myHandScore);
             }
             #endregion
-
-            #region OpponentTurn
-            else//만약 상대 턴이면
+            #region OpponentTurn	
+            else//만약 상대 턴이면	
             {
                 WhoTurn(CardManager.instance.opponentHand, CardManager.instance.opponentHandScore, true);
-                //CalculateScore(CardManager.instance.opponentHandScore);
+                CalculateScore(CardManager.instance.opponentHandScore);
             }
             #endregion
         }
