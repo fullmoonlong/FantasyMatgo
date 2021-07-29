@@ -76,49 +76,49 @@ public class MatgoScore : MonoBehaviour
         {
             CardManager.instance.isGwang3 = false;
             myGwangScore = 3;
-            Debug.Log("광3개");
+            //Debug.Log("광3개");
         }
         if (CardManager.instance.kingEmptyIndex == 4 && CardManager.instance.isGwang4)
         {
             CardManager.instance.isGwang4 = false;
             myGwangScore = 4;
-            Debug.Log("광4개");
+            //Debug.Log("광4개");
         }
         if (CardManager.instance.kingEmptyIndex == 5 && CardManager.instance.isGwang5)
         {
             CardManager.instance.isGwang5 = false;
             myGwangScore = 15;
-            Debug.Log("광5개");
+            //Debug.Log("광5개");
         }
         if (CardManager.instance.redFlagEmptyIndex == 3 && CardManager.instance.isRedFlag)
         {
             CardManager.instance.isRedFlag = false;
             myRedFlagScore = 3;
-            print("홍단");
+            //print("홍단");
         }
         if (CardManager.instance.blueFlagEmptyIndex == 3 && CardManager.instance.isBlueFlag)
         {
             CardManager.instance.isBlueFlag = false;
             myBlueFlagScore = 3;
-            print("청단");
+            //print("청단");
         }
         if (CardManager.instance.normalFlagEmptyIndex == 3 && CardManager.instance.isNormalFlag)
         {
             CardManager.instance.isNormalFlag = false;
             myNormalFlagScore = 3;
-            Debug.Log("초단");
+            //Debug.Log("초단");
         }
         if (CardManager.instance.soldierEmptyIndex >= 10 & CardManager.instance.isPee)
         {
             CardManager.instance.isPee = false;
             myPeeScore = (CardManager.instance.soldierEmptyIndex - 10);
-            Debug.Log("PEE over 10 from now +1 every pee");
+            //Debug.Log("PEE over 10 from now +1 every pee");
         }
         if (CardManager.instance.animalEmptyIndex == 3 && CardManager.instance.isAnimal)
         {
             CardManager.instance.isAnimal = false;
             myAnimalScore = 5;
-            Debug.Log("고도리");
+            //Debug.Log("고도리");
         }
         #endregion
     }
@@ -130,49 +130,49 @@ public class MatgoScore : MonoBehaviour
         {
             CardManager.instance.isOpGwang3 = false;
             opponentGwangScore = 3;
-            Debug.Log("광3개");
+            //Debug.Log("광3개");
         }
         if (CardManager.instance.enemyKingEmptyIndex == 4 && CardManager.instance.isOpGwang4)
         {
             CardManager.instance.isOpGwang4 = false;
             opponentGwangScore = 4;
-            Debug.Log("광4개");
+            //Debug.Log("광4개");
         }
         if (CardManager.instance.enemyKingEmptyIndex == 5 && CardManager.instance.isOpGwang5)
         {
             CardManager.instance.isOpGwang5 = false;
             opponentGwangScore = 15;
-            Debug.Log("광5개");
+            //Debug.Log("광5개");
         }
         if (CardManager.instance.enemyRedFlagEmptyIndex == 3 && CardManager.instance.isOpRedFlag)
         {
             CardManager.instance.isOpRedFlag = false;
             opponentRedFlagScore = 3;
-            print("홍단");
+            //print("홍단");
         }
         if (CardManager.instance.enemyBlueFlagEmptyIndex == 3 && CardManager.instance.isOpBlueFlag)
         {
             CardManager.instance.isOpBlueFlag = false;
             opponentBlueFlagScore = 3;
-            print("청단");
+            //print("청단");
         }
         if (CardManager.instance.enemyNormalFlagEmptyIndex == 3 && CardManager.instance.isOpNormalFlag)
         {
             CardManager.instance.isOpNormalFlag = false;
             opponentNormalFlagScore = 3;
-            Debug.Log("초단");
+            //Debug.Log("초단");
         }
         if (CardManager.instance.enemySoldierEmptyIndex >= 10)
         {
             CardManager.instance.isOpPee = false;
             opponentPeeScore = (CardManager.instance.enemySoldierEmptyIndex - 10);
-            Debug.Log("PEE over 10 from now +1 every pee");
+            //Debug.Log("PEE over 10 from now +1 every pee");
         }
         if (CardManager.instance.enemyAnimalEmptyIndex == 3 && CardManager.instance.isOpAnimal)
         {
             CardManager.instance.isOpAnimal = false;
             opponentAnimalScore = 5;
-            Debug.Log("고도리");
+            //Debug.Log("고도리");
         }
         #endregion
     }

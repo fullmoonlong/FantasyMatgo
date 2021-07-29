@@ -63,6 +63,9 @@ public class CardManager : MonoBehaviour
     public List<GameObject> BombObj;
     private List<GameObject> storage;
 
+    public int myCardCount;
+    public GameObject curObj;
+
     #region SCORE
     // my
     [HideInInspector] public int gwangCount;
@@ -134,6 +137,8 @@ public class CardManager : MonoBehaviour
         BombObj = new List<GameObject>();
 
         isFlip = false;
+
+        myCardCount = 0;
     }
 
     private void Start()
@@ -256,7 +261,6 @@ public class CardManager : MonoBehaviour
         {
             scoreEnemySoldierPosition[i] = new Vector3(-0.8f + (0.3f * i), 3f, 0f + (0.1f * i));
         }
-
         PrefabToCard(); // 프리팹 폴더에 존재하는 카드를 리스트에 담아 생성준비를 한다.
         CreateDeck(); // 플레이어가 준비한 카드 12장, 적이 준비한 카드 12장 을 더해 총 48장의 카드를 덱에 넣는다.
         ShuffleDeck(); //덱을 섞는다
