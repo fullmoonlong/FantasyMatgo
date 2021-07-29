@@ -2068,6 +2068,8 @@ MonoBehaviour:
   BombObj: []
   myCardCount: 0
   curObj: {fileID: 0}
+  BombCard: {fileID: 5602184375244336795, guid: b8268d9c968cbf14ea5ce84723ada016,
+    type: 3}
   gwangCount: 0
   redFlagCount: 0
   blueFlagCount: 0
@@ -2986,7 +2988,7 @@ MonoBehaviour:
   gameOverPanel: {fileID: 1591322481}
   myArtifactPanel: {fileID: 1602145390}
   oppoArtifactPanel: {fileID: 294930556}
-  turnCount: 0
+  MaxturnCount: 0
   artifactNumMe: 0
   artifactNumOpponent: 0
   isMyTurn: 0

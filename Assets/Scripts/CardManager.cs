@@ -64,7 +64,9 @@ public class CardManager : MonoBehaviour
     private List<GameObject> storage;
 
     public int myCardCount;
-    public GameObject curObj;
+    public GameObject curObj; // 클릭한 게임 오브젝트
+
+    public GameObject BombCard;
 
     #region SCORE
     // my
@@ -268,6 +270,8 @@ public class CardManager : MonoBehaviour
         DrawCard(opponentHand, 6);  // 상대손에 6장 씩 뽑는다.
         DrawCard(field, 6);
         FieldSameCard();
+
+      
     }
 
     private void Update()
@@ -421,6 +425,16 @@ public class CardManager : MonoBehaviour
             cardDeck.RemoveAt(i);
         }
     }
+
+    public void DrawBombCard(List<GameObject> cardList)
+    {
+        for(int i=0;i<2;i++)
+        {
+            cardList.Add(Instantiate(BombCard, parentDeck));
+            CardInitialPosition(cardList, cardList.Count - 1);
+        }
+        
+    }
     public void FlipCard()
     {
         if (cardDeck.Count == 0)
@@ -442,19 +456,19 @@ public class CardManager : MonoBehaviour
             //cardDeck[index].transform.position = myHandPosition[index];
             //cardList[index].transform.position = Vector3.Lerp(cardList[index].transform.position, myHandPosition[index], 3f);
             cardList[index].transform.DOMove(myHandPosition[index], 1f).SetEase(Ease.OutQuint);
-            cardList[index].transform.SetParent(GameObject.Find("MyHand").transform);
+            //cardList[index].transform.SetParent(GameObject.Find("MyHand").transform);
         }
         else if (cardList == opponentHand)
         {
             //cardDeck[index].transform.position = opponentHandPosition[index];
             cardList[index].transform.DOMove(opponentHandPosition[index], 1f).SetEase(Ease.OutQuint);
-            cardList[index].transform.SetParent(GameObject.Find("OpponentHand").transform);
+            //cardList[index].transform.SetParent(GameObject.Find("OpponentHand").transform);
         }
         else if (cardList == field)
         {
             cardList[index].transform.position = fieldPosition[index];
             //cardDeck[index].transform.DOMove(fieldPosition[index], 0.7f).SetEase(Ease.OutQuint);
-            cardList[index].transform.SetParent(GameObject.Find("Field").transform);
+            //cardList[index].transform.SetParent(GameObject.Find("Field").transform);
         }
 
     }
