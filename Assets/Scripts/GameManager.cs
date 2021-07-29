@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour
         isSetting = false;
         isMoving = false;
 
-        MaxturnCount = 9;
+        MaxturnCount = 7;
         StartCoroutine(CompleteSetting());
     }
 
