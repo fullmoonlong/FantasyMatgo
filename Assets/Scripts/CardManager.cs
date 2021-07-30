@@ -403,7 +403,12 @@ public class CardManager : MonoBehaviour
                 print(myHandScore.Count);
                 field.Remove(field[i]); // 필드에서 지우기
 
-               
+                ResetPosition(myHand);
+
+                DrawCard(myHand, 1);
+                GameManager.instance.oneTime = false;
+
+                DrawCard(field, 1);
             }
         }
     }

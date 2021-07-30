@@ -222,4 +222,8 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene("Game");
     }
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
 }

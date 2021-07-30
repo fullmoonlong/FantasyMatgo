@@ -210,15 +210,26 @@ public class CardClick : MonoBehaviour
                 MoveFieldScoreField(gameObject, handscore);
                 hand.Remove(gameObject);
 
-                CardManager.instance.myCardCount = 1;
+                //CardManager.instance.myCardCount = 1;
 
-                CheckCardAction(gameObject, hand, handscore);
+                //CheckCardAction(gameObject, hand, handscore);
 
-                GameManager.instance.isMoving = false;
+                //GameManager.instance.isMoving = false;
+
+                //CardManager.instance.ResetPosition(hand);
+
+                //EndArrange(hand, isPlayer);
 
                 CardManager.instance.ResetPosition(hand);
 
-                EndArrange(hand, isPlayer);
+                if (GameManager.instance.first)
+                {
+                    CardManager.instance.DrawCard(hand, 1);
+                }
+                CardManager.instance.DrawCard(hand, 1);
+                GameManager.instance.oneTime = false;
+
+                
             }
             else
             {
@@ -291,7 +302,7 @@ public class CardClick : MonoBehaviour
                         else
                         {
                             print("태그가 다름");
-                            FlipAction(handscore);
+                            FlipAction(hand, handscore);
                         }
                     }
 
@@ -362,7 +373,7 @@ public class CardClick : MonoBehaviour
                             MoveFieldScoreField(clickObj, handscore);
 
 
-                            FlipAction(handscore);
+                            FlipAction(hand, handscore);
                         }
                     }
 
@@ -407,7 +418,7 @@ public class CardClick : MonoBehaviour
                             MoveFieldScoreField(clickObj, handscore);
                             AfterFlipChoiceCard();
 
-                            FlipAction(handscore);
+                            FlipAction(hand, handscore);
                         }
                         break;
                     }
@@ -436,7 +447,7 @@ public class CardClick : MonoBehaviour
                     {
                         if (!(CardManager.instance.field[CardManager.instance.field.Count - 1].CompareTag(clickObj.tag))) // 다른거 맞음
                         {
-                            FlipAction(handscore);
+                            FlipAction(hand, handscore);
                         }
 
                         break;
@@ -448,7 +459,7 @@ public class CardClick : MonoBehaviour
     }
 
 
-    void FlipAction(List<GameObject> handscore)
+    void FlipAction(List<GameObject> hand, List<GameObject> handscore)
     {
         if(CardManager.instance.field[CardManager.instance.field.Count - 1].tag == "Bonus")
         {
@@ -459,9 +470,13 @@ public class CardClick : MonoBehaviour
 
             MoveFieldScoreField(CardManager.instance.field[CardManager.instance.field.Count - 1], handscore); // 피로 옮김
 
-            CardManager.instance.FlipCard();
+            CardManager.instance.ResetPosition(hand);
 
-            FlipAction(handscore);
+            CardManager.instance.DrawCard(hand, 1);
+            GameManager.instance.oneTime = false;
+            //CardManager.instance.FlipCard();
+
+            //FlipAction(hand, handscore);
         }
        
         else
