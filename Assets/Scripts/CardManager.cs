@@ -9,7 +9,7 @@ public class CardManager : MonoBehaviour
     public static CardManager instance;
     #endregion
 
-    private int maxCards = 48;
+    private int maxCards = 50;
 
     public Transform parentDeck; // Instantiate 할 대상(보기 좋게 묶기 용)
 
@@ -145,8 +145,8 @@ public class CardManager : MonoBehaviour
 
     private void Start()
     {
-        scoreSoldierPosition = new Vector3[24];
-        scoreEnemySoldierPosition = new Vector3[24];
+        scoreSoldierPosition = new Vector3[26];
+        scoreEnemySoldierPosition = new Vector3[26];
 
         //각 카드의 위치 설정
         for (int i = 0; i < 8; i++)
@@ -255,11 +255,11 @@ public class CardManager : MonoBehaviour
         };
 
         //
-        for (int i = 0; i < 24; i++)
+        for (int i = 0; i < 26; i++)
         {
             scoreSoldierPosition[i] = new Vector3(-0.8f + (0.3f * i), -3f, 0f + (0.1f * i));
         }
-        for (int i = 0; i < 24; i++)
+        for (int i = 0; i < 26; i++)
         {
             scoreEnemySoldierPosition[i] = new Vector3(-0.8f + (0.3f * i), 3f, 0f + (0.1f * i));
         }
@@ -270,8 +270,7 @@ public class CardManager : MonoBehaviour
         DrawCard(opponentHand, 6);  // 상대손에 6장 씩 뽑는다.
         DrawCard(field, 6);
         FieldSameCard();
-
-      
+        Invoke("FieldBonusCard",2f);
     }
 
     private void Update()
@@ -378,6 +377,29 @@ public class CardManager : MonoBehaviour
                 //엠티 카운트가 없으면 어저지,,
             }
             count = 0;
+        }
+    }
+
+    void FieldBonusCard()
+    {
+        for(int i=0;i<field.Count;i++)
+        {
+            if(field[i].tag == "Bonus")
+            {
+                //if(GameManager.instance.isSetting)
+                // {
+
+                // }
+                //3초 기다리기
+                print("보너스나옴");
+                GameManager.instance.isMoving = true;
+                field[i].transform.DOMove(scoreSoldierPosition[soldierEmptyIndex], 0.5f).SetEase(Ease.OutQuint); // 점수판 위치 이동
+                soldierEmptyIndex++;
+                StartCoroutine(GameManager.instance.CompleteMoving());
+                myHandScore.Add(field[i]); // 점수에 더해주기 
+                print(myHandScore.Count);
+                field.Remove(field[i]); // 필드에서 지우기
+            }
         }
     }
     public void ShuffleDeck()
