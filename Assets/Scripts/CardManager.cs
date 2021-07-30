@@ -270,7 +270,7 @@ public class CardManager : MonoBehaviour
         DrawCard(opponentHand, 6);  // 상대손에 6장 씩 뽑는다.
         DrawCard(field, 6);
         FieldSameCard();
-        Invoke("FieldBonusCard",2f);
+        Invoke("FieldBonusCard", 0.5f);
     }
 
     private void Update()
@@ -392,6 +392,9 @@ public class CardManager : MonoBehaviour
                 // }
                 //3초 기다리기
                 print("보너스나옴");
+
+                CardClick.instance.EmptyFieldPosition(field[i]);
+
                 GameManager.instance.isMoving = true;
                 field[i].transform.DOMove(scoreSoldierPosition[soldierEmptyIndex], 0.5f).SetEase(Ease.OutQuint); // 점수판 위치 이동
                 soldierEmptyIndex++;
@@ -399,6 +402,8 @@ public class CardManager : MonoBehaviour
                 myHandScore.Add(field[i]); // 점수에 더해주기 
                 print(myHandScore.Count);
                 field.Remove(field[i]); // 필드에서 지우기
+
+               
             }
         }
     }
@@ -467,7 +472,10 @@ public class CardManager : MonoBehaviour
         isFlip = true;
         field.Add(cardDeck[0]);// 뒤집기
         field[field.Count - 1].transform.position = fieldPosition[emptyIndex[0]]; //마지막 포지션은 비어있는 필드 포지션
-        sameTagCount[GetCardTagNum(field[field.Count - 1])]++;
+        if(GetCardTagNum(field[field.Count - 1]) < 13)
+        {
+            sameTagCount[GetCardTagNum(field[field.Count - 1])]++;
+        }
         cardDeck.RemoveAt(0);//카드 덱 삭제
     }
 

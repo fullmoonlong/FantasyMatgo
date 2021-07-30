@@ -116,6 +116,11 @@ public class CardClick : MonoBehaviour
                     print("player turn");
                     WhoTurn(CardManager.instance.myHand, CardManager.instance.myHandScore, false);
                     CalculateScore(CardManager.instance.myHandScore);
+                    for (int i = 0; i < CardManager.instance.emptyIndex.Count; i++)
+                    {
+                        print("완료 남은 카드 인덱스 " + i + " : " + CardManager.instance.emptyIndex[i]);
+                    }
+
                 }
                 #endregion
                 #region OpponentTurn	
@@ -124,6 +129,11 @@ public class CardClick : MonoBehaviour
                     print("Opponent turn");
                     WhoTurn(CardManager.instance.opponentHand, CardManager.instance.opponentHandScore, true);
                     CalculateScore(CardManager.instance.opponentHandScore);
+                    for (int i = 0; i < CardManager.instance.emptyIndex.Count; i++)
+                    {
+                        print("완료 남은 카드 인덱스 " + i + " : " + CardManager.instance.emptyIndex[i]);
+                    }
+
                 }
                 #endregion
             }
@@ -280,6 +290,7 @@ public class CardClick : MonoBehaviour
 
                         else
                         {
+                            print("태그가 다름");
                             FlipAction(handscore);
                         }
                     }
@@ -439,7 +450,6 @@ public class CardClick : MonoBehaviour
 
     void FlipAction(List<GameObject> handscore)
     {
-
         if(CardManager.instance.field[CardManager.instance.field.Count - 1].tag == "Bonus")
         {
             print("bonus card!");
@@ -453,8 +463,10 @@ public class CardClick : MonoBehaviour
 
             FlipAction(handscore);
         }
-
-        switch (CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(CardManager.instance.field[CardManager.instance.field.Count - 1])]) // 뒤집은 카드의 같은 태그 개수 별
+       
+        else
+        {
+            switch (CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(CardManager.instance.field[CardManager.instance.field.Count - 1])]) // 뒤집은 카드의 같은 태그 개수 별
             {
                 case 1:
                     {
@@ -509,7 +521,10 @@ public class CardClick : MonoBehaviour
                         MoveBombFieldScoreField(temp, CardManager.instance.field[CardManager.instance.field.Count - 1], handscore);
                         break;
                     }
+
             }
+        }
+      
       
     }
     GameObject GetHitCard(GameObject obj)
@@ -615,11 +630,21 @@ public class CardClick : MonoBehaviour
     void NoMatchField(GameObject obj)
     {
         print("no match");
-        CardManager.instance.EmptyIndexSort();//빈곳 인덱스 오름차순 정렬
+        
+
+        print("0 번 값: " + CardManager.instance.emptyIndex[0]);
         GameManager.instance.isMoving = true;
         obj.transform.DOMove(CardManager.instance.fieldPosition[CardManager.instance.emptyIndex[0]], 0.5f).SetEase(Ease.OutQuint); // 마지막 필드포지션은 빈곳에 넣음
         StartCoroutine(GameManager.instance.CompleteMoving());
+
         CardManager.instance.emptyIndex.RemoveAt(0);
+
+        CardManager.instance.EmptyIndexSort();//빈곳 인덱스 오름차순 정렬
+        for (int i = 0; i < CardManager.instance.emptyIndex.Count; i++)
+        {
+            print("남은 카드 인덱스 " + i + " : " + CardManager.instance.emptyIndex[i]);
+        }
+
     }
 
     public void MoveFieldScoreField(GameObject moveObj, List<GameObject> score)
@@ -664,7 +689,7 @@ public class CardClick : MonoBehaviour
 
     }
 
-    void EmptyFieldPosition(GameObject obj)
+    public void EmptyFieldPosition(GameObject obj)
     {
         int index = Array.IndexOf(CardManager.instance.fieldPosition, obj.transform.position);
 
@@ -675,6 +700,13 @@ public class CardClick : MonoBehaviour
                 CardManager.instance.emptyIndex.Add(index);
             }
         }
+
+        CardManager.instance.EmptyIndexSort();//빈곳 인덱스 오름차순 정렬
+        for (int i=0;i<CardManager.instance.emptyIndex.Count;i++)
+        {
+            print("남은 카드 인덱스 " + i + " : " + CardManager.instance.emptyIndex[i]);
+        }
+
     }
 
     GameObject OrignFieldPosition(GameObject[] obj)
@@ -766,8 +798,6 @@ public class CardClick : MonoBehaviour
             print(CardManager.instance.curObj.name);
             CardManager.instance.ResetPosition(CardManager.instance.myHand);
             CardManager.instance.myHand.Remove(CardManager.instance.curObj);//내손에서 지우기
-
-            print("내턴 들어옴");
             CheckCardAction(CardManager.instance.curObj, CardManager.instance.myHand, CardManager.instance.myHandScore);
 
             EndArrange(CardManager.instance.myHand, false);
@@ -778,8 +808,6 @@ public class CardClick : MonoBehaviour
             print(CardManager.instance.curObj.name);
             CardManager.instance.ResetPosition(CardManager.instance.opponentHand);
             CardManager.instance.opponentHand.Remove(CardManager.instance.curObj);//내손에서 지우기
-
-            print("상대턴 들어옴");
             CheckCardAction(CardManager.instance.curObj, CardManager.instance.opponentHand, CardManager.instance.opponentHandScore);
 
             EndArrange(CardManager.instance.opponentHand, true);
