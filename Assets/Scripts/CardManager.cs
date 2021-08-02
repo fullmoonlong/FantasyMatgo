@@ -188,81 +188,82 @@ public class CardManager : MonoBehaviour
         //
         scoreAnimalPosition = new[]
         {
-            new Vector3(-6.5f, -3f, 0f),
-            new Vector3(-6.2f, -3f, -0.1f),
-            new Vector3(-5.9f, -3f, -0.2f),
-            new Vector3(-5.6f, -3f, -0.3f),
-            new Vector3(-5.3f, -3f, -0.4f),
-            new Vector3(-5.0f, -3f, -0.5f),
-            new Vector3(-4.7f, -3f, -0.6f),
-            new Vector3(-4.4f, -3f, -0.7f),
-            new Vector3(-4.1f, -3f, -0.8f)
+            new Vector3(-5.9f, -3f, 0f),
+            new Vector3(-5.6f, -3f, -0.1f),
+            new Vector3(-5.3f, -3f, -0.2f),
+            new Vector3(-5.0f, -3f, -0.3f),
+            new Vector3(-4.7f, -3f, -0.4f),
+            new Vector3(-4.4f, -3f, -0.5f),
+            new Vector3(-4.1f, -3f, -0.6f),
+            new Vector3(-3.8f, -3f, -0.7f),
+            new Vector3(-3.5f, -3f, -0.8f)
         };
         scoreEnemyAnimalPosition = new[]
         {
-            new Vector3(-6.5f, 3f, 0f),
-            new Vector3(-6.2f, 3f, -0.1f),
-            new Vector3(-5.9f, 3f, -0.2f),
-            new Vector3(-5.6f, 3f, -0.3f),
-            new Vector3(-5.3f, 3f, -0.4f),
-            new Vector3(-5.0f, 3f, -0.5f),
-            new Vector3(-4.7f, 3f, -0.6f),
-            new Vector3(-4.4f, 3f, -0.7f),
-            new Vector3(-4.1f, 3f, -0.8f)
+            new Vector3(-5.9f, 3f, 0f),
+            new Vector3(-5.6f, 3f, -0.1f),
+            new Vector3(-5.3f, 3f, -0.2f),
+            new Vector3(-5.0f, 3f, -0.3f),
+            new Vector3(-4.7f, 3f, -0.4f),
+            new Vector3(-4.4f, 3f, -0.5f),
+            new Vector3(-4.1f, 3f, -0.6f),
+            new Vector3(-3.8f, 3f, -0.7f),
+            new Vector3(-3.5f, 3f, -0.8f)
         };
         //
         scoreRedFlagPosition = new[]
         {
-            new Vector3(-3.8f, -3f, 0f),
-            new Vector3(-3.5f, -3f, -0.1f),
-            new Vector3(-3.2f, -3f, -0.2f),
+            new Vector3(-2.6f, -3f, 0f),
+            new Vector3(-2.3f, -3f, -0.1f),
+            new Vector3(-2.0f, -3f, -0.2f),
         };
         scoreBlueFlagPosition = new[]
         {
-            new Vector3(-2.9f, -3f, -0.3f),
-            new Vector3(-2.6f, -3f, -0.4f),
-            new Vector3(-2.3f, -3f, -0.5f),
+            new Vector3(-1.1f, -3f, -0.3f),
+            new Vector3(-0.8f, -3f, -0.4f),
+            new Vector3(-0.5f, -3f, -0.5f),
         };
 
         scoreNormalFlagPosition = new[]
         {
-            new Vector3(-2.0f, -3f, -0.6f),
-            new Vector3(-1.7f, -3f, -0.7f),
-            new Vector3(-1.4f, -3f, -0.8f),
-            new Vector3(-1.1f, -3f, -0.9f),
+            new Vector3(0.4f, -3f, -0.6f),
+            new Vector3(0.7f, -3f, -0.7f),
+            new Vector3(1.0f, -3f, -0.8f),
+            new Vector3(1.3f, -3f, -0.9f),
         };
 
         scoreEnemyRedFlagPosition = new[]
         {
-            new Vector3(-3.8f, 3f, 0f),
-            new Vector3(-3.5f, 3f, -0.1f),
-            new Vector3(-3.2f, 3f, -0.2f),
+            new Vector3(-2.6f, 3f, 0f),
+            new Vector3(-2.3f, 3f, -0.1f),
+            new Vector3(-2.0f, 3f, -0.2f),
         };
 
         scoreEnemyBlueFlagPosition = new[]
         {
-            new Vector3(-2.9f, 3f, -0.3f),
-            new Vector3(-2.6f, 3f, -0.4f),
-            new Vector3(-2.3f, 3f, -0.5f),
+            new Vector3(-1.1f, 3f, -0.3f),
+            new Vector3(-0.8f, 3f, -0.4f),
+            new Vector3(-0.5f, 3f, -0.5f),
         };
 
         scoreEnemyNormalFlagPosition = new[]
         {
-            new Vector3(-2.0f, 3f, -0.6f),
-            new Vector3(-1.7f, 3f, -0.7f),
-            new Vector3(-1.4f, 3f, -0.8f),
-            new Vector3(-1.1f, 3f, -0.9f),
+            new Vector3(0.4f, 3f, -0.6f),
+            new Vector3(0.7f, 3f, -0.7f),
+            new Vector3(1.0f, 3f, -0.8f),
+            new Vector3(1.3f, 3f, -0.9f),
         };
 
         //
-        for (int i = 0; i < 26; i++)
+        for (int i = 0; i < 24; i++)
         {
-            scoreSoldierPosition[i] = new Vector3(-0.8f + (0.3f * i), -3f, 0f + (0.1f * i));
+            scoreSoldierPosition[i] = new Vector3(2.2f + (0.3f * i), -3f, 0f + (0.1f * i));
         }
-        for (int i = 0; i < 26; i++)
+        for (int i = 0; i < 24; i++)
         {
-            scoreEnemySoldierPosition[i] = new Vector3(-0.8f + (0.3f * i), 3f, 0f + (0.1f * i));
+            scoreEnemySoldierPosition[i] = new Vector3(2.2f + (0.3f * i), 3f, 0f + (0.1f * i));
         }
+
         PrefabToCard(); // 프리팹 폴더에 존재하는 카드를 리스트에 담아 생성준비를 한다.
         CreateDeck(); // 플레이어가 준비한 카드 12장, 적이 준비한 카드 12장 을 더해 총 48장의 카드를 덱에 넣는다.
         ShuffleDeck(); //덱을 섞는다
@@ -382,9 +383,9 @@ public class CardManager : MonoBehaviour
 
     void FieldBonusCard()
     {
-        for(int i=0;i<field.Count;i++)
+        for (int i = 0; i < field.Count; i++)
         {
-            if(field[i].tag == "Bonus")
+            if (field[i].tag == "Bonus")
             {
                 //if(GameManager.instance.isSetting)
                 // {
@@ -460,12 +461,12 @@ public class CardManager : MonoBehaviour
 
     public void DrawBombCard(List<GameObject> cardList)
     {
-        for(int i=0;i<2;i++)
+        for (int i = 0; i < 2; i++)
         {
             cardList.Add(Instantiate(BombCard, parentDeck));
             CardInitialPosition(cardList, cardList.Count - 1);
         }
-        
+
     }
     public void FlipCard()
     {
@@ -477,7 +478,7 @@ public class CardManager : MonoBehaviour
         isFlip = true;
         field.Add(cardDeck[0]);// 뒤집기
         field[field.Count - 1].transform.position = fieldPosition[emptyIndex[0]]; //마지막 포지션은 비어있는 필드 포지션
-        if(GetCardTagNum(field[field.Count - 1]) < 13)
+        if (GetCardTagNum(field[field.Count - 1]) < 13)
         {
             sameTagCount[GetCardTagNum(field[field.Count - 1])]++;
         }
