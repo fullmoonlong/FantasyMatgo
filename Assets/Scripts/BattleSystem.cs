@@ -26,7 +26,7 @@ public class BattleSystem : MonoBehaviour
     public GameObject player;
     public GameObject op;
 
-    public int power;
+    public int damage;
 
     //public GameObject startPanel;
 
@@ -143,8 +143,8 @@ public class BattleSystem : MonoBehaviour
 
     void Damaged(PlayerScript ui, BattleHUD hud)
     {
-        ui.currentHp -= power;
-        print(power);
+        ui.currentHp -= damage;
+        print(damage);
         hud.SetHp(ui.currentHp);
     }
     public void LightAttack(int mylight, int oplight)
@@ -157,21 +157,21 @@ public class BattleSystem : MonoBehaviour
             case 1:
             case 2:
                 print("nothing");
-                power = 0;
+                damage = 0;
                 break;
             case 3:
                 print("3점");
-                power = 3;
+                damage = 3;
                 break;
 
             case 4:
                 print("4점");
-                power = 4;
+                damage = 4;
                 break;
 
             case 5:
                 print("15점");
-                power = 15;
+                damage = 15;
                 break;
 
             default:
@@ -182,75 +182,75 @@ public class BattleSystem : MonoBehaviour
         {
             times = 2;
         }
-        power *= times;
+        damage *= times;
 
         //Instantiate(lightObj, gameObject.transform.position, Quaternion.identity); // 애니메이션 
 
     }
     public void FlagAttack(int red, int blue, int brown)
     {
-        power = 0;
+        damage = 0;
 
         int result = red + blue + brown;
         if(red == 3)
         {
-            power += 3;
+            damage += 3;
             print("red");
         }
         if (blue == 3)
         {
-            power += 3;
+            damage += 3;
             print("blue");
         }
 
         if (brown == 3)
         {
-            power += 3;
+            damage += 3;
             print("brown");
         }
 
         if (result == 7)
         {
-            power += 3;
+            damage += 3;
             print("result");
         }
 
         if (result == 6)
         {
-            power += 2;
+            damage += 2;
             print("result");
         }
 
         if(result > 7)
         {
-            power += 3;
+            damage += 3;
             for(int i=7;i<result;i++)
             {
-                power++;
+                damage++;
             }
         }
 
-        print(power);
+        print(damage);
     }
 
     public void GoDoRiAttack(int bird)
     {
-        power = 0;
+        damage = 0;
         if (bird == 3)
         {
-            power = 5;
+            damage = 5;
         }
     }
 
     public void SoldierAttack(int soldier)
     {
-        power = 0;
+        damage = 0;
         if(soldier >= 10)
         {
-            power = 1;
+            damage = 1;
             for(int i = 10; i<soldier;i++)
             {
-                power++;
+                damage++;
             }
         }
     }

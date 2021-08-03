@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     public GameObject myArtifactPanel;
     public GameObject oppoArtifactPanel;
 
-    public int MaxturnCount; // 현재까지 진행된 턴 수
+    public int maxTurnCount; // 현재까지 진행된 턴 수
     public int artifactNumMe;
     public int artifactNumOpponent;
     public bool isMyTurn; // 턴을 판정하는 bool 변수
@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
         isSetting = false;
         isMoving = false;
 
-        MaxturnCount = 7;
+        maxTurnCount = 7;
 
         battleFirst = true;
         StartCoroutine(CompleteSetting());
@@ -83,13 +83,12 @@ public class GameManager : MonoBehaviour
 
         if (oneTime)
         {
-            if(MaxturnCount > 0)
+            if(maxTurnCount > 0)
             {
                 if (isMyTurn)
                 {
                     print("두번째");
                     CardManager.instance.ResetPosition(CardManager.instance.myHand);
-
                     CardManager.instance.DrawCard(CardManager.instance.myHand, 1);
                     oneTime = false;
                 }
@@ -102,7 +101,7 @@ public class GameManager : MonoBehaviour
                     oneTime = false;
                 }
 
-                MaxturnCount -= 1;
+                maxTurnCount -= 1;
             }
            
         }
