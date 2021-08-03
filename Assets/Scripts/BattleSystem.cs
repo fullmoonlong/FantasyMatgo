@@ -93,7 +93,7 @@ public class BattleSystem : MonoBehaviour
 
         attackImage.transform.position = op.transform.position;
 
-        mysequence.Append(attackImage.transform.DOScale(Vector3.one * 0.9f, 0.5f).SetEase(Ease.InOutBack))
+        mysequence.Append(attackImage.transform.DOScale(Vector3.one * 0.3f, 0.3f).SetEase(Ease.InOutBack)).Join(op.transform.DOShakePosition(1f,5f))
             .AppendInterval(1.2f).Append(attackImage.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InOutBack)).OnComplete(() => Damaged(opUi, opHUD));
 
         Invoke("OpTurn", 3f);
@@ -129,7 +129,7 @@ public class BattleSystem : MonoBehaviour
 
         attackImage.transform.position = player.transform.position;
 
-        mysequence.Append(attackImage.transform.DOScale(Vector3.one * 0.9f, 0.5f).SetEase(Ease.InOutBack))
+        mysequence.Append(attackImage.transform.DOScale(Vector3.one * 0.3f, 0.3f).SetEase(Ease.InOutBack)).Join(player.transform.DOShakePosition(1f,5f))
           .AppendInterval(1.2f).Append(attackImage.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InOutBack)).OnComplete(() => Damaged(playerUi, playerHUD));
 
 
