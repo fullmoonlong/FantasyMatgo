@@ -252,7 +252,21 @@ public class CardClick : MonoBehaviour
 
                     CheckCardAction(gameObject, hand, handscore);
 
-                    EndArrange(hand, isPlayer);
+                    if (CardManager.instance.field[CardManager.instance.field.Count - 1].tag == "Bonus")
+                    {
+                        CardManager.instance.ResetPosition(hand);
+
+                        if (GameManager.instance.first)
+                        {
+                            CardManager.instance.DrawCard(hand, 1);
+                        }
+                        CardManager.instance.DrawCard(hand, 1);
+                        GameManager.instance.oneTime = false;
+                    }
+                    else
+                    {
+                        EndArrange(hand, isPlayer);
+                    }
                 }
             }
         }
@@ -470,10 +484,10 @@ public class CardClick : MonoBehaviour
 
             MoveFieldScoreField(CardManager.instance.field[CardManager.instance.field.Count - 1], handscore); // 피로 옮김
 
-            CardManager.instance.ResetPosition(hand);
+            //CardManager.instance.ResetPosition(hand);
 
-            CardManager.instance.DrawCard(hand, 1);
-            GameManager.instance.oneTime = false;
+            //CardManager.instance.DrawCard(hand, 1);
+            //GameManager.instance.oneTime = false;
             //CardManager.instance.FlipCard();
 
             //FlipAction(hand, handscore);

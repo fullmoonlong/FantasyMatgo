@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverPanel;
     public GameObject myArtifactPanel;
     public GameObject oppoArtifactPanel;
+
     public int MaxturnCount; // 현재까지 진행된 턴 수
     public int artifactNumMe;
     public int artifactNumOpponent;
@@ -29,6 +30,7 @@ public class GameManager : MonoBehaviour
     public bool isGameEnd = false;
     public bool oneTime;
     public bool first;
+    public bool battleFirst;
     public bool isMyFirstArtifact;
     public bool isMySecondArtifact;
     public bool isMyThirdArtifact;
@@ -37,6 +39,7 @@ public class GameManager : MonoBehaviour
     public bool isOppoThirdArtifact;
     public bool isSetting;
     public bool isMoving;
+    public bool isBattle;
 
     public Image[] artifactMe;
     public Image[] artifactOp;
@@ -46,6 +49,7 @@ public class GameManager : MonoBehaviour
         isMyTurn = true;
         oneTime = false;
         first = true;
+        isBattle = false;
 
         artifactNumMe = 0;
         artifactNumOpponent = 0;
@@ -60,6 +64,8 @@ public class GameManager : MonoBehaviour
         isMoving = false;
 
         MaxturnCount = 7;
+
+        battleFirst = true;
         StartCoroutine(CompleteSetting());
     }
 
@@ -71,6 +77,7 @@ public class GameManager : MonoBehaviour
 
         if (CardManager.instance.myHand.Count == 0 && CardManager.instance.opponentHand.Count == 0)
         {
+           
             GameOver();
         }
 
@@ -99,6 +106,7 @@ public class GameManager : MonoBehaviour
             }
            
         }
+
     }
 
 
@@ -210,14 +218,21 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        if (!gameOverPanel.activeSelf)
+        //if (!gameOverPanel.activeSelf)
+        //{
+        //    gameOverText.text = "Game Over";
+        //    gameOverPanel.SetActive(true);
+        //    isGameEnd = true;
+        //}
+        if(battleFirst)
         {
-            gameOverText.text = "Game Over";
-            gameOverPanel.SetActive(true);
             isGameEnd = true;
+            isMyTurn = true;
+            StartCoroutine(BattleSystem.instance.SettingBattle());
+            battleFirst = false;
         }
+  
     }
-
     public void Retry()
     {
         SceneManager.LoadScene("Game");
