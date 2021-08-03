@@ -383,7 +383,57 @@ public class CardManager : MonoBehaviour
 
     void FieldBonusCard()
     {
-        for (int i = 0; i < field.Count; i++)
+        Sequence mysequence = DOTween.Sequence();
+        int i = 0;
+        List<int> index = new List<int>();
+
+        while (i < field.Count)
+        {
+            if (field[i].tag == "Bonus")
+            {
+                index.Add(i);
+            }
+
+            i++;
+        }
+        if (index.Count >= 1)
+        {
+            print(myHandScore.Count);
+            print(index[0]);
+            mysequence.Append(field[index[0]].transform.DOMove(scoreSoldierPosition[soldierEmptyIndex], 0.5f).SetEase(Ease.OutQuint));
+            soldierEmptyIndex++;
+            myHandScore.Add(field[index[0]]); // 점수에 더해주기 
+            print(i);
+            CardClick.instance.EmptyFieldPosition(field[index[0]]);
+            field.Remove(field[index[0]]); // 필드에서 지우기
+
+            FlipCard();
+            ResetPosition(myHand);
+
+            DrawCard(myHand, 1);
+        }
+
+
+        if (index.Count == 2)
+        {
+            soldierEmptyIndex++;
+            myHandScore.Add(field[index[1]]); // 점수에 더해주기 
+            print(myHandScore.Count);
+            print(index[1]);
+            mysequence.Append(field[index[1]].transform.DOMove(scoreSoldierPosition[soldierEmptyIndex], 0.5f).SetEase(Ease.OutQuint));
+
+            CardClick.instance.EmptyFieldPosition(field[index[1]]);
+            field.Remove(field[index[1]]); // 필드에서 지우기
+
+            FlipCard();
+            ResetPosition(myHand);
+
+            DrawCard(myHand, 1);
+        }
+
+
+        GameManager.instance.oneTime = false;
+        /*for (int i = 0; i < field.Count; i++)
         {
             if (field[i].tag == "Bonus")
             {
@@ -411,7 +461,7 @@ public class CardManager : MonoBehaviour
 
                 DrawCard(field, 1);
             }
-        }
+        }*/
     }
     public void ShuffleDeck()
     {

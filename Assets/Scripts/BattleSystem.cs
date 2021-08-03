@@ -203,7 +203,7 @@ public class BattleSystem : MonoBehaviour
             print("blue");
         }
 
-        if (brown == 3)
+        if (brown >= 3)
         {
             damage += 3;
             print("brown");

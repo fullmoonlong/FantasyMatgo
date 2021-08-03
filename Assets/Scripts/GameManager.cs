@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
     public bool isSetting;
     public bool isMoving;
     public bool isBattle;
+    public bool isBonus;
 
     public Image[] artifactMe;
     public Image[] artifactOp;
@@ -66,6 +67,8 @@ public class GameManager : MonoBehaviour
         maxTurnCount = 7;
 
         battleFirst = true;
+
+        isBonus = false;
         StartCoroutine(CompleteSetting());
     }
 

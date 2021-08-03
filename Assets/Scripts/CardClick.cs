@@ -210,16 +210,6 @@ public class CardClick : MonoBehaviour
                 MoveFieldScoreField(gameObject, handscore);
                 hand.Remove(gameObject);
 
-                //CardManager.instance.myCardCount = 1;
-
-                //CheckCardAction(gameObject, hand, handscore);
-
-                //GameManager.instance.isMoving = false;
-
-                //CardManager.instance.ResetPosition(hand);
-
-                //EndArrange(hand, isPlayer);
-
                 CardManager.instance.ResetPosition(hand);
 
                 if (GameManager.instance.first)
@@ -228,8 +218,6 @@ public class CardClick : MonoBehaviour
                 }
                 CardManager.instance.DrawCard(hand, 1);
                 GameManager.instance.oneTime = false;
-
-                
             }
             else
             {
@@ -252,20 +240,15 @@ public class CardClick : MonoBehaviour
 
                     CheckCardAction(gameObject, hand, handscore);
 
-                    if (CardManager.instance.field[CardManager.instance.field.Count - 1].tag == "Bonus")
+                    if (!GameManager.instance.isBonus)
                     {
-                        CardManager.instance.ResetPosition(hand);
-
-                        if (GameManager.instance.first)
-                        {
-                            CardManager.instance.DrawCard(hand, 1);
-                        }
-                        CardManager.instance.DrawCard(hand, 1);
-                        GameManager.instance.oneTime = false;
+                        print("change");
+                        EndArrange(hand, isPlayer);
+                        
                     }
                     else
                     {
-                        EndArrange(hand, isPlayer);
+                        GameManager.instance.isBonus = false;
                     }
                 }
             }
@@ -477,6 +460,7 @@ public class CardClick : MonoBehaviour
     {
         if(CardManager.instance.field[CardManager.instance.field.Count - 1].tag == "Bonus")
         {
+
             print("bonus card!");
             NoMatchField(CardManager.instance.field[CardManager.instance.field.Count - 1]); //빈공간에 내가 둘 카드 둠
 
@@ -484,6 +468,20 @@ public class CardClick : MonoBehaviour
 
             MoveFieldScoreField(CardManager.instance.field[CardManager.instance.field.Count - 1], handscore); // 피로 옮김
 
+            CardManager.instance.ResetPosition(hand);
+
+            if (GameManager.instance.first)
+            {
+                CardManager.instance.DrawCard(hand, 1);
+            }
+            if (CardManager.instance.cardDeck.Count > 0)
+            {
+                print("Draw card");
+                CardManager.instance.DrawCard(hand, 1);
+                GameManager.instance.oneTime = false;
+            }
+
+            GameManager.instance.isBonus = true;
             //CardManager.instance.ResetPosition(hand);
 
             //CardManager.instance.DrawCard(hand, 1);
