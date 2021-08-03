@@ -75,8 +75,16 @@ public class BattleSystem : MonoBehaviour
                 break;
 
             case 1:
-                print("case 1");
+                GoDoRiAttack(CardManager.instance.animalEmptyIndex);
+                break;
+
+            case 2:
                 FlagAttack(CardManager.instance.redFlagEmptyIndex, CardManager.instance.blueFlagEmptyIndex, CardManager.instance.normalFlagEmptyIndex);
+                break;
+
+
+            case 3:
+                SoldierAttack(CardManager.instance.soldierEmptyIndex);
                 break;
 
             default:
@@ -88,10 +96,8 @@ public class BattleSystem : MonoBehaviour
         mysequence.Append(attackImage.transform.DOScale(Vector3.one * 0.9f, 0.5f).SetEase(Ease.InOutBack))
             .AppendInterval(1.2f).Append(attackImage.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InOutBack)).OnComplete(() => Damaged(opUi, opHUD));
 
-        if(attackCount != 3)
-        {
-            Invoke("OpTurn", 3f);
-        }
+        Invoke("OpTurn", 3f);
+       
     }
 
     public void OpTurn()
@@ -105,8 +111,18 @@ public class BattleSystem : MonoBehaviour
                 break;
 
             case 1:
+                GoDoRiAttack(CardManager.instance.enemyAnimalEmptyIndex);
+                break;
+
+            case 2:
                 FlagAttack(CardManager.instance.enemyRedFlagEmptyIndex, CardManager.instance.enemyBlueFlagEmptyIndex, CardManager.instance.enemyNormalFlagEmptyIndex);
                 break;
+
+
+            case 3:
+                SoldierAttack(CardManager.instance.enemySoldierEmptyIndex);
+                break;
+
             default:
                 break;
         }
@@ -116,10 +132,13 @@ public class BattleSystem : MonoBehaviour
         mysequence.Append(attackImage.transform.DOScale(Vector3.one * 0.9f, 0.5f).SetEase(Ease.InOutBack))
           .AppendInterval(1.2f).Append(attackImage.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InOutBack)).OnComplete(() => Damaged(playerUi, playerHUD));
 
+
+        if (attackCount != 3)
+        {
+            Invoke("PlayerTurn", 3f);
+        }
+
         attackCount++;
-
-        Invoke("PlayerTurn", 3f);
-
     }
 
     void Damaged(PlayerScript ui, BattleHUD hud)
@@ -178,32 +197,33 @@ public class BattleSystem : MonoBehaviour
             power += 3;
             print("red");
         }
-        else if (blue == 3)
+        if (blue == 3)
         {
             power += 3;
             print("blue");
         }
 
-        else if (brown == 3)
+        if (brown == 3)
         {
             power += 3;
             print("brown");
         }
 
-        else if (result == 7)
+        if (result == 7)
         {
             power += 3;
             print("result");
         }
 
-        else if (result == 6)
+        if (result == 6)
         {
             power += 2;
             print("result");
         }
 
-        else if(result > 7)
+        if(result > 7)
         {
+            power += 3;
             for(int i=7;i<result;i++)
             {
                 power++;
@@ -211,5 +231,27 @@ public class BattleSystem : MonoBehaviour
         }
 
         print(power);
+    }
+
+    public void GoDoRiAttack(int bird)
+    {
+        power = 0;
+        if (bird == 3)
+        {
+            power = 5;
+        }
+    }
+
+    public void SoldierAttack(int soldier)
+    {
+        power = 0;
+        if(soldier >= 10)
+        {
+            power = 1;
+            for(int i = 10; i<soldier;i++)
+            {
+                power++;
+            }
+        }
     }
 }
