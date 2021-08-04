@@ -732,7 +732,7 @@ public class CardClick : MonoBehaviour
         CardManager.instance.EmptyIndexSort();//빈곳 인덱스 오름차순 정렬
         for (int i=0;i<CardManager.instance.emptyIndex.Count;i++)
         {
-            //print("남은 카드 인덱스 " + i + " : " + CardManager.instance.emptyIndex[i]);
+            print("남은 카드 인덱스 " + i + " : " + CardManager.instance.emptyIndex[i]);
         }
 
     }

@@ -15,7 +15,6 @@ public class BattleSystem : MonoBehaviour
     }
     #endregion
 
-    
     public GameObject attackImage;
 
     public GameObject startPanel;
@@ -37,6 +36,7 @@ public class BattleSystem : MonoBehaviour
     int attackCount;
     // Start is called before the first frame update
     // Update is called once per frame
+   
     public void Update()
     {
 
@@ -145,6 +145,7 @@ public class BattleSystem : MonoBehaviour
     {
         ui.currentHp -= damage;
         //print(damage);
+        PlayerPrefs.SetInt("HP", ui.currentHp);
         hud.SetHp(ui.currentHp);
     }
     public void LightAttack(int mylight, int oplight)

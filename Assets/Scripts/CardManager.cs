@@ -149,7 +149,7 @@ public class CardManager : MonoBehaviour
         scoreEnemySoldierPosition = new Vector3[26];
 
         //각 카드의 위치 설정
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < 10; i++)
         {
             myHandPosition.Add(new Vector3(i - 4, -4.3f, 0));
             opponentHandPosition.Add(new Vector3(i - 4, 4.3f, 0));
@@ -266,7 +266,7 @@ public class CardManager : MonoBehaviour
 
         PrefabToCard(); // 프리팹 폴더에 존재하는 카드를 리스트에 담아 생성준비를 한다.
         CreateDeck(); // 플레이어가 준비한 카드 12장, 적이 준비한 카드 12장 을 더해 총 48장의 카드를 덱에 넣는다.
-        //ShuffleDeck(); //덱을 섞는다
+        ShuffleDeck(); //덱을 섞는다
         DrawCard(myHand, 6); // 내손에 6장 씩 뽑는다.
         DrawCard(opponentHand, 6);  // 상대손에 6장 씩 뽑는다.
         DrawCard(field, 6);
@@ -275,7 +275,6 @@ public class CardManager : MonoBehaviour
         //CardInitialPosition(field, field.Count - 1);
         //field.Add(GameObject.Find("49(Clone)"));
         //CardInitialPosition(field, field.Count - 1);
-
         FieldSameCard();
         Invoke("FieldBonusCard", 0.5f);
        
@@ -404,71 +403,108 @@ public class CardManager : MonoBehaviour
             i++;
         }
 
+        int eIndex = emptyIndex[0];
+
         switch (index.Count)
         {
+            
             case 1:
                 {
                     //print(index[0]);
+                    CardClick.instance.EmptyFieldPosition(field[index[0]]);
                     mysequence.Append(field[index[0]].transform.DOMove(scoreSoldierPosition[soldierEmptyIndex], 0.5f).SetEase(Ease.OutQuint));
                     soldierEmptyIndex++;
                     myHandScore.Add(field[index[0]]); // 점수에 더해주기 
-                    CardClick.instance.EmptyFieldPosition(field[index[0]]);
                     field.Remove(field[index[0]]); // 필드에서 지우기
 
                     FlipCard();
+
+                    //못맞췄을 때
+                    emptyIndex.RemoveAt(0);
+
+                    EmptyIndexSort();//빈곳 인덱스 오름차순 정렬
 
                     for (int j = 0; j < field.Count - 1; j++)
                     {
                         if (field[j].tag == field[field.Count - 1].tag)
                         {
                             field[field.Count - 1].transform.position = new Vector3(field[j].transform.position.x + 0.5f, field[j].transform.position.y, field[j].transform.position.z - 0.1f);
+                            emptyIndex.Add(eIndex);
+                            EmptyIndexSort();
                         }
+                        
                     }
 
                     ResetPosition(myHand);
 
                     DrawCard(myHand, 1);
+
+                    for (int j = 0; j < emptyIndex.Count; j++)
+                    {
+                        print("최종 카드 인덱스 " + j + " : " + emptyIndex[j]);
+                    }
+
                     break;
                 }
          
             case 2:
                 {
-                    //print(index[0]);
-                    //print(index[1]);
-
+                    CardClick.instance.EmptyFieldPosition(field[index[0]]);
                     mysequence.Append(field[index[0]].transform.DOMove(scoreSoldierPosition[soldierEmptyIndex], 0.5f).SetEase(Ease.OutQuint));// 둘다 옮기기
                     soldierEmptyIndex++;
+                    CardClick.instance.EmptyFieldPosition(field[index[1]]);
                     mysequence.Append(field[index[1]].transform.DOMove(scoreSoldierPosition[soldierEmptyIndex], 0.5f).SetEase(Ease.OutQuint));
                     soldierEmptyIndex++;
-                    myHandScore.Add(field[index[0]]); // 점수에 더해주기 
+                    myHandScore.Add(field[index[0]]); // 점수에 더해주기 W
                     myHandScore.Add(field[index[1]]);
-                    CardClick.instance.EmptyFieldPosition(field[index[0]]);
-                    CardClick.instance.EmptyFieldPosition(field[index[1]]);
+                   
+                   
                     field.Remove(field[index[0]]); // 필드에서 지우기
                     field.Remove(field[index[1] - 1]);
+
                     FlipCard();
+                    //못맞췄을 때
+                    emptyIndex.RemoveAt(0);
+
+                    EmptyIndexSort();//빈곳 인덱스 오름차순 정렬
+
+                    //맞췄을 때
 
                     for (int j = 0; j < field.Count - 1; j++)
                     {
                         if (field[j].tag == field[field.Count - 1].tag)
                         {
+                            print("같은게있음");
                             field[field.Count - 1].transform.position = new Vector3(field[j].transform.position.x + 0.5f, field[j].transform.position.y, field[j].transform.position.z - 0.1f);
+                            emptyIndex.Add(eIndex);
+                            EmptyIndexSort();
                         }
                     }
 
                     FlipCard();
 
+                    eIndex = emptyIndex[0];
+
+                    emptyIndex.RemoveAt(0);
+
+                    EmptyIndexSort();//빈곳 인덱스 오름차순 정렬
+
                     for (int j = 0; j < field.Count - 1; j++)
                     {
                         if (field[j].tag == field[field.Count - 1].tag)
                         {
+                            print("같은게있음");
                             field[field.Count - 1].transform.position = new Vector3(field[j].transform.position.x + 0.5f, field[j].transform.position.y, field[j].transform.position.z - 0.1f);
+                            emptyIndex.Add(eIndex);
+                            EmptyIndexSort();
                         }
                     }
 
                     ResetPosition(myHand);
 
-                    DrawCard(myHand, 1);
+                    DrawCard(myHand, 2);
+
+                 
                     break;
 
               

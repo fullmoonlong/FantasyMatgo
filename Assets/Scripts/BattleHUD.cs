@@ -9,11 +9,12 @@ public class BattleHUD : MonoBehaviour
     // Start is called before the first frame update
     public  void SetHUD(PlayerScript player)
     {
-        hpText.text = player.maxHp.ToString();
+        hpText.text = player.currentHp.ToString();
     }
 
     public void SetHp(int hp)
     {
+        PlayerPrefs.SetInt("HP", hp);
         hpText.text = hp.ToString();
     }
 }
