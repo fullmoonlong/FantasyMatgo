@@ -372,6 +372,7 @@ public class CardManager : MonoBehaviour
                 {
                     count++;
 
+                    //CardClick.instance.EmptyFieldPosition(field[j]);
                     //같은 카드 다음 포지션은 같은 태그의 갯수 * 0.5 만큼 x축을 더해준다.
                     field[j].transform.position = new Vector3(storage[i].transform.position.x + 0.5f * count, storage[i].transform.position.y, storage[i].transform.position.z - 0.1f * count);
 
@@ -385,6 +386,7 @@ public class CardManager : MonoBehaviour
             }
             count = 0;
         }
+        EmptyIndexSort();
     }
 
     void FieldBonusCard()
