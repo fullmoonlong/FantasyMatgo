@@ -266,12 +266,19 @@ public class CardManager : MonoBehaviour
 
         PrefabToCard(); // 프리팹 폴더에 존재하는 카드를 리스트에 담아 생성준비를 한다.
         CreateDeck(); // 플레이어가 준비한 카드 12장, 적이 준비한 카드 12장 을 더해 총 48장의 카드를 덱에 넣는다.
-        ShuffleDeck(); //덱을 섞는다
+        //ShuffleDeck(); //덱을 섞는다
         DrawCard(myHand, 6); // 내손에 6장 씩 뽑는다.
         DrawCard(opponentHand, 6);  // 상대손에 6장 씩 뽑는다.
         DrawCard(field, 6);
+
+        //field.Add(GameObject.Find("48(Clone)"));
+        //CardInitialPosition(field, field.Count - 1);
+        //field.Add(GameObject.Find("49(Clone)"));
+        //CardInitialPosition(field, field.Count - 1);
+
         FieldSameCard();
         Invoke("FieldBonusCard", 0.5f);
+       
     }
 
     private void Update()
@@ -396,72 +403,83 @@ public class CardManager : MonoBehaviour
 
             i++;
         }
-        if (index.Count >= 1)
+
+        switch (index.Count)
         {
-            print(myHandScore.Count);
-            print(index[0]);
-            mysequence.Append(field[index[0]].transform.DOMove(scoreSoldierPosition[soldierEmptyIndex], 0.5f).SetEase(Ease.OutQuint));
-            soldierEmptyIndex++;
-            myHandScore.Add(field[index[0]]); // 점수에 더해주기 
-            print(i);
-            CardClick.instance.EmptyFieldPosition(field[index[0]]);
-            field.Remove(field[index[0]]); // 필드에서 지우기
+            case 1:
+                {
+                    print(index[0]);
+                    mysequence.Append(field[index[0]].transform.DOMove(scoreSoldierPosition[soldierEmptyIndex], 0.5f).SetEase(Ease.OutQuint));
+                    soldierEmptyIndex++;
+                    myHandScore.Add(field[index[0]]); // 점수에 더해주기 
+                    CardClick.instance.EmptyFieldPosition(field[index[0]]);
+                    field.Remove(field[index[0]]); // 필드에서 지우기
 
-            FlipCard();
-            ResetPosition(myHand);
+                    FlipCard();
 
-            DrawCard(myHand, 1);
+                    for (int j = 0; j < field.Count - 1; j++)
+                    {
+                        if (field[j].tag == field[field.Count - 1].tag)
+                        {
+                            field[field.Count - 1].transform.position = new Vector3(field[j].transform.position.x + 0.5f, field[j].transform.position.y, field[j].transform.position.z - 0.1f);
+                        }
+                    }
+
+                    ResetPosition(myHand);
+
+                    DrawCard(myHand, 1);
+                    break;
+                }
+         
+            case 2:
+                {
+                    print(index[0]);
+                    print(index[1]);
+
+                    mysequence.Append(field[index[0]].transform.DOMove(scoreSoldierPosition[soldierEmptyIndex], 0.5f).SetEase(Ease.OutQuint));// 둘다 옮기기
+                    soldierEmptyIndex++;
+                    mysequence.Append(field[index[1]].transform.DOMove(scoreSoldierPosition[soldierEmptyIndex], 0.5f).SetEase(Ease.OutQuint));
+                    soldierEmptyIndex++;
+                    myHandScore.Add(field[index[0]]); // 점수에 더해주기 
+                    myHandScore.Add(field[index[1]]);
+                    CardClick.instance.EmptyFieldPosition(field[index[0]]);
+                    CardClick.instance.EmptyFieldPosition(field[index[1]]);
+                    field.Remove(field[index[0]]); // 필드에서 지우기
+                    field.Remove(field[index[1] - 1]);
+                    FlipCard();
+
+                    for (int j = 0; j < field.Count - 1; j++)
+                    {
+                        if (field[j].tag == field[field.Count - 1].tag)
+                        {
+                            field[field.Count - 1].transform.position = new Vector3(field[j].transform.position.x + 0.5f, field[j].transform.position.y, field[j].transform.position.z - 0.1f);
+                        }
+                    }
+
+                    FlipCard();
+
+                    for (int j = 0; j < field.Count - 1; j++)
+                    {
+                        if (field[j].tag == field[field.Count - 1].tag)
+                        {
+                            field[field.Count - 1].transform.position = new Vector3(field[j].transform.position.x + 0.5f, field[j].transform.position.y, field[j].transform.position.z - 0.1f);
+                        }
+                    }
+
+                    ResetPosition(myHand);
+
+                    DrawCard(myHand, 1);
+                    break;
+
+              
+                }
+            default:
+                break;
+
         }
-
-
-        if (index.Count == 2)
-        {
-            soldierEmptyIndex++;
-            myHandScore.Add(field[index[1]]); // 점수에 더해주기 
-            print(myHandScore.Count);
-            print(index[1]);
-            mysequence.Append(field[index[1]].transform.DOMove(scoreSoldierPosition[soldierEmptyIndex], 0.5f).SetEase(Ease.OutQuint));
-
-            CardClick.instance.EmptyFieldPosition(field[index[1]]);
-            field.Remove(field[index[1]]); // 필드에서 지우기
-
-            FlipCard();
-            ResetPosition(myHand);
-
-            DrawCard(myHand, 1);
-        }
-
 
         GameManager.instance.oneTime = false;
-        /*for (int i = 0; i < field.Count; i++)
-        {
-            if (field[i].tag == "Bonus")
-            {
-                //if(GameManager.instance.isSetting)
-                // {
 
-                // }
-                //3초 기다리기
-                print("보너스나옴");
-
-                CardClick.instance.EmptyFieldPosition(field[i]);
-
-                GameManager.instance.isMoving = true;
-                field[i].transform.DOMove(scoreSoldierPosition[soldierEmptyIndex], 0.5f).SetEase(Ease.OutQuint); // 점수판 위치 이동
-                soldierEmptyIndex++;
-                StartCoroutine(GameManager.instance.CompleteMoving());
-                myHandScore.Add(field[i]); // 점수에 더해주기 
-                print(myHandScore.Count);
-                field.Remove(field[i]); // 필드에서 지우기
-
-                ResetPosition(myHand);
-
-                DrawCard(myHand, 1);
-                GameManager.instance.oneTime = false;
-
-                DrawCard(field, 1);
-            }
-        }*/
     }
     public void ShuffleDeck()
     {
@@ -520,6 +538,7 @@ public class CardManager : MonoBehaviour
     }
     public void FlipCard()
     {
+        print("flip");
         if (cardDeck.Count == 0)
         {
             isFlip = false;

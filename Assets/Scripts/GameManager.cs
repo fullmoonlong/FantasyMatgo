@@ -78,9 +78,8 @@ public class GameManager : MonoBehaviour
         TurnTextSet();
         ScoreCheck();
 
-        if (CardManager.instance.myHand.Count == 0 && CardManager.instance.opponentHand.Count == 0)
+        if (CardManager.instance.myHand.Count == 0 && CardManager.instance.opponentHand.Count == 0 && !myArtifactPanel.activeSelf && !oppoArtifactPanel.activeSelf)
         {
-           
             GameOver();
         }
 

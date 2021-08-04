@@ -571,6 +571,7 @@ public class CardClick : MonoBehaviour
     }
     void FlipChoiceCard(GameObject obj)
     {
+        CardManager.instance.ChoiceObj.Clear();
         for (int i = 0; i < CardManager.instance.field.Count - 1; i++) // 카운트에서 1빼는 이유 -> 비교할 태그가 있음
         {
             if (CardManager.instance.field[i].CompareTag(obj.tag))// 태그가 같을 때 
@@ -581,9 +582,21 @@ public class CardClick : MonoBehaviour
         }
         CardManager.instance.ChoiceObj.Remove(obj);
 
+        print(CardManager.instance.ChoiceObj.Count);
         //같은 카드 다음 포지션은 같은 태그의 갯수 * 0.5 만큼 x축을 더해준다.
-        obj.transform.position = new Vector3(Math.Max(CardManager.instance.ChoiceObj[0].transform.position.x, CardManager.instance.ChoiceObj[1].transform.position.x) + 0.5f,
-            CardManager.instance.ChoiceObj[0].transform.position.y, CardManager.instance.ChoiceObj[0].transform.position.z - 0.1f * 3);
+        float max = CardManager.instance.ChoiceObj[0].transform.position.x;
+        for(int i=0;i<CardManager.instance.ChoiceObj.Count;i++)
+        {
+            if(CardManager.instance.ChoiceObj[i].transform.position.x > max)
+            {
+                max = CardManager.instance.ChoiceObj[i].transform.position.x;
+            }
+        }
+
+        //obj.transform.position = new Vector3(Math.Max(CardManager.instance.ChoiceObj[0].transform.position.x, CardManager.instance.ChoiceObj[1].transform.position.x) + 0.5f,
+        //    CardManager.instance.ChoiceObj[0].transform.position.y, CardManager.instance.ChoiceObj[0].transform.position.z - 0.1f * 3);
+
+        obj.transform.position = new Vector3(max + 0.5f, CardManager.instance.ChoiceObj[0].transform.position.y, CardManager.instance.ChoiceObj[0].transform.position.z - 0.3f);
     }
 
     void AfterFlipChoiceCard()
