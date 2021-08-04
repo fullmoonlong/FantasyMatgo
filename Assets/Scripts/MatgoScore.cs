@@ -40,11 +40,6 @@ public class MatgoScore : MonoBehaviour
         OpCardCountToScore();
         ScoreCalculate();
 
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            Debug.Log("내 광 점수 : " + myGwangScore + "\n" + "적 광 점수 : " + opponentGwangScore);
-            Debug.Log("내 피 점수 : " + myPeeScore + "\n" + "적 피 점수 : " + opponentPeeScore);
-        }
         if (GameManager.instance.isGameEnd)
         {
             return;
@@ -94,13 +89,13 @@ public class MatgoScore : MonoBehaviour
         {
             CardManager.instance.isRedFlag = false;
             myRedFlagScore = 3;
-            //print("홍단");
+            ////print("홍단");
         }
         if (CardManager.instance.blueFlagEmptyIndex == 3 && CardManager.instance.isBlueFlag)
         {
             CardManager.instance.isBlueFlag = false;
             myBlueFlagScore = 3;
-            //print("청단");
+            ////print("청단");
         }
         if (CardManager.instance.normalFlagEmptyIndex == 3 && CardManager.instance.isNormalFlag)
         {
@@ -148,13 +143,13 @@ public class MatgoScore : MonoBehaviour
         {
             CardManager.instance.isOpRedFlag = false;
             opponentRedFlagScore = 3;
-            //print("홍단");
+            ////print("홍단");
         }
         if (CardManager.instance.enemyBlueFlagEmptyIndex == 3 && CardManager.instance.isOpBlueFlag)
         {
             CardManager.instance.isOpBlueFlag = false;
             opponentBlueFlagScore = 3;
-            //print("청단");
+            ////print("청단");
         }
         if (CardManager.instance.enemyNormalFlagEmptyIndex == 3 && CardManager.instance.isOpNormalFlag)
         {

@@ -345,7 +345,7 @@ public class CardManager : MonoBehaviour
 
     void FieldSameCard()
     {
-        print("fieldCount : " + field.Count);
+        //print("fieldCount : " + field.Count);
         for (int j = 0; j < 12; j++) // 태그 12개 다 돌리기
         {
             for (int i = 0; i < field.Count; i++) // 필드 돌리기
@@ -360,7 +360,7 @@ public class CardManager : MonoBehaviour
                 }
 
             }
-            print("Tag : " + j + " " + sameTagCount[j]);
+            //print("Tag : " + j + " " + sameTagCount[j]);
         }
 
         int count = 0;
@@ -408,7 +408,7 @@ public class CardManager : MonoBehaviour
         {
             case 1:
                 {
-                    print(index[0]);
+                    //print(index[0]);
                     mysequence.Append(field[index[0]].transform.DOMove(scoreSoldierPosition[soldierEmptyIndex], 0.5f).SetEase(Ease.OutQuint));
                     soldierEmptyIndex++;
                     myHandScore.Add(field[index[0]]); // 점수에 더해주기 
@@ -433,8 +433,8 @@ public class CardManager : MonoBehaviour
          
             case 2:
                 {
-                    print(index[0]);
-                    print(index[1]);
+                    //print(index[0]);
+                    //print(index[1]);
 
                     mysequence.Append(field[index[0]].transform.DOMove(scoreSoldierPosition[soldierEmptyIndex], 0.5f).SetEase(Ease.OutQuint));// 둘다 옮기기
                     soldierEmptyIndex++;
@@ -538,7 +538,6 @@ public class CardManager : MonoBehaviour
     }
     public void FlipCard()
     {
-        print("flip");
         if (cardDeck.Count == 0)
         {
             isFlip = false;
@@ -582,7 +581,6 @@ public class CardManager : MonoBehaviour
     {
         if (cardList == myHand)
         {
-            print(myHand.Count);
             for (int i = 0; i < myHand.Count; i++)
             {
                 myHand[i].transform.position = myHandPosition[i];

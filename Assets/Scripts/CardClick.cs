@@ -29,73 +29,61 @@ public class CardClick : MonoBehaviour
                     if (scoreList == CardManager.instance.myHandScore)
                     {
                         CardManager.instance.gwangCount++;
-                        Debug.Log("내 광 : " + CardManager.instance.kingEmptyIndex);
                     }
                     else if (scoreList == CardManager.instance.opponentHandScore)
                     {
                         CardManager.instance.enemyGwangCount++;
-                        Debug.Log("상대 광 : " + CardManager.instance.enemyKingEmptyIndex);
                     }
                     break;
                 case "홍단":
                     if (scoreList == CardManager.instance.myHandScore)
                     {
                         CardManager.instance.redFlagCount++;
-                        Debug.Log("내 홍단 : " + CardManager.instance.redFlagEmptyIndex);
                     }
                     else if (scoreList == CardManager.instance.opponentHandScore)
                     {
                         CardManager.instance.enemyRedFlagCount++;
-                        Debug.Log("상대 홍단 : " + CardManager.instance.enemyRedFlagEmptyIndex);
                     }
                     break;
                 case "청단":
                     if (scoreList == CardManager.instance.myHandScore)
                     {
                         CardManager.instance.blueFlagCount++;
-                        Debug.Log("내 청단 : " + CardManager.instance.blueFlagEmptyIndex);
                     }
                     else if (scoreList == CardManager.instance.opponentHandScore)
                     {
                         CardManager.instance.enemyBlueFlagCount++;
-                        Debug.Log("상대 청단 : " + CardManager.instance.enemyBlueFlagEmptyIndex);
                     }
                     break;
                 case "초단":
                     if (scoreList == CardManager.instance.myHandScore)
                     {
                         CardManager.instance.normalFlagCount++;
-                        Debug.Log("내 초단 : " + CardManager.instance.normalFlagEmptyIndex);
                     }
                     else if (scoreList == CardManager.instance.opponentHandScore)
                     {
                         CardManager.instance.enemyNormalFlagCount++;
-                        Debug.Log("상대 초단 : " + CardManager.instance.enemyNormalFlagEmptyIndex);
                     }
                     break;
                 case "새":
                     if (scoreList == CardManager.instance.myHandScore)
                     {
                         CardManager.instance.animalCount++;
-                        Debug.Log("내 고돌위 : " + CardManager.instance.animalEmptyIndex);
                     }
                     else if (scoreList == CardManager.instance.opponentHandScore)
                     {
                         CardManager.instance.enemyAnimalCount++;
-                        Debug.Log("상대 고돌위 : " + CardManager.instance.enemyAnimalEmptyIndex);
                     }
                     break;
                 case "피":
                     if (scoreList == CardManager.instance.myHandScore)
                     {
                         CardManager.instance.peeCount++;
-                        Debug.Log("내 피 : " + CardManager.instance.soldierEmptyIndex);
                         CardManager.instance.isPee = true;
                     }
                     else if (scoreList == CardManager.instance.opponentHandScore)
                     {
                         CardManager.instance.enemyPeeCount++;
-                        Debug.Log("상대 피 : " + CardManager.instance.enemySoldierEmptyIndex);
                         CardManager.instance.isOpPee = true;
                     }
                     break;
@@ -113,12 +101,12 @@ public class CardClick : MonoBehaviour
                 #region PlayerTurn	
                 if (GameManager.instance.isMyTurn == true)//만약 플레이어 턴이면	
                 {
-                    print("player turn");
+                    //print("player turn");
                     WhoTurn(CardManager.instance.myHand, CardManager.instance.myHandScore, false);
                     CalculateScore(CardManager.instance.myHandScore);
                     for (int i = 0; i < CardManager.instance.emptyIndex.Count; i++)
                     {
-                        print("완료 남은 카드 인덱스 " + i + " : " + CardManager.instance.emptyIndex[i]);
+                        //print("완료 남은 카드 인덱스 " + i + " : " + CardManager.instance.emptyIndex[i]);
                     }
 
                 }
@@ -126,12 +114,12 @@ public class CardClick : MonoBehaviour
                 #region OpponentTurn	
                 else//만약 상대 턴이면	
                 {
-                    print("Opponent turn");
+                    //print("Opponent turn");
                     WhoTurn(CardManager.instance.opponentHand, CardManager.instance.opponentHandScore, true);
                     CalculateScore(CardManager.instance.opponentHandScore);
                     for (int i = 0; i < CardManager.instance.emptyIndex.Count; i++)
                     {
-                        print("완료 남은 카드 인덱스 " + i + " : " + CardManager.instance.emptyIndex[i]);
+                        //print("완료 남은 카드 인덱스 " + i + " : " + CardManager.instance.emptyIndex[i]);
                     }
 
                 }
@@ -182,12 +170,12 @@ public class CardClick : MonoBehaviour
 
     void WhoTurn(List<GameObject> hand, List<GameObject> handscore, bool isPlayer)
     {
-        print(gameObject.name);
+        //print(gameObject.name);
         //카드 뽑는 애니메이션
         if (hand.Contains(gameObject)) // 내손에 이 게임오브젝트가 있을 때
         {
-            print("hand in");
-            print(gameObject.name);
+            //print("hand in");
+            //print(gameObject.name);
             if (gameObject.name == "Bomb(Clone)")
             {
                 CardManager.instance.myCardCount = 1;
@@ -205,7 +193,7 @@ public class CardClick : MonoBehaviour
 
             else if(gameObject.tag == "Bonus")
             {
-                print("bonus card");
+                //print("bonus card");
 
                 MoveFieldScoreField(gameObject, handscore);
                 hand.Remove(gameObject);
@@ -227,7 +215,7 @@ public class CardClick : MonoBehaviour
 
                 if (HandCheck(hand, gameObject).Length == 2 && CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(gameObject)] == 1) // 내손에 같은 카드가 3장일 때 흔들기
                 {
-                    print("흔들기");
+                    //print("흔들기");
                     ShakePanel = GameObject.Find("Canvas").transform.Find("ShakePanel").gameObject;
                     ShakePanel.SetActive(true);
                     CardManager.instance.curObj = gameObject;
@@ -242,7 +230,7 @@ public class CardClick : MonoBehaviour
 
                     if (!GameManager.instance.isBonus)
                     {
-                        print("change");
+                        //print("change");
                         EndArrange(hand, isPlayer);
                         
                     }
@@ -269,7 +257,7 @@ public class CardClick : MonoBehaviour
             //카드가 안맞았을 때
             case 1:
                 {
-                    print("일단 안맞음");
+                    //print("일단 안맞음");
                     /*카드의 위치는 빈공간으로 간다.*/
 
                     if(clickObj.name != "Bomb(Clone)" && clickObj.tag != "Bonus")
@@ -288,7 +276,7 @@ public class CardClick : MonoBehaviour
                     {
                         if (CardManager.instance.field[CardManager.instance.field.Count - 1].CompareTag(clickObj.tag)) // 뒤집은 카드랑 내가 냈던 카드랑 같으면
                         {
-                            print("쪽");
+                            //print("쪽");
                             CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(clickObj)]--; // 내가 낸 카드
                             CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(CardManager.instance.field[CardManager.instance.field.Count - 1])]--; //뒤집은 카드랑
 
@@ -298,7 +286,7 @@ public class CardClick : MonoBehaviour
 
                         else
                         {
-                            print("태그가 다름");
+                            //print("태그가 다름");
                             FlipAction(hand, handscore);
                         }
                     }
@@ -308,9 +296,9 @@ public class CardClick : MonoBehaviour
 
             case 2:
                 {
-                    print("일단 맞음");
+                    //print("일단 맞음");
                     hittedCard = GetHitCard(clickObj); // 자리만 옮기기
-                    print(hittedCard.name);
+                    //print(hittedCard.name);
                     CardManager.instance.FlipCard();
 
                     if (!CardManager.instance.isFlip)
@@ -330,10 +318,10 @@ public class CardClick : MonoBehaviour
                         if (CardManager.instance.field[CardManager.instance.field.Count - 1].CompareTag(clickObj.tag)) // 같은거 맞음
                         {
                             //뻑
-                            print(clickObj.name);
+                            //print(clickObj.name);
                             SetNextPosition(clickObj, CardManager.instance.field[CardManager.instance.field.Count - 1]);
                             //CardManager.instance.field[CardManager.instance.field.Count - 1].transform.position = new Vector3(gameObject.transform.position.x + 0.5f, gameObject.transform.position.y, gameObject.transform.position.z - 0.1f);//뒤집은 카드는 내가 냈던 카드 옆으로 위치 이동                                                                                                                                                                                        //    gameObject.transform.position.z - 0.1f), 0.5f).SetEase(Ease.OutQuint);//뒤집은 카드는 내가 냈던 카드 옆으로 위치 이동
-                            print("뻑");
+                            //print("뻑");
                             break;
                         }
 
@@ -341,7 +329,7 @@ public class CardClick : MonoBehaviour
                         {
                             if (HandCheck(hand, clickObj).Length == 2) // 내손에 같은 카드가 3장일 때 
                             {
-                                print("handCheck");
+                                //print("handCheck");
                                 GameObject[] temp = HandCheck(hand, clickObj);
 
                                 hand.Remove(temp[0]);
@@ -380,7 +368,7 @@ public class CardClick : MonoBehaviour
 
             case 3:
                 {
-                    print("2개중 고르기");
+                    //print("2개중 고르기");
                     FlipChoiceCard(clickObj);
                     CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(clickObj)]--;
 
@@ -398,7 +386,7 @@ public class CardClick : MonoBehaviour
                         if (CardManager.instance.field[CardManager.instance.field.Count - 1].CompareTag(clickObj.tag)) // 같은거 맞음
                         {
                             //폭탄
-                            print("폭탄입니다.");
+                            //print("폭탄입니다.");
 
                             GameObject[] temp = new GameObject[3];
                             temp = FlipBombCard(CardManager.instance.field[CardManager.instance.field.Count - 1]);
@@ -411,7 +399,7 @@ public class CardClick : MonoBehaviour
 
                         else
                         {
-                            print("2개중 하나 고름");
+                            //print("2개중 하나 고름");
                             MoveFieldScoreField(clickObj, handscore);
                             AfterFlipChoiceCard();
 
@@ -424,7 +412,7 @@ public class CardClick : MonoBehaviour
             case 4:
                 {
                     //폭탄
-                    print("폭탄");
+                    //print("폭탄");
                     GameObject[] temp = new GameObject[3];
 
                     temp = FlipBombCard(clickObj);
@@ -461,7 +449,7 @@ public class CardClick : MonoBehaviour
         if(CardManager.instance.field[CardManager.instance.field.Count - 1].tag == "Bonus")
         {
 
-            print("bonus card!");
+            //print("bonus card!");
             NoMatchField(CardManager.instance.field[CardManager.instance.field.Count - 1]); //빈공간에 내가 둘 카드 둠
 
             EmptyFieldPosition(CardManager.instance.field[CardManager.instance.field.Count - 1]); // 빈공간 만들어줌
@@ -476,7 +464,7 @@ public class CardClick : MonoBehaviour
             }
             if (CardManager.instance.cardDeck.Count > 0)
             {
-                print("Draw card");
+                //print("Draw card");
                 CardManager.instance.DrawCard(hand, 1);
                 GameManager.instance.oneTime = false;
             }
@@ -497,17 +485,17 @@ public class CardClick : MonoBehaviour
             {
                 case 1:
                     {
-                        print("+ 뒤집은것도 안맞음");
+                        //print("+ 뒤집은것도 안맞음");
                         NoMatchField(CardManager.instance.field[CardManager.instance.field.Count - 1]); //빈공간에 내가 둘 카드 둠
                         break;//턴 넘기기
                     }
 
                 case 2:
                     {
-                        print(" + 뒤집은거 맞음");
+                        //print(" + 뒤집은거 맞음");
                         /*다른거 두개 맞았을 때 -> 무조건 같은 태그 오브젝트 1개 존재*/
                         hittedCard = GetHitCard(CardManager.instance.field[CardManager.instance.field.Count - 1]); // 뒤집은 카드와 맞은 카드 찾음
-                        print(hittedCard.name);
+                        //print(hittedCard.name);
 
                         EmptyFieldPosition(hittedCard);
 
@@ -523,7 +511,7 @@ public class CardClick : MonoBehaviour
                 case 3:
                     {
                         /*다른거 세개 맞았을 때 -> 무조건 2개 존재*/
-                        print(" + 둘 중 하나 고름"); ;
+                        //print(" + 둘 중 하나 고름"); ;
                         FlipChoiceCard(CardManager.instance.field[CardManager.instance.field.Count - 1]);
 
                         CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(CardManager.instance.field[CardManager.instance.field.Count - 1])]--;
@@ -537,7 +525,7 @@ public class CardClick : MonoBehaviour
                 case 4:
                     {
                         //뒤집은 칻으가 폭탄
-                        print(" + 폭탄");
+                        //print(" + 폭탄");
 
                         GameObject[] temp = new GameObject[3];
 
@@ -563,7 +551,7 @@ public class CardClick : MonoBehaviour
             {
                 index = i;
                 obj.transform.position = new Vector3(CardManager.instance.field[i].transform.position.x + 0.5f, CardManager.instance.field[i].transform.position.y, CardManager.instance.field[i].transform.position.z - 0.1f);
-                print(CardManager.instance.field[index].name);
+                //print(CardManager.instance.field[index].name);
                 //obj.transform.DOMove(new Vector3(CardManager.instance.field[i].transform.position.x + 0.5f, CardManager.instance.field[i].transform.position.y, CardManager.instance.field[i].transform.position.z - 0.1f), 0.5f).SetEase(Ease.OutQuint);
             }
         }
@@ -582,7 +570,7 @@ public class CardClick : MonoBehaviour
         }
         CardManager.instance.ChoiceObj.Remove(obj);
 
-        print(CardManager.instance.ChoiceObj.Count);
+        //print(CardManager.instance.ChoiceObj.Count);
         //같은 카드 다음 포지션은 같은 태그의 갯수 * 0.5 만큼 x축을 더해준다.
         float max = CardManager.instance.ChoiceObj[0].transform.position.x;
         for(int i=0;i<CardManager.instance.ChoiceObj.Count;i++)
@@ -623,7 +611,7 @@ public class CardClick : MonoBehaviour
             CardManager.instance.BombObj.Remove(obj);
         }
 
-        print(obj.name);
+        //print(obj.name);
 
         obj.transform.position = new Vector3(Math.Max(Math.Max(CardManager.instance.BombObj[0].transform.position.x, CardManager.instance.BombObj[1].transform.position.x), CardManager.instance.BombObj[2].transform.position.x) + 0.5f,
                                                                                     CardManager.instance.BombObj[0].transform.position.y, CardManager.instance.BombObj[0].transform.position.z - 0.1f * 3);// 필드에 먼저 놔둠
@@ -669,10 +657,10 @@ public class CardClick : MonoBehaviour
 
     void NoMatchField(GameObject obj)
     {
-        print("no match");
+        //print("no match");
         
 
-        print("0 번 값: " + CardManager.instance.emptyIndex[0]);
+        //print("0 번 값: " + CardManager.instance.emptyIndex[0]);
         GameManager.instance.isMoving = true;
         obj.transform.DOMove(CardManager.instance.fieldPosition[CardManager.instance.emptyIndex[0]], 0.5f).SetEase(Ease.OutQuint); // 마지막 필드포지션은 빈곳에 넣음
         StartCoroutine(GameManager.instance.CompleteMoving());
@@ -682,7 +670,7 @@ public class CardClick : MonoBehaviour
         CardManager.instance.EmptyIndexSort();//빈곳 인덱스 오름차순 정렬
         for (int i = 0; i < CardManager.instance.emptyIndex.Count; i++)
         {
-            print("남은 카드 인덱스 " + i + " : " + CardManager.instance.emptyIndex[i]);
+            //print("남은 카드 인덱스 " + i + " : " + CardManager.instance.emptyIndex[i]);
         }
 
     }
@@ -692,9 +680,9 @@ public class CardClick : MonoBehaviour
         GameManager.instance.isMoving = true;
         moveObj.transform.DOMove(CardManager.instance.ScoreField(moveObj, score), 0.5f).SetEase(Ease.OutQuint); // 점수판 위치 이동
         StartCoroutine(GameManager.instance.CompleteMoving());
-        print(score.Count);
+        //print(score.Count);
         score.Add(moveObj); // 점수에 더해주기 
-        print(score.Count);
+        //print(score.Count);
         if (CardManager.instance.field.Contains(moveObj))
         {
             CardManager.instance.field.Remove(moveObj); // 필드에서 지우기
@@ -744,7 +732,7 @@ public class CardClick : MonoBehaviour
         CardManager.instance.EmptyIndexSort();//빈곳 인덱스 오름차순 정렬
         for (int i=0;i<CardManager.instance.emptyIndex.Count;i++)
         {
-            print("남은 카드 인덱스 " + i + " : " + CardManager.instance.emptyIndex[i]);
+            //print("남은 카드 인덱스 " + i + " : " + CardManager.instance.emptyIndex[i]);
         }
 
     }
@@ -835,7 +823,7 @@ public class CardClick : MonoBehaviour
 
         if (GameManager.instance.isMyTurn)
         {
-            print(CardManager.instance.curObj.name);
+            //print(CardManager.instance.curObj.name);
             CardManager.instance.ResetPosition(CardManager.instance.myHand);
             CardManager.instance.myHand.Remove(CardManager.instance.curObj);//내손에서 지우기
             CheckCardAction(CardManager.instance.curObj, CardManager.instance.myHand, CardManager.instance.myHandScore);
@@ -845,7 +833,7 @@ public class CardClick : MonoBehaviour
 
         else
         {
-            print(CardManager.instance.curObj.name);
+            //print(CardManager.instance.curObj.name);
             CardManager.instance.ResetPosition(CardManager.instance.opponentHand);
             CardManager.instance.opponentHand.Remove(CardManager.instance.curObj);//내손에서 지우기
             CheckCardAction(CardManager.instance.curObj, CardManager.instance.opponentHand, CardManager.instance.opponentHandScore);

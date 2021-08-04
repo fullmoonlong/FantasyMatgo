@@ -41,7 +41,7 @@ public class BattleSystem : MonoBehaviour
     {
 
 
-        //흔들기 print("my turn");
+        //흔들기 //print("my turn");
     }
 
     public IEnumerator SettingBattle()
@@ -70,7 +70,7 @@ public class BattleSystem : MonoBehaviour
         {
             case 0:
                 attackCount = 0;
-                print("attackcount: " + attackCount);
+                //print("attackcount: " + attackCount);
                 LightAttack(CardManager.instance.kingEmptyIndex, CardManager.instance.enemyKingEmptyIndex);
                 break;
 
@@ -144,7 +144,7 @@ public class BattleSystem : MonoBehaviour
     void Damaged(PlayerScript ui, BattleHUD hud)
     {
         ui.currentHp -= damage;
-        print(damage);
+        //print(damage);
         hud.SetHp(ui.currentHp);
     }
     public void LightAttack(int mylight, int oplight)
@@ -156,21 +156,21 @@ public class BattleSystem : MonoBehaviour
             case 0:   
             case 1:
             case 2:
-                print("nothing");
+                //print("nothing");
                 damage = 0;
                 break;
             case 3:
-                print("3점");
+                //print("3점");
                 damage = 3;
                 break;
 
             case 4:
-                print("4점");
+                //print("4점");
                 damage = 4;
                 break;
 
             case 5:
-                print("15점");
+                //print("15점");
                 damage = 15;
                 break;
 
@@ -195,30 +195,30 @@ public class BattleSystem : MonoBehaviour
         if(red == 3)
         {
             damage += 3;
-            print("red");
+            //print("red");
         }
         if (blue == 3)
         {
             damage += 3;
-            print("blue");
+            //print("blue");
         }
 
         if (brown >= 3)
         {
             damage += 3;
-            print("brown");
+            //print("brown");
         }
 
         if (result == 7)
         {
             damage += 3;
-            print("result");
+            //print("result");
         }
 
         if (result == 6)
         {
             damage += 2;
-            print("result");
+            //print("result");
         }
 
         if(result > 7)
@@ -230,7 +230,7 @@ public class BattleSystem : MonoBehaviour
             }
         }
 
-        print(damage);
+        //print(damage);
     }
 
     public void GoDoRiAttack(int bird)
