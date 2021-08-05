@@ -117,7 +117,7 @@ public class CardManager : MonoBehaviour
         myHandScore = new List<GameObject>(); // 점수 리스트 할당
         opponentHandScore = new List<GameObject>(); // 점수 리스트 할당
 
-        emptyIndex = new List<int>(6) { 6, 7, 8, 9, 10, 11 };
+        emptyIndex = new List<int>(6) { 8, 9, 10, 11, 12 };
 
         kingEmptyIndex = 0;
         enemyKingEmptyIndex = 0;
@@ -166,7 +166,8 @@ public class CardManager : MonoBehaviour
                                 new Vector3(5, -2, 0),
                                 new Vector3(7, 2, 0),
                                 new Vector3(7, -2, 0),
-                                new Vector3(-7, 2, 0)
+                                new Vector3(-7, 2, 0),
+                                new Vector3(-7, -2, 0)
         };
         //
         scoreKingPosition = new[]
@@ -269,7 +270,7 @@ public class CardManager : MonoBehaviour
         ShuffleDeck(); //덱을 섞는다
         DrawCard(myHand, 6); // 내손에 6장 씩 뽑는다.
         DrawCard(opponentHand, 6);  // 상대손에 6장 씩 뽑는다.
-        DrawCard(field, 6);
+        DrawCard(field, 8);
 
         //field.Add(GameObject.Find("48(Clone)"));
         //CardInitialPosition(field, field.Count - 1);
@@ -387,6 +388,10 @@ public class CardManager : MonoBehaviour
             count = 0;
         }
         EmptyIndexSort();
+        for(int i=0;i<emptyIndex.Count;i++)
+        {
+            print("index i : " + emptyIndex[i]);
+        }
     }
 
     void FieldBonusCard()
@@ -436,10 +441,6 @@ public class CardManager : MonoBehaviour
                         }
                         
                     }
-
-                    ResetPosition(myHand);
-
-                    DrawCard(myHand, 1);
 
                     for (int j = 0; j < emptyIndex.Count; j++)
                     {
@@ -501,15 +502,7 @@ public class CardManager : MonoBehaviour
                             EmptyIndexSort();
                         }
                     }
-
-                    ResetPosition(myHand);
-
-                    DrawCard(myHand, 2);
-
-                 
                     break;
-
-              
                 }
             default:
                 break;
