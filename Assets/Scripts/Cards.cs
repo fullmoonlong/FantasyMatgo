@@ -1,7 +1,10 @@
 using UnityEngine;
 
-public class Cards : MonoBehaviour
+[CreateAssetMenu(fileName = "New Card", menuName = "Card")]
+public class Cards : ScriptableObject
 {
-    Cards() { }
-    ~Cards() { }
+    public string cardName;
+    public string description;
+
+    public Sprite artwork;
 }
