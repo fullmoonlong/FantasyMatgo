@@ -390,7 +390,7 @@ public class CardManager : MonoBehaviour
         EmptyIndexSort();
         for(int i=0;i<emptyIndex.Count;i++)
         {
-            print("index i : " + emptyIndex[i]);
+            //print("index i : " + emptyIndex[i]);
         }
     }
 

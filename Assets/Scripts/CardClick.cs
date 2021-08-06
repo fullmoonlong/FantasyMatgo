@@ -18,7 +18,7 @@ public class CardClick : MonoBehaviour
     GameObject hittedCard;
     private GameObject OpenChoicePanel;
     private GameObject ShakePanel;
-
+    private GameObject AttackPanel;
     public void CalculateScore(List<GameObject> scoreList)
     {
         foreach (var item in scoreList)
@@ -90,8 +90,77 @@ public class CardClick : MonoBehaviour
                 default:
                     break;
             }
+
+           
         }
     }
+
+    IEnumerator FixedMade(int king, int opking, int red, int blue, int normal, int animal, bool[] isking, bool[] isflag, bool isanimal, GameObject who, PlayerScript ui, BattleHUD hud)
+    {
+     
+        yield return new WaitForSeconds(1f);
+        for (int i=0;i<3;i++)
+        {
+            if (!isking[i] && king == i + 3)
+            {
+                AttackPanel = GameObject.Find("Canvas").transform.Find("AttackPanel").gameObject;
+                AttackPanel.SetActive(true);
+                print("광 공격");
+                BattleSystem.instance.LightAttack(king, opking);
+
+                StartCoroutine(AttackAction(who, ui, hud));
+                BattleSystem.instance.kingAttack[i] = true;
+            }
+        
+            int flag = 0;
+            switch (i)
+            {
+                case 0:
+                    flag = red;
+                    break;
+                case 1:
+                    flag = blue;
+                    break;
+                case 2:
+                    flag = normal;
+                    break;
+                default:
+                    break;
+            }
+
+            if (!isflag[i] && flag == 3)
+            {
+                AttackPanel = GameObject.Find("Canvas").transform.Find("AttackPanel").gameObject;
+                AttackPanel.SetActive(true);
+                BattleSystem.instance.damage = 3;
+                StartCoroutine(AttackAction(who, ui, hud));
+                BattleSystem.instance.flagAttack[i] = true;
+            }
+        }
+
+        if (!isanimal && animal == 3)
+        {
+            AttackPanel = GameObject.Find("Canvas").transform.Find("AttackPanel").gameObject;
+            AttackPanel.SetActive(true);
+            BattleSystem.instance.damage = 5;
+            StartCoroutine(AttackAction(who, ui, hud));
+            BattleSystem.instance.animalAttack = true;
+        }
+    }
+    IEnumerator AttackAction(GameObject who, PlayerScript ui, BattleHUD hud)
+    {
+        AttackPanel = GameObject.Find("Canvas").transform.Find("AttackPanel").gameObject;
+        Sequence mysequence = DOTween.Sequence();
+        BattleSystem.instance.attackImage.transform.position = who.transform.position;
+
+        mysequence.Append(BattleSystem.instance.attackImage.transform.DOScale(Vector3.one * 0.3f, 0.3f)
+            .SetEase(Ease.InOutBack)).Join(who.transform.DOShakePosition(1f, 5f))
+          .AppendInterval(1.2f).Append(BattleSystem.instance.attackImage.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InOutBack)).OnComplete(() => BattleSystem.instance.Damaged(ui, hud));
+
+        AttackPanel.SetActive(false);
+        yield return new WaitForSeconds(3f);
+    }
+
     public void OnMouseUp()
     {
         if (!EventSystem.current.IsPointerOverGameObject())
@@ -104,9 +173,12 @@ public class CardClick : MonoBehaviour
                     //print("player turn");
                     WhoTurn(CardManager.instance.myHand, CardManager.instance.myHandScore, false);
                     CalculateScore(CardManager.instance.myHandScore);
+                    //GameManager.instance.ScoreCheck();
+                    StartCoroutine(FixedMade(CardManager.instance.kingEmptyIndex, CardManager.instance.enemyKingEmptyIndex, CardManager.instance.redFlagEmptyIndex, CardManager.instance.blueFlagEmptyIndex, CardManager.instance.normalFlagEmptyIndex,
+                        CardManager.instance.animalEmptyIndex, BattleSystem.instance.kingAttack, BattleSystem.instance.flagAttack, BattleSystem.instance.animalAttack, BattleSystem.instance.op, BattleSystem.instance.opUi, BattleSystem.instance.opHUD));
                     for (int i = 0; i < CardManager.instance.emptyIndex.Count; i++)
                     {
-                        print("완료 남은 카드 인덱스 " + i + " : " + CardManager.instance.emptyIndex[i]);
+                        //print("완료 남은 카드 인덱스 " + i + " : " + CardManager.instance.emptyIndex[i]);
                     }
 
                 }
@@ -119,7 +191,7 @@ public class CardClick : MonoBehaviour
                     CalculateScore(CardManager.instance.opponentHandScore);
                     for (int i = 0; i < CardManager.instance.emptyIndex.Count; i++)
                     {
-                        print("완료 남은 카드 인덱스 " + i + " : " + CardManager.instance.emptyIndex[i]);
+                        //print("완료 남은 카드 인덱스 " + i + " : " + CardManager.instance.emptyIndex[i]);
                     }
 
                 }

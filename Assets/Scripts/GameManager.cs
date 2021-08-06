@@ -37,6 +37,8 @@ public class GameManager : MonoBehaviour
     public bool isOppoFirstArtifact;
     public bool isOppoSecondArtifact;
     public bool isOppoThirdArtifact;
+    public bool isChecked;
+
     public bool isSetting;
     public bool isMoving;
     public bool isBattle;
@@ -69,6 +71,8 @@ public class GameManager : MonoBehaviour
         battleFirst = true;
 
         isBonus = false;
+        isChecked = false;
+
         StartCoroutine(CompleteSetting());
     }
 
@@ -128,6 +132,7 @@ public class GameManager : MonoBehaviour
         {
             if (isMyFirstArtifact == true)
             {
+                isChecked = true;
                 ChooseMyArtifact();
             }
             isMyFirstArtifact = false;
@@ -136,6 +141,7 @@ public class GameManager : MonoBehaviour
         {
             if (isOppoFirstArtifact == true)
             {
+                isChecked = true;
                 ChooseOpponentArtifact();
             }
             isOppoFirstArtifact = false;
@@ -144,6 +150,7 @@ public class GameManager : MonoBehaviour
         {
             if (isMySecondArtifact == true)
             {
+                isChecked = true;
                 ChooseMyArtifact();
             }
             isMySecondArtifact = false;
@@ -152,16 +159,19 @@ public class GameManager : MonoBehaviour
         {
             if (isOppoSecondArtifact == true)
             {
+                isChecked = true;
                 ChooseOpponentArtifact();
             }
             isOppoSecondArtifact = false;
         }
         if (MatgoScore.myScore >= 7)
         {
+            isChecked = true;
             ChooseMyArtifact();
         }
         if (MatgoScore.opScore >= 7)
         {
+            isChecked = true;
             ChooseOpponentArtifact();
         }
     }
@@ -219,20 +229,20 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        //if (!gameOverPanel.activeSelf)
-        //{
-        //    gameOverText.text = "Game Over";
-        //    gameOverPanel.SetActive(true);
-        //    isGameEnd = true;
-        //}
-        if(battleFirst)
+        if (!gameOverPanel.activeSelf)
         {
+            gameOverText.text = "Game Over";
+            gameOverPanel.SetActive(true);
             isGameEnd = true;
-            isMyTurn = true;
-            StartCoroutine(BattleSystem.instance.SettingBattle());
-            battleFirst = false;
         }
-  
+        //if(battleFirst)
+        //{
+        //    isGameEnd = true;
+        //    isMyTurn = true;
+
+        //    battleFirst = false;
+        //}
+
     }
     public void Retry()
     {

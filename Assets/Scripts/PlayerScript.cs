@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
+    public int maxHp;
     public int currentHp;
 
-    private void Start()
+    void Awake()
     {
-       
-        if (!PlayerPrefs.HasKey("HP"))
-        {
-            PlayerPrefs.SetInt("HP", 100);
-            currentHp = 100;
-        }
-     
-        currentHp = PlayerPrefs.GetInt("HP");
+        //if (!PlayerPrefs.HasKey("HP"))
+        //{
+        //    PlayerPrefs.SetInt("HP", 100);
+        //}
+        maxHp = 100;
+
+        //currentHp = PlayerPrefs.GetInt("HP");
+        currentHp = maxHp;
     }
 }
