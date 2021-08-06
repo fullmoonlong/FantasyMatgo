@@ -20,8 +20,12 @@ public class GameManager : MonoBehaviour
     public Text opScoreText;
     public Text gameOverText;
     public GameObject gameOverPanel;
-    public GameObject myArtifactPanel;
-    public GameObject oppoArtifactPanel;
+    public GameObject myFirstArtifactPanel;
+    public GameObject mySecondArtifactPanel;
+    public GameObject myThirdArtifactPanel;
+    public GameObject opponentFirstArtifactPanel;
+    public GameObject opponentSecondArtifactPanel;
+    public GameObject opponentThirdArtifactPanel;
 
     public int maxTurnCount; // 현재까지 진행된 턴 수
     public int artifactNumMe;
@@ -37,8 +41,6 @@ public class GameManager : MonoBehaviour
     public bool isOppoFirstArtifact;
     public bool isOppoSecondArtifact;
     public bool isOppoThirdArtifact;
-    public bool isChecked;
-
     public bool isSetting;
     public bool isMoving;
     public bool isBattle;
@@ -71,8 +73,6 @@ public class GameManager : MonoBehaviour
         battleFirst = true;
 
         isBonus = false;
-        isChecked = false;
-
         StartCoroutine(CompleteSetting());
     }
 
@@ -82,14 +82,18 @@ public class GameManager : MonoBehaviour
         TurnTextSet();
         ScoreCheck();
 
-        if (CardManager.instance.myHand.Count == 0 && CardManager.instance.opponentHand.Count == 0 && !myArtifactPanel.activeSelf && !oppoArtifactPanel.activeSelf)
+        if (CardManager.instance.myHand.Count == 0 && CardManager.instance.opponentHand.Count == 0
+            && mySecondArtifactPanel.activeSelf == false
+            && opponentSecondArtifactPanel.activeSelf == false
+            && myThirdArtifactPanel.activeSelf == false
+            && opponentThirdArtifactPanel.activeSelf == false)
         {
             GameOver();
         }
 
         if (oneTime)
         {
-            if(maxTurnCount > 0)
+            if (maxTurnCount > 0)
             {
                 if (isMyTurn)
                 {
@@ -109,7 +113,7 @@ public class GameManager : MonoBehaviour
 
                 maxTurnCount -= 1;
             }
-           
+
         }
 
     }
@@ -132,7 +136,6 @@ public class GameManager : MonoBehaviour
         {
             if (isMyFirstArtifact == true)
             {
-                isChecked = true;
                 ChooseMyArtifact();
             }
             isMyFirstArtifact = false;
@@ -141,7 +144,6 @@ public class GameManager : MonoBehaviour
         {
             if (isOppoFirstArtifact == true)
             {
-                isChecked = true;
                 ChooseOpponentArtifact();
             }
             isOppoFirstArtifact = false;
@@ -150,7 +152,6 @@ public class GameManager : MonoBehaviour
         {
             if (isMySecondArtifact == true)
             {
-                isChecked = true;
                 ChooseMyArtifact();
             }
             isMySecondArtifact = false;
@@ -159,19 +160,16 @@ public class GameManager : MonoBehaviour
         {
             if (isOppoSecondArtifact == true)
             {
-                isChecked = true;
                 ChooseOpponentArtifact();
             }
             isOppoSecondArtifact = false;
         }
         if (MatgoScore.myScore >= 7)
         {
-            isChecked = true;
             ChooseMyArtifact();
         }
         if (MatgoScore.opScore >= 7)
         {
-            isChecked = true;
             ChooseOpponentArtifact();
         }
     }
@@ -196,17 +194,37 @@ public class GameManager : MonoBehaviour
 
     public void ChooseMyArtifact()
     {
-        if (artifactNumMe < 3)
+        if (artifactNumMe == 0)
         {
-            myArtifactPanel.SetActive(true);
+            myFirstArtifactPanel.SetActive(true);
         }
+        else if (artifactNumMe == 1)
+        {
+            mySecondArtifactPanel.SetActive(true);
+        }
+        else if (artifactNumMe == 2)
+        {
+            myThirdArtifactPanel.SetActive(true);
+        }
+        /// 이 밑으로 아티팩트를 4개 이상 먹는 시스템 구현
+        /// 
     }
     public void ChooseOpponentArtifact()
     {
-        if (artifactNumOpponent < 3)
+        if (artifactNumOpponent == 0)
         {
-            oppoArtifactPanel.SetActive(true);
+            opponentFirstArtifactPanel.SetActive(true);
         }
+        if (artifactNumOpponent == 1)
+        {
+            opponentSecondArtifactPanel.SetActive(true);
+        }
+        if (artifactNumOpponent == 2)
+        {
+            opponentThirdArtifactPanel.SetActive(true);
+        }
+        /// 이 밑으로 아티팩트를 4개 이상 먹는 시스템 구현
+        /// 
     }
 
     public void ApplyMyArtifact()
@@ -214,7 +232,19 @@ public class GameManager : MonoBehaviour
         GameObject btn = EventSystem.current.currentSelectedGameObject;
         artifactMe[artifactNumMe].sprite = btn.GetComponent<Image>().sprite;
         artifactMe[artifactNumMe].gameObject.SetActive(true);
-        myArtifactPanel.SetActive(false);
+
+        if (myFirstArtifactPanel.activeInHierarchy == true)
+        {
+            myFirstArtifactPanel.SetActive(false);
+        }
+        if (mySecondArtifactPanel.activeInHierarchy == true)
+        {
+            mySecondArtifactPanel.SetActive(false);
+        }
+        if (myThirdArtifactPanel.activeInHierarchy == true)
+        {
+            myThirdArtifactPanel.SetActive(false);
+        }
         artifactNumMe++;
     }
 
@@ -223,7 +253,18 @@ public class GameManager : MonoBehaviour
         GameObject btn = EventSystem.current.currentSelectedGameObject;
         artifactOp[artifactNumOpponent].sprite = btn.GetComponent<Image>().sprite;
         artifactOp[artifactNumOpponent].gameObject.SetActive(true);
-        oppoArtifactPanel.SetActive(false);
+        if (opponentFirstArtifactPanel.activeInHierarchy == true)
+        {
+            opponentFirstArtifactPanel.SetActive(false);
+        }
+        if (opponentSecondArtifactPanel.activeInHierarchy == true)
+        {
+            opponentSecondArtifactPanel.SetActive(false);
+        }
+        if (opponentThirdArtifactPanel.activeInHierarchy == true)
+        {
+            opponentThirdArtifactPanel.SetActive(false);
+        }
         artifactNumOpponent++;
     }
 
@@ -235,14 +276,6 @@ public class GameManager : MonoBehaviour
             gameOverPanel.SetActive(true);
             isGameEnd = true;
         }
-        //if(battleFirst)
-        //{
-        //    isGameEnd = true;
-        //    isMyTurn = true;
-
-        //    battleFirst = false;
-        //}
-
     }
     public void Retry()
     {
