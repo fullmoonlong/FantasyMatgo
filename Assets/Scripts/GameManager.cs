@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using System.Collections;
+using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class GameManager : MonoBehaviour
     public GameObject opponentFirstArtifactPanel;
     public GameObject opponentSecondArtifactPanel;
     public GameObject opponentThirdArtifactPanel;
+    public GameObject AttackPanel;
 
     public int maxTurnCount; // 현재까지 진행된 턴 수
     public int artifactNumMe;
@@ -45,6 +47,9 @@ public class GameManager : MonoBehaviour
     public bool isMoving;
     public bool isBattle;
     public bool isBonus;
+    public bool isAttack;
+    public bool isShake;
+    public bool isChoice;
 
     public Image[] artifactMe;
     public Image[] artifactOp;
@@ -73,6 +78,13 @@ public class GameManager : MonoBehaviour
         battleFirst = true;
 
         isBonus = false;
+
+        isAttack = true;
+
+        isShake = false;
+
+        isChoice = false;
+
         StartCoroutine(CompleteSetting());
     }
 
@@ -80,8 +92,8 @@ public class GameManager : MonoBehaviour
     {
         ScoreTextSet();
         TurnTextSet();
-        ScoreCheck();
-
+       
+        //if(!isMyTurn)
         if (CardManager.instance.myHand.Count == 0 && CardManager.instance.opponentHand.Count == 0
             && mySecondArtifactPanel.activeSelf == false
             && opponentSecondArtifactPanel.activeSelf == false
@@ -130,48 +142,135 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         isMoving = false;
     }
-    public void ScoreCheck()
+
+    public IEnumerator FixedMade(int king, int opking, int red, int blue, int normal, int animal, bool[] isking, bool[] isflag, bool isanimal, GameObject who, PlayerScript ui, BattleHUD hud)
     {
-        if (MatgoScore.myScore >= 3)
+        yield return new WaitForSeconds(1f);
+        for (int i = 0; i < 3; i++)
         {
-            if (isMyFirstArtifact == true)
+            if (!isking[i] && king == i + 3)
+            {
+                AttackPanel.SetActive(true);
+                print("광 공격");
+                BattleSystem.instance.LightAttack(king, opking);
+
+                StartCoroutine(AttackAction(who, ui, hud));
+                BattleSystem.instance.kingAttack[i] = true;
+            }
+
+            int flag = 0;
+            switch (i)
+            {
+                case 0:
+                    flag = red;
+                    break;
+                case 1:
+                    flag = blue;
+                    break;
+                case 2:
+                    flag = normal;
+                    break;
+                default:
+                    break;
+            }
+
+            if (!isflag[i] && flag == 3)
+            {
+                AttackPanel.SetActive(true);
+                BattleSystem.instance.damage = 3;
+                StartCoroutine(AttackAction(who, ui, hud));
+                BattleSystem.instance.flagAttack[i] = true;
+            }
+        }
+
+        if (!isanimal && animal == 3)
+        {
+            AttackPanel.SetActive(true);
+            BattleSystem.instance.damage = 5;
+            StartCoroutine(AttackAction(who, ui, hud));
+            BattleSystem.instance.animalAttack = true;
+        }
+
+
+    }
+    public IEnumerator AttackAction(GameObject who, PlayerScript ui, BattleHUD hud)
+    {
+        AttackPanel = GameObject.Find("Canvas").transform.Find("AttackPanel").gameObject;
+        Sequence mysequence = DOTween.Sequence();
+        BattleSystem.instance.attackImage.transform.position = who.transform.position;
+
+        mysequence.Append(BattleSystem.instance.attackImage.transform.DOScale(Vector3.one * 0.3f, 0.3f)
+            .SetEase(Ease.InOutBack)).Join(who.transform.DOShakePosition(1f, 5f))
+          .AppendInterval(1.2f).Append(BattleSystem.instance.attackImage.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InOutBack)).OnComplete(() => BattleSystem.instance.Damaged(ui, hud));
+
+        AttackPanel.SetActive(false);
+        yield return new WaitForSeconds(3f);
+    }
+
+    public void ScoreCheck(bool isPlayer)
+    {
+        MatgoScore.instance.MyCardCountToScore();
+        MatgoScore.instance.ScoreCalculate();
+        if (isPlayer)
+        {
+            print("내턴");
+            print(MatgoScore.myScore);
+            if (MatgoScore.myScore >= 3)
+            {
+                if (isMyFirstArtifact == true)
+                {
+                    ChooseMyArtifact();
+                }
+                isMyFirstArtifact = false;
+            }
+
+            if (MatgoScore.myScore >= 6)
+            {
+                if (isMySecondArtifact == true)
+                {
+                    ChooseMyArtifact();
+                }
+                isMySecondArtifact = false;
+            }
+
+            if (MatgoScore.myScore >= 7)
             {
                 ChooseMyArtifact();
             }
-            isMyFirstArtifact = false;
         }
-        if (MatgoScore.opScore >= 3)
+     
+        else
         {
-            if (isOppoFirstArtifact == true)
+            if (MatgoScore.opScore >= 3)
+            {
+                if (isOppoFirstArtifact == true)
+                {
+                    ChooseOpponentArtifact();
+                }
+                isOppoFirstArtifact = false;
+            }
+
+            if (MatgoScore.opScore >= 6)
+            {
+                if (isOppoSecondArtifact == true)
+                {
+                    ChooseOpponentArtifact();
+                }
+                isOppoSecondArtifact = false;
+            }
+
+            if (MatgoScore.opScore >= 7)
             {
                 ChooseOpponentArtifact();
             }
-            isOppoFirstArtifact = false;
         }
-        if (MatgoScore.myScore >= 6)
-        {
-            if (isMySecondArtifact == true)
-            {
-                ChooseMyArtifact();
-            }
-            isMySecondArtifact = false;
-        }
-        if (MatgoScore.opScore >= 6)
-        {
-            if (isOppoSecondArtifact == true)
-            {
-                ChooseOpponentArtifact();
-            }
-            isOppoSecondArtifact = false;
-        }
-        if (MatgoScore.myScore >= 7)
-        {
-            ChooseMyArtifact();
-        }
-        if (MatgoScore.opScore >= 7)
-        {
-            ChooseOpponentArtifact();
-        }
+
+        //if(MatgoScore.myScore >3 && MatgoScore.myScore < 6)
+        //{
+        //    StartCoroutine(FixedMade(CardManager.instance.kingEmptyIndex, CardManager.instance.enemyKingEmptyIndex, CardManager.instance.redFlagEmptyIndex, CardManager.instance.blueFlagEmptyIndex, CardManager.instance.normalFlagEmptyIndex,
+        //       CardManager.instance.animalEmptyIndex, BattleSystem.instance.kingAttack, BattleSystem.instance.flagAttack, BattleSystem.instance.animalAttack, BattleSystem.instance.op, BattleSystem.instance.opUi, BattleSystem.instance.opHUD));
+
+        //}
     }
 
     public void ScoreTextSet()
@@ -207,7 +306,8 @@ public class GameManager : MonoBehaviour
             myThirdArtifactPanel.SetActive(true);
         }
         /// 이 밑으로 아티팩트를 4개 이상 먹는 시스템 구현
-        /// 
+        ///
+
     }
     public void ChooseOpponentArtifact()
     {
@@ -246,6 +346,10 @@ public class GameManager : MonoBehaviour
             myThirdArtifactPanel.SetActive(false);
         }
         artifactNumMe++;
+
+        StartCoroutine(FixedMade(CardManager.instance.kingEmptyIndex, CardManager.instance.enemyKingEmptyIndex, CardManager.instance.redFlagEmptyIndex, CardManager.instance.blueFlagEmptyIndex, CardManager.instance.normalFlagEmptyIndex,
+                CardManager.instance.animalEmptyIndex, BattleSystem.instance.kingAttack, BattleSystem.instance.flagAttack, BattleSystem.instance.animalAttack, BattleSystem.instance.op, BattleSystem.instance.opUi, BattleSystem.instance.opHUD));
+       
     }
 
     public void ApplyOpponentArtifact()
