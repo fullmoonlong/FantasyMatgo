@@ -37,6 +37,10 @@ public class BattleSystem : MonoBehaviour
     public bool[] kingAttack;
     public bool[] flagAttack;
     public bool animalAttack;
+
+    public bool[] enemyKingAttack;
+    public bool[] enemyFlagAttack;
+    public bool enemyAnimalAttack;
     // Start is called before the first frame update
     // Update is called once per frame
 
@@ -44,12 +48,17 @@ public class BattleSystem : MonoBehaviour
     {
         kingAttack = new bool[3];
         flagAttack = new bool[3];
-        for(int i=0;i<3;i++)
+        enemyKingAttack = new bool[3];
+        enemyFlagAttack = new bool[3];
+        for (int i=0;i<3;i++)
         {
             kingAttack[i] = false;
             flagAttack[i] = false;
+            enemyKingAttack[i] = false;
+            enemyFlagAttack[i] = false;
         }
         animalAttack = false;
+        enemyAnimalAttack = false;
         SettingBattle();
     }
     public void Update()
@@ -240,7 +249,7 @@ public class BattleSystem : MonoBehaviour
             }
         }
 
-        //print(damage);
+        print(damage);
     }
 
     public void GoDoRiAttack(int bird)
@@ -250,6 +259,7 @@ public class BattleSystem : MonoBehaviour
         {
             damage = 5;
         }
+        print(damage);
     }
 
     public void SoldierAttack(int soldier)
@@ -263,5 +273,6 @@ public class BattleSystem : MonoBehaviour
                 damage++;
             }
         }
+        print(damage);
     }
 }

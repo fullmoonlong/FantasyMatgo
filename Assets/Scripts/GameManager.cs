@@ -145,17 +145,18 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator FixedMade(int king, int opking, int red, int blue, int normal, int animal, bool[] isking, bool[] isflag, bool isanimal, GameObject who, PlayerScript ui, BattleHUD hud)
     {
+        print("attack");
         yield return new WaitForSeconds(1f);
+        AttackPanel.SetActive(false);
+        print("check");
         for (int i = 0; i < 3; i++)
         {
             if (!isking[i] && king == i + 3)
             {
-                AttackPanel.SetActive(true);
                 print("광 공격");
                 BattleSystem.instance.LightAttack(king, opking);
-
                 StartCoroutine(AttackAction(who, ui, hud));
-                BattleSystem.instance.kingAttack[i] = true;
+                isking[i] = true;
             }
 
             int flag = 0;
@@ -176,26 +177,24 @@ public class GameManager : MonoBehaviour
 
             if (!isflag[i] && flag == 3)
             {
-                AttackPanel.SetActive(true);
+                print("플래그 공격");
                 BattleSystem.instance.damage = 3;
                 StartCoroutine(AttackAction(who, ui, hud));
-                BattleSystem.instance.flagAttack[i] = true;
+                isflag[i] = true;
             }
         }
 
         if (!isanimal && animal == 3)
         {
-            AttackPanel.SetActive(true);
+            print("동물 공격");
             BattleSystem.instance.damage = 5;
             StartCoroutine(AttackAction(who, ui, hud));
-            BattleSystem.instance.animalAttack = true;
+            isanimal = true;
         }
-
-
     }
     public IEnumerator AttackAction(GameObject who, PlayerScript ui, BattleHUD hud)
     {
-        AttackPanel = GameObject.Find("Canvas").transform.Find("AttackPanel").gameObject;
+        AttackPanel.SetActive(true);
         Sequence mysequence = DOTween.Sequence();
         BattleSystem.instance.attackImage.transform.position = who.transform.position;
 
@@ -203,18 +202,24 @@ public class GameManager : MonoBehaviour
             .SetEase(Ease.InOutBack)).Join(who.transform.DOShakePosition(1f, 5f))
           .AppendInterval(1.2f).Append(BattleSystem.instance.attackImage.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InOutBack)).OnComplete(() => BattleSystem.instance.Damaged(ui, hud));
 
+        yield return new WaitForSeconds(4f);
         AttackPanel.SetActive(false);
-        yield return new WaitForSeconds(3f);
     }
 
+    public void OnOffPanel(bool on)
+    {
+        print("panel false");
+        AttackPanel.SetActive(on);
+        print("panel false");
+    }
     public void ScoreCheck(bool isPlayer)
     {
         MatgoScore.instance.MyCardCountToScore();
+        MatgoScore.instance.OpCardCountToScore();
         MatgoScore.instance.ScoreCalculate();
         if (isPlayer)
         {
             print("내턴");
-            print(MatgoScore.myScore);
             if (MatgoScore.myScore >= 3)
             {
                 if (isMyFirstArtifact == true)
@@ -264,13 +269,6 @@ public class GameManager : MonoBehaviour
                 ChooseOpponentArtifact();
             }
         }
-
-        //if(MatgoScore.myScore >3 && MatgoScore.myScore < 6)
-        //{
-        //    StartCoroutine(FixedMade(CardManager.instance.kingEmptyIndex, CardManager.instance.enemyKingEmptyIndex, CardManager.instance.redFlagEmptyIndex, CardManager.instance.blueFlagEmptyIndex, CardManager.instance.normalFlagEmptyIndex,
-        //       CardManager.instance.animalEmptyIndex, BattleSystem.instance.kingAttack, BattleSystem.instance.flagAttack, BattleSystem.instance.animalAttack, BattleSystem.instance.op, BattleSystem.instance.opUi, BattleSystem.instance.opHUD));
-
-        //}
     }
 
     public void ScoreTextSet()
@@ -347,9 +345,10 @@ public class GameManager : MonoBehaviour
         }
         artifactNumMe++;
 
+        AttackPanel.SetActive(true);
+
         StartCoroutine(FixedMade(CardManager.instance.kingEmptyIndex, CardManager.instance.enemyKingEmptyIndex, CardManager.instance.redFlagEmptyIndex, CardManager.instance.blueFlagEmptyIndex, CardManager.instance.normalFlagEmptyIndex,
                 CardManager.instance.animalEmptyIndex, BattleSystem.instance.kingAttack, BattleSystem.instance.flagAttack, BattleSystem.instance.animalAttack, BattleSystem.instance.op, BattleSystem.instance.opUi, BattleSystem.instance.opHUD));
-       
     }
 
     public void ApplyOpponentArtifact()
@@ -370,6 +369,13 @@ public class GameManager : MonoBehaviour
             opponentThirdArtifactPanel.SetActive(false);
         }
         artifactNumOpponent++;
+
+        AttackPanel.SetActive(true);
+
+        StartCoroutine(FixedMade(CardManager.instance.enemyKingEmptyIndex, CardManager.instance.kingEmptyIndex, CardManager.instance.enemyRedFlagEmptyIndex, CardManager.instance.enemyBlueFlagEmptyIndex, CardManager.instance.enemyNormalFlagEmptyIndex,
+           CardManager.instance.enemyAnimalEmptyIndex, BattleSystem.instance.enemyKingAttack, BattleSystem.instance.enemyFlagAttack, BattleSystem.instance.enemyAnimalAttack, BattleSystem.instance.player, BattleSystem.instance.playerUi, BattleSystem.instance.playerHUD));
+
+
     }
 
     public void GameOver()

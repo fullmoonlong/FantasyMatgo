@@ -18,7 +18,6 @@ public class CardClick : MonoBehaviour
     GameObject hittedCard;
     private GameObject OpenChoicePanel;
     private GameObject ShakePanel;
-    private GameObject AttackPanel;
     public void CalculateScore(List<GameObject> scoreList)
     {
         foreach (var item in scoreList)
@@ -107,22 +106,29 @@ public class CardClick : MonoBehaviour
                     if(CardManager.instance.myHand.Contains(gameObject))
                     {
                         WhoTurn(CardManager.instance.myHand, CardManager.instance.myHandScore);
+
+                        CardManager.instance.ResetPosition(CardManager.instance.myHand);
+                       
                         CalculateScore(CardManager.instance.myHandScore);
-                    
-                        GameManager.instance.ScoreCheck(true);
 
-                        if (!GameManager.instance.myFirstArtifactPanel.activeSelf && !GameManager.instance.mySecondArtifactPanel.activeSelf && !GameManager.instance.myThirdArtifactPanel.activeSelf)
-                        {
-                            print("panel no");
-                            StartCoroutine(GameManager.instance.FixedMade(CardManager.instance.kingEmptyIndex, CardManager.instance.enemyKingEmptyIndex, CardManager.instance.redFlagEmptyIndex, CardManager.instance.blueFlagEmptyIndex, CardManager.instance.normalFlagEmptyIndex,
-                            CardManager.instance.animalEmptyIndex, BattleSystem.instance.kingAttack, BattleSystem.instance.flagAttack, BattleSystem.instance.animalAttack, BattleSystem.instance.op, BattleSystem.instance.opUi, BattleSystem.instance.opHUD));
-                        }
 
+
+                        print(GameManager.instance.isShake + " + " + GameManager.instance.isChoice + " + " + GameManager.instance.isBonus);
                         if (!GameManager.instance.isShake && !GameManager.instance.isChoice && !GameManager.instance.isBonus)
                         {
-                            print("흔들기 아님 + 고르기 아님");
+                            GameManager.instance.ScoreCheck(true);
+
+                            if (!GameManager.instance.myFirstArtifactPanel.activeSelf && !GameManager.instance.mySecondArtifactPanel.activeSelf && !GameManager.instance.myThirdArtifactPanel.activeSelf)
+                            {
+                                GameManager.instance.AttackPanel.SetActive(true);
+                                
+                                print("bomb check");
+                                StartCoroutine(GameManager.instance.FixedMade(CardManager.instance.kingEmptyIndex, CardManager.instance.enemyKingEmptyIndex, CardManager.instance.redFlagEmptyIndex, CardManager.instance.blueFlagEmptyIndex, CardManager.instance.normalFlagEmptyIndex,
+                                CardManager.instance.animalEmptyIndex, BattleSystem.instance.kingAttack, BattleSystem.instance.flagAttack, BattleSystem.instance.animalAttack, BattleSystem.instance.op, BattleSystem.instance.opUi, BattleSystem.instance.opHUD));
+
+                            }
+
                             EndArrange(CardManager.instance.myHand, false);
-                            
                         }
 
                         GameManager.instance.isBonus = false;
@@ -141,15 +147,29 @@ public class CardClick : MonoBehaviour
                     if (CardManager.instance.opponentHand.Contains(gameObject)) // 내손에 이 게임오브젝트가 있을 때
                     {
                         WhoTurn(CardManager.instance.opponentHand, CardManager.instance.opponentHandScore);
+                        CardManager.instance.ResetPosition(CardManager.instance.opponentHand);
                         CalculateScore(CardManager.instance.opponentHandScore);
-                     
-                        GameManager.instance.ScoreCheck(false);
+
+
+                        print(GameManager.instance.isShake +  " + "  + GameManager.instance.isChoice + " + " + GameManager.instance.isBonus);
+
                         if (!GameManager.instance.isShake && !GameManager.instance.isChoice && !GameManager.instance.isBonus)
                         {
-                            print("흔들기 아님 + 고르기 아님");
-                            EndArrange(CardManager.instance.myHand, true);
-                        }
+                            GameManager.instance.ScoreCheck(false);
 
+                            if (!GameManager.instance.myFirstArtifactPanel.activeSelf && !GameManager.instance.mySecondArtifactPanel.activeSelf && !GameManager.instance.myThirdArtifactPanel.activeSelf)
+                            {
+                                
+                                GameManager.instance.AttackPanel.SetActive(true);
+                               
+                                print("bomb check");
+                                StartCoroutine(GameManager.instance.FixedMade(CardManager.instance.enemyKingEmptyIndex, CardManager.instance.kingEmptyIndex, CardManager.instance.enemyRedFlagEmptyIndex, CardManager.instance.enemyBlueFlagEmptyIndex, CardManager.instance.enemyNormalFlagEmptyIndex,
+                                CardManager.instance.enemyAnimalEmptyIndex, BattleSystem.instance.enemyKingAttack, BattleSystem.instance.enemyFlagAttack, BattleSystem.instance.enemyAnimalAttack, BattleSystem.instance.player, BattleSystem.instance.playerUi, BattleSystem.instance.playerHUD));
+
+                            }
+
+                            EndArrange(CardManager.instance.opponentHandScore, true);
+                        }
                         GameManager.instance.isBonus = false;
                     }
 
@@ -159,6 +179,7 @@ public class CardClick : MonoBehaviour
                     }
                 }
                 #endregion
+
             }
 
         }
@@ -212,12 +233,12 @@ public class CardClick : MonoBehaviour
         {
             CardManager.instance.myCardCount = 1;
 
+            hand.Remove(gameObject);
             CheckCardAction(gameObject, hand, handscore);
 
-            hand.Remove(gameObject);
-            Destroy(gameObject);
-            GameManager.instance.isMoving = false;
-                
+            GameManager.instance.isMoving = true;
+            gameObject.transform.DOMove(new Vector3(-1f, 0f, 0f), 0.5f).SetEase(Ease.OutQuint); //맞춘 오브젝트 옆으로 이동
+            StartCoroutine(GameManager.instance.CompleteMoving());
             //CardManager.instance.ResetPosition(hand);
 
             //EndArrange(hand, isPlayer);
@@ -789,6 +810,17 @@ public class CardClick : MonoBehaviour
             MoveFieldScoreField(CardManager.instance.ChoiceObj[num], CardManager.instance.myHandScore);
             CardManager.instance.ResetPosition(CardManager.instance.myHand);
 
+            GameManager.instance.ScoreCheck(true);
+
+            if (!GameManager.instance.myFirstArtifactPanel.activeSelf && !GameManager.instance.mySecondArtifactPanel.activeSelf && !GameManager.instance.myThirdArtifactPanel.activeSelf)
+            {
+                print("panel no");
+                GameManager.instance.AttackPanel.SetActive(true);
+                StartCoroutine(GameManager.instance.FixedMade(CardManager.instance.kingEmptyIndex, CardManager.instance.enemyKingEmptyIndex, CardManager.instance.redFlagEmptyIndex, CardManager.instance.blueFlagEmptyIndex, CardManager.instance.normalFlagEmptyIndex,
+                CardManager.instance.animalEmptyIndex, BattleSystem.instance.kingAttack, BattleSystem.instance.flagAttack, BattleSystem.instance.animalAttack, BattleSystem.instance.op, BattleSystem.instance.opUi, BattleSystem.instance.opHUD));
+
+            }
+
             EndArrange(CardManager.instance.myHand, false);
         }
 
@@ -796,6 +828,18 @@ public class CardClick : MonoBehaviour
         {
             MoveFieldScoreField(CardManager.instance.ChoiceObj[num], CardManager.instance.opponentHandScore);
             CardManager.instance.ResetPosition(CardManager.instance.opponentHand);
+
+            GameManager.instance.ScoreCheck(false);
+
+
+            if (!GameManager.instance.opponentFirstArtifactPanel.activeSelf && !GameManager.instance.opponentSecondArtifactPanel.activeSelf && !GameManager.instance.opponentThirdArtifactPanel.activeSelf)
+            {
+                print("panel no");
+                GameManager.instance.AttackPanel.SetActive(true);
+                StartCoroutine(GameManager.instance.FixedMade(CardManager.instance.enemyKingEmptyIndex, CardManager.instance.kingEmptyIndex, CardManager.instance.enemyRedFlagEmptyIndex, CardManager.instance.enemyBlueFlagEmptyIndex, CardManager.instance.enemyNormalFlagEmptyIndex,
+                CardManager.instance.enemyAnimalEmptyIndex, BattleSystem.instance.enemyKingAttack, BattleSystem.instance.enemyFlagAttack, BattleSystem.instance.enemyAnimalAttack, BattleSystem.instance.player, BattleSystem.instance.playerUi, BattleSystem.instance.playerHUD));
+
+            }
 
             EndArrange(CardManager.instance.opponentHand, true);
         }
@@ -853,6 +897,18 @@ public class CardClick : MonoBehaviour
             CardManager.instance.myHand.Remove(CardManager.instance.curObj);//내손에서 지우기
             CheckCardAction(CardManager.instance.curObj, CardManager.instance.myHand, CardManager.instance.myHandScore);
 
+            GameManager.instance.ScoreCheck(true);
+
+            if (!GameManager.instance.myFirstArtifactPanel.activeSelf && !GameManager.instance.mySecondArtifactPanel.activeSelf && !GameManager.instance.myThirdArtifactPanel.activeSelf)
+            {
+                print("panel no");
+                GameManager.instance.AttackPanel.SetActive(true);
+
+                StartCoroutine(GameManager.instance.FixedMade(CardManager.instance.kingEmptyIndex, CardManager.instance.enemyKingEmptyIndex, CardManager.instance.redFlagEmptyIndex, CardManager.instance.blueFlagEmptyIndex, CardManager.instance.normalFlagEmptyIndex,
+                CardManager.instance.animalEmptyIndex, BattleSystem.instance.kingAttack, BattleSystem.instance.flagAttack, BattleSystem.instance.animalAttack, BattleSystem.instance.op, BattleSystem.instance.opUi, BattleSystem.instance.opHUD));
+
+            }
+
             EndArrange(CardManager.instance.myHand, false);
         }
 
@@ -862,6 +918,19 @@ public class CardClick : MonoBehaviour
             CardManager.instance.ResetPosition(CardManager.instance.opponentHand);
             CardManager.instance.opponentHand.Remove(CardManager.instance.curObj);//내손에서 지우기
             CheckCardAction(CardManager.instance.curObj, CardManager.instance.opponentHand, CardManager.instance.opponentHandScore);
+
+            GameManager.instance.ScoreCheck(false);
+
+
+            if (!GameManager.instance.opponentFirstArtifactPanel.activeSelf && !GameManager.instance.opponentSecondArtifactPanel.activeSelf && !GameManager.instance.opponentThirdArtifactPanel.activeSelf)
+            {
+                print("panel no");
+                GameManager.instance.AttackPanel.SetActive(true);
+
+                StartCoroutine(GameManager.instance.FixedMade(CardManager.instance.enemyKingEmptyIndex, CardManager.instance.kingEmptyIndex, CardManager.instance.enemyRedFlagEmptyIndex, CardManager.instance.enemyBlueFlagEmptyIndex, CardManager.instance.enemyNormalFlagEmptyIndex,
+                CardManager.instance.enemyAnimalEmptyIndex, BattleSystem.instance.enemyKingAttack, BattleSystem.instance.enemyFlagAttack, BattleSystem.instance.enemyAnimalAttack, BattleSystem.instance.player, BattleSystem.instance.playerUi, BattleSystem.instance.playerHUD));
+
+            }
 
             EndArrange(CardManager.instance.opponentHand, true);
         }
