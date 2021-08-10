@@ -89,7 +89,7 @@ public class GameManager : MonoBehaviour
     {
         ScoreTextSet();
         TurnTextSet();
-       
+
         //if(!isMyTurn)
         if (CardManager.instance.myHand.Count == 0 && CardManager.instance.opponentHand.Count == 0
             && mySecondArtifactPanel.activeSelf == false
@@ -100,10 +100,10 @@ public class GameManager : MonoBehaviour
             Invoke("Retry", 1f);
         }
 
-        if(PlayerPrefs.GetInt(BattleSystem.instance.player.name + "Game_Hp") <= 0 || PlayerPrefs.GetInt(BattleSystem.instance.op.name + "Game_Hp") <= 0)
+        if (PlayerPrefs.GetInt(BattleSystem.instance.player.name + "Game_Hp") <= 0 || PlayerPrefs.GetInt(BattleSystem.instance.op.name + "Game_Hp") <= 0)
         {
             print("게임 오버");
-            if(PlayerPrefs.GetInt(BattleSystem.instance.player.name + "Game_Hp") > 0)
+            if (PlayerPrefs.GetInt(BattleSystem.instance.player.name + "Game_Hp") > 0)
             {
                 Profile.instance.currentHp += PlayerPrefs.GetInt(BattleSystem.instance.player.name + "Game_Hp");
             }
@@ -113,6 +113,8 @@ public class GameManager : MonoBehaviour
 
             Invoke("GotoMain", 1f);
         }
+
+
         if (oneTime)
         {
             if (maxTurnCount > 0)
@@ -140,7 +142,6 @@ public class GameManager : MonoBehaviour
 
     }
 
-
     public IEnumerator CompleteSetting()
     {
         yield return new WaitForSeconds(1f);
@@ -155,7 +156,6 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator FixedMade(int king, int opking, int red, int blue, int normal, int animal, bool[] isking, bool[] isflag, bool[] isanimal, GameObject who, PlayerScript ui, BattleHUD hud)
     {
-        
         print("attack");
         yield return new WaitForSeconds(1f);
         AttackPanel.SetActive(false);
@@ -196,7 +196,6 @@ public class GameManager : MonoBehaviour
         }
 
         print(BattleSystem.instance.animalAttack);
-
         if (!isanimal[0] && animal == 3)
         {
             print("동물 공격");
@@ -231,7 +230,7 @@ public class GameManager : MonoBehaviour
             {
                 if (isMyFirstArtifact == false)
                 {
-                    ChooseMyArtifact();
+                    ChooseMyArtifact("first");
                 }
                 isMyFirstArtifact = true;
             }
@@ -240,24 +239,24 @@ public class GameManager : MonoBehaviour
             {
                 if (isMySecondArtifact == false)
                 {
-                    ChooseMyArtifact();
+                    ChooseMyArtifact("second");
                 }
                 isMySecondArtifact = true;
             }
 
             if (MatgoScore.myScore >= 7)
             {
-                ChooseMyArtifact();
+                ChooseMyArtifact("third");
             }
         }
-     
+
         else
         {
             if (MatgoScore.opScore >= 3)
             {
                 if (isOppoFirstArtifact == false)
                 {
-                    ChooseOpponentArtifact();
+                    ChooseOpponentArtifact("first");
                 }
                 isOppoFirstArtifact = true;
             }
@@ -266,14 +265,14 @@ public class GameManager : MonoBehaviour
             {
                 if (isOppoSecondArtifact == false)
                 {
-                    ChooseOpponentArtifact();
+                    ChooseOpponentArtifact("second");
                 }
                 isOppoSecondArtifact = true;
             }
 
             if (MatgoScore.opScore >= 7)
             {
-                ChooseOpponentArtifact();
+                ChooseOpponentArtifact("third");
             }
         }
     }
@@ -296,35 +295,36 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void ChooseMyArtifact()
+    public void ChooseMyArtifact(string order)
     {
-        if (artifactNumMe == 0)
+        if (order == "first")
         {
             myFirstArtifactPanel.SetActive(true);
         }
-        else if (artifactNumMe == 1)
+        if (order == "second")
         {
             mySecondArtifactPanel.SetActive(true);
         }
-        else if (artifactNumMe == 2)
+        if (order == "third")
         {
             myThirdArtifactPanel.SetActive(true);
         }
+
         /// 이 밑으로 아티팩트를 4개 이상 먹는 시스템 구현
         ///
-
     }
-    public void ChooseOpponentArtifact()
+
+    public void ChooseOpponentArtifact(string order)
     {
-        if (artifactNumOpponent == 0)
+        if (order == "first")
         {
             opponentFirstArtifactPanel.SetActive(true);
         }
-        if (artifactNumOpponent == 1)
+        if (order == "second")
         {
             opponentSecondArtifactPanel.SetActive(true);
         }
-        if (artifactNumOpponent == 2)
+        if (order == "third")
         {
             opponentThirdArtifactPanel.SetActive(true);
         }
@@ -342,11 +342,11 @@ public class GameManager : MonoBehaviour
         {
             myFirstArtifactPanel.SetActive(false);
         }
-        if (mySecondArtifactPanel.activeInHierarchy == true)
+        else if (mySecondArtifactPanel.activeInHierarchy == true)
         {
             mySecondArtifactPanel.SetActive(false);
         }
-        if (myThirdArtifactPanel.activeInHierarchy == true)
+        else if (myThirdArtifactPanel.activeInHierarchy == true)
         {
             myThirdArtifactPanel.SetActive(false);
         }
@@ -363,15 +363,16 @@ public class GameManager : MonoBehaviour
         GameObject btn = EventSystem.current.currentSelectedGameObject;
         artifactOp[artifactNumOpponent].sprite = btn.GetComponent<Image>().sprite;
         artifactOp[artifactNumOpponent].gameObject.SetActive(true);
+
         if (opponentFirstArtifactPanel.activeInHierarchy == true)
         {
             opponentFirstArtifactPanel.SetActive(false);
         }
-        if (opponentSecondArtifactPanel.activeInHierarchy == true)
+        else if (opponentSecondArtifactPanel.activeInHierarchy == true)
         {
             opponentSecondArtifactPanel.SetActive(false);
         }
-        if (opponentThirdArtifactPanel.activeInHierarchy == true)
+        else if (opponentThirdArtifactPanel.activeInHierarchy == true)
         {
             opponentThirdArtifactPanel.SetActive(false);
         }
@@ -394,14 +395,17 @@ public class GameManager : MonoBehaviour
             isGameEnd = true;
         }
     }
+
     public void GotoMain()
     {
         SceneManager.LoadScene("MainScene");
     }
+
     public void Retry()
     {
         SceneManager.LoadScene("Game");
     }
+
     public void ExitGame()
     {
         Application.Quit();
