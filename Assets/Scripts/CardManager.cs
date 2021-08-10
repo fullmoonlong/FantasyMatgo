@@ -141,6 +141,8 @@ public class CardManager : MonoBehaviour
         isFlip = false;
 
         myCardCount = 0;
+
+        PlayerPrefs.DeleteAll();
     }
 
     private void Start()

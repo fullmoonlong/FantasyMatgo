@@ -47,7 +47,6 @@ public class GameManager : MonoBehaviour
     public bool isMoving;
     public bool isBattle;
     public bool isBonus;
-    public bool isAttack;
     public bool isShake;
     public bool isChoice;
 
@@ -79,8 +78,6 @@ public class GameManager : MonoBehaviour
 
         isBonus = false;
 
-        isAttack = true;
-
         isShake = false;
 
         isChoice = false;
@@ -98,11 +95,16 @@ public class GameManager : MonoBehaviour
             && mySecondArtifactPanel.activeSelf == false
             && opponentSecondArtifactPanel.activeSelf == false
             && myThirdArtifactPanel.activeSelf == false
-            && opponentThirdArtifactPanel.activeSelf == false)
+            && opponentThirdArtifactPanel.activeSelf == false && !AttackPanel.activeSelf)
         {
             Invoke("Retry", 1f);
         }
 
+        if(PlayerPrefs.GetInt(BattleSystem.instance.player.name + "Game_Hp") <= 0 || PlayerPrefs.GetInt(BattleSystem.instance.op.name + "Game_Hp") <= 0)
+        {
+            print("게임 오버");
+            Invoke("GameOver", 1f);
+        }
         if (oneTime)
         {
             if (maxTurnCount > 0)
@@ -145,6 +147,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator FixedMade(int king, int opking, int red, int blue, int normal, int animal, bool[] isking, bool[] isflag, bool[] isanimal, GameObject who, PlayerScript ui, BattleHUD hud)
     {
+        
         print("attack");
         yield return new WaitForSeconds(1f);
         AttackPanel.SetActive(false);

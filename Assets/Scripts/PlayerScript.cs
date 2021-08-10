@@ -9,13 +9,14 @@ public class PlayerScript : MonoBehaviour
 
     void Awake()
     {
-        maxHp = 100;
-        //if (!PlayerPrefs.HasKey("Game_Hp"))
-        //{
-        //    PlayerPrefs.SetInt("Game_Hp", maxHp);
-        //}
+        maxHp = 10;
+        if (!PlayerPrefs.HasKey(gameObject.name + "Game_Hp"))
+        {
+            PlayerPrefs.SetInt(gameObject.name + "Game_Hp", maxHp);
+        }
 
-        //currentHp = PlayerPrefs.GetInt("Game_Hp");
-        currentHp = maxHp;
+        print(gameObject.name);
+        currentHp = PlayerPrefs.GetInt(gameObject.name + "Game_Hp");
+        //currentHp = maxHp;
     }
 }

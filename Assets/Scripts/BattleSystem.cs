@@ -65,8 +65,6 @@ public class BattleSystem : MonoBehaviour
     }
     public void Update()
     {
-
-
         //흔들기 //print("my turn");
     }
 
