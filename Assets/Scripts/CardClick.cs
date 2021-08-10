@@ -157,7 +157,7 @@ public class CardClick : MonoBehaviour
                         {
                             GameManager.instance.ScoreCheck(false);
 
-                            if (!GameManager.instance.myFirstArtifactPanel.activeSelf && !GameManager.instance.mySecondArtifactPanel.activeSelf && !GameManager.instance.myThirdArtifactPanel.activeSelf)
+                            if (!GameManager.instance.opponentFirstArtifactPanel.activeSelf && !GameManager.instance.opponentSecondArtifactPanel.activeSelf && !GameManager.instance.opponentThirdArtifactPanel.activeSelf)
                             {
                                 
                                 GameManager.instance.AttackPanel.SetActive(true);

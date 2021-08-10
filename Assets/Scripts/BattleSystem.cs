@@ -36,11 +36,11 @@ public class BattleSystem : MonoBehaviour
 
     public bool[] kingAttack;
     public bool[] flagAttack;
-    public bool animalAttack;
+    public bool[] animalAttack;
 
     public bool[] enemyKingAttack;
     public bool[] enemyFlagAttack;
-    public bool enemyAnimalAttack;
+    public bool[] enemyAnimalAttack;
     // Start is called before the first frame update
     // Update is called once per frame
 
@@ -50,6 +50,8 @@ public class BattleSystem : MonoBehaviour
         flagAttack = new bool[3];
         enemyKingAttack = new bool[3];
         enemyFlagAttack = new bool[3];
+        animalAttack = new bool[1];
+        enemyAnimalAttack = new bool[1];
         for (int i=0;i<3;i++)
         {
             kingAttack[i] = false;
@@ -57,8 +59,8 @@ public class BattleSystem : MonoBehaviour
             enemyKingAttack[i] = false;
             enemyFlagAttack[i] = false;
         }
-        animalAttack = false;
-        enemyAnimalAttack = false;
+        animalAttack[0] = false;
+        enemyAnimalAttack[0] = false;
         SettingBattle();
     }
     public void Update()
@@ -78,97 +80,13 @@ public class BattleSystem : MonoBehaviour
 
         playerHUD.SetHUD(playerUi);
         opHUD.SetHUD(opUi);
-
-        //Invoke("PlayerTurn",2f);
-    }
-
-    public void PlayerTurn(int type)
-    {
-        Sequence mysequence = DOTween.Sequence();
-
-        switch (type)
-        {
-            case 0:
-                //print("attackcount: " + attackCount);
-                //LightAttack(CardManager.instance.kingEmptyIndex, CardManager.instance.enemyKingEmptyIndex);
-                LightAttack(CardManager.instance.kingEmptyIndex, CardManager.instance.enemyKingEmptyIndex);
-                break;
-
-            case 1:
-                GoDoRiAttack(CardManager.instance.animalEmptyIndex);
-                break;
-
-            case 2:
-                damage = 3;
-                //FlagAttack(CardManager.instance.redFlagEmptyIndex, CardManager.instance.blueFlagEmptyIndex, CardManager.instance.normalFlagEmptyIndex);
-                break;
-
-
-            case 3:
-                SoldierAttack(CardManager.instance.soldierEmptyIndex);
-                break;
-
-            default:
-                break;
-        }
-
-        attackImage.transform.position = op.transform.position;
-
-        mysequence.Append(attackImage.transform.DOScale(Vector3.one * 0.3f, 0.3f).SetEase(Ease.InOutBack)).Join(op.transform.DOShakePosition(1f,5f))
-            .AppendInterval(1.2f).Append(attackImage.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InOutBack)).OnComplete(() => Damaged(opUi, opHUD));
-
-        //Invoke("OpTurn", 3f);
-    }
-
-    public void OpTurn(int type)
-    {
-        Sequence mysequence = DOTween.Sequence();
-
-        switch (type)
-        {
-            case 0:
-          
-                LightAttack(CardManager.instance.enemyKingEmptyIndex, CardManager.instance.kingEmptyIndex);
-                break;
-
-            case 1:
-                GoDoRiAttack(CardManager.instance.enemyAnimalEmptyIndex);
-                break;
-
-            case 2:
-                damage = 3;
-                //FlagAttack(CardManager.instance.redFlagEmptyIndex, CardManager.instance.blueFlagEmptyIndex, CardManager.instance.normalFlagEmptyIndex);
-                break;
-
-
-            case 3:
-                SoldierAttack(CardManager.instance.enemySoldierEmptyIndex);
-                break;
-
-            default:
-                break;
-        }
-
-
-        attackImage.transform.position = player.transform.position;
-
-        mysequence.Append(attackImage.transform.DOScale(Vector3.one * 0.3f, 0.3f).SetEase(Ease.InOutBack)).Join(player.transform.DOShakePosition(1f,5f))
-          .AppendInterval(1.2f).Append(attackImage.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InOutBack)).OnComplete(() => Damaged(playerUi, playerHUD));
-
-
-        //if (attackCount != 3)
-        //{
-        //    Invoke("PlayerTurn", 3f);
-        //}
-
-        //attackCount++;
     }
 
     public void Damaged(PlayerScript ui, BattleHUD hud)
     {
         ui.currentHp -= damage;
         //print(damage);
-        //PlayerPrefs.SetInt("HP", ui.currentHp);
+        //PlayerPrefs.SetInt("Game_Hp", ui.currentHp);
         hud.SetHp(ui.currentHp);
     }
     public void LightAttack(int mylight, int oplight)

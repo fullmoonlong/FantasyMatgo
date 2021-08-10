@@ -100,7 +100,7 @@ public class GameManager : MonoBehaviour
             && myThirdArtifactPanel.activeSelf == false
             && opponentThirdArtifactPanel.activeSelf == false)
         {
-            GameOver();
+            Invoke("Retry", 1f);
         }
 
         if (oneTime)
@@ -143,7 +143,7 @@ public class GameManager : MonoBehaviour
         isMoving = false;
     }
 
-    public IEnumerator FixedMade(int king, int opking, int red, int blue, int normal, int animal, bool[] isking, bool[] isflag, bool isanimal, GameObject who, PlayerScript ui, BattleHUD hud)
+    public IEnumerator FixedMade(int king, int opking, int red, int blue, int normal, int animal, bool[] isking, bool[] isflag, bool[] isanimal, GameObject who, PlayerScript ui, BattleHUD hud)
     {
         print("attack");
         yield return new WaitForSeconds(1f);
@@ -184,12 +184,14 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (!isanimal && animal == 3)
+        print(BattleSystem.instance.animalAttack);
+
+        if (!isanimal[0] && animal == 3)
         {
             print("동물 공격");
             BattleSystem.instance.damage = 5;
             StartCoroutine(AttackAction(who, ui, hud));
-            isanimal = true;
+            isanimal[0] = true;
         }
     }
     public IEnumerator AttackAction(GameObject who, PlayerScript ui, BattleHUD hud)
@@ -206,12 +208,6 @@ public class GameManager : MonoBehaviour
         AttackPanel.SetActive(false);
     }
 
-    public void OnOffPanel(bool on)
-    {
-        print("panel false");
-        AttackPanel.SetActive(on);
-        print("panel false");
-    }
     public void ScoreCheck(bool isPlayer)
     {
         MatgoScore.instance.MyCardCountToScore();
