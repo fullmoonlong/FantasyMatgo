@@ -103,7 +103,15 @@ public class GameManager : MonoBehaviour
         if(PlayerPrefs.GetInt(BattleSystem.instance.player.name + "Game_Hp") <= 0 || PlayerPrefs.GetInt(BattleSystem.instance.op.name + "Game_Hp") <= 0)
         {
             print("게임 오버");
-            Invoke("GameOver", 1f);
+            if(PlayerPrefs.GetInt(BattleSystem.instance.player.name + "Game_Hp") > 0)
+            {
+                Profile.instance.currentHp += PlayerPrefs.GetInt(BattleSystem.instance.player.name + "Game_Hp");
+            }
+            PlayerPrefs.SetInt("HP", Profile.instance.currentHp);
+            PlayerPrefs.DeleteKey(BattleSystem.instance.player.name + "Game_Hp");
+            PlayerPrefs.DeleteKey(BattleSystem.instance.op.name + "Game_Hp");
+
+            Invoke("GotoMain", 1f);
         }
         if (oneTime)
         {
@@ -385,6 +393,10 @@ public class GameManager : MonoBehaviour
             gameOverPanel.SetActive(true);
             isGameEnd = true;
         }
+    }
+    public void GotoMain()
+    {
+        SceneManager.LoadScene("MainScene");
     }
     public void Retry()
     {

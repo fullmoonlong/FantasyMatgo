@@ -142,7 +142,7 @@ public class CardManager : MonoBehaviour
 
         myCardCount = 0;
 
-        PlayerPrefs.DeleteAll();
+        //PlayerPrefs.DeleteAll();
     }
 
     private void Start()
