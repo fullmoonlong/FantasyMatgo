@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour
     public bool isBonus;
     public bool isShake;
     public bool isChoice;
+    public bool isAttack;
 
     public Image[] artifactMe;
     public Image[] artifactOp;
@@ -82,6 +83,8 @@ public class GameManager : MonoBehaviour
 
         isChoice = false;
 
+        isAttack = false;
+
         StartCoroutine(CompleteSetting());
     }
 
@@ -95,7 +98,7 @@ public class GameManager : MonoBehaviour
             && mySecondArtifactPanel.activeSelf == false
             && opponentSecondArtifactPanel.activeSelf == false
             && myThirdArtifactPanel.activeSelf == false
-            && opponentThirdArtifactPanel.activeSelf == false && !AttackPanel.activeSelf)
+            && opponentThirdArtifactPanel.activeSelf == false && !AttackPanel.activeSelf && !isAttack)
         {
             Invoke("Retry", 1f);
         }
@@ -164,6 +167,7 @@ public class GameManager : MonoBehaviour
         {
             if (!isking[i] && king == i + 3)
             {
+                isAttack = true;
                 print("광 공격");
                 BattleSystem.instance.LightAttack(king, opking);
                 StartCoroutine(AttackAction(who, ui, hud));
@@ -188,6 +192,7 @@ public class GameManager : MonoBehaviour
 
             if (!isflag[i] && flag == 3)
             {
+                isAttack = true;
                 print("플래그 공격");
                 BattleSystem.instance.damage = 3;
                 StartCoroutine(AttackAction(who, ui, hud));
@@ -199,6 +204,7 @@ public class GameManager : MonoBehaviour
 
         if (!isanimal[0] && animal == 3)
         {
+            isAttack = true;
             print("동물 공격");
             BattleSystem.instance.damage = 5;
             StartCoroutine(AttackAction(who, ui, hud));
@@ -217,6 +223,7 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(4f);
         AttackPanel.SetActive(false);
+        isAttack = false;
     }
 
     public void ScoreCheck(bool isPlayer)
