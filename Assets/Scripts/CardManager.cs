@@ -285,15 +285,11 @@ public class CardManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F))
         {
-            Debug.Log("Pee : " + isPee);
-            Debug.Log("Gwang : " + isGwang3);
-            Debug.Log("Chodan : " + isNormalFlag);
+            MatgoScore.instance.myGwangScore = 6;
         }
         if (Input.GetKeyDown(KeyCode.G))
         {
-            Debug.Log("OpPee" + isOpPee);
-            Debug.Log("OpGwang : " + isOpGwang3);
-            Debug.Log("OpChodan : " + isOpNormalFlag);
+            MatgoScore.instance.opponentGwangScore = 6;
         }
     }
 

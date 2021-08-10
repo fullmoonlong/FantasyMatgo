@@ -64,11 +64,11 @@ public class GameManager : MonoBehaviour
         artifactNumMe = 0;
         artifactNumOpponent = 0;
 
-        isMyFirstArtifact = true;
-        isMySecondArtifact = true;
+        isMyFirstArtifact = false;
+        isMySecondArtifact = false;
 
-        isOppoFirstArtifact = true;
-        isOppoSecondArtifact = true;
+        isOppoFirstArtifact = false;
+        isOppoSecondArtifact = false;
 
         isSetting = false;
         isMoving = false;
@@ -222,20 +222,20 @@ public class GameManager : MonoBehaviour
             print("³»ÅÏ");
             if (MatgoScore.myScore >= 3)
             {
-                if (isMyFirstArtifact == true)
+                if (isMyFirstArtifact == false)
                 {
                     ChooseMyArtifact();
                 }
-                isMyFirstArtifact = false;
+                isMyFirstArtifact = true;
             }
 
             if (MatgoScore.myScore >= 6)
             {
-                if (isMySecondArtifact == true)
+                if (isMySecondArtifact == false)
                 {
                     ChooseMyArtifact();
                 }
-                isMySecondArtifact = false;
+                isMySecondArtifact = true;
             }
 
             if (MatgoScore.myScore >= 7)
@@ -248,20 +248,20 @@ public class GameManager : MonoBehaviour
         {
             if (MatgoScore.opScore >= 3)
             {
-                if (isOppoFirstArtifact == true)
+                if (isOppoFirstArtifact == false)
                 {
                     ChooseOpponentArtifact();
                 }
-                isOppoFirstArtifact = false;
+                isOppoFirstArtifact = true;
             }
 
             if (MatgoScore.opScore >= 6)
             {
-                if (isOppoSecondArtifact == true)
+                if (isOppoSecondArtifact == false)
                 {
                     ChooseOpponentArtifact();
                 }
-                isOppoSecondArtifact = false;
+                isOppoSecondArtifact = true;
             }
 
             if (MatgoScore.opScore >= 7)
