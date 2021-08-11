@@ -150,9 +150,6 @@ public class CardClick : MonoBehaviour
                         CardManager.instance.ResetPosition(CardManager.instance.opponentHand);
                         CalculateScore(CardManager.instance.opponentHandScore);
 
-
-                        print(GameManager.instance.isShake +  " + "  + GameManager.instance.isChoice + " + " + GameManager.instance.isBonus);
-
                         if (!GameManager.instance.isShake && !GameManager.instance.isChoice && !GameManager.instance.isBonus)
                         {
                             GameManager.instance.ScoreCheck(false);

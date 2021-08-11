@@ -15,18 +15,27 @@ public class Serialization<T>
 [System.Serializable]
 public class Shop
 {
-    public Shop(string license, string name, string exp, string cost, bool ishaving)
+    public Shop(string license, string name, string exp, string cost, bool ishaving, bool isequip)
     {
-        License = license; Name = name; Exp = exp; Cost = cost; IsHaving = ishaving;
+        License = license; Name = name; Exp = exp; Cost = cost; IsHaving = ishaving; IsEquip = isequip;
     }
     public string License, Name, Exp, Cost;
-    public bool IsHaving;
+    public bool IsHaving, IsEquip;
 }
 public class ShopManager : MonoBehaviour
 {
+    #region Singleton
+    public static ShopManager instance;
+
+    private void Awake()
+    {
+        instance = this;
+    }
+    #endregion
+
     public TextAsset ShopDatabase; // 샵 데이터베이스 불러올 텍스트
 
-    public List<Shop> AllShopList, MyShopList, CurShopList; // 리스트
+    public List<Shop> AllShopList, CurShopList; // 리스트
 
     string Allfilepath;
 
@@ -44,13 +53,14 @@ public class ShopManager : MonoBehaviour
     License license = License.N2;
 
     public GameObject[] ShopSlot;
-    public GameObject[] CollectionSlot;
 
     public Sprite Click, UnClick;
 
     public Image[] TabImg;
 
     public GameObject CanBuyPanel;
+
+    public Sprite[] AllShopSprite;
     // Start is called before the first frame update
     void Start()
     {
@@ -60,7 +70,7 @@ public class ShopManager : MonoBehaviour
         {
             string[] cell = shopline[i].Split('\t');
 
-            AllShopList.Add(new Shop(cell[0], cell[1], cell[2], cell[3], cell[4] == "TRUE"));
+            AllShopList.Add(new Shop(cell[0], cell[1], cell[2], cell[3], cell[4] == "TRUE", cell[5] == "TRUE"));
         }
 
         Allfilepath = Application.persistentDataPath + "/AllShop.txt";
@@ -68,8 +78,6 @@ public class ShopManager : MonoBehaviour
         print(Allfilepath);
 
         AllLoadFile(); // 내 리스트 저장
-
-        LoadCollection();
     }
 
     public void AllLoadFile()
@@ -87,7 +95,7 @@ public class ShopManager : MonoBehaviour
     public void ResetFile()
     {
         string jsondata = JsonUtility.ToJson(new Serialization<Shop>(AllShopList)); // 데이터 클래스를 Json으로 변환
-        print(jsondata);
+
         File.WriteAllText(Allfilepath, jsondata); // Json데이터를 올파일패스에 씀
         AllLoadFile();
     }
@@ -140,6 +148,10 @@ public class ShopManager : MonoBehaviour
             ShopSlot[i].SetActive(i < CurShopList.Count); // 내 카드리스트 수보다 적으면 슬롯을 안보이게함
             ShopSlot[i].transform.GetChild(1).GetComponent<Text>().text = i < CurShopList.Count ? CurShopList[i].Name : "";
             ShopSlot[i].transform.GetChild(2).GetComponent<Text>().text = i < CurShopList.Count ? CurShopList[i].Cost : "";
+            if(i < CurShopList.Count)
+            {
+                ShopSlot[i].transform.GetChild(0).GetComponent<Image>().sprite = AllShopSprite[AllShopList.FindIndex(x => x.Name == CurShopList[i].Name)];
+            }
         }
         
         
@@ -149,12 +161,10 @@ public class ShopManager : MonoBehaviour
         }
 
     }
-    public void SlotNumCheck(int slotnum)
+    public void CheckLicense(int slotnum)
     {
         curNum = slotnum;
-    }
-    public void CheckLicense()
-    {
+        print(curNum);
         CanBuyPanel.SetActive(true);
         //만약 라이센스가 없다면
         if (PlayerPrefs.GetInt("License") < (int)license)
@@ -166,14 +176,22 @@ public class ShopManager : MonoBehaviour
         //만약 가지고 있다면
         else
         {
-            CanBuyPanel.transform.GetChild(0).GetComponent<Text>().text = "구매하시겠습니까?";
+            print(CurShopList[curNum].Name);
+            if(CurShopList[curNum].IsHaving == true)
+            {
+                CanBuyPanel.transform.GetChild(0).GetComponent<Text>().text = "이미 가지고 있는 아티팩트입니다.";
+            }
+            else
+            {
+                CanBuyPanel.transform.GetChild(0).GetComponent<Text>().text = "구매하시겠습니까?";
+            }
         }
 
     }
 
     public void PurchaseCheck()
     {
-        if (CanBuyPanel.transform.GetChild(0).GetComponent<Text>().text == "가격이 부족합니다." || CanBuyPanel.transform.GetChild(0).GetComponent<Text>().text == "구매가 완료되었습니다.")
+        if (CanBuyPanel.transform.GetChild(0).GetComponent<Text>().text == "가격이 부족합니다." || CanBuyPanel.transform.GetChild(0).GetComponent<Text>().text == "구매가 완료되었습니다." || CanBuyPanel.transform.GetChild(0).GetComponent<Text>().text == "이미 가지고 있는 아티팩트입니다.")
         {
             CanBuyPanel.SetActive(false);
             return;
@@ -186,21 +204,10 @@ public class ShopManager : MonoBehaviour
         if (PlayerPrefs.GetInt("Coin") >= Int32.Parse(CurShopList[curNum].Cost))
         {
             CanBuyPanel.transform.GetChild(0).GetComponent<Text>().text = "구매가 완료되었습니다.";
+            Profile.instance.UseCoin(Int32.Parse(CurShopList[curNum].Cost));
             CurShopList[curNum].IsHaving = true;
             SaveFile();
         }
     }
 
-    public void LoadCollection()
-    {
-        MyShopList = AllShopList.FindAll(x => x.IsHaving);
-        
-        for (int i = 0; i < CollectionSlot.Length; i++) // 카드 슬롯만큼 돌림
-        {
-            //슬롯은 이미지, 이름, 설명 순으로 가지고 있음
-
-            CollectionSlot[i].SetActive(i < MyShopList.Count); // 내 카드리스트 수보다 적으면 슬롯을 안보이게함
-            CollectionSlot[i].transform.GetChild(0).GetComponent<Text>().text = i < MyShopList.Count ? CurShopList[i].Name : "";
-        }
-    }
 }

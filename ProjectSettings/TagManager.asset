@@ -18,6 +18,8 @@ TagManager:
   - Dog
   - Pig
   - Bonus
+  - MyArtifactPanel
+  - OPArtifactPanel
   layers:
   - Default
   - TransparentFX

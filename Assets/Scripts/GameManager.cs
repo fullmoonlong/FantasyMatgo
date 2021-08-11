@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using System.Collections;
 using DG.Tweening;
-
+using System.Collections.Generic;
 public class GameManager : MonoBehaviour
 {
     #region Singleton
@@ -53,6 +53,10 @@ public class GameManager : MonoBehaviour
 
     public Image[] artifactMe;
     public Image[] artifactOp;
+
+    public GameObject[] artifact;
+
+    List<Shop> CurArtifactList;
 
     public void Start()
     {
@@ -109,8 +113,9 @@ public class GameManager : MonoBehaviour
             if (PlayerPrefs.GetInt(BattleSystem.instance.player.name + "Game_Hp") > 0)
             {
                 Profile.instance.currentHp += PlayerPrefs.GetInt(BattleSystem.instance.player.name + "Game_Hp");
+                PlayerPrefs.SetInt("HP", Profile.instance.currentHp);
             }
-            PlayerPrefs.SetInt("HP", Profile.instance.currentHp);
+            
             PlayerPrefs.DeleteKey(BattleSystem.instance.player.name + "Game_Hp");
             PlayerPrefs.DeleteKey(BattleSystem.instance.op.name + "Game_Hp");
 
@@ -162,7 +167,7 @@ public class GameManager : MonoBehaviour
         print("attack");
         yield return new WaitForSeconds(1f);
         AttackPanel.SetActive(false);
-        print("check");
+
         for (int i = 0; i < 3; i++)
         {
             if (!isking[i] && king == i + 3)
@@ -200,7 +205,6 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        print(BattleSystem.instance.animalAttack);
         if (!isanimal[0] && animal == 3)
         {
             isAttack = true;
@@ -302,6 +306,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void ArrangeArtifact() // ¿Â∫Ò 6∞≥ ¿Â¬¯
+    {
+        //CurArtifactList = ShopManager.instance.AllShopList.FindAll(x => x.IsEq);
+
+        for(int i=0;i<artifact.Length;i++)
+        {
+            artifact[i].SetActive(i < CurArtifactList.Count);
+        }
+    }
     public void ChooseMyArtifact(string order)
     {
         if (order == "first")
@@ -339,11 +352,13 @@ public class GameManager : MonoBehaviour
         /// 
     }
 
-    public void ApplyMyArtifact()
+    public void ApplyMyArtifact(int num)
     {
         GameObject btn = EventSystem.current.currentSelectedGameObject;
         artifactMe[artifactNumMe].sprite = btn.GetComponent<Image>().sprite;
         artifactMe[artifactNumMe].gameObject.SetActive(true);
+        //CurArtifactList[num].IsHaving = false; // ¿Â¬¯¿ª ª©¡‹
+        //artifactMe[artifactNumMe].sprite = artifact[num].GetComponent<Image>().sprite;
 
         if (myFirstArtifactPanel.activeInHierarchy == true)
         {
@@ -359,11 +374,15 @@ public class GameManager : MonoBehaviour
         }
         artifactNumMe++;
 
-        AttackPanel.SetActive(true);
+        if(!mySecondArtifactPanel.activeSelf && !myThirdArtifactPanel.activeSelf)
+        {
+            AttackPanel.SetActive(true);
 
-        StartCoroutine(FixedMade(CardManager.instance.kingEmptyIndex, CardManager.instance.enemyKingEmptyIndex, CardManager.instance.redFlagEmptyIndex, CardManager.instance.blueFlagEmptyIndex, CardManager.instance.normalFlagEmptyIndex,
+            StartCoroutine(FixedMade(CardManager.instance.kingEmptyIndex, CardManager.instance.enemyKingEmptyIndex, CardManager.instance.redFlagEmptyIndex, CardManager.instance.blueFlagEmptyIndex, CardManager.instance.normalFlagEmptyIndex,
                 CardManager.instance.animalEmptyIndex, BattleSystem.instance.kingAttack, BattleSystem.instance.flagAttack, BattleSystem.instance.animalAttack, BattleSystem.instance.op, BattleSystem.instance.opUi, BattleSystem.instance.opHUD));
-    }
+        }
+
+     }
 
     public void ApplyOpponentArtifact()
     {
@@ -385,11 +404,15 @@ public class GameManager : MonoBehaviour
         }
         artifactNumOpponent++;
 
-        AttackPanel.SetActive(true);
 
-        StartCoroutine(FixedMade(CardManager.instance.enemyKingEmptyIndex, CardManager.instance.kingEmptyIndex, CardManager.instance.enemyRedFlagEmptyIndex, CardManager.instance.enemyBlueFlagEmptyIndex, CardManager.instance.enemyNormalFlagEmptyIndex,
+        if (!opponentSecondArtifactPanel.activeSelf && !opponentThirdArtifactPanel.activeSelf)
+        {
+            AttackPanel.SetActive(true);
+
+            StartCoroutine(FixedMade(CardManager.instance.enemyKingEmptyIndex, CardManager.instance.kingEmptyIndex, CardManager.instance.enemyRedFlagEmptyIndex, CardManager.instance.enemyBlueFlagEmptyIndex, CardManager.instance.enemyNormalFlagEmptyIndex,
            CardManager.instance.enemyAnimalEmptyIndex, BattleSystem.instance.enemyKingAttack, BattleSystem.instance.enemyFlagAttack, BattleSystem.instance.enemyAnimalAttack, BattleSystem.instance.player, BattleSystem.instance.playerUi, BattleSystem.instance.playerHUD));
 
+        }
 
     }
 

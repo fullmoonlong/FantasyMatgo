@@ -15,7 +15,6 @@ public class PlayerScript : MonoBehaviour
             PlayerPrefs.SetInt(gameObject.name + "Game_Hp", maxHp);
         }
 
-        print(gameObject.name);
         currentHp = PlayerPrefs.GetInt(gameObject.name + "Game_Hp");
         //currentHp = maxHp;
     }
