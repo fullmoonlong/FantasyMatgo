@@ -164,7 +164,6 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator FixedMade(int king, int opking, int red, int blue, int normal, int animal, bool[] isking, bool[] isflag, bool[] isanimal, GameObject who, PlayerScript ui, BattleHUD hud)
     {
-        print("attack");
         yield return new WaitForSeconds(1f);
         AttackPanel.SetActive(false);
 
@@ -173,7 +172,7 @@ public class GameManager : MonoBehaviour
             if (!isking[i] && king == i + 3)
             {
                 isAttack = true;
-                print("광 공격");
+                //print("광 공격");
                 BattleSystem.instance.LightAttack(king, opking);
                 StartCoroutine(AttackAction(who, ui, hud));
                 isking[i] = true;
@@ -198,7 +197,7 @@ public class GameManager : MonoBehaviour
             if (!isflag[i] && flag == 3)
             {
                 isAttack = true;
-                print("플래그 공격");
+                //print("플래그 공격");
                 BattleSystem.instance.damage = 3;
                 StartCoroutine(AttackAction(who, ui, hud));
                 isflag[i] = true;
@@ -208,7 +207,7 @@ public class GameManager : MonoBehaviour
         if (!isanimal[0] && animal == 3)
         {
             isAttack = true;
-            print("동물 공격");
+            //print("동물 공격");
             BattleSystem.instance.damage = 5;
             StartCoroutine(AttackAction(who, ui, hud));
             isanimal[0] = true;
