@@ -63,10 +63,6 @@ public class BattleSystem : MonoBehaviour
         enemyAnimalAttack[0] = false;
         SettingBattle();
     }
-    public void Update()
-    {
-        //흔들기 //print("my turn");
-    }
 
     public void SettingBattle()
     {
@@ -87,6 +83,7 @@ public class BattleSystem : MonoBehaviour
         //PlayerPrefs.SetInt("Game_Hp", ui.currentHp);
         hud.SetHp(ui.currentHp);
     }
+
     public void LightAttack(int mylight, int oplight)
     {
         int times = 1;
@@ -104,8 +101,8 @@ public class BattleSystem : MonoBehaviour
                 break;
 
             case 5:
-                print("15점");
-                damage = 15;
+                print("5점");
+                damage = 5;
                 break;
 
             default:
@@ -122,6 +119,7 @@ public class BattleSystem : MonoBehaviour
         //Instantiate(lightObj, gameObject.transform.position, Quaternion.identity); // 애니메이션 
 
     }
+
     public void FlagAttack(int red, int blue, int brown)
     {
         damage = 0;

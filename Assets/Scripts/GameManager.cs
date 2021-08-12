@@ -37,12 +37,21 @@ public class GameManager : MonoBehaviour
     public bool oneTime;
     public bool first;
     public bool battleFirst;
+
     public bool isMyFirstArtifact;
     public bool isMySecondArtifact;
     public bool isMyThirdArtifact;
-    public bool isOppoFirstArtifact;
-    public bool isOppoSecondArtifact;
-    public bool isOppoThirdArtifact;
+    public bool isMyFourthArtifact;
+    public bool isMyFifthArtifact;
+    public bool isMySixthArtifact;
+
+    public bool isOpponentFirstArtifact;
+    public bool isOpponentSecondArtifact;
+    public bool isOpponentThirdArtifact;
+    public bool isOpponentFourthArtifact;
+    public bool isOpponentFifthArtifact;
+    public bool isOpponentSixthArtifact;
+
     public bool isSetting;
     public bool isMoving;
     public bool isBattle;
@@ -65,9 +74,15 @@ public class GameManager : MonoBehaviour
 
         isMyFirstArtifact = false;
         isMySecondArtifact = false;
+        isMyThirdArtifact = false;
+        isMyFourthArtifact = false;
+        isMyFifthArtifact = false;
 
-        isOppoFirstArtifact = false;
-        isOppoSecondArtifact = false;
+        isOpponentFirstArtifact = false;
+        isOpponentSecondArtifact = false;
+        isOpponentThirdArtifact = false;
+        isOpponentFourthArtifact = false;
+        isOpponentFifthArtifact = false;
 
         isSetting = false;
         isMoving = false;
@@ -102,12 +117,12 @@ public class GameManager : MonoBehaviour
 
         if (PlayerPrefs.GetInt(BattleSystem.instance.player.name + "Game_Hp") <= 0 || PlayerPrefs.GetInt(BattleSystem.instance.op.name + "Game_Hp") <= 0)
         {
-            print("게임 오버");
+            //print("게임 오버");
             if (PlayerPrefs.GetInt(BattleSystem.instance.player.name + "Game_Hp") > 0)
             {
                 Profile.instance.currentHp += PlayerPrefs.GetInt(BattleSystem.instance.player.name + "Game_Hp");
+                PlayerPrefs.SetInt("HP", Profile.instance.currentHp);
             }
-            PlayerPrefs.SetInt("HP", Profile.instance.currentHp);
             PlayerPrefs.DeleteKey(BattleSystem.instance.player.name + "Game_Hp");
             PlayerPrefs.DeleteKey(BattleSystem.instance.op.name + "Game_Hp");
 
@@ -121,7 +136,7 @@ public class GameManager : MonoBehaviour
             {
                 if (isMyTurn)
                 {
-                    //print("두번째");
+                    ////print("두번째");
                     CardManager.instance.ResetPosition(CardManager.instance.myHand);
                     CardManager.instance.DrawCard(CardManager.instance.myHand, 1);
                     oneTime = false;
@@ -129,7 +144,7 @@ public class GameManager : MonoBehaviour
 
                 else
                 {
-                    //print("두번째");
+                    ////print("두번째");
                     CardManager.instance.ResetPosition(CardManager.instance.opponentHand);
                     CardManager.instance.DrawCard(CardManager.instance.opponentHand, 1);
                     oneTime = false;
@@ -156,15 +171,13 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator FixedMade(int king, int opking, int red, int blue, int normal, int animal, bool[] isking, bool[] isflag, bool[] isanimal, GameObject who, PlayerScript ui, BattleHUD hud)
     {
-        print("attack");
         yield return new WaitForSeconds(1f);
         AttackPanel.SetActive(false);
-        print("check");
         for (int i = 0; i < 3; i++)
         {
             if (!isking[i] && king == i + 3)
             {
-                print("광 공격");
+                //print("광 공격");
                 BattleSystem.instance.LightAttack(king, opking);
                 StartCoroutine(AttackAction(who, ui, hud));
                 isking[i] = true;
@@ -188,17 +201,16 @@ public class GameManager : MonoBehaviour
 
             if (!isflag[i] && flag == 3)
             {
-                print("플래그 공격");
+                //print("플래그 공격");
                 BattleSystem.instance.damage = 3;
                 StartCoroutine(AttackAction(who, ui, hud));
                 isflag[i] = true;
             }
         }
 
-        print(BattleSystem.instance.animalAttack);
         if (!isanimal[0] && animal == 3)
         {
-            print("동물 공격");
+            //print("동물 공격");
             BattleSystem.instance.damage = 5;
             StartCoroutine(AttackAction(who, ui, hud));
             isanimal[0] = true;
@@ -225,7 +237,6 @@ public class GameManager : MonoBehaviour
         MatgoScore.instance.ScoreCalculate();
         if (isPlayer)
         {
-            print("내턴");
             if (MatgoScore.myScore >= 3)
             {
                 if (isMyFirstArtifact == false)
@@ -246,7 +257,11 @@ public class GameManager : MonoBehaviour
 
             if (MatgoScore.myScore >= 7)
             {
-                ChooseMyArtifact("third");
+                if (isMyThirdArtifact == false)
+                {
+                    ChooseMyArtifact("third");
+                }
+                isMyThirdArtifact = true;
             }
         }
 
@@ -254,25 +269,29 @@ public class GameManager : MonoBehaviour
         {
             if (MatgoScore.opScore >= 3)
             {
-                if (isOppoFirstArtifact == false)
+                if (isOpponentFirstArtifact == false)
                 {
                     ChooseOpponentArtifact("first");
                 }
-                isOppoFirstArtifact = true;
+                isOpponentFirstArtifact = true;
             }
 
             if (MatgoScore.opScore >= 6)
             {
-                if (isOppoSecondArtifact == false)
+                if (isOpponentSecondArtifact == false)
                 {
                     ChooseOpponentArtifact("second");
                 }
-                isOppoSecondArtifact = true;
+                isOpponentSecondArtifact = true;
             }
 
             if (MatgoScore.opScore >= 7)
             {
-                ChooseOpponentArtifact("third");
+                if (isOpponentThirdArtifact == false)
+                {
+                    ChooseOpponentArtifact("third");
+                }
+                isOpponentThirdArtifact = true;
             }
         }
     }
