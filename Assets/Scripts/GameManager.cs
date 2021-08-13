@@ -112,6 +112,8 @@ public class GameManager : MonoBehaviour
             && myThirdArtifactPanel.activeSelf == false
             && opponentThirdArtifactPanel.activeSelf == false && !AttackPanel.activeSelf)
         {
+            //EndPhaseCalc.instance.DamageCalculation(BattleSystem.instance.playerUi);
+            //EndPhaseCalc.instance.DamageCalculation(BattleSystem.instance.opUi);
             Invoke("Retry", 1f);
         }
 
@@ -120,8 +122,7 @@ public class GameManager : MonoBehaviour
             //print("게임 오버");
             if (PlayerPrefs.GetInt(BattleSystem.instance.player.name + "Game_Hp") > 0)
             {
-                Profile.instance.currentHp += PlayerPrefs.GetInt(BattleSystem.instance.player.name + "Game_Hp");
-                PlayerPrefs.SetInt("HP", Profile.instance.currentHp);
+                PlayerPrefs.SetInt("HP", PlayerPrefs.GetInt(BattleSystem.instance.player.name + "Game_Hp"));
             }
             PlayerPrefs.DeleteKey(BattleSystem.instance.player.name + "Game_Hp");
             PlayerPrefs.DeleteKey(BattleSystem.instance.op.name + "Game_Hp");
