@@ -13,9 +13,9 @@ public class EndPhaseCalc : MonoBehaviour
     }
     #endregion
 
-    public void DamageCalculation(PlayerScript player)
+    public void DamageCalculation()
     {
-        Debug.Log(player.totalDamage);
-        player.currentHp -= player.totalDamage;
+        PlayerPrefs.SetInt("HP", PlayerPrefs.GetInt("HP") + PlayerPrefs.GetInt(BattleSystem.instance.player.name + "Game_Hp"));
+        PlayerPrefs.SetInt("HP", PlayerPrefs.GetInt("HP") + PlayerPrefs.GetInt(BattleSystem.instance.op.name + "Game_Hp"));
     }
 }

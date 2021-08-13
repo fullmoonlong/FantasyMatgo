@@ -19,14 +19,16 @@ public class BattleSystem : MonoBehaviour
 
     public GameObject startPanel;
 
-    public PlayerScript playerUi;
-    public PlayerScript opUi;
+    public PlayerScript playerInfo;
+    public PlayerScript opponentInfo;
 
     public GameObject player;
     public GameObject op;
 
     public bool isKingCacled = false;
     public int damage;
+    public int playerTotalDamage;
+    public int opponentTotalDamage;
 
     //public GameObject startPanel;
 
@@ -70,11 +72,11 @@ public class BattleSystem : MonoBehaviour
         player.SetActive(true);
         op.SetActive(true);
 
-        playerUi = player.GetComponent<PlayerScript>();
-        opUi = op.GetComponent<PlayerScript>();
+        playerInfo = player.GetComponent<PlayerScript>();
+        opponentInfo = op.GetComponent<PlayerScript>();
 
-        playerHUD.SetHUD(playerUi);
-        opHUD.SetHUD(opUi);
+        playerHUD.SetHUD(playerInfo);
+        opHUD.SetHUD(opponentInfo);
     }
 
     public void Damaged(PlayerScript ui, BattleHUD hud)
@@ -99,12 +101,12 @@ public class BattleSystem : MonoBehaviour
                     if (GameManager.instance.isMyTurn == false)
                     {
                         Debug.Log("MyTotalDamage");
-                        playerUi.totalDamage += 3;
+                        playerTotalDamage += 3;
                     }
                     else
                     {
                         Debug.Log("OppppTotalDamage");
-                        opUi.totalDamage += 3;
+                        opponentTotalDamage += 3;
                     }
                     isKingCacled = true;
                 }
@@ -117,11 +119,11 @@ public class BattleSystem : MonoBehaviour
                 {
                     if (GameManager.instance.isMyTurn == false)
                     {
-                        playerUi.totalDamage += 4;
+                        playerTotalDamage += 4;
                     }
                     else
                     {
-                        opUi.totalDamage += 4;
+                        opponentTotalDamage += 4;
                     }
                     isKingCacled = true;
                 }
@@ -134,11 +136,11 @@ public class BattleSystem : MonoBehaviour
                 {
                     if (GameManager.instance.isMyTurn == false)
                     {
-                        playerUi.totalDamage += 5;
+                        playerTotalDamage += 5;
                     }
                     else
                     {
-                        opUi.totalDamage += 5;
+                        opponentTotalDamage += 5;
                     }
                     isKingCacled = true;
                 }
@@ -171,11 +173,11 @@ public class BattleSystem : MonoBehaviour
             damage += 3;
             if (GameManager.instance.isMyTurn == true)
             {
-                playerUi.totalDamage += 3;
+                playerTotalDamage += 3;
             }
             else
             {
-                opUi.totalDamage += 3;
+                opponentTotalDamage += 3;
             }
             //print("red");
         }
@@ -184,11 +186,11 @@ public class BattleSystem : MonoBehaviour
             damage += 3;
             if (GameManager.instance.isMyTurn == true)
             {
-                playerUi.totalDamage += 3;
+                playerTotalDamage += 3;
             }
             else
             {
-                opUi.totalDamage += 3;
+                opponentTotalDamage += 3;
             }
             //print("blue");
         }
@@ -198,11 +200,11 @@ public class BattleSystem : MonoBehaviour
             damage += 3;
             if (GameManager.instance.isMyTurn == true)
             {
-                playerUi.totalDamage += 3;
+                playerTotalDamage += 3;
             }
             else
             {
-                opUi.totalDamage += 3;
+                opponentTotalDamage += 3;
             }
             //print("brown");
         }
@@ -212,11 +214,11 @@ public class BattleSystem : MonoBehaviour
             damage += 2;
             if (GameManager.instance.isMyTurn == true)
             {
-                playerUi.totalDamage += 2;
+                playerTotalDamage += 2;
             }
             else
             {
-                opUi.totalDamage += 2;
+                opponentTotalDamage += 2;
             }
             //print("result");
         }
@@ -226,11 +228,11 @@ public class BattleSystem : MonoBehaviour
             damage += 3;
             if (GameManager.instance.isMyTurn == true)
             {
-                playerUi.totalDamage += 3;
+                playerTotalDamage += 3;
             }
             else
             {
-                opUi.totalDamage += 3;
+                opponentTotalDamage += 3;
             }
             //print("result");
         }
@@ -244,11 +246,11 @@ public class BattleSystem : MonoBehaviour
                 damage++;
                 if (GameManager.instance.isMyTurn == true)
                 {
-                    playerUi.totalDamage++;
+                    playerTotalDamage++;
                 }
                 else
                 {
-                    opUi.totalDamage++;
+                    opponentTotalDamage++;
                 }
             }
         }
@@ -264,11 +266,11 @@ public class BattleSystem : MonoBehaviour
             damage = 5;
             if (GameManager.instance.isMyTurn == true)
             {
-                playerUi.totalDamage += 5;
+                playerTotalDamage += 5;
             }
             else
             {
-                opUi.totalDamage += 5;
+                opponentTotalDamage += 5;
             }
         }
         print(damage);
@@ -282,22 +284,22 @@ public class BattleSystem : MonoBehaviour
             damage = 1;
             if (GameManager.instance.isMyTurn == true)
             {
-                playerUi.totalDamage += 1;
+                playerTotalDamage += 1;
             }
             else
             {
-                opUi.totalDamage += 1;
+                opponentTotalDamage += 1;
             }
             for (int i = 10; i < soldier; i++)
             {
                 damage++;
                 if (GameManager.instance.isMyTurn == true)
                 {
-                    playerUi.totalDamage++;
+                    playerTotalDamage++;
                 }
                 else
                 {
-                    opUi.totalDamage++;
+                    opponentTotalDamage++;
                 }
             }
         }
