@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     public bool isGameEnd = false;
     public bool oneTime;
     public bool first;
+
     public bool[] isMyArtifact;
     public bool[] isOpArtifact;
 
@@ -102,17 +103,18 @@ public class GameManager : MonoBehaviour
         //if(!isMyTurn)
         if (CardManager.instance.myHand.Count == 0 && CardManager.instance.opponentHand.Count == 0 && !AttackPanel.activeSelf && !ArtifactPanel.activeSelf && !isAttack)
         {
+            //EndPhaseCalc.instance.DamageCalculation(BattleSystem.instance.playerUi);
+            //EndPhaseCalc.instance.DamageCalculation(BattleSystem.instance.opUi);
             Invoke("Retry", 1f);
         }
 
         if (PlayerPrefs.GetInt(BattleSystem.instance.player.name + "Game_Hp") <= 0 || PlayerPrefs.GetInt(BattleSystem.instance.op.name + "Game_Hp") <= 0)
         {
-            print("게임 오버");
+            //print("게임 오버");
             if (PlayerPrefs.GetInt(BattleSystem.instance.player.name + "Game_Hp") > 0)
             {
                 PlayerPrefs.SetInt("HP", PlayerPrefs.GetInt("HP") + PlayerPrefs.GetInt(BattleSystem.instance.player.name + "Game_Hp"));
             }
-            
             PlayerPrefs.DeleteKey(BattleSystem.instance.player.name + "Game_Hp");
             PlayerPrefs.DeleteKey(BattleSystem.instance.op.name + "Game_Hp");
 
@@ -126,7 +128,7 @@ public class GameManager : MonoBehaviour
             {
                 if (isMyTurn)
                 {
-                    //print("두번째");
+                    ////print("두번째");
                     CardManager.instance.ResetPosition(CardManager.instance.myHand);
                     CardManager.instance.DrawCard(CardManager.instance.myHand, 1);
                     oneTime = false;
@@ -134,7 +136,7 @@ public class GameManager : MonoBehaviour
 
                 else
                 {
-                    //print("두번째");
+                    ////print("두번째");
                     CardManager.instance.ResetPosition(CardManager.instance.opponentHand);
                     CardManager.instance.DrawCard(CardManager.instance.opponentHand, 1);
                     oneTime = false;
@@ -287,7 +289,6 @@ public class GameManager : MonoBehaviour
                     }
                     isOpArtifact[0] = false;
                 }
-
                 if (MatgoScore.opScore >= 6)
                 {
                     if (isOpArtifact[1])
@@ -297,7 +298,6 @@ public class GameManager : MonoBehaviour
                     }
                     isOpArtifact[1] = false;
                 }
-
                 if (MatgoScore.opScore >= 7)
                 {
                     if (isOpArtifact[2])

@@ -6,10 +6,11 @@ public class PlayerScript : MonoBehaviour
 {
     public int maxHp;
     public int currentHp;
-
-    void Awake()
+    public int totalDamage;
+    
+    private void Awake()
     {
-        maxHp = 10;
+        maxHp = 100;
         if (!PlayerPrefs.HasKey(gameObject.name + "Game_Hp"))
         {
             print("없음");
@@ -18,6 +19,6 @@ public class PlayerScript : MonoBehaviour
 
         print(gameObject.name);
         currentHp = PlayerPrefs.GetInt(gameObject.name + "Game_Hp");
-        //currentHp = maxHp;
+        totalDamage = 0;
     }
 }

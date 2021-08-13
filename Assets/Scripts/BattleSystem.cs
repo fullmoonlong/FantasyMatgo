@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 public class BattleSystem : MonoBehaviour
 {
-   
+
     #region Singleton
     public static BattleSystem instance;
 
@@ -25,6 +25,7 @@ public class BattleSystem : MonoBehaviour
     public GameObject player;
     public GameObject op;
 
+    public bool isKingCacled = false;
     public int damage;
 
     //public GameObject startPanel;
@@ -52,7 +53,7 @@ public class BattleSystem : MonoBehaviour
         enemyFlagAttack = new bool[3];
         animalAttack = new bool[1];
         enemyAnimalAttack = new bool[1];
-        for (int i=0;i<3;i++)
+        for (int i = 0; i < 3; i++)
         {
             kingAttack[i] = false;
             flagAttack[i] = false;
@@ -62,10 +63,6 @@ public class BattleSystem : MonoBehaviour
         animalAttack[0] = false;
         enemyAnimalAttack[0] = false;
         SettingBattle();
-    }
-    public void Update()
-    {
-        //흔들기 //print("my turn");
     }
 
     public void SettingBattle()
@@ -87,6 +84,7 @@ public class BattleSystem : MonoBehaviour
         //PlayerPrefs.SetInt("Game_Hp", ui.currentHp);
         hud.SetHp(ui.currentHp);
     }
+
     public void LightAttack(int mylight, int oplight)
     {
         int times = 1;
@@ -96,72 +94,162 @@ public class BattleSystem : MonoBehaviour
             case 3:
                 print("3점");
                 damage = 3;
+                if (isKingCacled == false)
+                {
+                    if (GameManager.instance.isMyTurn == false)
+                    {
+                        Debug.Log("MyTotalDamage");
+                        playerUi.totalDamage += 3;
+                    }
+                    else
+                    {
+                        Debug.Log("OppppTotalDamage");
+                        opUi.totalDamage += 3;
+                    }
+                    isKingCacled = true;
+                }
                 break;
 
             case 4:
                 print("4점");
                 damage = 4;
+                if (isKingCacled == false)
+                {
+                    if (GameManager.instance.isMyTurn == false)
+                    {
+                        playerUi.totalDamage += 4;
+                    }
+                    else
+                    {
+                        opUi.totalDamage += 4;
+                    }
+                    isKingCacled = true;
+                }
                 break;
 
             case 5:
-                print("15점");
-                damage = 15;
+                print("5점");
+                damage = 5;
+                if (isKingCacled == false)
+                {
+                    if (GameManager.instance.isMyTurn == false)
+                    {
+                        playerUi.totalDamage += 5;
+                    }
+                    else
+                    {
+                        opUi.totalDamage += 5;
+                    }
+                    isKingCacled = true;
+                }
                 break;
 
             default:
                 break;
         }
 
-        if(mylight > 3 && oplight == 0)
+        if (mylight > 3 && oplight == 0)
         {
             times = 2;
         }
+
         print("damage : " + damage);
         damage *= times;
 
         //Instantiate(lightObj, gameObject.transform.position, Quaternion.identity); // 애니메이션 
 
     }
+
     public void FlagAttack(int red, int blue, int brown)
     {
         damage = 0;
 
         int result = red + blue + brown;
-        if(red == 3)
+
+        if (red == 3)
         {
             damage += 3;
+            if (GameManager.instance.isMyTurn == true)
+            {
+                playerUi.totalDamage += 3;
+            }
+            else
+            {
+                opUi.totalDamage += 3;
+            }
             //print("red");
         }
         if (blue == 3)
         {
             damage += 3;
+            if (GameManager.instance.isMyTurn == true)
+            {
+                playerUi.totalDamage += 3;
+            }
+            else
+            {
+                opUi.totalDamage += 3;
+            }
             //print("blue");
         }
 
         if (brown >= 3)
         {
             damage += 3;
+            if (GameManager.instance.isMyTurn == true)
+            {
+                playerUi.totalDamage += 3;
+            }
+            else
+            {
+                opUi.totalDamage += 3;
+            }
             //print("brown");
-        }
-
-        if (result == 7)
-        {
-            damage += 3;
-            //print("result");
         }
 
         if (result == 6)
         {
             damage += 2;
+            if (GameManager.instance.isMyTurn == true)
+            {
+                playerUi.totalDamage += 2;
+            }
+            else
+            {
+                opUi.totalDamage += 2;
+            }
             //print("result");
         }
 
-        if(result > 7)
+        if (result == 7)
         {
             damage += 3;
-            for(int i=7;i<result;i++)
+            if (GameManager.instance.isMyTurn == true)
+            {
+                playerUi.totalDamage += 3;
+            }
+            else
+            {
+                opUi.totalDamage += 3;
+            }
+            //print("result");
+        }
+
+
+        if (result > 7)
+        {
+            damage += 3;
+            for (int i = 7; i < result; i++)
             {
                 damage++;
+                if (GameManager.instance.isMyTurn == true)
+                {
+                    playerUi.totalDamage++;
+                }
+                else
+                {
+                    opUi.totalDamage++;
+                }
             }
         }
 
@@ -174,6 +262,14 @@ public class BattleSystem : MonoBehaviour
         if (bird == 3)
         {
             damage = 5;
+            if (GameManager.instance.isMyTurn == true)
+            {
+                playerUi.totalDamage += 5;
+            }
+            else
+            {
+                opUi.totalDamage += 5;
+            }
         }
         print(damage);
     }
@@ -181,12 +277,28 @@ public class BattleSystem : MonoBehaviour
     public void SoldierAttack(int soldier)
     {
         damage = 0;
-        if(soldier >= 10)
+        if (soldier >= 10)
         {
             damage = 1;
-            for(int i = 10; i<soldier;i++)
+            if (GameManager.instance.isMyTurn == true)
+            {
+                playerUi.totalDamage += 1;
+            }
+            else
+            {
+                opUi.totalDamage += 1;
+            }
+            for (int i = 10; i < soldier; i++)
             {
                 damage++;
+                if (GameManager.instance.isMyTurn == true)
+                {
+                    playerUi.totalDamage++;
+                }
+                else
+                {
+                    opUi.totalDamage++;
+                }
             }
         }
         print(damage);
