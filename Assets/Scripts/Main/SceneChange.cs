@@ -4,13 +4,62 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class SceneChange : MonoBehaviour
 {
+    public GameObject enterPanel;
     // Start is called before the first frame update
-    public Profile player;
     public void SceneLoad(string name)
     {
-        player.currentHp -= 10;
-        player.SetHp(player.currentHp);
-        SceneManager.LoadScene(name);
+        Profile.instance.currentHp = PlayerPrefs.GetInt("HP");
+        print(Profile.instance.currentHp);
+        print(PlayerPrefs.GetInt("License"));
+        if (Profile.instance.currentHp >= 1000 + PlayerPrefs.GetInt("License") * 2)
+        {
+            switch (PlayerPrefs.GetInt("License"))
+            {
+                case 0:
+                    Profile.instance.currentHp -= 1000;
+                    PlayerPrefs.SetInt("Player" + "Game_Hp", 1000);
+                    PlayerPrefs.SetInt("Op" + "Game_Hp", 1000);
+                    break;
+
+                case 1:
+                    Profile.instance.currentHp -= 1200;
+                    PlayerPrefs.SetInt("Player" + "Game_Hp", 1200);
+                    PlayerPrefs.SetInt("Op" + "Game_Hp", 1200);
+                    break;
+
+                case 2:
+                    Profile.instance.currentHp -= 1400;
+                    PlayerPrefs.SetInt("Player" + "Game_Hp", 1400);
+                    PlayerPrefs.SetInt("Op" + "Game_Hp", 1400);
+                    break;
+
+                case 3:
+                    Profile.instance.currentHp -= 1600;
+                    PlayerPrefs.SetInt("Player" + "Game_Hp", 1600);
+                    PlayerPrefs.SetInt("Op" + "Game_Hp", 1600);
+                    break;
+
+                case 4:
+                    Profile.instance.currentHp -= 1800;
+                    PlayerPrefs.SetInt("Player" + "Game_Hp", 1800);
+                    PlayerPrefs.SetInt("Op" + "Game_Hp", 1800);
+                    break;
+
+                case 5:
+                    Profile.instance.currentHp -= 2000;
+                    PlayerPrefs.SetInt("Player" + "Game_Hp", 2000);
+                    PlayerPrefs.SetInt("Op" + "Game_Hp", 2000);
+                    break;
+            }
+
+            Profile.instance.SetHp(Profile.instance.currentHp);
+            SceneManager.LoadScene(name);
+        }
+      
+        else
+        {
+            enterPanel.SetActive(true);
+        }
     }
 
 }

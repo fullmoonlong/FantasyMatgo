@@ -118,17 +118,15 @@ public class CardClick : MonoBehaviour
                         {
                             GameManager.instance.ScoreCheck(true);
 
-                            if (!GameManager.instance.myFirstArtifactPanel.activeSelf && !GameManager.instance.mySecondArtifactPanel.activeSelf && !GameManager.instance.myThirdArtifactPanel.activeSelf)
+                            if (!GameManager.instance.ArtifactPanel.activeSelf)
                             {
                                 GameManager.instance.AttackPanel.SetActive(true);
                                 
                                 print("bomb check");
                                 StartCoroutine(GameManager.instance.FixedMade(CardManager.instance.kingEmptyIndex, CardManager.instance.enemyKingEmptyIndex, CardManager.instance.redFlagEmptyIndex, CardManager.instance.blueFlagEmptyIndex, CardManager.instance.normalFlagEmptyIndex,
                                 CardManager.instance.animalEmptyIndex, BattleSystem.instance.kingAttack, BattleSystem.instance.flagAttack, BattleSystem.instance.animalAttack, BattleSystem.instance.op, BattleSystem.instance.opUi, BattleSystem.instance.opHUD));
-
+                                EndArrange(CardManager.instance.myHand, false);
                             }
-
-                            EndArrange(CardManager.instance.myHand, false);
                         }
 
                         GameManager.instance.isBonus = false;
@@ -154,17 +152,16 @@ public class CardClick : MonoBehaviour
                         {
                             GameManager.instance.ScoreCheck(false);
 
-                            if (!GameManager.instance.opponentFirstArtifactPanel.activeSelf && !GameManager.instance.opponentSecondArtifactPanel.activeSelf && !GameManager.instance.opponentThirdArtifactPanel.activeSelf)
+                            if (!GameManager.instance.ArtifactPanel.activeSelf)
                             {
-                                
                                 GameManager.instance.AttackPanel.SetActive(true);
                                
                                 StartCoroutine(GameManager.instance.FixedMade(CardManager.instance.enemyKingEmptyIndex, CardManager.instance.kingEmptyIndex, CardManager.instance.enemyRedFlagEmptyIndex, CardManager.instance.enemyBlueFlagEmptyIndex, CardManager.instance.enemyNormalFlagEmptyIndex,
                                 CardManager.instance.enemyAnimalEmptyIndex, BattleSystem.instance.enemyKingAttack, BattleSystem.instance.enemyFlagAttack, BattleSystem.instance.enemyAnimalAttack, BattleSystem.instance.player, BattleSystem.instance.playerUi, BattleSystem.instance.playerHUD));
+                                EndArrange(CardManager.instance.opponentHandScore, true);
 
                             }
 
-                            EndArrange(CardManager.instance.opponentHandScore, true);
                         }
                         GameManager.instance.isBonus = false;
                     }
@@ -808,16 +805,16 @@ public class CardClick : MonoBehaviour
 
             GameManager.instance.ScoreCheck(true);
 
-            if (!GameManager.instance.myFirstArtifactPanel.activeSelf && !GameManager.instance.mySecondArtifactPanel.activeSelf && !GameManager.instance.myThirdArtifactPanel.activeSelf)
+            if (!GameManager.instance.ArtifactPanel.activeSelf)
             {
                 print("panel no");
                 GameManager.instance.AttackPanel.SetActive(true);
                 StartCoroutine(GameManager.instance.FixedMade(CardManager.instance.kingEmptyIndex, CardManager.instance.enemyKingEmptyIndex, CardManager.instance.redFlagEmptyIndex, CardManager.instance.blueFlagEmptyIndex, CardManager.instance.normalFlagEmptyIndex,
                 CardManager.instance.animalEmptyIndex, BattleSystem.instance.kingAttack, BattleSystem.instance.flagAttack, BattleSystem.instance.animalAttack, BattleSystem.instance.op, BattleSystem.instance.opUi, BattleSystem.instance.opHUD));
 
+                EndArrange(CardManager.instance.myHand, false);
             }
 
-            EndArrange(CardManager.instance.myHand, false);
         }
 
         else
@@ -828,16 +825,16 @@ public class CardClick : MonoBehaviour
             GameManager.instance.ScoreCheck(false);
 
 
-            if (!GameManager.instance.opponentFirstArtifactPanel.activeSelf && !GameManager.instance.opponentSecondArtifactPanel.activeSelf && !GameManager.instance.opponentThirdArtifactPanel.activeSelf)
+            if (!GameManager.instance.ArtifactPanel.activeSelf)
             {
                 print("panel no");
                 GameManager.instance.AttackPanel.SetActive(true);
                 StartCoroutine(GameManager.instance.FixedMade(CardManager.instance.enemyKingEmptyIndex, CardManager.instance.kingEmptyIndex, CardManager.instance.enemyRedFlagEmptyIndex, CardManager.instance.enemyBlueFlagEmptyIndex, CardManager.instance.enemyNormalFlagEmptyIndex,
                 CardManager.instance.enemyAnimalEmptyIndex, BattleSystem.instance.enemyKingAttack, BattleSystem.instance.enemyFlagAttack, BattleSystem.instance.enemyAnimalAttack, BattleSystem.instance.player, BattleSystem.instance.playerUi, BattleSystem.instance.playerHUD));
 
+                EndArrange(CardManager.instance.opponentHand, true);
             }
 
-            EndArrange(CardManager.instance.opponentHand, true);
         }
 
         CardManager.instance.ChoiceObj[1 - num].transform.position = OrignFieldPosition(temp).transform.position;
@@ -895,17 +892,18 @@ public class CardClick : MonoBehaviour
 
             GameManager.instance.ScoreCheck(true);
 
-            if (!GameManager.instance.myFirstArtifactPanel.activeSelf && !GameManager.instance.mySecondArtifactPanel.activeSelf && !GameManager.instance.myThirdArtifactPanel.activeSelf)
+            if (!GameManager.instance.ArtifactPanel.activeSelf)
             {
                 print("panel no");
                 GameManager.instance.AttackPanel.SetActive(true);
 
                 StartCoroutine(GameManager.instance.FixedMade(CardManager.instance.kingEmptyIndex, CardManager.instance.enemyKingEmptyIndex, CardManager.instance.redFlagEmptyIndex, CardManager.instance.blueFlagEmptyIndex, CardManager.instance.normalFlagEmptyIndex,
                 CardManager.instance.animalEmptyIndex, BattleSystem.instance.kingAttack, BattleSystem.instance.flagAttack, BattleSystem.instance.animalAttack, BattleSystem.instance.op, BattleSystem.instance.opUi, BattleSystem.instance.opHUD));
-
+                
+                EndArrange(CardManager.instance.myHand, false);
             }
 
-            EndArrange(CardManager.instance.myHand, false);
+            
         }
 
         else
@@ -918,7 +916,7 @@ public class CardClick : MonoBehaviour
             GameManager.instance.ScoreCheck(false);
 
 
-            if (!GameManager.instance.opponentFirstArtifactPanel.activeSelf && !GameManager.instance.opponentSecondArtifactPanel.activeSelf && !GameManager.instance.opponentThirdArtifactPanel.activeSelf)
+            if (!GameManager.instance.ArtifactPanel.activeSelf)
             {
                 print("panel no");
                 GameManager.instance.AttackPanel.SetActive(true);
@@ -926,13 +924,14 @@ public class CardClick : MonoBehaviour
                 StartCoroutine(GameManager.instance.FixedMade(CardManager.instance.enemyKingEmptyIndex, CardManager.instance.kingEmptyIndex, CardManager.instance.enemyRedFlagEmptyIndex, CardManager.instance.enemyBlueFlagEmptyIndex, CardManager.instance.enemyNormalFlagEmptyIndex,
                 CardManager.instance.enemyAnimalEmptyIndex, BattleSystem.instance.enemyKingAttack, BattleSystem.instance.enemyFlagAttack, BattleSystem.instance.enemyAnimalAttack, BattleSystem.instance.player, BattleSystem.instance.playerUi, BattleSystem.instance.playerHUD));
 
+                EndArrange(CardManager.instance.opponentHand, true);
             }
 
-            EndArrange(CardManager.instance.opponentHand, true);
+           
         }
         GameManager.instance.isShake = false;
     }
-    void EndArrange(List<GameObject> hand, bool isPlayer)
+    public void EndArrange(List<GameObject> hand, bool isPlayer)
     {
         if (GameManager.instance.first)
         {

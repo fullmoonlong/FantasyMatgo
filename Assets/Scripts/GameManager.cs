@@ -21,12 +21,7 @@ public class GameManager : MonoBehaviour
     public Text opScoreText;
     public Text gameOverText;
     public GameObject gameOverPanel;
-    public GameObject myFirstArtifactPanel;
-    public GameObject mySecondArtifactPanel;
-    public GameObject myThirdArtifactPanel;
-    public GameObject opponentFirstArtifactPanel;
-    public GameObject opponentSecondArtifactPanel;
-    public GameObject opponentThirdArtifactPanel;
+    public GameObject ArtifactPanel;
     public GameObject AttackPanel;
 
     public int maxTurnCount; // 현재까지 진행된 턴 수
@@ -36,13 +31,9 @@ public class GameManager : MonoBehaviour
     public bool isGameEnd = false;
     public bool oneTime;
     public bool first;
-    public bool battleFirst;
-    public bool isMyFirstArtifact;
-    public bool isMySecondArtifact;
-    public bool isMyThirdArtifact;
-    public bool isOppoFirstArtifact;
-    public bool isOppoSecondArtifact;
-    public bool isOppoThirdArtifact;
+    public bool[] isMyArtifact;
+    public bool[] isOpArtifact;
+
     public bool isSetting;
     public bool isMoving;
     public bool isBattle;
@@ -54,10 +45,14 @@ public class GameManager : MonoBehaviour
     public Image[] artifactMe;
     public Image[] artifactOp;
 
-    public GameObject[] artifact;
+    //public GameObject[] artifact;
 
     List<Shop> CurArtifactList;
 
+    int MyOpenNum;
+    int OpOpenNum;
+
+    List<int> AllArtifact;
     public void Start()
     {
         isMyTurn = true;
@@ -68,18 +63,18 @@ public class GameManager : MonoBehaviour
         artifactNumMe = 0;
         artifactNumOpponent = 0;
 
-        isMyFirstArtifact = false;
-        isMySecondArtifact = false;
-
-        isOppoFirstArtifact = false;
-        isOppoSecondArtifact = false;
+        isMyArtifact = new bool[3];
+        isOpArtifact = new bool[3];
+        for (int i=0;i<isMyArtifact.Length;i++)
+        {
+            isMyArtifact[i] = true;
+            isOpArtifact[i] = true;
+        }
 
         isSetting = false;
         isMoving = false;
 
         maxTurnCount = 7;
-
-        battleFirst = true;
 
         isBonus = false;
 
@@ -88,6 +83,13 @@ public class GameManager : MonoBehaviour
         isChoice = false;
 
         isAttack = false;
+
+        MyOpenNum = 0;
+        OpOpenNum = 0;
+
+
+        AllArtifact = new List<int>();
+        ArrangeArtifact();
 
         StartCoroutine(CompleteSetting());
     }
@@ -98,11 +100,7 @@ public class GameManager : MonoBehaviour
         TurnTextSet();
 
         //if(!isMyTurn)
-        if (CardManager.instance.myHand.Count == 0 && CardManager.instance.opponentHand.Count == 0
-            && mySecondArtifactPanel.activeSelf == false
-            && opponentSecondArtifactPanel.activeSelf == false
-            && myThirdArtifactPanel.activeSelf == false
-            && opponentThirdArtifactPanel.activeSelf == false && !AttackPanel.activeSelf && !isAttack)
+        if (CardManager.instance.myHand.Count == 0 && CardManager.instance.opponentHand.Count == 0 && !AttackPanel.activeSelf && !ArtifactPanel.activeSelf && !isAttack)
         {
             Invoke("Retry", 1f);
         }
@@ -112,8 +110,7 @@ public class GameManager : MonoBehaviour
             print("게임 오버");
             if (PlayerPrefs.GetInt(BattleSystem.instance.player.name + "Game_Hp") > 0)
             {
-                Profile.instance.currentHp += PlayerPrefs.GetInt(BattleSystem.instance.player.name + "Game_Hp");
-                PlayerPrefs.SetInt("HP", Profile.instance.currentHp);
+                PlayerPrefs.SetInt("HP", PlayerPrefs.GetInt("HP") + PlayerPrefs.GetInt(BattleSystem.instance.player.name + "Game_Hp"));
             }
             
             PlayerPrefs.DeleteKey(BattleSystem.instance.player.name + "Game_Hp");
@@ -233,58 +230,174 @@ public class GameManager : MonoBehaviour
         MatgoScore.instance.MyCardCountToScore();
         MatgoScore.instance.OpCardCountToScore();
         MatgoScore.instance.ScoreCalculate();
-        if (isPlayer)
+
+        if(AllArtifact.Count > 0) // 아티팩트가 있을 때
         {
-            print("내턴");
-            if (MatgoScore.myScore >= 3)
+            if (isPlayer)
             {
-                if (isMyFirstArtifact == false)
+                ArtifactPanel.transform.GetChild(1).GetComponent<Text>().text = "My Artifact";
+                print("내턴");
+                if (MatgoScore.myScore >= 3)
                 {
-                    ChooseMyArtifact("first");
+                    if (isMyArtifact[0])
+                    {
+                        MyOpenNum++;
+                        ArtifactPanel.SetActive(true);
+                    }
+                    isMyArtifact[0] = false;
                 }
-                isMyFirstArtifact = true;
+
+                if (MatgoScore.myScore >= 6)
+                {
+                    if (isMyArtifact[1])
+                    {
+                        MyOpenNum++;
+                        ArtifactPanel.SetActive(true);
+                    }
+                    isMyArtifact[1] = false;
+                }
+
+                if (MatgoScore.myScore >= 7)
+                {
+                    if (isMyArtifact[2])
+                    {
+                        MyOpenNum++;
+                        ArtifactPanel.SetActive(true);
+                    }
+
+                    else
+                    {
+                        //만약 이전 점수보다 더 커졌다면
+                        MyOpenNum++;
+                        ArtifactPanel.SetActive(true);
+                    }
+                    isMyArtifact[2] = false;
+                }
             }
 
-            if (MatgoScore.myScore >= 6)
+            else
             {
-                if (isMySecondArtifact == false)
+                ArtifactPanel.transform.GetChild(1).GetComponent<Text>().text = "Op Artifact";
+                if (MatgoScore.opScore >= 3)
                 {
-                    ChooseMyArtifact("second");
+                    if (isOpArtifact[0])
+                    {
+                        OpOpenNum++;
+                        ArtifactPanel.SetActive(true);
+                    }
+                    isOpArtifact[0] = false;
                 }
-                isMySecondArtifact = true;
-            }
 
-            if (MatgoScore.myScore >= 7)
+                if (MatgoScore.opScore >= 6)
+                {
+                    if (isOpArtifact[1])
+                    {
+                        OpOpenNum++;
+                        ArtifactPanel.SetActive(true);
+                    }
+                    isOpArtifact[1] = false;
+                }
+
+                if (MatgoScore.opScore >= 7)
+                {
+                    if (isOpArtifact[2])
+                    {
+                        OpOpenNum++;
+                        ArtifactPanel.SetActive(true);
+                    }
+
+                    else
+                    {
+                        OpOpenNum++;
+                        ArtifactPanel.SetActive(true);
+                    }
+                    isOpArtifact[2] = false;
+                }
+            }
+        }
+       
+    }
+    public void ApplyMyArtifact(int num)
+    {
+
+        GameObject btn = EventSystem.current.currentSelectedGameObject;
+
+        for(int i=0;i<AllArtifact.Count;i++)
+        {
+            print("아티펙트 넘 : " + AllArtifact[i]);
+        }
+        AllArtifact.RemoveAt(num);
+
+        for (int i = 0; i < AllArtifact.Count; i++)
+        {
+            print("변경 후 : " + AllArtifact[i]);
+        }
+        //CurArtifactList[num].IsHaving = false; // 장착을 빼줌
+        //artifactMe[artifactNumMe].sprite = artifact[num].GetComponent<Image>().sprite;
+        //ArtifactPanel.transform.GetChild(0).GetChild(num)
+        //AllArtifact.RemoveAt(num);
+
+        //print(AllArtifact.Count);
+
+        if (isMyTurn)
+        {
+            print(btn.GetComponent<Image>().sprite.name);
+            MyOpenNum--;
+
+            artifactMe[artifactNumMe].sprite = btn.GetComponent<Image>().sprite;
+            artifactMe[artifactNumMe].gameObject.SetActive(true);
+            artifactNumMe++;
+
+            if (MyOpenNum == 0)
             {
-                ChooseMyArtifact("third");
+                ArtifactPanel.SetActive(false);
             }
         }
 
-        else
+        if (!isMyTurn)
         {
-            if (MatgoScore.opScore >= 3)
+            print(btn.GetComponent<Image>().sprite.name);
+            OpOpenNum--;
+            artifactOp[artifactNumOpponent].sprite = btn.GetComponent<Image>().sprite;
+            artifactOp[artifactNumOpponent].gameObject.SetActive(true);
+            artifactNumOpponent++;
+            if (OpOpenNum == 0)
             {
-                if (isOppoFirstArtifact == false)
-                {
-                    ChooseOpponentArtifact("first");
-                }
-                isOppoFirstArtifact = true;
-            }
-
-            if (MatgoScore.opScore >= 6)
-            {
-                if (isOppoSecondArtifact == false)
-                {
-                    ChooseOpponentArtifact("second");
-                }
-                isOppoSecondArtifact = true;
-            }
-
-            if (MatgoScore.opScore >= 7)
-            {
-                ChooseOpponentArtifact("third");
+                ArtifactPanel.SetActive(false);
             }
         }
+
+        if (!ArtifactPanel.activeSelf)
+        {
+            AttackPanel.SetActive(true);
+
+            if(isMyTurn)
+            {
+                StartCoroutine(FixedMade(CardManager.instance.kingEmptyIndex, CardManager.instance.enemyKingEmptyIndex, CardManager.instance.redFlagEmptyIndex, CardManager.instance.blueFlagEmptyIndex, CardManager.instance.normalFlagEmptyIndex,
+                CardManager.instance.animalEmptyIndex, BattleSystem.instance.kingAttack, BattleSystem.instance.flagAttack, BattleSystem.instance.animalAttack, BattleSystem.instance.op, BattleSystem.instance.opUi, BattleSystem.instance.opHUD));
+
+                CardClick.instance.EndArrange(CardManager.instance.myHand, false);
+            }
+            else
+            {
+                StartCoroutine(FixedMade(CardManager.instance.enemyKingEmptyIndex, CardManager.instance.kingEmptyIndex, CardManager.instance.enemyRedFlagEmptyIndex, CardManager.instance.enemyBlueFlagEmptyIndex, CardManager.instance.enemyNormalFlagEmptyIndex,
+                CardManager.instance.enemyAnimalEmptyIndex, BattleSystem.instance.enemyKingAttack, BattleSystem.instance.enemyFlagAttack, BattleSystem.instance.enemyAnimalAttack, BattleSystem.instance.player, BattleSystem.instance.playerUi, BattleSystem.instance.playerHUD));
+                CardClick.instance.EndArrange(CardManager.instance.opponentHand, true);
+            }
+        }
+
+        print(AllArtifact.Count);
+        for (int i = 0; i < 6; i++)
+        {
+            ArtifactPanel.transform.GetChild(0).GetChild(i).gameObject.SetActive(i < AllArtifact.Count);
+        }
+
+        for (int i = 0; i < AllArtifact.Count; i++)
+        {
+            ArtifactPanel.transform.GetChild(0).GetChild(i).GetComponent<Image>().sprite = ShopManager.instance.AllShopSprite[AllArtifact[i]];
+
+        }
+
     }
 
     public void ScoreTextSet()
@@ -308,113 +421,21 @@ public class GameManager : MonoBehaviour
     public void ArrangeArtifact() // 장비 6개 장착
     {
         //CurArtifactList = ShopManager.instance.AllShopList.FindAll(x => x.IsEq);
-
-        for(int i=0;i<artifact.Length;i++)
+        for(int i=0;i<3;i++)
         {
-            artifact[i].SetActive(i < CurArtifactList.Count);
-        }
-    }
-    public void ChooseMyArtifact(string order)
-    {
-        if (order == "first")
-        {
-            myFirstArtifactPanel.SetActive(true);
-        }
-        if (order == "second")
-        {
-            mySecondArtifactPanel.SetActive(true);
-        }
-        if (order == "third")
-        {
-            myThirdArtifactPanel.SetActive(true);
+            ArtifactPanel.transform.GetChild(0).GetChild(i).GetComponent<Image>().sprite = ShopManager.instance.AllShopSprite[PlayerPrefs.GetInt("Equip" + i)];
+            AllArtifact.Add(PlayerPrefs.GetInt("Equip" + i));
         }
 
-        /// 이 밑으로 아티팩트를 4개 이상 먹는 시스템 구현
-        ///
-    }
-
-    public void ChooseOpponentArtifact(string order)
-    {
-        if (order == "first")
+        //일단 상대 예제
+        for(int i=3;i<6;i++)
         {
-            opponentFirstArtifactPanel.SetActive(true);
-        }
-        if (order == "second")
-        {
-            opponentSecondArtifactPanel.SetActive(true);
-        }
-        if (order == "third")
-        {
-            opponentThirdArtifactPanel.SetActive(true);
-        }
-        /// 이 밑으로 아티팩트를 4개 이상 먹는 시스템 구현
-        /// 
-    }
-
-    public void ApplyMyArtifact(int num)
-    {
-        GameObject btn = EventSystem.current.currentSelectedGameObject;
-        artifactMe[artifactNumMe].sprite = btn.GetComponent<Image>().sprite;
-        artifactMe[artifactNumMe].gameObject.SetActive(true);
-        //CurArtifactList[num].IsHaving = false; // 장착을 빼줌
-        //artifactMe[artifactNumMe].sprite = artifact[num].GetComponent<Image>().sprite;
-
-        if (myFirstArtifactPanel.activeInHierarchy == true)
-        {
-            myFirstArtifactPanel.SetActive(false);
-        }
-        else if (mySecondArtifactPanel.activeInHierarchy == true)
-        {
-            mySecondArtifactPanel.SetActive(false);
-        }
-        else if (myThirdArtifactPanel.activeInHierarchy == true)
-        {
-            myThirdArtifactPanel.SetActive(false);
-        }
-        artifactNumMe++;
-
-        if(!mySecondArtifactPanel.activeSelf && !myThirdArtifactPanel.activeSelf)
-        {
-            AttackPanel.SetActive(true);
-
-            StartCoroutine(FixedMade(CardManager.instance.kingEmptyIndex, CardManager.instance.enemyKingEmptyIndex, CardManager.instance.redFlagEmptyIndex, CardManager.instance.blueFlagEmptyIndex, CardManager.instance.normalFlagEmptyIndex,
-                CardManager.instance.animalEmptyIndex, BattleSystem.instance.kingAttack, BattleSystem.instance.flagAttack, BattleSystem.instance.animalAttack, BattleSystem.instance.op, BattleSystem.instance.opUi, BattleSystem.instance.opHUD));
-        }
-
-     }
-
-    public void ApplyOpponentArtifact()
-    {
-        GameObject btn = EventSystem.current.currentSelectedGameObject;
-        artifactOp[artifactNumOpponent].sprite = btn.GetComponent<Image>().sprite;
-        artifactOp[artifactNumOpponent].gameObject.SetActive(true);
-
-        if (opponentFirstArtifactPanel.activeInHierarchy == true)
-        {
-            opponentFirstArtifactPanel.SetActive(false);
-        }
-        else if (opponentSecondArtifactPanel.activeInHierarchy == true)
-        {
-            opponentSecondArtifactPanel.SetActive(false);
-        }
-        else if (opponentThirdArtifactPanel.activeInHierarchy == true)
-        {
-            opponentThirdArtifactPanel.SetActive(false);
-        }
-        artifactNumOpponent++;
-
-
-        if (!opponentSecondArtifactPanel.activeSelf && !opponentThirdArtifactPanel.activeSelf)
-        {
-            AttackPanel.SetActive(true);
-
-            StartCoroutine(FixedMade(CardManager.instance.enemyKingEmptyIndex, CardManager.instance.kingEmptyIndex, CardManager.instance.enemyRedFlagEmptyIndex, CardManager.instance.enemyBlueFlagEmptyIndex, CardManager.instance.enemyNormalFlagEmptyIndex,
-           CardManager.instance.enemyAnimalEmptyIndex, BattleSystem.instance.enemyKingAttack, BattleSystem.instance.enemyFlagAttack, BattleSystem.instance.enemyAnimalAttack, BattleSystem.instance.player, BattleSystem.instance.playerUi, BattleSystem.instance.playerHUD));
-
+            ArtifactPanel.transform.GetChild(0).GetChild(i).GetComponent<Image>().sprite = ShopManager.instance.AllShopSprite[i];
+            AllArtifact.Add(i);
         }
 
     }
-
+   
     public void GameOver()
     {
         if (!gameOverPanel.activeSelf)

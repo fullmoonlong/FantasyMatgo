@@ -8,14 +8,7 @@ public class GameScript : MonoBehaviour
     void Start()
     {
         //라이센스, 돈 관리
-        if(!PlayerPrefs.HasKey("License"))
-        {
-            PlayerPrefs.SetInt("License", 0);
-        }
-        if(!PlayerPrefs.HasKey("Coin"))
-        {
-            PlayerPrefs.SetInt("Coin", 0);
-        }
+       
     }
 
     // Update is called once per frame

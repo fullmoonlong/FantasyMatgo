@@ -12,9 +12,11 @@ public class PlayerScript : MonoBehaviour
         maxHp = 10;
         if (!PlayerPrefs.HasKey(gameObject.name + "Game_Hp"))
         {
+            print("없음");
             PlayerPrefs.SetInt(gameObject.name + "Game_Hp", maxHp);
         }
 
+        print(gameObject.name);
         currentHp = PlayerPrefs.GetInt(gameObject.name + "Game_Hp");
         //currentHp = maxHp;
     }

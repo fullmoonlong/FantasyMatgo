@@ -47,7 +47,7 @@ public class ShopManager : MonoBehaviour
         Magic,
         Rare,
         Unique,
-        Apic
+        Epic
     }
 
     License license = License.N2;
@@ -133,7 +133,7 @@ public class ShopManager : MonoBehaviour
                 break;
 
             case 5:
-                license = License.Apic;
+                license = License.Epic;
                 break;
         }
 
@@ -148,7 +148,8 @@ public class ShopManager : MonoBehaviour
             ShopSlot[i].SetActive(i < CurShopList.Count); // 내 카드리스트 수보다 적으면 슬롯을 안보이게함
             ShopSlot[i].transform.GetChild(1).GetComponent<Text>().text = i < CurShopList.Count ? CurShopList[i].Name : "";
             ShopSlot[i].transform.GetChild(2).GetComponent<Text>().text = i < CurShopList.Count ? CurShopList[i].Cost : "";
-            if(i < CurShopList.Count)
+            print(CurShopList.Count);
+            if (i < CurShopList.Count)
             {
                 ShopSlot[i].transform.GetChild(0).GetComponent<Image>().sprite = AllShopSprite[AllShopList.FindIndex(x => x.Name == CurShopList[i].Name)];
             }
@@ -184,6 +185,7 @@ public class ShopManager : MonoBehaviour
             else
             {
                 CanBuyPanel.transform.GetChild(0).GetComponent<Text>().text = "구매하시겠습니까?";
+                CanBuyPanel.transform.GetChild(1).gameObject.SetActive(true);
             }
         }
 
