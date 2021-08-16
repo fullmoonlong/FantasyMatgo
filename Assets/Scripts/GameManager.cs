@@ -103,9 +103,9 @@ public class GameManager : MonoBehaviour
         //if(!isMyTurn)
         if (CardManager.instance.myHand.Count == 0 && CardManager.instance.opponentHand.Count == 0 && !AttackPanel.activeSelf && !ArtifactPanel.activeSelf && !isAttack)
         {
-            //EndPhaseCalc.instance.DamageCalculation(BattleSystem.instance.playerUi);
-            //EndPhaseCalc.instance.DamageCalculation(BattleSystem.instance.opUi);
-            Invoke("Retry", 1f);
+            EndPhaseCalc.instance.DamageCalculation();
+
+            //Invoke("Retry", 1f);
         }
 
         if (PlayerPrefs.GetInt(BattleSystem.instance.player.name + "Game_Hp") <= 0 || PlayerPrefs.GetInt(BattleSystem.instance.op.name + "Game_Hp") <= 0)
@@ -375,7 +375,6 @@ public class GameManager : MonoBehaviour
             {
                 StartCoroutine(FixedMade(CardManager.instance.kingEmptyIndex, CardManager.instance.enemyKingEmptyIndex, CardManager.instance.redFlagEmptyIndex, CardManager.instance.blueFlagEmptyIndex, CardManager.instance.normalFlagEmptyIndex,
                 CardManager.instance.animalEmptyIndex, BattleSystem.instance.kingAttack, BattleSystem.instance.flagAttack, BattleSystem.instance.animalAttack, BattleSystem.instance.op, BattleSystem.instance.opponentInfo, BattleSystem.instance.opHUD));
-
                 CardClick.instance.EndArrange(CardManager.instance.myHand, false);
             }
             else

@@ -1717,8 +1717,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 800, y: -100}
-  m_SizeDelta: {x: 300, y: 100}
+  m_AnchoredPosition: {x: 750, y: -100}
+  m_SizeDelta: {x: 350, y: 100}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &459909321
 MonoBehaviour:
@@ -1746,8 +1746,8 @@ MonoBehaviour:
     m_FontStyle: 0
     m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 200
-    m_Alignment: 4
+    m_MaxSize: 60
+    m_Alignment: 3
     m_AlignByGeometry: 1
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -2489,7 +2489,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 0
   currentHp: 0
-  totalDamage: 0
 --- !u!114 &777367380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3202,7 +3201,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 0
   currentHp: 0
-  totalDamage: 0
 --- !u!114 &849657932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4205,6 +4203,7 @@ GameObject:
   - component: {fileID: 1389542314}
   - component: {fileID: 1389542316}
   - component: {fileID: 1389542317}
+  - component: {fileID: 1389542313}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -4275,6 +4274,18 @@ MonoBehaviour:
   - {fileID: 1159259699}
   - {fileID: 109169214}
   - {fileID: 75029302}
+--- !u!114 &1389542313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1389542310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65464a1a663d43b4e83183faf1c1760d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1389542314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4326,12 +4337,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackImage: {fileID: 1900141188}
   startPanel: {fileID: 134367908}
-  playerUi: {fileID: 0}
-  opUi: {fileID: 0}
+  playerInfo: {fileID: 0}
+  opponentInfo: {fileID: 0}
   player: {fileID: 849657928}
   op: {fileID: 777367376}
   isKingCacled: 0
   damage: 0
+  playerTotalDamage: 0
+  opponentTotalDamage: 0
   playerHUD: {fileID: 849657930}
   opHUD: {fileID: 777367377}
   kingAttack: 
@@ -5564,8 +5577,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 800, y: 100}
-  m_SizeDelta: {x: 300, y: 100}
+  m_AnchoredPosition: {x: 750, y: 100}
+  m_SizeDelta: {x: 350, y: 100}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1874004714
 MonoBehaviour:
@@ -5593,8 +5606,8 @@ MonoBehaviour:
     m_FontStyle: 0
     m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 200
-    m_Alignment: 4
+    m_MaxSize: 60
+    m_Alignment: 3
     m_AlignByGeometry: 1
     m_RichText: 1
     m_HorizontalOverflow: 0
