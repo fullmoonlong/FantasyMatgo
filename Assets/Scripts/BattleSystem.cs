@@ -105,12 +105,10 @@ public class BattleSystem : MonoBehaviour
                 {
                     if (GameManager.instance.isMyTurn == false)
                     {
-                        Debug.Log("MyTotalDamage");
                         playerTotalDamage += 3;
                     }
                     else
                     {
-                        Debug.Log("OppppTotalDamage");
                         opponentTotalDamage += 3;
                     }
                     isKingCacled = true;
@@ -160,7 +158,6 @@ public class BattleSystem : MonoBehaviour
             times = 2;
         }
 
-        print("damage : " + damage);
         damage *= times;
     }
 

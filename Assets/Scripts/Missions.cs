@@ -63,14 +63,14 @@ public class Missions : MonoBehaviour
                 if (CardManager.instance.kingEmptyIndex >= 2 && isGwangMissionDone == false)
                 {
                     myMissionDoneCount++;
-                    BattleSystem.instance.damage = 2;
+                    BattleSystem.instance.playerTotalDamage += 2;
                     Debug.Log("MeDoneGwangMission");
                     isGwangMissionDone = true;
                 }
                 else if (CardManager.instance.enemyKingEmptyIndex >= 2 && isGwangMissionDone == false)
                 {
                     opponentMissionDoneCount++;
-                    BattleSystem.instance.damage = 2;
+                    BattleSystem.instance.opponentTotalDamage += 2;
                     Debug.Log("OPDoneGwangMission");
                     isGwangMissionDone = true;
                 }
@@ -80,14 +80,14 @@ public class Missions : MonoBehaviour
                 if (CardManager.instance.soldierEmptyIndex >= 5 && isPeeMissionDone == false)
                 {
                     myMissionDoneCount++;
-                    BattleSystem.instance.damage = 2;
+                    BattleSystem.instance.playerTotalDamage += 2;
                     Debug.Log("MeDonePeeMission");
                     isPeeMissionDone = true;
                 }
                 else if (CardManager.instance.enemySoldierEmptyIndex >= 5 && isPeeMissionDone == false)
                 {
                     opponentMissionDoneCount++;
-                    BattleSystem.instance.damage = 2;
+                    BattleSystem.instance.opponentTotalDamage += 2;
                     Debug.Log("OPDonePeeMission");
                     isPeeMissionDone = true;
                 }
@@ -97,14 +97,14 @@ public class Missions : MonoBehaviour
                 if (CardManager.instance.normalFlagEmptyIndex >= 2 && isDanMissionDone == false)
                 {
                     myMissionDoneCount++;
-                    BattleSystem.instance.damage = 2;
+                    BattleSystem.instance.playerTotalDamage += 2;
                     Debug.Log("MeDoneFlagMission");
                     isDanMissionDone = true;
                 }
                 else if (CardManager.instance.enemyNormalFlagEmptyIndex >= 2 && isDanMissionDone == false)
                 {
                     opponentMissionDoneCount++;
-                    BattleSystem.instance.damage = 2;
+                    BattleSystem.instance.opponentTotalDamage += 2;
                     Debug.Log("OPDoneFlagMission");
                     isDanMissionDone = true;
                 }
@@ -114,14 +114,14 @@ public class Missions : MonoBehaviour
                 if (CardManager.instance.animalEmptyIndex >= 2 && isGodoriMissionDone == false)
                 {
                     myMissionDoneCount++;
-                    BattleSystem.instance.damage = 2;
+                    BattleSystem.instance.playerTotalDamage += 2;
                     Debug.Log("MeDoneGodoriMission");
                     isGodoriMissionDone = true;
                 }
                 else if (CardManager.instance.enemyAnimalEmptyIndex >= 2 & isGodoriMissionDone == false)
                 {
                     opponentMissionDoneCount++;
-                    BattleSystem.instance.damage = 2;
+                    BattleSystem.instance.opponentTotalDamage += 2;
                     Debug.Log("OPDoneGodoriMission");
                     isGodoriMissionDone = true;
                 }

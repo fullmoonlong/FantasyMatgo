@@ -50,6 +50,9 @@ public class GameManager : MonoBehaviour
     int OpOpenNum;
 
     List<int> AllArtifact;
+    List<string> myArtifactList;
+    List<string> opponentArtifactList;
+
     public void Start()
     {
         isMyTurn = true;
@@ -86,6 +89,9 @@ public class GameManager : MonoBehaviour
 
 
         AllArtifact = new List<int>();
+        myArtifactList = new List<string>();
+        opponentArtifactList = new List<string>();
+
         ArrangeArtifact();
 
         StartCoroutine(CompleteSetting());
@@ -98,6 +104,8 @@ public class GameManager : MonoBehaviour
 
         if (CardManager.instance.myHand.Count == 0 && CardManager.instance.opponentHand.Count == 0 && !AttackPanel.activeSelf && !ArtifactPanel.activeSelf && !isAttack)
         {
+            MyArtifactDamage();
+            OpponentArtifactDamage();
             EndPhaseCalc.instance.DamageCalculation();
 
             //Invoke("Retry", 1f);
@@ -320,6 +328,7 @@ public class GameManager : MonoBehaviour
         }
 
     }
+
     public void ApplyMyArtifact(int num)
     {
 
@@ -329,7 +338,6 @@ public class GameManager : MonoBehaviour
         {
             print("아티펙트 넘 : " + AllArtifact[i]);
         }
-        AllArtifact.RemoveAt(num);
 
         for (int i = 0; i < AllArtifact.Count; i++)
         {
@@ -341,6 +349,7 @@ public class GameManager : MonoBehaviour
             print(btn.GetComponent<Image>().sprite.name);
             MyOpenNum--;
 
+            myArtifactList.Add(ShopManager.instance.AllShopList[AllArtifact[num]].Name);
             artifactMe[artifactNumMe].sprite = btn.GetComponent<Image>().sprite;
             artifactMe[artifactNumMe].gameObject.SetActive(true);
             artifactNumMe++;
@@ -350,11 +359,12 @@ public class GameManager : MonoBehaviour
                 ArtifactPanel.SetActive(false);
             }
         }
-
         if (!isMyTurn)
         {
             print(btn.GetComponent<Image>().sprite.name);
             OpOpenNum--;
+
+            opponentArtifactList.Add(ShopManager.instance.AllShopList[AllArtifact[num]].Name);
             artifactOp[artifactNumOpponent].sprite = btn.GetComponent<Image>().sprite;
             artifactOp[artifactNumOpponent].gameObject.SetActive(true);
             artifactNumOpponent++;
@@ -363,6 +373,9 @@ public class GameManager : MonoBehaviour
                 ArtifactPanel.SetActive(false);
             }
         }
+
+        Debug.Log(ShopManager.instance.AllShopList[AllArtifact[num]].Name);
+        AllArtifact.RemoveAt(num);
 
         if (!ArtifactPanel.activeSelf)
         {
@@ -428,7 +441,145 @@ public class GameManager : MonoBehaviour
             ArtifactPanel.transform.GetChild(0).GetChild(i).GetComponent<Image>().sprite = ShopManager.instance.AllShopSprite[i];
             AllArtifact.Add(i);
         }
+    }
 
+    public void MyArtifactDamage()
+    {
+        for (int i = 0; i < myArtifactList.Count; i++)
+        {
+            switch (myArtifactList[i])
+            {
+                case "기본 화염 지팡이":
+                    if (CardManager.instance.redFlagEmptyIndex == 3)
+                    {
+                        BattleSystem.instance.playerTotalDamage += 4;
+                    }
+                    break;
+
+                case "기본 전기 지팡이":
+                    if (CardManager.instance.normalFlagEmptyIndex == 3)
+                    {
+                        BattleSystem.instance.playerTotalDamage += 4;
+                    }
+                    break;
+
+                case "기본 얼음 지팡이":
+                    if (CardManager.instance.blueFlagEmptyIndex == 3)
+                    {
+                        BattleSystem.instance.playerTotalDamage += 4;
+                    }
+                    break;
+
+                case "기본 대검":
+                    if (CardManager.instance.kingEmptyIndex == 5 && (CardManager.instance.redFlagEmptyIndex + CardManager.instance.blueFlagEmptyIndex + CardManager.instance.normalFlagEmptyIndex) == 5)
+                    {
+                        BattleSystem.instance.playerTotalDamage += 5;
+                    }
+                    break;
+
+                case "기본 장검":
+                    if ((CardManager.instance.redFlagEmptyIndex + CardManager.instance.blueFlagEmptyIndex + CardManager.instance.normalFlagEmptyIndex) == 5 && CardManager.instance.animalEmptyIndex == 2)
+                    {
+                        BattleSystem.instance.playerTotalDamage += 5;
+                    }
+                    break;
+
+                case "기본 단검":
+                    if (CardManager.instance.soldierEmptyIndex >= 10)
+                    {
+                        BattleSystem.instance.playerTotalDamage += (CardManager.instance.soldierEmptyIndex / 5);
+                    }
+                    break;
+
+                case "기본 오브":
+                    if ((CardManager.instance.redFlagEmptyIndex + CardManager.instance.blueFlagEmptyIndex + CardManager.instance.normalFlagEmptyIndex) == 5 && CardManager.instance.soldierEmptyIndex >= 15)
+                    {
+                        BattleSystem.instance.playerTotalDamage += 8;
+                    }
+                    break;
+
+                case "기본 창":
+                    if ((CardManager.instance.redFlagEmptyIndex + CardManager.instance.blueFlagEmptyIndex + CardManager.instance.normalFlagEmptyIndex) >= 7 &&
+                        (CardManager.instance.redFlagEmptyIndex == 3 || CardManager.instance.blueFlagEmptyIndex == 3 || CardManager.instance.normalFlagEmptyIndex == 3))
+                    {
+                        BattleSystem.instance.playerTotalDamage += 5;
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+    }
+
+    public void OpponentArtifactDamage()
+    {
+        for (int i = 0; i < opponentArtifactList.Count; i++)
+        {
+            switch (opponentArtifactList[i])
+            {
+                case "기본 화염 지팡이":
+                    if (CardManager.instance.enemyRedFlagEmptyIndex == 3)
+                    {
+                        BattleSystem.instance.opponentTotalDamage += 4;
+                    }
+                    break;
+
+                case "기본 전기 지팡이":
+                    if (CardManager.instance.enemyNormalFlagEmptyIndex == 3)
+                    {
+                        BattleSystem.instance.opponentTotalDamage += 4;
+                    }
+                    break;
+
+                case "기본 얼음 지팡이":
+                    if (CardManager.instance.enemyBlueFlagEmptyIndex == 3)
+                    {
+                        BattleSystem.instance.opponentTotalDamage += 4;
+                    }
+                    break;
+
+                case "기본 대검":
+                    if (CardManager.instance.enemyKingEmptyIndex == 5 && (CardManager.instance.enemyRedFlagEmptyIndex + CardManager.instance.enemyBlueFlagEmptyIndex + CardManager.instance.enemyNormalFlagEmptyIndex) == 5)
+                    {
+                        BattleSystem.instance.opponentTotalDamage += 5;
+                    }
+                    break;
+
+                case "기본 장검":
+                    if ((CardManager.instance.enemyRedFlagEmptyIndex + CardManager.instance.enemyBlueFlagEmptyIndex + CardManager.instance.enemyNormalFlagEmptyIndex) == 5 && CardManager.instance.enemyAnimalEmptyIndex == 2)
+                    {
+                        BattleSystem.instance.opponentTotalDamage += 5;
+                    }
+                    break;
+
+                case "기본 단검":
+                    if (CardManager.instance.enemySoldierEmptyIndex >= 10)
+                    {
+                        BattleSystem.instance.opponentTotalDamage += (CardManager.instance.enemySoldierEmptyIndex / 5);
+                    }
+                    break;
+
+                case "기본 오브":
+                    if ((CardManager.instance.enemyRedFlagEmptyIndex + CardManager.instance.enemyBlueFlagEmptyIndex + CardManager.instance.enemyNormalFlagEmptyIndex) == 5 && CardManager.instance.enemySoldierEmptyIndex >= 15)
+                    {
+                        BattleSystem.instance.opponentTotalDamage += 8;
+                    }
+                    break;
+
+                case "기본 창":
+                    if ((CardManager.instance.enemyRedFlagEmptyIndex + CardManager.instance.enemyBlueFlagEmptyIndex + CardManager.instance.enemyNormalFlagEmptyIndex) >= 7 &&
+                        (CardManager.instance.enemyRedFlagEmptyIndex == 3 || CardManager.instance.enemyBlueFlagEmptyIndex == 3 || CardManager.instance.enemyNormalFlagEmptyIndex == 3))
+                    {
+                        BattleSystem.instance.opponentTotalDamage += 5;
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+        }
     }
 
     public void GameOver()
