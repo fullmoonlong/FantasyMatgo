@@ -348,7 +348,7 @@ public class GameManager : MonoBehaviour
             artifactMe[artifactNumMe].gameObject.SetActive(true);
             artifactNumMe++;
 
-            if (MyOpenNum == 0)
+            if (MyOpenNum == 0 || AllArtifact.Count == 0)
             {
                 ArtifactPanel.SetActive(false);
             }
@@ -361,7 +361,7 @@ public class GameManager : MonoBehaviour
             artifactOp[artifactNumOpponent].sprite = btn.GetComponent<Image>().sprite;
             artifactOp[artifactNumOpponent].gameObject.SetActive(true);
             artifactNumOpponent++;
-            if (OpOpenNum == 0)
+            if (OpOpenNum == 0 || AllArtifact.Count == 0)
             {
                 ArtifactPanel.SetActive(false);
             }
