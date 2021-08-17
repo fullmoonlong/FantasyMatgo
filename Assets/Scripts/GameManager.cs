@@ -105,8 +105,8 @@ public class GameManager : MonoBehaviour
         if (CardManager.instance.myHand.Count == 0 && CardManager.instance.opponentHand.Count == 0 && !AttackPanel.activeSelf && !ArtifactPanel.activeSelf && !isAttack)
         {
             MyArtifactDamage();
-            OpponentArtifactDamage();
-            EndPhaseCalc.instance.DamageCalculation();
+            Invoke("OpponentArtifactDamage",3f);
+            StartCoroutine(EndPhaseCalc.instance.MyDamageCalculation());
 
             //Invoke("Retry", 1f);
         }

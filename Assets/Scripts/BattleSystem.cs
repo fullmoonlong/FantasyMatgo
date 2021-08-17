@@ -92,6 +92,13 @@ public class BattleSystem : MonoBehaviour
         hud.SetHp(ui.currentHp);
     }
 
+    public void TotalDamaged(PlayerScript ui, BattleHUD hud, int damage)
+    {
+        ui.currentHp -= damage;
+
+        hud.SetHp(ui.currentHp);
+    }
+
     public void LightAttack(int mylight, int oplight)
     {
         int times = 1;
