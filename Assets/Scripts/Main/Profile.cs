@@ -24,12 +24,12 @@ public class Profile : MonoBehaviour
         //PlayerPrefs.DeleteAll();
         if(!PlayerPrefs.HasKey("HP"))
         {
-            PlayerPrefs.SetInt("HP", 1000);
+            PlayerPrefs.SetInt("HP", 10000);
         }
 
         if(!PlayerPrefs.HasKey("Coin"))
         {
-            PlayerPrefs.SetInt("Coin", 1000);
+            PlayerPrefs.SetInt("Coin", 10000);
         }
 
         if (!PlayerPrefs.HasKey("License"))
