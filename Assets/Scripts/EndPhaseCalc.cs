@@ -16,7 +16,6 @@ public class EndPhaseCalc : MonoBehaviour
     public void DamageCalculation()
     {
         Debug.Log("Calculation Start");
-
         PlayerPrefs.SetInt("HP", PlayerPrefs.GetInt(BattleSystem.instance.player.name + "Game_Hp") - BattleSystem.instance.playerTotalDamage);
         Debug.Log(BattleSystem.instance.playerTotalDamage);
         Debug.Log("PlayerSET");
