@@ -31,6 +31,8 @@ public class EndPhaseCalc : MonoBehaviour
             Debug.Log(BattleSystem.instance.opponentTotalDamage - (MatgoScore.instance.opponentGwangScore + MatgoScore.instance.opponentBlueFlagScore + MatgoScore.instance.opponentRedFlagScore + MatgoScore.instance.opponentNormalFlagScore + MatgoScore.instance.opponentAnimalScore));
             Debug.Log("정산 후 내 체력: " + PlayerPrefs.GetInt(BattleSystem.instance.player.name + "Game_Hp"));
 
+
+
             //opponent damage phase
             Debug.Log("정산 전 적 체력 : " + PlayerPrefs.GetInt(BattleSystem.instance.op.name + "Game_Hp"));
             PlayerPrefs.SetInt(BattleSystem.instance.op.name + "Game_Hp",
