@@ -50,16 +50,22 @@ public class BattleSystem : MonoBehaviour
     private void Start()
     {
         kingAttack = new bool[3];
-        flagAttack = new bool[3];
+        flagAttack = new bool[8];
         enemyKingAttack = new bool[3];
-        enemyFlagAttack = new bool[3];
+        enemyFlagAttack = new bool[8];
         animalAttack = new bool[1];
         enemyAnimalAttack = new bool[1];
         for (int i = 0; i < 3; i++)
         {
             kingAttack[i] = false;
-            flagAttack[i] = false;
+
             enemyKingAttack[i] = false;
+
+        }
+
+        for (int i = 0; i < 8; i++)
+        {
+            flagAttack[i] = false;
             enemyFlagAttack[i] = false;
         }
         animalAttack[0] = false;
@@ -82,15 +88,14 @@ public class BattleSystem : MonoBehaviour
     public void Damaged(PlayerScript ui, BattleHUD hud)
     {
         ui.currentHp -= damage;
-        //print(damage);
-        //PlayerPrefs.SetInt("Game_Hp", ui.currentHp);
+
         hud.SetHp(ui.currentHp);
     }
 
     public void LightAttack(int mylight, int oplight)
     {
         int times = 1;
-        //kingEmptyIndex
+
         switch (mylight)
         {
             case 3:
@@ -157,17 +162,11 @@ public class BattleSystem : MonoBehaviour
 
         print("damage : " + damage);
         damage *= times;
-
-        //Instantiate(lightObj, gameObject.transform.position, Quaternion.identity); // 애니메이션 
-
     }
 
     public void FlagAttack(int red, int blue, int brown)
     {
         damage = 0;
-
-        int result = red + blue + brown;
-
         if (red == 3)
         {
             damage += 3;
@@ -209,6 +208,12 @@ public class BattleSystem : MonoBehaviour
             //print("brown");
         }
 
+    }
+
+    public void ResultFlag(int result)
+    {
+        damage = 0;
+
         if (result == 6)
         {
             damage += 2;
@@ -237,7 +242,6 @@ public class BattleSystem : MonoBehaviour
             //print("result");
         }
 
-
         if (result > 7)
         {
             damage += 3;
@@ -258,51 +262,33 @@ public class BattleSystem : MonoBehaviour
         print(damage);
     }
 
-    public void GoDoRiAttack(int bird)
+    public void GoDoRiAttack()
     {
         damage = 0;
-        if (bird == 3)
+        damage = 5;
+        if (GameManager.instance.isMyTurn == true)
         {
-            damage = 5;
-            if (GameManager.instance.isMyTurn == true)
-            {
-                playerTotalDamage += 5;
-            }
-            else
-            {
-                opponentTotalDamage += 5;
-            }
+            playerTotalDamage += 5;
         }
-        print(damage);
+        else
+        {
+            opponentTotalDamage += 5;
+        }
+
     }
 
     public void SoldierAttack(int soldier)
     {
-        damage = 0;
         if (soldier >= 10)
         {
-            damage = 1;
             if (GameManager.instance.isMyTurn == true)
             {
-                playerTotalDamage += 1;
+                playerTotalDamage = (CardManager.instance.soldierEmptyIndex - 9);
             }
             else
             {
-                opponentTotalDamage += 1;
-            }
-            for (int i = 10; i < soldier; i++)
-            {
-                damage++;
-                if (GameManager.instance.isMyTurn == true)
-                {
-                    playerTotalDamage++;
-                }
-                else
-                {
-                    opponentTotalDamage++;
-                }
+                opponentTotalDamage = (CardManager.instance.enemySoldierEmptyIndex - 9);
             }
         }
-        print(damage);
     }
 }
