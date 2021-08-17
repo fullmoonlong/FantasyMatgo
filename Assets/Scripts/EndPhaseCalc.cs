@@ -13,14 +13,34 @@ public class EndPhaseCalc : MonoBehaviour
     }
     #endregion
 
+    public bool isPhaseOver = false;
+
     public void DamageCalculation()
     {
         Debug.Log("Calculation Start");
-        PlayerPrefs.SetInt("HP", PlayerPrefs.GetInt(BattleSystem.instance.player.name + "Game_Hp") - BattleSystem.instance.playerTotalDamage);
-        Debug.Log(BattleSystem.instance.playerTotalDamage);
-        Debug.Log("PlayerSET");
-        PlayerPrefs.SetInt("HP", PlayerPrefs.GetInt(BattleSystem.instance.op.name + "Game_Hp") - BattleSystem.instance.opponentTotalDamage);
-        Debug.Log(BattleSystem.instance.opponentTotalDamage);
-        Debug.Log("OP SET");
+        if (isPhaseOver == false)
+        {
+            // player damage phase
+            Debug.Log("정산 전 내 피: " + PlayerPrefs.GetInt(BattleSystem.instance.player.name + "Game_Hp"));
+            PlayerPrefs.SetInt(BattleSystem.instance.player.name + "Game_Hp",
+                PlayerPrefs.GetInt(BattleSystem.instance.player.name + "Game_Hp") - BattleSystem.instance.opponentTotalDamage);
+
+            BattleSystem.instance.player.GetComponent<BattleHUD>().SetHp(PlayerPrefs.GetInt(BattleSystem.instance.player.name + "Game_Hp"));
+
+            Debug.Log(BattleSystem.instance.opponentTotalDamage); // 내가 받을 데미지
+            Debug.Log("정산 후 내 피: " + PlayerPrefs.GetInt(BattleSystem.instance.player.name + "Game_Hp"));
+
+            //opponent damage phase
+            Debug.Log("정산 전 적 피 : " + PlayerPrefs.GetInt(BattleSystem.instance.op.name + "Game_Hp"));
+            PlayerPrefs.SetInt(BattleSystem.instance.op.name + "Game_Hp",
+                PlayerPrefs.GetInt(BattleSystem.instance.op.name + "Game_Hp") - BattleSystem.instance.playerTotalDamage);
+            
+            BattleSystem.instance.op.GetComponent<BattleHUD>().SetHp(PlayerPrefs.GetInt(BattleSystem.instance.op.name + "Game_Hp"));
+
+            Debug.Log(BattleSystem.instance.playerTotalDamage); // 상대가 받을 데미지
+            Debug.Log("정산 후 적 피 : " + PlayerPrefs.GetInt(BattleSystem.instance.op.name + "Game_Hp"));
+
+            isPhaseOver = true;
+        }
     }
 }

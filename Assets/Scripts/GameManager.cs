@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    public Text turnText; // ´©±¸ÀÇ ÅÏÀÎÁö Ç¥½ÃÇÏ´Â ÅØ½ºÆ®
+    public Text turnText; // ëˆ„êµ¬ì˜ í„´ì¸ì§€ í‘œì‹œí•˜ëŠ” í…ìŠ¤íŠ¸
     public Text myScoreText;
     public Text opScoreText;
     public Text gameOverText;
@@ -24,10 +24,10 @@ public class GameManager : MonoBehaviour
     public GameObject ArtifactPanel;
     public GameObject AttackPanel;
 
-    public int maxTurnCount; // ÇöÀç±îÁö ÁøÇàµÈ ÅÏ ¼ö
+    public int maxTurnCount; // í˜„ì¬ê¹Œì§€ ì§„í–‰ëœ í„´ ìˆ˜
     public int artifactNumMe;
     public int artifactNumOpponent;
-    public bool isMyTurn; // ÅÏÀ» ÆÇÁ¤ÇÏ´Â bool º¯¼ö
+    public bool isMyTurn; // í„´ì„ íŒì •í•˜ëŠ” bool ë³€ìˆ˜
     public bool isGameEnd = false;
     public bool oneTime;
     public bool first;
@@ -46,10 +46,6 @@ public class GameManager : MonoBehaviour
     public Image[] artifactMe;
     public Image[] artifactOp;
 
-    //public GameObject[] artifact;
-
-    List<Shop> CurArtifactList;
-
     int MyOpenNum;
     int OpOpenNum;
 
@@ -66,7 +62,7 @@ public class GameManager : MonoBehaviour
 
         isMyArtifact = new bool[3];
         isOpArtifact = new bool[3];
-        for (int i=0;i<isMyArtifact.Length;i++)
+        for (int i = 0; i < isMyArtifact.Length; i++)
         {
             isMyArtifact[i] = true;
             isOpArtifact[i] = true;
@@ -100,7 +96,6 @@ public class GameManager : MonoBehaviour
         ScoreTextSet();
         TurnTextSet();
 
-        //if(!isMyTurn)
         if (CardManager.instance.myHand.Count == 0 && CardManager.instance.opponentHand.Count == 0 && !AttackPanel.activeSelf && !ArtifactPanel.activeSelf && !isAttack)
         {
             EndPhaseCalc.instance.DamageCalculation();
@@ -110,7 +105,6 @@ public class GameManager : MonoBehaviour
 
         if (PlayerPrefs.GetInt(BattleSystem.instance.player.name + "Game_Hp") <= 0 || PlayerPrefs.GetInt(BattleSystem.instance.op.name + "Game_Hp") <= 0)
         {
-            //print("°ÔÀÓ ¿À¹ö");
             if (PlayerPrefs.GetInt(BattleSystem.instance.player.name + "Game_Hp") > 0)
             {
                 PlayerPrefs.SetInt("HP", PlayerPrefs.GetInt("HP") + PlayerPrefs.GetInt(BattleSystem.instance.player.name + "Game_Hp"));
@@ -128,7 +122,7 @@ public class GameManager : MonoBehaviour
             {
                 if (isMyTurn)
                 {
-                    ////print("µÎ¹øÂ°");
+                    //print("ë‘ë²ˆì§¸");
                     CardManager.instance.ResetPosition(CardManager.instance.myHand);
                     CardManager.instance.DrawCard(CardManager.instance.myHand, 1);
                     oneTime = false;
@@ -136,7 +130,7 @@ public class GameManager : MonoBehaviour
 
                 else
                 {
-                    ////print("µÎ¹øÂ°");
+                    //print("ë‘ë²ˆì§¸");
                     CardManager.instance.ResetPosition(CardManager.instance.opponentHand);
                     CardManager.instance.DrawCard(CardManager.instance.opponentHand, 1);
                     oneTime = false;
@@ -144,9 +138,7 @@ public class GameManager : MonoBehaviour
 
                 maxTurnCount -= 1;
             }
-
         }
-
     }
 
     public IEnumerator CompleteSetting()
@@ -171,7 +163,7 @@ public class GameManager : MonoBehaviour
             if (!isking[i] && king == i + 3)
             {
                 isAttack = true;
-                //print("±¤ °ø°İ");
+                //print("ê´‘ ê³µê²©");
                 BattleSystem.instance.LightAttack(king, opking);
                 StartCoroutine(AttackAction(who, ui, hud));
                 isking[i] = true;
@@ -196,18 +188,29 @@ public class GameManager : MonoBehaviour
             if (!isflag[i] && flag == 3)
             {
                 isAttack = true;
-                //print("ÇÃ·¡±× °ø°İ");
-                BattleSystem.instance.damage = 3;
+                //print("í”Œë˜ê·¸ ê³µê²©");
+                BattleSystem.instance.FlagAttack(red, blue, normal);
                 StartCoroutine(AttackAction(who, ui, hud));
                 isflag[i] = true;
             }
         }
 
+        int result = red + blue + normal;
+        for (int i = 0; i < 5; i++)
+        {
+            if (!isflag[i + 3] && result == i + 6)
+            {
+                isAttack = true;
+                BattleSystem.instance.ResultFlag(result);
+                StartCoroutine(AttackAction(who, ui, hud));
+                isflag[i + 3] = true;
+            }
+        }
         if (!isanimal[0] && animal == 3)
         {
             isAttack = true;
-            //print("µ¿¹° °ø°İ");
-            BattleSystem.instance.damage = 5;
+            //print("ë™ë¬¼ ê³µê²©");
+            BattleSystem.instance.GoDoRiAttack();
             StartCoroutine(AttackAction(who, ui, hud));
             isanimal[0] = true;
         }
@@ -233,12 +236,12 @@ public class GameManager : MonoBehaviour
         MatgoScore.instance.OpCardCountToScore();
         MatgoScore.instance.ScoreCalculate();
 
-        if(AllArtifact.Count > 0) // ¾ÆÆ¼ÆÑÆ®°¡ ÀÖÀ» ¶§
+        if (AllArtifact.Count > 0) // ì•„í‹°íŒ©íŠ¸ê°€ ìˆì„ ë•Œ
         {
             if (isPlayer)
             {
                 ArtifactPanel.transform.GetChild(1).GetComponent<Text>().text = "My Artifact";
-                print("³»ÅÏ");
+                print("ë‚´í„´");
                 if (MatgoScore.myScore >= 3)
                 {
                     if (isMyArtifact[0])
@@ -269,7 +272,7 @@ public class GameManager : MonoBehaviour
 
                     else
                     {
-                        //¸¸¾à ÀÌÀü Á¡¼öº¸´Ù ´õ Ä¿Á³´Ù¸é
+                        //ë§Œì•½ ì´ì „ ì ìˆ˜ë³´ë‹¤ ë” ì»¤ì¡Œë‹¤ë©´
                         MyOpenNum++;
                         ArtifactPanel.SetActive(true);
                     }
@@ -315,29 +318,23 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-       
+
     }
     public void ApplyMyArtifact(int num)
     {
 
         GameObject btn = EventSystem.current.currentSelectedGameObject;
 
-        for(int i=0;i<AllArtifact.Count;i++)
+        for (int i = 0; i < AllArtifact.Count; i++)
         {
-            print("¾ÆÆ¼ÆåÆ® ³Ñ : " + AllArtifact[i]);
+            print("ì•„í‹°í™íŠ¸ ë„˜ : " + AllArtifact[i]);
         }
         AllArtifact.RemoveAt(num);
 
         for (int i = 0; i < AllArtifact.Count; i++)
         {
-            print("º¯°æ ÈÄ : " + AllArtifact[i]);
+            print("ë³€ê²½ í›„ : " + AllArtifact[i]);
         }
-        //CurArtifactList[num].IsHaving = false; // ÀåÂøÀ» »©ÁÜ
-        //artifactMe[artifactNumMe].sprite = artifact[num].GetComponent<Image>().sprite;
-        //ArtifactPanel.transform.GetChild(0).GetChild(num)
-        //AllArtifact.RemoveAt(num);
-
-        //print(AllArtifact.Count);
 
         if (isMyTurn)
         {
@@ -371,7 +368,7 @@ public class GameManager : MonoBehaviour
         {
             AttackPanel.SetActive(true);
 
-            if(isMyTurn)
+            if (isMyTurn)
             {
                 StartCoroutine(FixedMade(CardManager.instance.kingEmptyIndex, CardManager.instance.enemyKingEmptyIndex, CardManager.instance.redFlagEmptyIndex, CardManager.instance.blueFlagEmptyIndex, CardManager.instance.normalFlagEmptyIndex,
                 CardManager.instance.animalEmptyIndex, BattleSystem.instance.kingAttack, BattleSystem.instance.flagAttack, BattleSystem.instance.animalAttack, BattleSystem.instance.op, BattleSystem.instance.opponentInfo, BattleSystem.instance.opHUD));
@@ -401,40 +398,39 @@ public class GameManager : MonoBehaviour
 
     public void ScoreTextSet()
     {
-        myScoreText.text = "1P (6½Ã) Á¡¼ö : " + MatgoScore.myScore.ToString();
-        opScoreText.text = "2P(12½Ã) Á¡¼ö : " + MatgoScore.opScore.ToString();
+        myScoreText.text = "1P ì ìˆ˜ : " + MatgoScore.myScore.ToString();
+        opScoreText.text = "2P ì ìˆ˜ : " + MatgoScore.opScore.ToString();
     }
 
     public void TurnTextSet()
     {
         if (isMyTurn == true)
         {
-            turnText.text = "1P ÅÏ (6½Ã)";
+            turnText.text = "1P í„´";
         }
         else
         {
-            turnText.text = "2P ÅÏ (12½Ã)";
+            turnText.text = "2P í„´";
         }
     }
 
-    public void ArrangeArtifact() // Àåºñ 6°³ ÀåÂø
+    public void ArrangeArtifact() // ì¥ë¹„ 6ê°œ ì¥ì°©
     {
-        //CurArtifactList = ShopManager.instance.AllShopList.FindAll(x => x.IsEq);
-        for(int i=0;i<3;i++)
+        for (int i = 0; i < 3; i++)
         {
             ArtifactPanel.transform.GetChild(0).GetChild(i).GetComponent<Image>().sprite = ShopManager.instance.AllShopSprite[PlayerPrefs.GetInt("Equip" + i)];
             AllArtifact.Add(PlayerPrefs.GetInt("Equip" + i));
         }
 
-        //ÀÏ´Ü »ó´ë ¿¹Á¦
-        for(int i=3;i<6;i++)
+        //ì¼ë‹¨ ìƒëŒ€ ì˜ˆì œ
+        for (int i = 3; i < 6; i++)
         {
             ArtifactPanel.transform.GetChild(0).GetChild(i).GetComponent<Image>().sprite = ShopManager.instance.AllShopSprite[i];
             AllArtifact.Add(i);
         }
 
     }
-   
+
     public void GameOver()
     {
         if (!gameOverPanel.activeSelf)
@@ -452,6 +448,7 @@ public class GameManager : MonoBehaviour
 
     public void Retry()
     {
+        EndPhaseCalc.instance.isPhaseOver = false;
         SceneManager.LoadScene("Game");
     }
 
