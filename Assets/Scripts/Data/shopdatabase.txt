@@ -1,26 +1,26 @@
-N2	기본 화염 지팡이	설명 나중에 적을 예정	30	FALSE	FALSE
-N2	기본 전기 지팡이	설명 나중에 적을 예정	30	FALSE	FALSE
-N2	기본 얼음 지팡이	설명 나중에 적을 예정	30	FALSE	FALSE
-N2	기본 대검	설명 나중에 적을 예정	30	FALSE	FALSE
-N2	기본 장검	설명 나중에 적을 예정	30	FALSE	FALSE
-N2	기본 단검	설명 나중에 적을 예정	30	FALSE	FALSE
-N2	기본 오브	설명 나중에 적을 예정	30	FALSE	FALSE
-N2	기본 창	설명 나중에 적을 예정	30	FALSE	FALSE
-N1	날카로운칼	설명 나중에 적을 예정	50	FALSE	FALSE
-N1	석궁	설명 나중에 적을 예정	50	FALSE	FALSE
-N1	마법봉	설명 나중에 적을 예정	50	FALSE	FALSE
-Magic	단단한 망치	설명 나중에 적을 예정	80	FALSE	FALSE
-Magic	단단한검	설명 나중에 적을 예정	80	FALSE	FALSE
-Magic	단단한표창	설명 나중에 적을 예정	80	FALSE	FALSE
-Magic	단단한도끼	설명 나중에 적을 예정	80	FALSE	FALSE
-Rare	철도끼	설명 나중에 적을 예정	100	FALSE	FALSE
-Rare	철망치	설명 나중에 적을 예정	100	FALSE	FALSE
-Rare	철표창	설명 나중에 적을 예정	100	FALSE	FALSE
-Unique	황금망치	설명 나중에 적을 예정	150	FALSE	FALSE
-Unique	황금표창	설명 나중에 적을 예정	150	FALSE	FALSE
-Unique	황금도끼	설명 나중에 적을 예정	150	FALSE	FALSE
-Unique	황금칼	설명 나중에 적을 예정	150	FALSE	FALSE
-Unique	황금석궁	설명 나중에 적을 예정	150	FALSE	FALSE
-Epic	다이아망치	설명 나중에 적을 예정	200	FALSE	FALSE
-Epic	다이아표창	설명 나중에 적을 예정	200	FALSE	FALSE
-Epic	다이아도끼	설명 나중에 적을 예정	200	FALSE	FALSE
+N2	기본 화염 지팡이	설명 나중에 적을 예정	30	FALSE
+N2	기본 전기 지팡이	설명 나중에 적을 예정	30	FALSE
+N2	기본 얼음 지팡이	설명 나중에 적을 예정	30	FALSE
+N2	기본 대검	설명 나중에 적을 예정	30	FALSE
+N2	기본 장검	설명 나중에 적을 예정	30	FALSE
+N2	기본 단검	설명 나중에 적을 예정	30	FALSE
+N2	기본 오브	설명 나중에 적을 예정	30	FALSE
+N2	기본 창	설명 나중에 적을 예정	30	FALSE
+N1	날카로운칼	설명 나중에 적을 예정	50	FALSE
+N1	석궁	설명 나중에 적을 예정	50	FALSE
+N1	마법봉	설명 나중에 적을 예정	50	FALSE
+Magic	단단한 망치	설명 나중에 적을 예정	80	FALSE
+Magic	단단한검	설명 나중에 적을 예정	80	FALSE
+Magic	단단한표창	설명 나중에 적을 예정	80	FALSE
+Magic	단단한도끼	설명 나중에 적을 예정	80	FALSE
+Rare	철도끼	설명 나중에 적을 예정	100	FALSE
+Rare	철망치	설명 나중에 적을 예정	100	FALSE
+Rare	철표창	설명 나중에 적을 예정	100	FALSE
+Unique	황금망치	설명 나중에 적을 예정	150	FALSE
+Unique	황금표창	설명 나중에 적을 예정	150	FALSE
+Unique	황금도끼	설명 나중에 적을 예정	150	FALSE
+Unique	황금칼	설명 나중에 적을 예정	150	FALSE
+Unique	황금석궁	설명 나중에 적을 예정	150	FALSE
+Epic	다이아망치	설명 나중에 적을 예정	200	FALSE
+Epic	다이아표창	설명 나중에 적을 예정	200	FALSE
+Epic	다이아도끼	설명 나중에 적을 예정	200	FALSE

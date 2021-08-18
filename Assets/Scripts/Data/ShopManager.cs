@@ -15,12 +15,12 @@ public class Serialization<T>
 [System.Serializable]
 public class Shop
 {
-    public Shop(string license, string name, string exp, string cost, bool ishaving, bool isequip)
+    public Shop(string license, string name, string exp, string cost, bool ishaving)
     {
-        License = license; Name = name; Exp = exp; Cost = cost; IsHaving = ishaving; IsEquip = isequip;
+        License = license; Name = name; Exp = exp; Cost = cost; IsHaving = ishaving;
     }
     public string License, Name, Exp, Cost;
-    public bool IsHaving, IsEquip;
+    public bool IsHaving;
 }
 public class ShopManager : MonoBehaviour
 {
@@ -70,7 +70,7 @@ public class ShopManager : MonoBehaviour
         {
             string[] cell = shopline[i].Split('\t');
 
-            AllShopList.Add(new Shop(cell[0], cell[1], cell[2], cell[3], cell[4] == "TRUE", cell[5] == "TRUE"));
+            AllShopList.Add(new Shop(cell[0], cell[1], cell[2], cell[3], cell[4] == "TRUE"));
         }
 
         Allfilepath = Application.persistentDataPath + "/AllShop.txt";
