@@ -50,7 +50,7 @@ public class EndPhaseCalc : MonoBehaviour
 
     public IEnumerator OpDamageCalculation()
     {
-        Debug.Log("정산 전 내 체력: " + PlayerPrefs.GetInt(BattleSystem.instance.op.name + "Game_Hp"));
+        Debug.Log("정산 전 상대 체력: " + PlayerPrefs.GetInt(BattleSystem.instance.op.name + "Game_Hp"));
         GameManager.instance.AttackPanel.SetActive(true);
         Sequence mysequence = DOTween.Sequence();
         BattleSystem.instance.attackImage.transform.position = BattleSystem.instance.player.transform.position;
@@ -62,7 +62,7 @@ public class EndPhaseCalc : MonoBehaviour
 
         
         yield return new WaitForSeconds(4f);
-        Debug.Log("정산 후 내 체력: " + PlayerPrefs.GetInt(BattleSystem.instance.op.name + "Game_Hp"));
+        Debug.Log("정산 후 상대 체력: " + PlayerPrefs.GetInt(BattleSystem.instance.op.name + "Game_Hp"));
 
         GameManager.instance.AttackPanel.SetActive(false);
         GameManager.instance.isAttack = false;

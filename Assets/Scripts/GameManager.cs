@@ -381,8 +381,7 @@ public class GameManager : MonoBehaviour
                 ArtifactPanel.SetActive(false);
             }
         }
-
-        //Debug.Log(ShopManager.instance.AllShopList[AllArtifact[num]].Name);
+        
 
         if (!ArtifactPanel.activeSelf)
         {
