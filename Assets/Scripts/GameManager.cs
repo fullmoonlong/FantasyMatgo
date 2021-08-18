@@ -131,7 +131,7 @@ public class GameManager : MonoBehaviour
                 if (isMyTurn)
                 {
                     //print("두번째");
-                    CardManager.instance.ResetPosition(CardManager.instance.myHand);
+                    CardManager.instance.CardInitialPosition(CardManager.instance.myHand);
                     CardManager.instance.DrawCard(CardManager.instance.myHand, 1);
                     oneTime = false;
                 }
@@ -139,7 +139,7 @@ public class GameManager : MonoBehaviour
                 else
                 {
                     //print("두번째");
-                    CardManager.instance.ResetPosition(CardManager.instance.opponentHand);
+                    CardManager.instance.CardInitialPosition(CardManager.instance.opponentHand);
                     CardManager.instance.DrawCard(CardManager.instance.opponentHand, 1);
                     oneTime = false;
                 }

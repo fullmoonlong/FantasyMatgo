@@ -270,14 +270,18 @@ public class CardManager : MonoBehaviour
         PrefabToCard(); // 프리팹 폴더에 존재하는 카드를 리스트에 담아 생성준비를 한다.
         CreateDeck(); // 플레이어가 준비한 카드 12장, 적이 준비한 카드 12장 을 더해 총 48장의 카드를 덱에 넣는다.
         ShuffleDeck(); //덱을 섞는다
+        
         DrawCard(myHand, 6); // 내손에 6장 씩 뽑는다.
+
         DrawCard(opponentHand, 6);  // 상대손에 6장 씩 뽑는다.
+       
         DrawCard(field, 8);
 
         //field.Add(GameObject.Find("48(Clone)"));
         //CardInitialPosition(field, field.Count - 1);
         //field.Add(GameObject.Find("49(Clone)"));
         //CardInitialPosition(field, field.Count - 1);
+        
         FieldSameCard();
         Invoke("FieldBonusCard", 0.5f);
        
@@ -551,19 +555,19 @@ public class CardManager : MonoBehaviour
         for (int i = 0; i < drawAmount; i++)
         {
             cardList.Add(cardDeck[i]);
-            CardInitialPosition(cardList, cardList.Count - 1);
             cardDeck.RemoveAt(i);
         }
-    }
 
+        CardInitialPosition(cardList);
+    }
     public void DrawBombCard(List<GameObject> cardList)
     {
         for (int i = 0; i < 2; i++)
         {
             cardList.Add(Instantiate(BombCard, parentDeck));
-            CardInitialPosition(cardList, cardList.Count - 1);
         }
 
+        CardInitialPosition(cardList);
     }
     public void FlipCard()
     {
@@ -581,57 +585,31 @@ public class CardManager : MonoBehaviour
         }
         cardDeck.RemoveAt(0);//카드 덱 삭제
     }
-
-    public void CardInitialPosition(List<GameObject> cardList, int index)
+    public void CardInitialPosition(List<GameObject> cardList)
     {
         if (cardList == myHand)
         {
-            //cardDeck[index].transform.position = myHandPosition[index];
-            //cardList[index].transform.position = Vector3.Lerp(cardList[index].transform.position, myHandPosition[index], 3f);
-            cardList[index].transform.DOMove(myHandPosition[index], 1f).SetEase(Ease.OutQuint);
-            //cardList[index].transform.SetParent(GameObject.Find("MyHand").transform);
+            cardList = cardList.OrderBy(x => GetCardTagNum(x)).ToList();
+            for (int i=0;i< cardList.Count;i++)
+            {
+                cardList[i].transform.DOMove(myHandPosition[i], 1f).SetEase(Ease.OutQuint);
+            }
         }
         else if (cardList == opponentHand)
         {
-            //cardDeck[index].transform.position = opponentHandPosition[index];
-            cardList[index].transform.DOMove(opponentHandPosition[index], 1f).SetEase(Ease.OutQuint);
-            //cardList[index].transform.SetParent(GameObject.Find("OpponentHand").transform);
+            cardList = cardList.OrderBy(x => GetCardTagNum(x)).ToList();
+            for (int i = 0; i < cardList.Count; i++)
+            {
+                cardList[i].transform.DOMove(opponentHandPosition[i], 1f).SetEase(Ease.OutQuint);
+            }
         }
         else if (cardList == field)
         {
-            cardList[index].transform.position = fieldPosition[index];
-            //cardDeck[index].transform.DOMove(fieldPosition[index], 0.7f).SetEase(Ease.OutQuint);
-            //cardList[index].transform.SetParent(GameObject.Find("Field").transform);
-        }
-
-    }
-
-    public void ResetPosition(List<GameObject> cardList)
-    {
-        if (cardList == myHand)
-        {
-            for (int i = 0; i < myHand.Count; i++)
+            for (int i = 0; i < cardList.Count; i++)
             {
-                myHand[i].transform.position = myHandPosition[i];
+                cardList[i].transform.position = fieldPosition[i];
             }
         }
-        else if (cardList == opponentHand)
-        {
-            for (int i = 0; i < opponentHand.Count; i++)
-            {
-                opponentHand[i].transform.position = opponentHandPosition[i];
-            }
-        }
-    }
-    public void SetPosition(List<GameObject> list, GameObject obj)
-    {
-        obj.transform.position =
-            new Vector3(list[list.Count].transform.position.x + 0.5f, list[list.Count].transform.position.y, list[list.Count].transform.position.z);
-    }
-
-    public void SetNextPosition(Vector3 position)
-    {
-        position = new Vector3(position.x + 0.5f, position.y, position.z);
     }
 
     public void EmptyIndexSort()
@@ -646,23 +624,23 @@ public class CardManager : MonoBehaviour
         {
             switch (clickedObject.GetComponent<CardClick>().type)
             {
-                case "광":
+                case "큐브":
                     destination = scoreKingPosition[kingEmptyIndex];
                     kingEmptyIndex++;
                     return destination;
-                case "새":
+                case "암흑 오브":
                     destination = scoreAnimalPosition[animalEmptyIndex];
                     animalEmptyIndex++;
                     return destination;
-                case "홍단":
+                case "붉은 크리스탈":
                     destination = scoreRedFlagPosition[redFlagEmptyIndex];
                     redFlagEmptyIndex++;
                     return destination;
-                case "청단":
+                case "파란 크리스탈":
                     destination = scoreBlueFlagPosition[blueFlagEmptyIndex];
                     blueFlagEmptyIndex++;
                     return destination;
-                case "초단":
+                case "초록 크리스탈":
                     destination = scoreNormalFlagPosition[normalFlagEmptyIndex];
                     normalFlagEmptyIndex++;
                     return destination;
@@ -677,23 +655,23 @@ public class CardManager : MonoBehaviour
         {
             switch (clickedObject.GetComponent<CardClick>().type)
             {
-                case "광":
+                case "큐브":
                     destination = scoreEnemyKingPosition[enemyKingEmptyIndex];
                     enemyKingEmptyIndex++;
                     return destination;
-                case "새":
+                case "암흑 오브":
                     destination = scoreEnemyAnimalPosition[enemyAnimalEmptyIndex];
                     enemyAnimalEmptyIndex++;
                     return destination;
-                case "홍단":
+                case "붉은 크리스탈":
                     destination = scoreEnemyRedFlagPosition[enemyRedFlagEmptyIndex];
                     enemyRedFlagEmptyIndex++;
                     return destination;
-                case "청단":
+                case "파란 크리스탈":
                     destination = scoreEnemyBlueFlagPosition[enemyBlueFlagEmptyIndex];
                     enemyBlueFlagEmptyIndex++;
                     return destination;
-                case "초단":
+                case "초록 크리스탈":
                     destination = scoreEnemyNormalFlagPosition[enemyNormalFlagEmptyIndex];
                     enemyNormalFlagEmptyIndex++;
                     return destination;
@@ -708,19 +686,4 @@ public class CardManager : MonoBehaviour
             return destination;
     }
 
-    public void ArrangeHand(List<GameObject> hand)
-    {
-        for (int i = 0; i < hand.Count; i++)
-        {
-            if (hand == myHand)
-            {
-                hand[i].transform.position = myHandPosition[i];
-            }
-
-            if (hand == opponentHand)
-            {
-                hand[i].transform.position = opponentHandPosition[i];
-            }
-        }
-    }
 }
