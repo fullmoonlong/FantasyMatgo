@@ -105,10 +105,10 @@ public class GameManager : MonoBehaviour
         if (CardManager.instance.myHand.Count == 0 && CardManager.instance.opponentHand.Count == 0 && !AttackPanel.activeSelf && !ArtifactPanel.activeSelf && !isAttack)
         {
             MyArtifactDamage();
-            Invoke("OpponentArtifactDamage",3f);
+            OpponentArtifactDamage();
             StartCoroutine(EndPhaseCalc.instance.MyDamageCalculation());
 
-            //Invoke("Retry", 1f);
+            
         }
 
         if (PlayerPrefs.GetInt(BattleSystem.instance.player.name + "Game_Hp") <= 0 || PlayerPrefs.GetInt(BattleSystem.instance.op.name + "Game_Hp") <= 0)
@@ -334,15 +334,18 @@ public class GameManager : MonoBehaviour
 
         GameObject btn = EventSystem.current.currentSelectedGameObject;
 
+        print(AllArtifact.Count);
         for (int i = 0; i < AllArtifact.Count; i++)
         {
             print("아티펙트 넘 : " + AllArtifact[i]);
         }
 
+       
         for (int i = 0; i < AllArtifact.Count; i++)
         {
             print("변경 후 : " + AllArtifact[i]);
         }
+        
 
         if (isMyTurn)
         {
@@ -353,6 +356,8 @@ public class GameManager : MonoBehaviour
             artifactMe[artifactNumMe].sprite = btn.GetComponent<Image>().sprite;
             artifactMe[artifactNumMe].gameObject.SetActive(true);
             artifactNumMe++;
+
+            AllArtifact.RemoveAt(num);
 
             if (MyOpenNum == 0 || AllArtifact.Count == 0)
             {
@@ -368,14 +373,16 @@ public class GameManager : MonoBehaviour
             artifactOp[artifactNumOpponent].sprite = btn.GetComponent<Image>().sprite;
             artifactOp[artifactNumOpponent].gameObject.SetActive(true);
             artifactNumOpponent++;
+
+            AllArtifact.RemoveAt(num);
+
             if (OpOpenNum == 0 || AllArtifact.Count == 0)
             {
                 ArtifactPanel.SetActive(false);
             }
         }
 
-        Debug.Log(ShopManager.instance.AllShopList[AllArtifact[num]].Name);
-        AllArtifact.RemoveAt(num);
+        //Debug.Log(ShopManager.instance.AllShopList[AllArtifact[num]].Name);
 
         if (!ArtifactPanel.activeSelf)
         {
@@ -597,8 +604,9 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("MainScene");
     }
 
-    public void Retry()
+    public IEnumerator Retry()
     {
+        yield return new WaitForSeconds(1f);
         EndPhaseCalc.instance.isPhaseOver = false;
         SceneManager.LoadScene("Game");
     }

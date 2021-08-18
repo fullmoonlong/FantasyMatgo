@@ -30,7 +30,6 @@ public class EndPhaseCalc : MonoBehaviour
             //Debug.Log(BattleSystem.instance.opponentTotalDamage); // 내가 받을 데미지
             //Debug.Log(BattleSystem.instance.opponentTotalDamage - (MatgoScore.instance.opponentGwangScore + MatgoScore.instance.opponentBlueFlagScore + MatgoScore.instance.opponentRedFlagScore + MatgoScore.instance.opponentNormalFlagScore + MatgoScore.instance.opponentAnimalScore));
             
-
             GameManager.instance.AttackPanel.SetActive(true);
             Sequence mysequence = DOTween.Sequence();
             BattleSystem.instance.attackImage.transform.position = BattleSystem.instance.op.transform.position;
@@ -69,5 +68,6 @@ public class EndPhaseCalc : MonoBehaviour
         GameManager.instance.isAttack = false;
 
         isPhaseOver = true;
+        StartCoroutine(GameManager.instance.Retry());
     }
 }
