@@ -17,38 +17,38 @@ public class SceneChange : MonoBehaviour
             {
                 case 0:
                     Profile.instance.currentHp -= 1000;
-                    PlayerPrefs.SetInt("Player" + "Game_Hp", 1000);
-                    PlayerPrefs.SetInt("Op" + "Game_Hp", 1000);
+                    PlayerPrefs.SetInt("Player" + "Game_Hp", 100);
+                    PlayerPrefs.SetInt("Op" + "Game_Hp", 100);
                     break;
 
                 case 1:
                     Profile.instance.currentHp -= 1200;
-                    PlayerPrefs.SetInt("Player" + "Game_Hp", 1200);
-                    PlayerPrefs.SetInt("Op" + "Game_Hp", 1200);
+                    PlayerPrefs.SetInt("Player" + "Game_Hp", 120);
+                    PlayerPrefs.SetInt("Op" + "Game_Hp", 120);
                     break;
 
                 case 2:
                     Profile.instance.currentHp -= 1400;
-                    PlayerPrefs.SetInt("Player" + "Game_Hp", 1400);
-                    PlayerPrefs.SetInt("Op" + "Game_Hp", 1400);
+                    PlayerPrefs.SetInt("Player" + "Game_Hp", 140);
+                    PlayerPrefs.SetInt("Op" + "Game_Hp", 140);
                     break;
 
                 case 3:
                     Profile.instance.currentHp -= 1600;
-                    PlayerPrefs.SetInt("Player" + "Game_Hp", 1600);
-                    PlayerPrefs.SetInt("Op" + "Game_Hp", 1600);
+                    PlayerPrefs.SetInt("Player" + "Game_Hp", 160);
+                    PlayerPrefs.SetInt("Op" + "Game_Hp", 160);
                     break;
 
                 case 4:
                     Profile.instance.currentHp -= 1800;
-                    PlayerPrefs.SetInt("Player" + "Game_Hp", 1800);
-                    PlayerPrefs.SetInt("Op" + "Game_Hp", 1800);
+                    PlayerPrefs.SetInt("Player" + "Game_Hp", 180);
+                    PlayerPrefs.SetInt("Op" + "Game_Hp", 180);
                     break;
 
                 case 5:
                     Profile.instance.currentHp -= 2000;
-                    PlayerPrefs.SetInt("Player" + "Game_Hp", 2000);
-                    PlayerPrefs.SetInt("Op" + "Game_Hp", 2000);
+                    PlayerPrefs.SetInt("Player" + "Game_Hp", 200);
+                    PlayerPrefs.SetInt("Op" + "Game_Hp", 200);
                     break;
             }
 
