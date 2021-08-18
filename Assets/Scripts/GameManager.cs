@@ -171,7 +171,7 @@ public class GameManager : MonoBehaviour
             if (!isking[i] && king == i + 3)
             {
                 isAttack = true;
-                //print("광 공격");
+                //print("큐브 공격");
                 BattleSystem.instance.LightAttack(king, opking);
                 StartCoroutine(AttackAction(who, ui, hud));
                 isking[i] = true;

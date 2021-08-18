@@ -24,7 +24,7 @@ public class CardClick : MonoBehaviour
         {
             switch (item.GetComponent<CardClick>().type)
             {
-                case "광":
+                case "큐브":
                     if (scoreList == CardManager.instance.myHandScore)
                     {
                         CardManager.instance.gwangCount++;
@@ -34,7 +34,7 @@ public class CardClick : MonoBehaviour
                         CardManager.instance.enemyGwangCount++;
                     }
                     break;
-                case "홍단":
+                case "붉은 크리스탈":
                     if (scoreList == CardManager.instance.myHandScore)
                     {
                         CardManager.instance.redFlagCount++;
@@ -44,7 +44,7 @@ public class CardClick : MonoBehaviour
                         CardManager.instance.enemyRedFlagCount++;
                     }
                     break;
-                case "청단":
+                case "파란 크리스탈":
                     if (scoreList == CardManager.instance.myHandScore)
                     {
                         CardManager.instance.blueFlagCount++;
@@ -54,7 +54,7 @@ public class CardClick : MonoBehaviour
                         CardManager.instance.enemyBlueFlagCount++;
                     }
                     break;
-                case "초단":
+                case "초록 크리스탈":
                     if (scoreList == CardManager.instance.myHandScore)
                     {
                         CardManager.instance.normalFlagCount++;
@@ -64,7 +64,7 @@ public class CardClick : MonoBehaviour
                         CardManager.instance.enemyNormalFlagCount++;
                     }
                     break;
-                case "새":
+                case "암흑 오브":
                     if (scoreList == CardManager.instance.myHandScore)
                     {
                         CardManager.instance.animalCount++;
@@ -74,7 +74,7 @@ public class CardClick : MonoBehaviour
                         CardManager.instance.enemyAnimalCount++;
                     }
                     break;
-                case "피":
+                case "일반":
                     if (scoreList == CardManager.instance.myHandScore)
                     {
                         CardManager.instance.peeCount++;
@@ -182,37 +182,51 @@ public class CardClick : MonoBehaviour
     {
         switch (name)
         {
-            //광	
+            //큐브	
             case "0(Clone)":
             case "8(Clone)":
             case "28(Clone)":
             case "40(Clone)":
             case "44(Clone)":
-                type = "광";
+                type = "큐브";
                 break;
+
             case "1(Clone)":
             case "5(Clone)":
             case "9(Clone)":
-                type = "홍단";
+                type = "붉은 크리스탈";
                 break;
+
             case "21(Clone)":
             case "33(Clone)":
             case "37(Clone)":
-                type = "청단";
+                type = "파란 크리스탈";
                 break;
+
             case "13(Clone)":
             case "17(Clone)":
             case "25(Clone)":
             case "46(Clone)":
-                type = "초단";
+                type = "초록 크리스탈";
                 break;
+
             case "4(Clone)":
             case "12(Clone)":
             case "29(Clone)":
-                type = "새";
+                type = "암흑 오브";
                 break;
+
+            case "15(Clone)":
+            case "19(Clone)":
+            case "23(Clone)":
+            case "31(Clone)":
+            case "35(Clone)":
+            case "45(Clone)":
+                type = "파란 오브";
+                break;
+
             default:
-                type = "피";
+                type = "일반";
                 break;
         }
     }
@@ -496,7 +510,7 @@ public class CardClick : MonoBehaviour
 
             EmptyFieldPosition(CardManager.instance.field[CardManager.instance.field.Count - 1]); // 빈공간 만들어줌
 
-            MoveFieldScoreField(CardManager.instance.field[CardManager.instance.field.Count - 1], handscore); // 피로 옮김
+            MoveFieldScoreField(CardManager.instance.field[CardManager.instance.field.Count - 1], handscore); // 일반로 옮김
 
             CardManager.instance.FlipCard();
             //GameManager.instance.isBonus = true;

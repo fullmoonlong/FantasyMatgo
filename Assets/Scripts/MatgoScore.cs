@@ -71,37 +71,37 @@ public class MatgoScore : MonoBehaviour
         {
             CardManager.instance.isGwang3 = false;
             myGwangScore = 3;
-            //Debug.Log("광3개");
+            //Debug.Log("큐브3개");
         }
         if (CardManager.instance.kingEmptyIndex == 4 && CardManager.instance.isGwang4)
         {
             CardManager.instance.isGwang4 = false;
             myGwangScore = 4;
-            //Debug.Log("광4개");
+            //Debug.Log("큐브4개");
         }
         if (CardManager.instance.kingEmptyIndex == 5 && CardManager.instance.isGwang5)
         {
             CardManager.instance.isGwang5 = false;
             myGwangScore = 15;
-            //Debug.Log("광5개");
+            //Debug.Log("큐브5개");
         }
         if (CardManager.instance.redFlagEmptyIndex == 3 && CardManager.instance.isRedFlag)
         {
             CardManager.instance.isRedFlag = false;
             myRedFlagScore = 3;
-            ////print("홍단");
+            ////print("붉은 크리스탈");
         }
         if (CardManager.instance.blueFlagEmptyIndex == 3 && CardManager.instance.isBlueFlag)
         {
             CardManager.instance.isBlueFlag = false;
             myBlueFlagScore = 3;
-            ////print("청단");
+            ////print("파란 크리스탈");
         }
         if (CardManager.instance.normalFlagEmptyIndex == 3 && CardManager.instance.isNormalFlag)
         {
             CardManager.instance.isNormalFlag = false;
             myNormalFlagScore = 3;
-            //Debug.Log("초단");
+            //Debug.Log("초록 크리스탈");
         }
         if (CardManager.instance.soldierEmptyIndex >= 10)
         {
@@ -125,37 +125,37 @@ public class MatgoScore : MonoBehaviour
         {
             CardManager.instance.isOpGwang3 = false;
             opponentGwangScore = 3;
-            //Debug.Log("광3개");
+            //Debug.Log("큐브3개");
         }
         if (CardManager.instance.enemyKingEmptyIndex == 4 && CardManager.instance.isOpGwang4)
         {
             CardManager.instance.isOpGwang4 = false;
             opponentGwangScore = 4;
-            //Debug.Log("광4개");
+            //Debug.Log("큐브4개");
         }
         if (CardManager.instance.enemyKingEmptyIndex == 5 && CardManager.instance.isOpGwang5)
         {
             CardManager.instance.isOpGwang5 = false;
             opponentGwangScore = 15;
-            //Debug.Log("광5개");
+            //Debug.Log("큐브5개");
         }
         if (CardManager.instance.enemyRedFlagEmptyIndex == 3 && CardManager.instance.isOpRedFlag)
         {
             CardManager.instance.isOpRedFlag = false;
             opponentRedFlagScore = 3;
-            ////print("홍단");
+            ////print("붉은 크리스탈");
         }
         if (CardManager.instance.enemyBlueFlagEmptyIndex == 3 && CardManager.instance.isOpBlueFlag)
         {
             CardManager.instance.isOpBlueFlag = false;
             opponentBlueFlagScore = 3;
-            ////print("청단");
+            ////print("파란 크리스탈");
         }
         if (CardManager.instance.enemyNormalFlagEmptyIndex == 3 && CardManager.instance.isOpNormalFlag)
         {
             CardManager.instance.isOpNormalFlag = false;
             opponentNormalFlagScore = 3;
-            //Debug.Log("초단");
+            //Debug.Log("초록 크리스탈");
         }
         if (CardManager.instance.enemySoldierEmptyIndex >= 10)
         {
