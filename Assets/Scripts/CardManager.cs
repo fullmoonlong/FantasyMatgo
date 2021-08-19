@@ -68,6 +68,7 @@ public class CardManager : MonoBehaviour
 
     public GameObject BombCard;
 
+    bool isSame;
     #region SCORE
     // my
     [HideInInspector] public int gwangCount;
@@ -142,6 +143,7 @@ public class CardManager : MonoBehaviour
 
         myCardCount = 0;
 
+        isSame = false;
         //PlayerPrefs.DeleteAll();
     }
 
@@ -274,17 +276,14 @@ public class CardManager : MonoBehaviour
         DrawCard(myHand, 6); // 내손에 6장 씩 뽑는다.
 
         DrawCard(opponentHand, 6);  // 상대손에 6장 씩 뽑는다.
-       
+
         DrawCard(field, 8);
 
-        //field.Add(GameObject.Find("48(Clone)"));
-        //CardInitialPosition(field, field.Count - 1);
-        //field.Add(GameObject.Find("49(Clone)"));
-        //CardInitialPosition(field, field.Count - 1);
-        
         FieldSameCard();
+        CheckSameCard(myHand);
+        CheckSameCard(opponentHand);
         Invoke("FieldBonusCard", 0.5f);
-       
+        
     }
 
     private void Update()
@@ -419,7 +418,6 @@ public class CardManager : MonoBehaviour
             
             case 1:
                 {
-                    //print(index[0]);
                     CardClick.instance.EmptyFieldPosition(field[index[0]]);
                     mysequence.Append(field[index[0]].transform.DOMove(scoreSoldierPosition[soldierEmptyIndex], 0.5f).SetEase(Ease.OutQuint));
                     soldierEmptyIndex++;
@@ -544,7 +542,30 @@ public class CardManager : MonoBehaviour
             cardPrefabs.Add(Resources.Load<GameObject>("Prefabs/" + i));
         }
     }
+    public void CheckSameCard(List<GameObject> cardList)
+    {
+        for (int i = 0; i < cardList.Count; i++) 
+        {
+            for (int j = 0; j < field.Count; j++) 
+            {
+                if(cardList[i].tag == field[j].tag)
+                {
+                    isSame = true;
+                }
+            }
+            if(GetCardTagNum (cardList[i]) !=13)
+            {
+                cardList[i].transform.GetChild(0).gameObject.SetActive(isSame);
+                isSame = false;
+            }
+           
+        }
+    }
 
+    public void DeleteOutline(GameObject obj)
+    {
+        obj.transform.GetChild(0).gameObject.SetActive(false);
+    }
     public void DrawCard(List<GameObject> cardList, int drawAmount)
     {
         if (drawAmount > cardDeck.Count)
@@ -559,6 +580,7 @@ public class CardManager : MonoBehaviour
         }
 
         CardInitialPosition(cardList);
+        
     }
     public void DrawBombCard(List<GameObject> cardList)
     {
@@ -594,6 +616,7 @@ public class CardManager : MonoBehaviour
             {
                 cardList[i].transform.DOMove(myHandPosition[i], 1f).SetEase(Ease.OutQuint);
             }
+            CheckSameCard(cardList);
         }
         else if (cardList == opponentHand)
         {
@@ -602,6 +625,7 @@ public class CardManager : MonoBehaviour
             {
                 cardList[i].transform.DOMove(opponentHandPosition[i], 1f).SetEase(Ease.OutQuint);
             }
+            CheckSameCard(cardList);
         }
         else if (cardList == field)
         {

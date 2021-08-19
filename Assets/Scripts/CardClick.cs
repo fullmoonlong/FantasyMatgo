@@ -136,6 +136,7 @@ public class CardClick : MonoBehaviour
                     {
                         print("실행안됨");
                     }
+                  
                 }
                 #endregion
 
@@ -170,6 +171,7 @@ public class CardClick : MonoBehaviour
                     {
                         print("실행안됨");
                     }
+                 
                 }
                 #endregion
 
@@ -707,6 +709,11 @@ public class CardClick : MonoBehaviour
 
     public void MoveFieldScoreField(GameObject moveObj, List<GameObject> score)
     {
+        if(CardManager.instance.GetCardTagNum(moveObj) != 13)
+        {
+            CardManager.instance.DeleteOutline(moveObj);
+        }
+        
         GameManager.instance.isMoving = true;
         moveObj.transform.DOMove(CardManager.instance.ScoreField(moveObj, score), 0.5f).SetEase(Ease.OutQuint); // 점수판 위치 이동
         StartCoroutine(GameManager.instance.CompleteMoving());
@@ -723,6 +730,7 @@ public class CardClick : MonoBehaviour
     {
         for (int i = 0; i < bombObj.Length; i++)
         {
+            CardManager.instance.DeleteOutline(bombObj[i]);
             GameManager.instance.isMoving = true;
             bombObj[i].transform.DOMove(CardManager.instance.ScoreField(bombObj[i], score), 0.5f).SetEase(Ease.OutQuint); // 점수 필드로 위치 옮김
             StartCoroutine(GameManager.instance.CompleteMoving());
@@ -735,6 +743,11 @@ public class CardClick : MonoBehaviour
         }
 
         //card.transform.position = CardManager.instance.ScoreField(card, score);
+        if (CardManager.instance.GetCardTagNum(card) != 13)
+        {
+            CardManager.instance.DeleteOutline(card);
+        }
+
         GameManager.instance.isMoving = true;
         card.transform.DOMove(CardManager.instance.ScoreField(card, score), 0.5f).SetEase(Ease.OutQuint);
         StartCoroutine(GameManager.instance.CompleteMoving());
