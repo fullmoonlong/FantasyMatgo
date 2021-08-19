@@ -628,22 +628,32 @@ public class CardManager : MonoBehaviour
                     destination = scoreKingPosition[kingEmptyIndex];
                     kingEmptyIndex++;
                     return destination;
+
                 case "암흑 오브":
                     destination = scoreAnimalPosition[animalEmptyIndex];
                     animalEmptyIndex++;
                     return destination;
+
+                case "파란 오브":
+                    destination = scoreAnimalPosition[animalEmptyIndex];
+                    animalEmptyIndex++;
+                    return destination;
+
                 case "붉은 크리스탈":
                     destination = scoreRedFlagPosition[redFlagEmptyIndex];
                     redFlagEmptyIndex++;
                     return destination;
+
                 case "파란 크리스탈":
                     destination = scoreBlueFlagPosition[blueFlagEmptyIndex];
                     blueFlagEmptyIndex++;
                     return destination;
+
                 case "초록 크리스탈":
                     destination = scoreNormalFlagPosition[normalFlagEmptyIndex];
                     normalFlagEmptyIndex++;
                     return destination;
+
                 default:
                     destination = scoreSoldierPosition[soldierEmptyIndex];
                     soldierEmptyIndex++;
@@ -659,22 +669,32 @@ public class CardManager : MonoBehaviour
                     destination = scoreEnemyKingPosition[enemyKingEmptyIndex];
                     enemyKingEmptyIndex++;
                     return destination;
+
                 case "암흑 오브":
                     destination = scoreEnemyAnimalPosition[enemyAnimalEmptyIndex];
                     enemyAnimalEmptyIndex++;
                     return destination;
+
+                case "파란 오브":
+                    destination = scoreEnemyAnimalPosition[enemyAnimalEmptyIndex];
+                    enemyAnimalEmptyIndex++;
+                    return destination;
+
                 case "붉은 크리스탈":
                     destination = scoreEnemyRedFlagPosition[enemyRedFlagEmptyIndex];
                     enemyRedFlagEmptyIndex++;
                     return destination;
+
                 case "파란 크리스탈":
                     destination = scoreEnemyBlueFlagPosition[enemyBlueFlagEmptyIndex];
                     enemyBlueFlagEmptyIndex++;
                     return destination;
+
                 case "초록 크리스탈":
                     destination = scoreEnemyNormalFlagPosition[enemyNormalFlagEmptyIndex];
                     enemyNormalFlagEmptyIndex++;
                     return destination;
+
                 default:
                     destination = scoreEnemySoldierPosition[enemySoldierEmptyIndex];
                     enemySoldierEmptyIndex++;

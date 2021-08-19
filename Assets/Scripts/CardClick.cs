@@ -219,8 +219,8 @@ public class CardClick : MonoBehaviour
             case "15(Clone)":
             case "19(Clone)":
             case "23(Clone)":
-            case "31(Clone)":
-            case "35(Clone)":
+            case "32(Clone)":
+            case "36(Clone)":
             case "45(Clone)":
                 type = "파란 오브";
                 break;
