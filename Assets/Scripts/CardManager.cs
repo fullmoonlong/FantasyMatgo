@@ -542,6 +542,27 @@ public class CardManager : MonoBehaviour
             cardPrefabs.Add(Resources.Load<GameObject>("Prefabs/" + i));
         }
     }
+
+    public bool ScoreSameTag(GameObject obj)
+    {
+        for(int i=0;i<myHandScore.Count;i++)
+        {
+            if(myHandScore[i].tag == obj.tag)
+            {
+                return true;
+            }
+        }
+
+        for (int i = 0; i < opponentHandScore.Count; i++)
+        {
+            if (opponentHandScore[i].tag == obj.tag)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
     public void CheckSameCard(List<GameObject> cardList)
     {
         for (int i = 0; i < cardList.Count; i++) 
@@ -556,6 +577,31 @@ public class CardManager : MonoBehaviour
             if(GetCardTagNum (cardList[i]) !=13)
             {
                 cardList[i].transform.GetChild(0).gameObject.SetActive(isSame);
+                if(isSame)
+                {
+                    if (cardList == myHand)
+                    {
+                        if(ScoreSameTag(cardList[i]))
+                        {
+                            cardList[i].transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.black;
+                        }
+                        else
+                        {
+                            cardList[i].transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.white;
+                        }
+                    }
+                    if (cardList == opponentHand)
+                    {
+                        if (ScoreSameTag(cardList[i]))
+                        {
+                            cardList[i].transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.black;
+                        }
+                        else
+                        {
+                            cardList[i].transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.white;
+                        }
+                    }
+                }
                 isSame = false;
             }
            
