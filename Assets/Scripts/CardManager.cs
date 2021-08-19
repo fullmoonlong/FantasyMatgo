@@ -29,8 +29,10 @@ public class CardManager : MonoBehaviour
     public Vector3[] fieldPosition; // 카드를 내려놓을 필드 위치
     public Vector3[] scoreKingPosition; // 5개
     public Vector3[] scoreEnemyKingPosition; // 5개
-    public Vector3[] scoreAnimalPosition; // 9개 멍따
-    public Vector3[] scoreEnemyAnimalPosition; // 9개 멍따
+    public Vector3[] scoreAnimalPosition; // 3개 고도리
+    public Vector3[] scoreThingPosition; // 6개 뮬건
+    public Vector3[] scoreEnemyAnimalPosition; // 3개 암흑오브
+    public Vector3[] scoreEnemyThingPosition; // 6개 파란오브
     public Vector3[] scoreRedFlagPosition;
     public Vector3[] scoreBlueFlagPosition;
     public Vector3[] scoreNormalFlagPosition;
@@ -54,6 +56,8 @@ public class CardManager : MonoBehaviour
     public int enemyNormalFlagEmptyIndex;
     public int soldierEmptyIndex;
     public int enemySoldierEmptyIndex;
+    public int thingEmptyIndex;
+    public int enemyThingEmptyIndex;
 
     public bool isFlip;
 
@@ -123,7 +127,9 @@ public class CardManager : MonoBehaviour
         kingEmptyIndex = 0;
         enemyKingEmptyIndex = 0;
         animalEmptyIndex = 0;
+        thingEmptyIndex = 0;
         enemyAnimalEmptyIndex = 0;
+        enemyThingEmptyIndex = 0;
         redFlagEmptyIndex = 0;
         blueFlagEmptyIndex = 0;
         normalFlagEmptyIndex = 0;
@@ -177,86 +183,92 @@ public class CardManager : MonoBehaviour
         scoreKingPosition = new[]
         {
             new Vector3(-8f, -3f, 0f),
-            new Vector3(-7.7f, -3f, -0.1f),
-            new Vector3(-7.4f, -3f, -0.2f),
-            new Vector3(-7.1f, -3f, -0.3f),
-            new Vector3(-6.8f, -3f, -0.4f),
+            new Vector3(-7.7f, -3f, 0.1f),
+            new Vector3(-7.4f, -3f, 0.2f),
+            new Vector3(-7.1f, -3f, 0.3f),
+            new Vector3(-6.8f, -3f, 0.4f),
         };
         scoreEnemyKingPosition = new[]
         {
             new Vector3(-8f, 3f, 0f),
-            new Vector3(-7.7f, 3f, -0.1f),
-            new Vector3(-7.4f, 3f, -0.2f),
-            new Vector3(-7.1f, 3f, -0.3f),
-            new Vector3(-6.8f, 3f, -0.4f),
+            new Vector3(-7.7f, 3f, 0.1f),
+            new Vector3(-7.4f, 3f, 0.2f),
+            new Vector3(-7.1f, 3f, 0.3f),
+            new Vector3(-6.8f, 3f, 0.4f),
         };
         //
         scoreAnimalPosition = new[]
         {
             new Vector3(-5.9f, -3f, 0f),
-            new Vector3(-5.6f, -3f, -0.1f),
-            new Vector3(-5.3f, -3f, -0.2f),
-            new Vector3(-5.0f, -3f, -0.3f),
-            new Vector3(-4.7f, -3f, -0.4f),
-            new Vector3(-4.4f, -3f, -0.5f),
-            new Vector3(-4.1f, -3f, -0.6f),
-            new Vector3(-3.8f, -3f, -0.7f),
-            new Vector3(-3.5f, -3f, -0.8f)
+            new Vector3(-5.6f, -3f, 0.1f),
+            new Vector3(-5.3f, -3f, 0.2f),
+        };
+        scoreThingPosition = new[]
+        {
+            new Vector3(-5.0f, -3f, 0.3f),
+            new Vector3(-4.7f, -3f, 0.4f),
+            new Vector3(-4.4f, -3f, 0.5f),
+            new Vector3(-4.1f, -3f, 0.6f),
+            new Vector3(-3.8f, -3f, 0.7f),
+            new Vector3(-3.5f, -3f, 0.8f)
         };
         scoreEnemyAnimalPosition = new[]
         {
             new Vector3(-5.9f, 3f, 0f),
-            new Vector3(-5.6f, 3f, -0.1f),
-            new Vector3(-5.3f, 3f, -0.2f),
-            new Vector3(-5.0f, 3f, -0.3f),
-            new Vector3(-4.7f, 3f, -0.4f),
-            new Vector3(-4.4f, 3f, -0.5f),
-            new Vector3(-4.1f, 3f, -0.6f),
-            new Vector3(-3.8f, 3f, -0.7f),
-            new Vector3(-3.5f, 3f, -0.8f)
+            new Vector3(-5.6f, 3f, 0.1f),
+            new Vector3(-5.3f, 3f, 0.2f),
+        };
+        scoreEnemyThingPosition = new[]
+        {
+            new Vector3(-5.0f, 3f, 0.3f),
+            new Vector3(-4.7f, 3f, 0.4f),
+            new Vector3(-4.4f, 3f, 0.5f),
+            new Vector3(-4.1f, 3f, 0.6f),
+            new Vector3(-3.8f, 3f, 0.7f),
+            new Vector3(-3.5f, 3f, 0.8f)
         };
         //
         scoreRedFlagPosition = new[]
         {
             new Vector3(-2.6f, -3f, 0f),
-            new Vector3(-2.3f, -3f, -0.1f),
-            new Vector3(-2.0f, -3f, -0.2f),
+            new Vector3(-2.3f, -3f, 0.1f),
+            new Vector3(-2.0f, -3f, 0.2f),
         };
         scoreBlueFlagPosition = new[]
         {
-            new Vector3(-1.1f, -3f, -0.3f),
-            new Vector3(-0.8f, -3f, -0.4f),
-            new Vector3(-0.5f, -3f, -0.5f),
+            new Vector3(-1.1f, -3f, 0.3f),
+            new Vector3(-0.8f, -3f, 0.4f),
+            new Vector3(-0.5f, -3f, 0.5f),
         };
 
         scoreNormalFlagPosition = new[]
         {
-            new Vector3(0.4f, -3f, -0.6f),
-            new Vector3(0.7f, -3f, -0.7f),
-            new Vector3(1.0f, -3f, -0.8f),
-            new Vector3(1.3f, -3f, -0.9f),
+            new Vector3(0.4f, -3f, 0.6f),
+            new Vector3(0.7f, -3f, 0.7f),
+            new Vector3(1.0f, -3f, 0.8f),
+            new Vector3(1.3f, -3f, 0.9f),
         };
 
         scoreEnemyRedFlagPosition = new[]
         {
             new Vector3(-2.6f, 3f, 0f),
-            new Vector3(-2.3f, 3f, -0.1f),
-            new Vector3(-2.0f, 3f, -0.2f),
+            new Vector3(-2.3f, 3f, 0.1f),
+            new Vector3(-2.0f, 3f, 0.2f),
         };
 
         scoreEnemyBlueFlagPosition = new[]
         {
-            new Vector3(-1.1f, 3f, -0.3f),
-            new Vector3(-0.8f, 3f, -0.4f),
-            new Vector3(-0.5f, 3f, -0.5f),
+            new Vector3(-1.1f, 3f, 0.3f),
+            new Vector3(-0.8f, 3f, 0.4f),
+            new Vector3(-0.5f, 3f, 0.5f),
         };
 
         scoreEnemyNormalFlagPosition = new[]
         {
-            new Vector3(0.4f, 3f, -0.6f),
-            new Vector3(0.7f, 3f, -0.7f),
-            new Vector3(1.0f, 3f, -0.8f),
-            new Vector3(1.3f, 3f, -0.9f),
+            new Vector3(0.4f, 3f, 0.6f),
+            new Vector3(0.7f, 3f, 0.7f),
+            new Vector3(1.0f, 3f, 0.8f),
+            new Vector3(1.3f, 3f, 0.9f),
         };
 
         //
@@ -272,7 +284,7 @@ public class CardManager : MonoBehaviour
         PrefabToCard(); // 프리팹 폴더에 존재하는 카드를 리스트에 담아 생성준비를 한다.
         CreateDeck(); // 플레이어가 준비한 카드 12장, 적이 준비한 카드 12장 을 더해 총 48장의 카드를 덱에 넣는다.
         ShuffleDeck(); //덱을 섞는다
-        
+
         DrawCard(myHand, 6); // 내손에 6장 씩 뽑는다.
 
         DrawCard(opponentHand, 6);  // 상대손에 6장 씩 뽑는다.
@@ -283,7 +295,7 @@ public class CardManager : MonoBehaviour
         CheckSameCard(myHand);
         CheckSameCard(opponentHand);
         Invoke("FieldBonusCard", 0.5f);
-        
+
     }
 
     private void Update()
@@ -389,7 +401,7 @@ public class CardManager : MonoBehaviour
             count = 0;
         }
         EmptyIndexSort();
-        for(int i=0;i<emptyIndex.Count;i++)
+        for (int i = 0; i < emptyIndex.Count; i++)
         {
             //print("index i : " + emptyIndex[i]);
         }
@@ -415,7 +427,7 @@ public class CardManager : MonoBehaviour
 
         switch (index.Count)
         {
-            
+
             case 1:
                 {
                     CardClick.instance.EmptyFieldPosition(field[index[0]]);
@@ -439,7 +451,7 @@ public class CardManager : MonoBehaviour
                             emptyIndex.Add(eIndex);
                             EmptyIndexSort();
                         }
-                        
+
                     }
 
                     for (int j = 0; j < emptyIndex.Count; j++)
@@ -449,7 +461,7 @@ public class CardManager : MonoBehaviour
 
                     break;
                 }
-         
+
             case 2:
                 {
                     CardClick.instance.EmptyFieldPosition(field[index[0]]);
@@ -460,8 +472,8 @@ public class CardManager : MonoBehaviour
                     soldierEmptyIndex++;
                     myHandScore.Add(field[index[0]]); // 점수에 더해주기 W
                     myHandScore.Add(field[index[1]]);
-                   
-                   
+
+
                     field.Remove(field[index[0]]); // 필드에서 지우기
                     field.Remove(field[index[1] - 1]);
 
@@ -545,9 +557,9 @@ public class CardManager : MonoBehaviour
 
     public bool ScoreSameTag(GameObject obj)
     {
-        for(int i=0;i<myHandScore.Count;i++)
+        for (int i = 0; i < myHandScore.Count; i++)
         {
-            if(myHandScore[i].tag == obj.tag)
+            if (myHandScore[i].tag == obj.tag)
             {
                 return true;
             }
@@ -565,23 +577,23 @@ public class CardManager : MonoBehaviour
     }
     public void CheckSameCard(List<GameObject> cardList)
     {
-        for (int i = 0; i < cardList.Count; i++) 
+        for (int i = 0; i < cardList.Count; i++)
         {
-            for (int j = 0; j < field.Count; j++) 
+            for (int j = 0; j < field.Count; j++)
             {
-                if(cardList[i].tag == field[j].tag)
+                if (cardList[i].tag == field[j].tag)
                 {
                     isSame = true;
                 }
             }
-            if(GetCardTagNum (cardList[i]) !=13)
+            if (GetCardTagNum(cardList[i]) != 13)
             {
                 cardList[i].transform.GetChild(0).gameObject.SetActive(isSame);
-                if(isSame)
+                if (isSame)
                 {
                     if (cardList == myHand)
                     {
-                        if(ScoreSameTag(cardList[i]))
+                        if (ScoreSameTag(cardList[i]))
                         {
                             cardList[i].transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.black;
                         }
@@ -604,7 +616,7 @@ public class CardManager : MonoBehaviour
                 }
                 isSame = false;
             }
-           
+
         }
     }
 
@@ -626,7 +638,7 @@ public class CardManager : MonoBehaviour
         }
 
         CardInitialPosition(cardList);
-        
+
     }
     public void DrawBombCard(List<GameObject> cardList)
     {
@@ -658,7 +670,7 @@ public class CardManager : MonoBehaviour
         if (cardList == myHand)
         {
             cardList = cardList.OrderBy(x => GetCardTagNum(x)).ToList();
-            for (int i=0;i< cardList.Count;i++)
+            for (int i = 0; i < cardList.Count; i++)
             {
                 cardList[i].transform.DOMove(myHandPosition[i], 1f).SetEase(Ease.OutQuint);
             }
@@ -707,8 +719,8 @@ public class CardManager : MonoBehaviour
                     return destination;
 
                 case "파란 오브":
-                    destination = scoreAnimalPosition[animalEmptyIndex];
-                    animalEmptyIndex++;
+                    destination = scoreThingPosition[thingEmptyIndex];
+                    thingEmptyIndex++;
                     return destination;
 
                 case "붉은 크리스탈":
@@ -748,8 +760,8 @@ public class CardManager : MonoBehaviour
                     return destination;
 
                 case "파란 오브":
-                    destination = scoreEnemyAnimalPosition[enemyAnimalEmptyIndex];
-                    enemyAnimalEmptyIndex++;
+                    destination = scoreEnemyThingPosition[enemyThingEmptyIndex];
+                    enemyThingEmptyIndex++;
                     return destination;
 
                 case "붉은 크리스탈":
