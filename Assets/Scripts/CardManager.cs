@@ -617,6 +617,7 @@ public class CardManager : MonoBehaviour
                 cardList[i].transform.DOMove(myHandPosition[i], 1f).SetEase(Ease.OutQuint);
             }
             CheckSameCard(cardList);
+            CheckSameCard(opponentHand);
         }
         else if (cardList == opponentHand)
         {
@@ -626,6 +627,7 @@ public class CardManager : MonoBehaviour
                 cardList[i].transform.DOMove(opponentHandPosition[i], 1f).SetEase(Ease.OutQuint);
             }
             CheckSameCard(cardList);
+            CheckSameCard(myHand);
         }
         else if (cardList == field)
         {

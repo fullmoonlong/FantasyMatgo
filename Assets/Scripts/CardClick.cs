@@ -111,8 +111,6 @@ public class CardClick : MonoBehaviour
                        
                         CalculateScore(CardManager.instance.myHandScore);
 
-
-
                         print(GameManager.instance.isShake + " + " + GameManager.instance.isChoice + " + " + GameManager.instance.isBonus);
                         if (!GameManager.instance.isShake && !GameManager.instance.isChoice && !GameManager.instance.isBonus)
                         {
@@ -160,7 +158,6 @@ public class CardClick : MonoBehaviour
                                 StartCoroutine(GameManager.instance.FixedMade(CardManager.instance.enemyKingEmptyIndex, CardManager.instance.kingEmptyIndex, CardManager.instance.enemyRedFlagEmptyIndex, CardManager.instance.enemyBlueFlagEmptyIndex, CardManager.instance.enemyNormalFlagEmptyIndex,
                                 CardManager.instance.enemyAnimalEmptyIndex, BattleSystem.instance.enemyKingAttack, BattleSystem.instance.enemyFlagAttack, BattleSystem.instance.enemyAnimalAttack, BattleSystem.instance.player, BattleSystem.instance.playerInfo, BattleSystem.instance.playerHUD));
                                 EndArrange(CardManager.instance.opponentHandScore, true);
-
                             }
 
                         }
@@ -364,6 +361,7 @@ public class CardClick : MonoBehaviour
                             //뻑
                             //print(clickObj.name);
                             SetNextPosition(clickObj, CardManager.instance.field[CardManager.instance.field.Count - 1]);
+                            CardManager.instance.DeleteOutline(clickObj);
                             //CardManager.instance.field[CardManager.instance.field.Count - 1].transform.position = new Vector3(gameObject.transform.position.x + 0.5f, gameObject.transform.position.y, gameObject.transform.position.z - 0.1f);//뒤집은 카드는 내가 냈던 카드 옆으로 위치 이동                                                                                                                                                                                        //    gameObject.transform.position.z - 0.1f), 0.5f).SetEase(Ease.OutQuint);//뒤집은 카드는 내가 냈던 카드 옆으로 위치 이동
                             print("뻑");
                             break;

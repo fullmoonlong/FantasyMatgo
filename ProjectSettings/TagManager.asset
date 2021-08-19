@@ -20,6 +20,7 @@ TagManager:
   - Bonus
   - MyArtifactPanel
   - OPArtifactPanel
+  - fire
   layers:
   - Default
   - TransparentFX

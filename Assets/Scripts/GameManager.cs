@@ -107,8 +107,6 @@ public class GameManager : MonoBehaviour
             MyArtifactDamage();
             OpponentArtifactDamage();
             StartCoroutine(EndPhaseCalc.instance.MyDamageCalculation());
-
-            
         }
 
         if (PlayerPrefs.GetInt(BattleSystem.instance.player.name + "Game_Hp") <= 0 || PlayerPrefs.GetInt(BattleSystem.instance.op.name + "Game_Hp") <= 0)
@@ -173,7 +171,6 @@ public class GameManager : MonoBehaviour
                 isAttack = true;
                 //print("광 공격");
                 BattleSystem.instance.LightAttack(king, opking);
-                StartCoroutine(AttackAction(who, ui, hud));
                 isking[i] = true;
             }
 
@@ -198,7 +195,6 @@ public class GameManager : MonoBehaviour
                 isAttack = true;
                 //print("플래그 공격");
                 BattleSystem.instance.FlagAttack(red, blue, normal);
-                StartCoroutine(AttackAction(who, ui, hud));
                 isflag[i] = true;
             }
         }
@@ -210,7 +206,6 @@ public class GameManager : MonoBehaviour
             {
                 isAttack = true;
                 BattleSystem.instance.ResultFlag(result);
-                StartCoroutine(AttackAction(who, ui, hud));
                 isflag[i + 3] = true;
             }
         }
@@ -219,21 +214,52 @@ public class GameManager : MonoBehaviour
             isAttack = true;
             //print("동물 공격");
             BattleSystem.instance.GoDoRiAttack();
-            StartCoroutine(AttackAction(who, ui, hud));
             isanimal[0] = true;
+        }
+
+        if(isAttack)
+        {
+            AttackMotion(who, ui, hud);
+        }
+    }
+    public void AttackMotion(GameObject who, PlayerScript ui, BattleHUD hud)
+    {
+        AttackPanel.SetActive(true);
+        Sequence attacksequence = DOTween.Sequence();
+        print(BattleSystem.instance.attackMotionImage.Count);
+        for(int i=0;i<BattleSystem.instance.attackMotionImage.Count;i++)
+        {
+            attacksequence.Append(BattleSystem.instance.attackMotionImage[i].transform.DOMove(who.transform.position, 1f))
+                .OnComplete(() => StartCoroutine(AttackAction(who, ui, hud)));
         }
     }
     public IEnumerator AttackAction(GameObject who, PlayerScript ui, BattleHUD hud)
     {
-        AttackPanel.SetActive(true);
+        //AttackPanel.SetActive(true);
+
+        GameObject[] fireObj = GameObject.FindGameObjectsWithTag("fire");
+
+        for (int i = 0; i < fireObj.Length; i++)
+        {
+            fireObj[i].SetActive(false);
+        }
+
         Sequence mysequence = DOTween.Sequence();
         BattleSystem.instance.attackImage.transform.position = who.transform.position;
-
+      
         mysequence.Append(BattleSystem.instance.attackImage.transform.DOScale(Vector3.one * 0.3f, 0.3f)
             .SetEase(Ease.InOutBack)).Join(who.transform.DOShakePosition(1f, 5f))
           .AppendInterval(1.2f).Append(BattleSystem.instance.attackImage.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InOutBack)).OnComplete(() => BattleSystem.instance.Damaged(ui, hud));
 
         yield return new WaitForSeconds(4f);
+        
+        for (int i = 0; i < BattleSystem.instance.attackMotionImage.Count; i++)
+        {
+            BattleSystem.instance.attackMotionImage.RemoveAt(i);
+        }
+
+        BattleSystem.instance.damage = 0;
+
         AttackPanel.SetActive(false);
         isAttack = false;
     }

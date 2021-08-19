@@ -16,7 +16,8 @@ public class BattleSystem : MonoBehaviour
     #endregion
 
     public GameObject attackImage;
-
+    public GameObject flyAttackImage;
+    public List<GameObject> attackMotionImage;
     public GameObject startPanel;
 
     public PlayerScript playerInfo;
@@ -107,52 +108,53 @@ public class BattleSystem : MonoBehaviour
         {
             case 3:
                 print("3점");
-                damage = 3;
-                if (isKingCacled == false)
+                damage += 3;
+               
+                print("3");
+                if (GameManager.instance.isMyTurn == false)
                 {
-                    if (GameManager.instance.isMyTurn == false)
-                    {
-                        playerTotalDamage += 3;
-                    }
-                    else
-                    {
-                        opponentTotalDamage += 3;
-                    }
-                    isKingCacled = true;
+                    playerTotalDamage += 3;
+                    attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreKingPosition[2], Quaternion.identity));
                 }
+                else
+                {
+                    opponentTotalDamage += 3;
+                    attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreEnemyKingPosition[2], Quaternion.identity));
+                }
+
                 break;
 
             case 4:
                 print("4점");
-                damage = 4;
-                if (isKingCacled == false)
+                damage += 4;
+                print("4");
+                if (GameManager.instance.isMyTurn == false)
                 {
-                    if (GameManager.instance.isMyTurn == false)
-                    {
-                        playerTotalDamage += 4;
-                    }
-                    else
-                    {
-                        opponentTotalDamage += 4;
-                    }
-                    isKingCacled = true;
+                    playerTotalDamage += 4;
+                    attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreKingPosition[2], Quaternion.identity));
                 }
+                else
+                {
+                    opponentTotalDamage += 4;
+                    attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreEnemyKingPosition[2], Quaternion.identity));
+                }
+
                 break;
 
             case 5:
                 print("5점");
-                damage = 5;
-                if (isKingCacled == false)
+                damage += 5;
+            
+                print("5");
+                if (GameManager.instance.isMyTurn == false)
                 {
-                    if (GameManager.instance.isMyTurn == false)
-                    {
-                        playerTotalDamage += 5;
-                    }
-                    else
-                    {
-                        opponentTotalDamage += 5;
-                    }
-                    isKingCacled = true;
+                    playerTotalDamage += 5;
+                    attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreKingPosition[2], Quaternion.identity));
+                }
+                else
+                {
+                    opponentTotalDamage += 5;
+                    attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreEnemyKingPosition[2], Quaternion.identity));
                 }
                 break;
 
@@ -170,30 +172,33 @@ public class BattleSystem : MonoBehaviour
 
     public void FlagAttack(int red, int blue, int brown)
     {
-        damage = 0;
         if (red == 3)
         {
             damage += 3;
-            if (GameManager.instance.isMyTurn == true)
+            if (GameManager.instance.isMyTurn == false)
             {
                 playerTotalDamage += 3;
+                attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreRedFlagPosition[1], Quaternion.identity));
             }
             else
             {
                 opponentTotalDamage += 3;
+                attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreEnemyRedFlagPosition[1], Quaternion.identity));
             }
             //print("red");
         }
         if (blue == 3)
         {
             damage += 3;
-            if (GameManager.instance.isMyTurn == true)
+            if (GameManager.instance.isMyTurn == false)
             {
                 playerTotalDamage += 3;
+                attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreBlueFlagPosition[1], Quaternion.identity));
             }
             else
             {
                 opponentTotalDamage += 3;
+                attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreEnemyBlueFlagPosition[1], Quaternion.identity));
             }
             //print("blue");
         }
@@ -201,13 +206,15 @@ public class BattleSystem : MonoBehaviour
         if (brown >= 3)
         {
             damage += 3;
-            if (GameManager.instance.isMyTurn == true)
+            if (GameManager.instance.isMyTurn == false)
             {
                 playerTotalDamage += 3;
+                attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreNormalFlagPosition[1], Quaternion.identity));
             }
             else
             {
                 opponentTotalDamage += 3;
+                attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreEnemyNormalFlagPosition[1], Quaternion.identity));
             }
             //print("brown");
         }
@@ -216,12 +223,10 @@ public class BattleSystem : MonoBehaviour
 
     public void ResultFlag(int result)
     {
-        damage = 0;
-
         if (result == 6)
         {
             damage += 2;
-            if (GameManager.instance.isMyTurn == true)
+            if (GameManager.instance.isMyTurn == false)
             {
                 playerTotalDamage += 2;
             }
@@ -235,7 +240,7 @@ public class BattleSystem : MonoBehaviour
         if (result == 7)
         {
             damage += 3;
-            if (GameManager.instance.isMyTurn == true)
+            if (GameManager.instance.isMyTurn == false)
             {
                 playerTotalDamage += 3;
             }
@@ -252,7 +257,7 @@ public class BattleSystem : MonoBehaviour
             for (int i = 7; i < result; i++)
             {
                 damage++;
-                if (GameManager.instance.isMyTurn == true)
+                if (GameManager.instance.isMyTurn == false)
                 {
                     playerTotalDamage++;
                 }
@@ -263,20 +268,32 @@ public class BattleSystem : MonoBehaviour
             }
         }
 
+
+        if(GameManager.instance.isMyTurn == false)
+        {
+            attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreBlueFlagPosition[1], Quaternion.identity));
+        }
+
+        if(GameManager.instance.isMyTurn)
+        {
+            attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreEnemyBlueFlagPosition[1], Quaternion.identity));
+        }
+
         print(damage);
     }
 
     public void GoDoRiAttack()
     {
-        damage = 0;
-        damage = 5;
-        if (GameManager.instance.isMyTurn == true)
+        damage += 5;
+        if (GameManager.instance.isMyTurn == false)
         {
             playerTotalDamage += 5;
+            attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreAnimalPosition[4], Quaternion.identity));
         }
         else
         {
             opponentTotalDamage += 5;
+            attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreEnemyAnimalPosition[4], Quaternion.identity));
         }
 
     }
@@ -285,7 +302,7 @@ public class BattleSystem : MonoBehaviour
     {
         if (soldier >= 10)
         {
-            if (GameManager.instance.isMyTurn == true)
+            if (GameManager.instance.isMyTurn == false)
             {
                 playerTotalDamage = (CardManager.instance.soldierEmptyIndex - 9);
             }
@@ -294,5 +311,6 @@ public class BattleSystem : MonoBehaviour
                 opponentTotalDamage = (CardManager.instance.enemySoldierEmptyIndex - 9);
             }
         }
+
     }
 }
