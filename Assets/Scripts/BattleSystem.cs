@@ -70,12 +70,12 @@ public class BattleSystem : MonoBehaviour
             enemyFlagAttack[i] = false;
         }
 
-        for(int i=0;i<6;i++)
+        for (int i = 0; i < 6; i++)
         {
             animalAttack[i] = false;
             enemyAnimalAttack[i] = false;
         }
-      
+
         SettingBattle();
     }
 
@@ -98,9 +98,9 @@ public class BattleSystem : MonoBehaviour
         hud.SetHp(ui.currentHp);
     }
 
-    public void TotalDamaged(PlayerScript ui, BattleHUD hud, int damage)
+    public void TotalDamaged(PlayerScript ui, BattleHUD hud, int _damage)
     {
-        ui.currentHp -= damage;
+        ui.currentHp -= _damage;
 
         hud.SetHp(ui.currentHp);
     }
@@ -112,53 +112,53 @@ public class BattleSystem : MonoBehaviour
         switch (mylight)
         {
             case 3:
-                print("3점");
                 damage += 3;
-               
-                print("3");
+
                 if (GameManager.instance.isMyTurn == false)
                 {
                     playerTotalDamage += 3;
+                    Debug.Log("큐브 3뎀축적(플레이어)");
                     attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreKingPosition[2], Quaternion.identity));
                 }
                 else
                 {
                     opponentTotalDamage += 3;
+                    Debug.Log("큐브 3뎀축적(적)");
                     attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreEnemyKingPosition[2], Quaternion.identity));
                 }
 
                 break;
 
             case 4:
-                print("4점");
                 damage += 4;
-                print("4");
                 if (GameManager.instance.isMyTurn == false)
                 {
                     playerTotalDamage += 4;
+                    Debug.Log("큐브 4뎀축적(플레이어)");
                     attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreKingPosition[2], Quaternion.identity));
                 }
                 else
                 {
                     opponentTotalDamage += 4;
+                    Debug.Log("큐브 4뎀축적(적)");
                     attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreEnemyKingPosition[2], Quaternion.identity));
                 }
 
                 break;
 
             case 5:
-                print("5점");
                 damage += 5;
-            
-                print("5");
+
                 if (GameManager.instance.isMyTurn == false)
                 {
                     playerTotalDamage += 5;
+                    Debug.Log("큐브 5뎀축적(플레이어)");
                     attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreKingPosition[2], Quaternion.identity));
                 }
                 else
                 {
                     opponentTotalDamage += 5;
+                    Debug.Log("큐브 5뎀축적(적)");
                     attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreEnemyKingPosition[2], Quaternion.identity));
                 }
                 break;
@@ -183,11 +183,13 @@ public class BattleSystem : MonoBehaviour
             if (GameManager.instance.isMyTurn == false)
             {
                 playerTotalDamage += 3;
+                Debug.Log("홍단 3뎀축적(플레이어)");
                 attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreRedFlagPosition[1], Quaternion.identity));
             }
             else
             {
                 opponentTotalDamage += 3;
+                Debug.Log("홍단 3뎀축적(적)");
                 attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreEnemyRedFlagPosition[1], Quaternion.identity));
             }
             //print("red");
@@ -198,11 +200,13 @@ public class BattleSystem : MonoBehaviour
             if (GameManager.instance.isMyTurn == false)
             {
                 playerTotalDamage += 3;
+                Debug.Log("청단 3뎀축적(플레이어)");
                 attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreBlueFlagPosition[1], Quaternion.identity));
             }
             else
             {
                 opponentTotalDamage += 3;
+                Debug.Log("청단 3뎀축적(적)");
                 attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreEnemyBlueFlagPosition[1], Quaternion.identity));
             }
             //print("blue");
@@ -214,18 +218,20 @@ public class BattleSystem : MonoBehaviour
             if (GameManager.instance.isMyTurn == false)
             {
                 playerTotalDamage += 3;
+                Debug.Log("초단 3뎀축적(플레이어)");
                 attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreNormalFlagPosition[1], Quaternion.identity));
             }
             else
             {
                 opponentTotalDamage += 3;
+                Debug.Log("초단 3뎀축적(적)");
                 attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreEnemyNormalFlagPosition[1], Quaternion.identity));
             }
             //print("brown");
         }
 
     }
-  
+
     public void ResultFlag(int result)
     {
         if (result == 6)
@@ -234,10 +240,12 @@ public class BattleSystem : MonoBehaviour
             if (GameManager.instance.isMyTurn == false)
             {
                 playerTotalDamage += 2;
+                Debug.Log("총단갯수6개 2뎀축적(플레이어)");
             }
             else
             {
                 opponentTotalDamage += 2;
+                Debug.Log("총단갯수6개 2뎀축적(적)");
             }
             //print("result");
         }
@@ -248,10 +256,12 @@ public class BattleSystem : MonoBehaviour
             if (GameManager.instance.isMyTurn == false)
             {
                 playerTotalDamage += 3;
+                Debug.Log("총단갯수7개 3뎀축적(플레이어)");
             }
             else
             {
                 opponentTotalDamage += 3;
+                Debug.Log("총단갯수7개 3뎀축적(적)");
             }
             //print("result");
         }
@@ -265,26 +275,27 @@ public class BattleSystem : MonoBehaviour
                 if (GameManager.instance.isMyTurn == false)
                 {
                     playerTotalDamage++;
+                    Debug.Log("총단갯수7개초과 개당 1뎀축적(플레이어)");
                 }
                 else
                 {
                     opponentTotalDamage++;
+                    Debug.Log("총단갯수7개초과 개당 1뎀축적(적)");
                 }
             }
         }
 
 
-        if(GameManager.instance.isMyTurn == false)
+        if (GameManager.instance.isMyTurn == false)
         {
             attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreBlueFlagPosition[1], Quaternion.identity));
         }
 
-        if(GameManager.instance.isMyTurn)
+        if (GameManager.instance.isMyTurn)
         {
             attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreEnemyBlueFlagPosition[1], Quaternion.identity));
         }
 
-        print(damage);
     }
 
     public void GoDoRiAttack()
@@ -293,11 +304,13 @@ public class BattleSystem : MonoBehaviour
         if (GameManager.instance.isMyTurn == false)
         {
             playerTotalDamage += 5;
+            Debug.Log("암흑오브(고도리) 5뎀축적(플레이어)");
             attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreAnimalPosition[1], Quaternion.identity));
         }
         else
         {
             opponentTotalDamage += 5;
+            Debug.Log("암흑오브(고도리) 5뎀축적(적)");
             attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreEnemyAnimalPosition[1], Quaternion.identity));
         }
 
@@ -313,11 +326,12 @@ public class BattleSystem : MonoBehaviour
                 if (GameManager.instance.isMyTurn == false)
                 {
                     playerTotalDamage++;
-
+                    Debug.Log("오브(고도리,열끗(물건))4개 초과당 개당 1뎀축적(플레이어)");
                 }
                 else
                 {
                     opponentTotalDamage++;
+                    Debug.Log("오브(고도리,열끗(물건))4개 초과당 개당 1뎀축적(적)");
                 }
             }
         }
@@ -341,11 +355,13 @@ public class BattleSystem : MonoBehaviour
         {
             if (GameManager.instance.isMyTurn == false)
             {
-                playerTotalDamage = (CardManager.instance.soldierEmptyIndex - 9);
+                playerTotalDamage += (CardManager.instance.soldierEmptyIndex - 9);
+                Debug.Log("피 10개이상 개당 1뎀축적(플레이어)");
             }
             else
             {
-                opponentTotalDamage = (CardManager.instance.enemySoldierEmptyIndex - 9);
+                opponentTotalDamage += (CardManager.instance.enemySoldierEmptyIndex - 9);
+                Debug.Log("피 10개이상 개당 1뎀축적(적)");
             }
         }
 

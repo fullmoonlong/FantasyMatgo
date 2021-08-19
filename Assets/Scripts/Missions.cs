@@ -56,7 +56,6 @@ public class Missions : MonoBehaviour
 
     private void MissionDone()
     {
-        Debug.Log("WHA");
         switch (currentMission)
         {
             case "GwangPair":

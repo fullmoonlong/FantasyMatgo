@@ -206,7 +206,7 @@ public class CardClick : MonoBehaviour
             case "13(Clone)":
             case "17(Clone)":
             case "25(Clone)":
-            case "46(Clone)":
+            case "41(Clone)":
                 type = "초록 크리스탈";
                 break;
 
@@ -233,9 +233,8 @@ public class CardClick : MonoBehaviour
 
     void WhoTurn(List<GameObject> hand, List<GameObject> handscore)
     {
-        print(gameObject.name);
-        //print("hand in");
         //print(gameObject.name);
+
         if (gameObject.name == "Bomb(Clone)")
         {
             CardManager.instance.myCardCount = 1;

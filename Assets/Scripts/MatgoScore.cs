@@ -106,7 +106,7 @@ public class MatgoScore : MonoBehaviour
         if (CardManager.instance.soldierEmptyIndex >= 10)
         {
             myPeeScore = (CardManager.instance.soldierEmptyIndex - 9);
-            BattleSystem.instance.SoldierAttack(CardManager.instance.soldierEmptyIndex);
+            //BattleSystem.instance.SoldierAttack(CardManager.instance.soldierEmptyIndex);
             //Debug.Log("PEE over 10 from now +1 every pee");
         }
         if (CardManager.instance.animalEmptyIndex == 3 && CardManager.instance.isAnimal)
@@ -160,7 +160,7 @@ public class MatgoScore : MonoBehaviour
         if (CardManager.instance.enemySoldierEmptyIndex >= 10)
         {
             opponentPeeScore = (CardManager.instance.enemySoldierEmptyIndex - 9);
-            BattleSystem.instance.SoldierAttack(CardManager.instance.enemySoldierEmptyIndex);
+            //BattleSystem.instance.SoldierAttack(CardManager.instance.enemySoldierEmptyIndex);
             //Debug.Log("PEE over 10 from now +1 every pee");
         }
         if (CardManager.instance.enemyAnimalEmptyIndex == 3 && CardManager.instance.isOpAnimal)
