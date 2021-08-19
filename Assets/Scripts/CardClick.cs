@@ -107,13 +107,13 @@ public class CardClick : MonoBehaviour
                     {
                         WhoTurn(CardManager.instance.myHand, CardManager.instance.myHandScore);
 
-                        CardManager.instance.CardInitialPosition(CardManager.instance.myHand);
-                       
                         CalculateScore(CardManager.instance.myHandScore);
 
                         print(GameManager.instance.isShake + " + " + GameManager.instance.isChoice + " + " + GameManager.instance.isBonus);
                         if (!GameManager.instance.isShake && !GameManager.instance.isChoice && !GameManager.instance.isBonus)
                         {
+                            CardManager.instance.CardInitialPosition(CardManager.instance.myHand);
+
                             GameManager.instance.ScoreCheck(true);
 
                             if (!GameManager.instance.ArtifactPanel.activeSelf)
@@ -144,11 +144,12 @@ public class CardClick : MonoBehaviour
                     if (CardManager.instance.opponentHand.Contains(gameObject)) // 내손에 이 게임오브젝트가 있을 때
                     {
                         WhoTurn(CardManager.instance.opponentHand, CardManager.instance.opponentHandScore);
-                        CardManager.instance.CardInitialPosition(CardManager.instance.opponentHand);
+               
                         CalculateScore(CardManager.instance.opponentHandScore);
 
                         if (!GameManager.instance.isShake && !GameManager.instance.isChoice && !GameManager.instance.isBonus)
                         {
+                            CardManager.instance.CardInitialPosition(CardManager.instance.opponentHand);
                             GameManager.instance.ScoreCheck(false);
 
                             if (!GameManager.instance.ArtifactPanel.activeSelf)
@@ -895,6 +896,7 @@ public class CardClick : MonoBehaviour
         if (GameManager.instance.isMyTurn)
         {
             //print(CardManager.instance.curObj.name);
+            
             CardManager.instance.myHand.Remove(CardManager.instance.curObj);//내손에서 지우기
             CheckCardAction(CardManager.instance.curObj, CardManager.instance.myHand, CardManager.instance.myHandScore);
 
@@ -917,12 +919,10 @@ public class CardClick : MonoBehaviour
         else
         {
             //print(CardManager.instance.curObj.name);
-            CardManager.instance.CardInitialPosition(CardManager.instance.opponentHand);
             CardManager.instance.opponentHand.Remove(CardManager.instance.curObj);//내손에서 지우기
             CheckCardAction(CardManager.instance.curObj, CardManager.instance.opponentHand, CardManager.instance.opponentHandScore);
 
             GameManager.instance.ScoreCheck(false);
-
 
             if (!GameManager.instance.ArtifactPanel.activeSelf)
             {
@@ -941,10 +941,10 @@ public class CardClick : MonoBehaviour
     }
     public void EndArrange(List<GameObject> hand, bool isPlayer)
     {
+        CardManager.instance.CardInitialPosition(hand);
         if (GameManager.instance.first)
         {
             print("first in ");
-            CardManager.instance.CardInitialPosition(hand);
             CardManager.instance.DrawCard(hand, 1);
             GameManager.instance.first = false;
         } // 처음만
