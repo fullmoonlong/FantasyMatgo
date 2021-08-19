@@ -122,7 +122,7 @@ public class CardClick : MonoBehaviour
                                 
                                 print("bomb check");
                                 StartCoroutine(GameManager.instance.FixedMade(CardManager.instance.kingEmptyIndex, CardManager.instance.enemyKingEmptyIndex, CardManager.instance.redFlagEmptyIndex, CardManager.instance.blueFlagEmptyIndex, CardManager.instance.normalFlagEmptyIndex,
-                                CardManager.instance.animalEmptyIndex, BattleSystem.instance.kingAttack, BattleSystem.instance.flagAttack, BattleSystem.instance.animalAttack, BattleSystem.instance.op, BattleSystem.instance.opponentInfo, BattleSystem.instance.opHUD));
+                                CardManager.instance.animalEmptyIndex, CardManager.instance.thingEmptyIndex, BattleSystem.instance.kingAttack, BattleSystem.instance.flagAttack, BattleSystem.instance.animalAttack, BattleSystem.instance.op, BattleSystem.instance.opponentInfo, BattleSystem.instance.opHUD));
                                 EndArrange(CardManager.instance.myHand, false);
                             }
                         }
@@ -156,7 +156,7 @@ public class CardClick : MonoBehaviour
                                 GameManager.instance.AttackPanel.SetActive(true);
                                
                                 StartCoroutine(GameManager.instance.FixedMade(CardManager.instance.enemyKingEmptyIndex, CardManager.instance.kingEmptyIndex, CardManager.instance.enemyRedFlagEmptyIndex, CardManager.instance.enemyBlueFlagEmptyIndex, CardManager.instance.enemyNormalFlagEmptyIndex,
-                                CardManager.instance.enemyAnimalEmptyIndex, BattleSystem.instance.enemyKingAttack, BattleSystem.instance.enemyFlagAttack, BattleSystem.instance.enemyAnimalAttack, BattleSystem.instance.player, BattleSystem.instance.playerInfo, BattleSystem.instance.playerHUD));
+                                CardManager.instance.enemyAnimalEmptyIndex, CardManager.instance.enemyThingEmptyIndex, BattleSystem.instance.enemyKingAttack, BattleSystem.instance.enemyFlagAttack, BattleSystem.instance.enemyAnimalAttack, BattleSystem.instance.player, BattleSystem.instance.playerInfo, BattleSystem.instance.playerHUD));
                                 EndArrange(CardManager.instance.opponentHandScore, true);
                             }
 
@@ -819,7 +819,7 @@ public class CardClick : MonoBehaviour
                 print("panel no");
                 GameManager.instance.AttackPanel.SetActive(true);
                 StartCoroutine(GameManager.instance.FixedMade(CardManager.instance.kingEmptyIndex, CardManager.instance.enemyKingEmptyIndex, CardManager.instance.redFlagEmptyIndex, CardManager.instance.blueFlagEmptyIndex, CardManager.instance.normalFlagEmptyIndex,
-                CardManager.instance.animalEmptyIndex, BattleSystem.instance.kingAttack, BattleSystem.instance.flagAttack, BattleSystem.instance.animalAttack, BattleSystem.instance.op, BattleSystem.instance.opponentInfo, BattleSystem.instance.opHUD));
+                CardManager.instance.animalEmptyIndex, CardManager.instance.thingEmptyIndex, BattleSystem.instance.kingAttack, BattleSystem.instance.flagAttack, BattleSystem.instance.animalAttack, BattleSystem.instance.op, BattleSystem.instance.opponentInfo, BattleSystem.instance.opHUD));
 
                 EndArrange(CardManager.instance.myHand, false);
             }
@@ -839,7 +839,7 @@ public class CardClick : MonoBehaviour
                 print("panel no");
                 GameManager.instance.AttackPanel.SetActive(true);
                 StartCoroutine(GameManager.instance.FixedMade(CardManager.instance.enemyKingEmptyIndex, CardManager.instance.kingEmptyIndex, CardManager.instance.enemyRedFlagEmptyIndex, CardManager.instance.enemyBlueFlagEmptyIndex, CardManager.instance.enemyNormalFlagEmptyIndex,
-                CardManager.instance.enemyAnimalEmptyIndex, BattleSystem.instance.enemyKingAttack, BattleSystem.instance.enemyFlagAttack, BattleSystem.instance.enemyAnimalAttack, BattleSystem.instance.player, BattleSystem.instance.playerInfo, BattleSystem.instance.playerHUD));
+                CardManager.instance.enemyAnimalEmptyIndex, CardManager.instance.enemyThingEmptyIndex, BattleSystem.instance.enemyKingAttack, BattleSystem.instance.enemyFlagAttack, BattleSystem.instance.enemyAnimalAttack, BattleSystem.instance.player, BattleSystem.instance.playerInfo, BattleSystem.instance.playerHUD));
 
                 EndArrange(CardManager.instance.opponentHand, true);
             }
@@ -906,7 +906,7 @@ public class CardClick : MonoBehaviour
                 GameManager.instance.AttackPanel.SetActive(true);
 
                 StartCoroutine(GameManager.instance.FixedMade(CardManager.instance.kingEmptyIndex, CardManager.instance.enemyKingEmptyIndex, CardManager.instance.redFlagEmptyIndex, CardManager.instance.blueFlagEmptyIndex, CardManager.instance.normalFlagEmptyIndex,
-                CardManager.instance.animalEmptyIndex, BattleSystem.instance.kingAttack, BattleSystem.instance.flagAttack, BattleSystem.instance.animalAttack, BattleSystem.instance.op, BattleSystem.instance.opponentInfo, BattleSystem.instance.opHUD));
+                CardManager.instance.animalEmptyIndex, CardManager.instance.thingEmptyIndex, BattleSystem.instance.kingAttack, BattleSystem.instance.flagAttack, BattleSystem.instance.animalAttack, BattleSystem.instance.op, BattleSystem.instance.opponentInfo, BattleSystem.instance.opHUD));
                 
                 EndArrange(CardManager.instance.myHand, false);
             }
@@ -930,7 +930,7 @@ public class CardClick : MonoBehaviour
                 GameManager.instance.AttackPanel.SetActive(true);
 
                 StartCoroutine(GameManager.instance.FixedMade(CardManager.instance.enemyKingEmptyIndex, CardManager.instance.kingEmptyIndex, CardManager.instance.enemyRedFlagEmptyIndex, CardManager.instance.enemyBlueFlagEmptyIndex, CardManager.instance.enemyNormalFlagEmptyIndex,
-                CardManager.instance.enemyAnimalEmptyIndex, BattleSystem.instance.enemyKingAttack, BattleSystem.instance.enemyFlagAttack, BattleSystem.instance.enemyAnimalAttack, BattleSystem.instance.player, BattleSystem.instance.playerInfo, BattleSystem.instance.playerHUD));
+                CardManager.instance.enemyAnimalEmptyIndex, CardManager.instance.enemyThingEmptyIndex, BattleSystem.instance.enemyKingAttack, BattleSystem.instance.enemyFlagAttack, BattleSystem.instance.enemyAnimalAttack, BattleSystem.instance.player, BattleSystem.instance.playerInfo, BattleSystem.instance.playerHUD));
 
                 EndArrange(CardManager.instance.opponentHand, true);
             }

@@ -54,8 +54,8 @@ public class BattleSystem : MonoBehaviour
         flagAttack = new bool[8];
         enemyKingAttack = new bool[3];
         enemyFlagAttack = new bool[8];
-        animalAttack = new bool[1];
-        enemyAnimalAttack = new bool[1];
+        animalAttack = new bool[6];
+        enemyAnimalAttack = new bool[6];
         for (int i = 0; i < 3; i++)
         {
             kingAttack[i] = false;
@@ -69,8 +69,13 @@ public class BattleSystem : MonoBehaviour
             flagAttack[i] = false;
             enemyFlagAttack[i] = false;
         }
-        animalAttack[0] = false;
-        enemyAnimalAttack[0] = false;
+
+        for(int i=0;i<6;i++)
+        {
+            animalAttack[i] = false;
+            enemyAnimalAttack[i] = false;
+        }
+      
         SettingBattle();
     }
 
@@ -220,7 +225,7 @@ public class BattleSystem : MonoBehaviour
         }
 
     }
-
+  
     public void ResultFlag(int result)
     {
         if (result == 6)
@@ -288,16 +293,48 @@ public class BattleSystem : MonoBehaviour
         if (GameManager.instance.isMyTurn == false)
         {
             playerTotalDamage += 5;
-            attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreAnimalPosition[4], Quaternion.identity));
+            attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreAnimalPosition[1], Quaternion.identity));
         }
         else
         {
             opponentTotalDamage += 5;
-            attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreEnemyAnimalPosition[4], Quaternion.identity));
+            attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreEnemyAnimalPosition[1], Quaternion.identity));
         }
 
     }
 
+    public void ResultAnimal(int result)
+    {
+        if (result > 4)
+        {
+            for (int i = 4; i < result; i++)
+            {
+                damage++;
+                if (GameManager.instance.isMyTurn == false)
+                {
+                    playerTotalDamage++;
+
+                }
+                else
+                {
+                    opponentTotalDamage++;
+                }
+            }
+        }
+
+
+        if (GameManager.instance.isMyTurn == false)
+        {
+            attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreThingPosition[2], Quaternion.identity));
+        }
+
+        if (GameManager.instance.isMyTurn)
+        {
+            attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreEnemyThingPosition[2], Quaternion.identity));
+        }
+
+        print(damage);
+    }
     public void SoldierAttack(int soldier)
     {
         if (soldier >= 10)

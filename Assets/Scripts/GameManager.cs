@@ -159,7 +159,7 @@ public class GameManager : MonoBehaviour
         isMoving = false;
     }
 
-    public IEnumerator FixedMade(int king, int opking, int red, int blue, int normal, int animal, bool[] isking, bool[] isflag, bool[] isanimal, GameObject who, PlayerScript ui, BattleHUD hud)
+    public IEnumerator FixedMade(int king, int opking, int red, int blue, int normal, int animal,int thing, bool[] isking, bool[] isflag, bool[] isanimal, GameObject who, PlayerScript ui, BattleHUD hud)
     {
         yield return new WaitForSeconds(1f);
         AttackPanel.SetActive(false);
@@ -209,6 +209,7 @@ public class GameManager : MonoBehaviour
                 isflag[i + 3] = true;
             }
         }
+
         if (!isanimal[0] && animal == 3)
         {
             isAttack = true;
@@ -217,7 +218,19 @@ public class GameManager : MonoBehaviour
             isanimal[0] = true;
         }
 
-        if(isAttack)
+        result = animal + thing;
+
+        for(int i=0;i<5;i++)
+        {
+            if (!isanimal[i + 1] && result == i + 5) 
+            {
+                isAttack = true;
+                BattleSystem.instance.ResultAnimal(result);
+                isanimal[i + 1] = true;
+            }
+        }
+
+        if (isAttack)
         {
             AttackMotion(who, ui, hud);
         }
@@ -416,13 +429,13 @@ public class GameManager : MonoBehaviour
             if (isMyTurn)
             {
                 StartCoroutine(FixedMade(CardManager.instance.kingEmptyIndex, CardManager.instance.enemyKingEmptyIndex, CardManager.instance.redFlagEmptyIndex, CardManager.instance.blueFlagEmptyIndex, CardManager.instance.normalFlagEmptyIndex,
-                CardManager.instance.animalEmptyIndex, BattleSystem.instance.kingAttack, BattleSystem.instance.flagAttack, BattleSystem.instance.animalAttack, BattleSystem.instance.op, BattleSystem.instance.opponentInfo, BattleSystem.instance.opHUD));
+                CardManager.instance.animalEmptyIndex, CardManager.instance.thingEmptyIndex, BattleSystem.instance.kingAttack, BattleSystem.instance.flagAttack, BattleSystem.instance.animalAttack, BattleSystem.instance.op, BattleSystem.instance.opponentInfo, BattleSystem.instance.opHUD));
                 CardClick.instance.EndArrange(CardManager.instance.myHand, false);
             }
             else
             {
                 StartCoroutine(FixedMade(CardManager.instance.enemyKingEmptyIndex, CardManager.instance.kingEmptyIndex, CardManager.instance.enemyRedFlagEmptyIndex, CardManager.instance.enemyBlueFlagEmptyIndex, CardManager.instance.enemyNormalFlagEmptyIndex,
-                CardManager.instance.enemyAnimalEmptyIndex, BattleSystem.instance.enemyKingAttack, BattleSystem.instance.enemyFlagAttack, BattleSystem.instance.enemyAnimalAttack, BattleSystem.instance.player, BattleSystem.instance.playerInfo, BattleSystem.instance.playerHUD));
+                CardManager.instance.enemyAnimalEmptyIndex, CardManager.instance.enemyThingEmptyIndex, BattleSystem.instance.enemyKingAttack, BattleSystem.instance.enemyFlagAttack, BattleSystem.instance.enemyAnimalAttack, BattleSystem.instance.player, BattleSystem.instance.playerInfo, BattleSystem.instance.playerHUD));
                 CardClick.instance.EndArrange(CardManager.instance.opponentHand, true);
             }
         }
