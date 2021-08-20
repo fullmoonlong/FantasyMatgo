@@ -9,70 +9,77 @@ public class CardManager : MonoBehaviour
     public static CardManager instance;
     #endregion
 
-    private int maxCards = 50;
+    private int maxCards = 50; // 전체 카드 개수 기본카드 48  + 보너스카드 2
 
     public Transform parentDeck; // Instantiate 할 대상(보기 좋게 묶기 용)
 
     private List<GameObject> cardPrefabs; // 카드의 프리팹 화
-    public List<GameObject> cardDeck; // 필드에 놓일 카드 덱 리스트 생성
+    [HideInInspector] public List<GameObject> cardDeck; // 필드에 놓일 카드 덱 리스트 생성
+ 
+    [HideInInspector] public List<GameObject> myHand; // 플레이어 자신의 패 리스트
+    [HideInInspector] public List<GameObject> opponentHand; // 상대의 패 리스트
+    [HideInInspector] public List<GameObject> field; // 필드 리스트
+   
+    [HideInInspector] public List<GameObject> myHandScore; // 내 점수 리스트
+    [HideInInspector] public List<GameObject> opponentHandScore; // 상대 점수 리스트
+ 
+    [HideInInspector] public List<Vector3> myHandPosition; // 자신 패의 위치
+    [HideInInspector] public List<Vector3> opponentHandPosition; // 상대 패의 위치
+    [HideInInspector] public Vector3[] fieldPosition; // 카드를 내려놓을 필드 위치
 
-    public List<GameObject> myHand; // 플레이어 자신의 패 리스트
-    public List<GameObject> opponentHand; // 상대의 패 리스트
-    public List<GameObject> field; // 필드 리스트
+    #region 점수포지션
+    [HideInInspector] public Vector3[] scoreKingPosition; // 5개
+    [HideInInspector] public Vector3[] scoreEnemyKingPosition; // 5개
+    [HideInInspector] public Vector3[] scoreAnimalPosition; // 3개 고도리
+    [HideInInspector] public Vector3[] scoreThingPosition; // 6개 뮬건
+    [HideInInspector] public Vector3[] scoreEnemyAnimalPosition; // 3개 암흑오브
+    [HideInInspector] public Vector3[] scoreEnemyThingPosition; // 6개 파란오브
+    [HideInInspector] public Vector3[] scoreRedFlagPosition;
+    [HideInInspector] public Vector3[] scoreBlueFlagPosition;
+    [HideInInspector] public Vector3[] scoreNormalFlagPosition;
+    [HideInInspector] public Vector3[] scoreEnemyRedFlagPosition;
+    [HideInInspector] public Vector3[] scoreEnemyBlueFlagPosition;
+    [HideInInspector] public Vector3[] scoreEnemyNormalFlagPosition;
+    [HideInInspector] public Vector3[] scoreSoldierPosition;
+    [HideInInspector] public Vector3[] scoreEnemySoldierPosition;
+    #endregion
 
-    public List<GameObject> myHandScore; // 내 점수 리스트
-    public List<GameObject> opponentHandScore; // 상대 점수 리스트
+    #region 점수 필드 위치 지정용 인덱스 (점수로도 사용)
+    [HideInInspector] public int kingEmptyIndex;
+    [HideInInspector] public int enemyKingEmptyIndex;
+    [HideInInspector] public int animalEmptyIndex;
+    [HideInInspector] public int enemyAnimalEmptyIndex;
+    [HideInInspector] public int redFlagEmptyIndex;
+    [HideInInspector] public int blueFlagEmptyIndex;
+    [HideInInspector] public int normalFlagEmptyIndex;
+    [HideInInspector] public int enemyRedFlagEmptyIndex;
+    [HideInInspector] public int enemyBlueFlagEmptyIndex;
+    [HideInInspector] public int enemyNormalFlagEmptyIndex;
+    [HideInInspector] public int soldierEmptyIndex;
+    [HideInInspector] public int enemySoldierEmptyIndex;
+    [HideInInspector] public int thingEmptyIndex;
+    [HideInInspector] public int enemyThingEmptyIndex;
+    #endregion
 
-    public List<Vector3> myHandPosition; // 자신 패의 위치
-    public List<Vector3> opponentHandPosition; // 상대 패의 위치
+    [HideInInspector] public bool isFlip; // 플립할게 있는지 없는지 체크
+  
+    [HideInInspector] public List<int> emptyIndex; //필드에 남은 자리 위치 번호
+ 
+    [HideInInspector] public List<int> sameTagCount; //필드안에 존재하는 십이지신 별 개수
+   
+    [HideInInspector] public List<GameObject> choiceObj; // 선택 할 카드
+  
+    [HideInInspector] public List<GameObject> bombObj; // 폭탄으로 들고올 카드 3장
 
-    public Vector3[] fieldPosition; // 카드를 내려놓을 필드 위치
-    public Vector3[] scoreKingPosition; // 5개
-    public Vector3[] scoreEnemyKingPosition; // 5개
-    public Vector3[] scoreAnimalPosition; // 3개 고도리
-    public Vector3[] scoreThingPosition; // 6개 뮬건
-    public Vector3[] scoreEnemyAnimalPosition; // 3개 암흑오브
-    public Vector3[] scoreEnemyThingPosition; // 6개 파란오브
-    public Vector3[] scoreRedFlagPosition;
-    public Vector3[] scoreBlueFlagPosition;
-    public Vector3[] scoreNormalFlagPosition;
-    public Vector3[] scoreEnemyRedFlagPosition;
-    public Vector3[] scoreEnemyBlueFlagPosition;
-    public Vector3[] scoreEnemyNormalFlagPosition;
-    public Vector3[] scoreSoldierPosition;
-    public Vector3[] scoreEnemySoldierPosition;
+    private List<GameObject> storage; 
+  
+    [HideInInspector] public int myCardCount;
+ 
+    [HideInInspector] public GameObject curObj; // 클릭한 게임 오브젝트
+    
+    [HideInInspector] public GameObject BombCard; // 폭탄을 하고나면 주는 폭탄 카드
 
-    public GameObject ChociePanel;//두개 중 하나 고를 때 판넬
-
-    public int kingEmptyIndex;
-    public int enemyKingEmptyIndex;
-    public int animalEmptyIndex;
-    public int enemyAnimalEmptyIndex;
-    public int redFlagEmptyIndex;
-    public int blueFlagEmptyIndex;
-    public int normalFlagEmptyIndex;
-    public int enemyRedFlagEmptyIndex;
-    public int enemyBlueFlagEmptyIndex;
-    public int enemyNormalFlagEmptyIndex;
-    public int soldierEmptyIndex;
-    public int enemySoldierEmptyIndex;
-    public int thingEmptyIndex;
-    public int enemyThingEmptyIndex;
-
-    public bool isFlip;
-
-    public List<int> emptyIndex;
-    public List<int> sameTagCount;
-    public List<GameObject> ChoiceObj;
-    public List<GameObject> BombObj;
-    private List<GameObject> storage;
-
-    public int myCardCount;
-    public GameObject curObj; // 클릭한 게임 오브젝트
-
-    public GameObject BombCard;
-
-    bool isSame;
+    bool isSame; //손에서 필드에 같은 (맞출) 카드가 있는지 체크
     #region SCORE
     // my
     [HideInInspector] public int gwangCount;
@@ -112,6 +119,8 @@ public class CardManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+
+        //변수 초기화
         cardPrefabs = new List<GameObject>(); // 프리팹 리스트 할당
         cardDeck = new List<GameObject>(); // 덱 리스트 할당
 
@@ -142,8 +151,8 @@ public class CardManager : MonoBehaviour
         sameTagCount = new List<int>(12) { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         storage = new List<GameObject>();
 
-        ChoiceObj = new List<GameObject>();
-        BombObj = new List<GameObject>();
+        choiceObj = new List<GameObject>();
+        bombObj = new List<GameObject>();
 
         isFlip = false;
 
@@ -151,10 +160,6 @@ public class CardManager : MonoBehaviour
 
         isSame = false;
         //PlayerPrefs.DeleteAll();
-    }
-
-    private void Start()
-    {
         scoreSoldierPosition = new Vector3[26];
         scoreEnemySoldierPosition = new Vector3[26];
 
@@ -179,7 +184,7 @@ public class CardManager : MonoBehaviour
                                 new Vector3(-7, 2, 0),
                                 new Vector3(-7, -2, 0)
         };
-        //
+     
         scoreKingPosition = new[]
         {
             new Vector3(-8f, -3f, 0f),
@@ -196,7 +201,7 @@ public class CardManager : MonoBehaviour
             new Vector3(-7.1f, 3f, 0.3f),
             new Vector3(-6.8f, 3f, 0.4f),
         };
-        //
+
         scoreAnimalPosition = new[]
         {
             new Vector3(-5.9f, -3f, 0f),
@@ -227,7 +232,7 @@ public class CardManager : MonoBehaviour
             new Vector3(-3.8f, 3f, 0.7f),
             new Vector3(-3.5f, 3f, 0.8f)
         };
-        //
+
         scoreRedFlagPosition = new[]
         {
             new Vector3(-2.6f, -3f, 0f),
@@ -271,7 +276,6 @@ public class CardManager : MonoBehaviour
             new Vector3(1.3f, 3f, 0.9f),
         };
 
-        //
         for (int i = 0; i < 24; i++)
         {
             scoreSoldierPosition[i] = new Vector3(2.2f + (0.3f * i), -3f, 0f + (0.1f * i));
@@ -281,6 +285,10 @@ public class CardManager : MonoBehaviour
             scoreEnemySoldierPosition[i] = new Vector3(2.2f + (0.3f * i), 3f, 0f + (0.1f * i));
         }
 
+    }
+
+    private void Start()
+    {
         PrefabToCard(); // 프리팹 폴더에 존재하는 카드를 리스트에 담아 생성준비를 한다.
         CreateDeck(); // 플레이어가 준비한 카드 12장, 적이 준비한 카드 12장 을 더해 총 48장의 카드를 덱에 넣는다.
         ShuffleDeck(); //덱을 섞는다
@@ -294,6 +302,7 @@ public class CardManager : MonoBehaviour
         FieldSameCard();
         CheckSameCard(myHand);
         CheckSameCard(opponentHand);
+
         Invoke("FieldBonusCard", 0.5f);
 
     }
@@ -310,7 +319,8 @@ public class CardManager : MonoBehaviour
         }
     }
 
-    public int GetCardTagNum(GameObject obj)
+    
+    public int GetCardTagNum(GameObject obj) //가지고 있는 태그(십이지신)를 0~11로 표시
     {
         switch (obj.tag)
         {
@@ -356,9 +366,9 @@ public class CardManager : MonoBehaviour
         }
     }
 
-    void FieldSameCard()
+    void FieldSameCard() // 필드에 같은 태그를 가진 카드들이 존재하면 겹쳐줌
     {
-        //print("fieldCount : " + field.Count);
+        //<필드에서 가지고 있는 태그(십이지신) storage에 넣기>
         for (int j = 0; j < 12; j++) // 태그 12개 다 돌리기
         {
             for (int i = 0; i < field.Count; i++) // 필드 돌리기
@@ -366,28 +376,25 @@ public class CardManager : MonoBehaviour
                 if (j == GetCardTagNum(field[i])) // 필드 i의 태그가 j와 같다면
                 {
                     sameTagCount[j]++; // 태그 값 더하기
-                    if (sameTagCount[j] == 1) // 필드 태그가 하나밖에 없다면
+                    if (sameTagCount[j] == 1) // 필드 태그가 하나일 때
                     {
                         storage.Add(field[i]);
                     }
                 }
-
             }
-            //print("Tag : " + j + " " + sameTagCount[j]);
         }
 
-        int count = 0;
+        int count = 0; // 겹칠 카드 개수
 
+        //<같은 태그가 2개 이상인 카드 찾기>
         for (int i = 0; i < storage.Count; i++)
         {
             for (int j = 0; j < field.Count; j++)
             {
-                if (storage[i].CompareTag(field[j].tag) && storage[i].transform.position != field[j].transform.position)// 태그는 같고 포지션은 다를 때
+                if (storage[i].CompareTag(field[j].tag) && storage[i].transform.position != field[j].transform.position)// 태그는 같고 포지션은 다를 때 -> 같은 태그가 2개 이상이라는 뜻
                 {
                     count++;
-
-                    //CardClick.instance.EmptyFieldPosition(field[j]);
-                    //같은 카드 다음 포지션은 같은 태그의 갯수 * 0.5 만큼 x축을 더해준다.
+                    //카드를 겹쳐줌
                     field[j].transform.position = new Vector3(storage[i].transform.position.x + 0.5f * count, storage[i].transform.position.y, storage[i].transform.position.z - 0.1f * count);
 
                     //만약 카드 카운트가 0 이상이면 -> 같은 카드의 자리가 비기 때문에
@@ -396,28 +403,26 @@ public class CardManager : MonoBehaviour
                         emptyIndex.Add(j);
                     }
                 }
-                //엠티 카운트가 없으면 어저지,,
             }
             count = 0;
         }
-        EmptyIndexSort();
-        for (int i = 0; i < emptyIndex.Count; i++)
-        {
-            //print("index i : " + emptyIndex[i]);
-        }
+
+        EmptyIndexSort(); // 빈 자리 정렬
     }
 
-    void FieldBonusCard()
+    void FieldBonusCard() //필드에 보너스 카드가 있을 때
     {
         Sequence mysequence = DOTween.Sequence();
+
         int i = 0;
+
         List<int> index = new List<int>();
 
         while (i < field.Count)
         {
-            if (field[i].tag == "Bonus")
+            if (field[i].tag == "Bonus") // 필드에 보너스 카드가 있으면
             {
-                index.Add(i);
+                index.Add(i); //인덱스에 몇번째 위치인지 넣어줌
             }
 
             i++;
@@ -425,39 +430,35 @@ public class CardManager : MonoBehaviour
 
         int eIndex = emptyIndex[0];
 
-        switch (index.Count)
+        switch (index.Count) // 보너스 카드 개수에 따라
         {
 
             case 1:
                 {
-                    CardClick.instance.EmptyFieldPosition(field[index[0]]);
-                    mysequence.Append(field[index[0]].transform.DOMove(scoreSoldierPosition[soldierEmptyIndex], 0.5f).SetEase(Ease.OutQuint));
-                    soldierEmptyIndex++;
+                    CardClick.instance.EmptyFieldPosition(field[index[0]]); //보너스 카드의 필드 포지션을 지워줌
+                    mysequence.Append(field[index[0]].transform.DOMove(scoreSoldierPosition[soldierEmptyIndex], 0.5f).SetEase(Ease.OutQuint)); //첫번째 사람의 피 점수 포지션으로 보너스 카드를 옮김
+                    soldierEmptyIndex++; // 피위치 ++
                     myHandScore.Add(field[index[0]]); // 점수에 더해주기 
                     field.Remove(field[index[0]]); // 필드에서 지우기
 
-                    FlipCard();
+                    FlipCard(); // 카드를 뒤집음
 
-                    //못맞췄을 때
-                    emptyIndex.RemoveAt(0);
+                    emptyIndex.RemoveAt(0); // 첫번째 빈자리 사용
 
                     EmptyIndexSort();//빈곳 인덱스 오름차순 정렬
 
                     for (int j = 0; j < field.Count - 1; j++)
                     {
-                        if (field[j].tag == field[field.Count - 1].tag)
+                        if (field[j].tag == field[field.Count - 1].tag) //만약 뒤집은 카드랑 필드에 같은 카드가 있으면 옆에 겹쳐줌
                         {
                             field[field.Count - 1].transform.position = new Vector3(field[j].transform.position.x + 0.5f, field[j].transform.position.y, field[j].transform.position.z - 0.1f);
-                            emptyIndex.Add(eIndex);
-                            EmptyIndexSort();
+                            emptyIndex.Add(eIndex); //자리 비워줌 
+                            EmptyIndexSort(); // 정렬
                         }
 
                     }
 
-                    for (int j = 0; j < emptyIndex.Count; j++)
-                    {
-                        print("최종 카드 인덱스 " + j + " : " + emptyIndex[j]);
-                    }
+                    FieldBonusCard(); // 플립한 카드가 보너스 카드일 수도 있어서 한번 더 체크
 
                     break;
                 }
@@ -470,7 +471,7 @@ public class CardManager : MonoBehaviour
                     CardClick.instance.EmptyFieldPosition(field[index[1]]);
                     mysequence.Append(field[index[1]].transform.DOMove(scoreSoldierPosition[soldierEmptyIndex], 0.5f).SetEase(Ease.OutQuint));
                     soldierEmptyIndex++;
-                    myHandScore.Add(field[index[0]]); // 점수에 더해주기 W
+                    myHandScore.Add(field[index[0]]); // 점수에 더해주기
                     myHandScore.Add(field[index[1]]);
 
 
@@ -478,7 +479,7 @@ public class CardManager : MonoBehaviour
                     field.Remove(field[index[1] - 1]);
 
                     FlipCard();
-                    //못맞췄을 때
+
                     emptyIndex.RemoveAt(0);
 
                     EmptyIndexSort();//빈곳 인덱스 오름차순 정렬
@@ -541,7 +542,7 @@ public class CardManager : MonoBehaviour
 
     public void CreateDeck()
     {
-        for (int i = 0; i < maxCards; i++) // 화투덱 숫자
+        for (int i = 0; i < maxCards; i++)
         {
             cardDeck.Add(Instantiate(cardPrefabs[i], parentDeck));
         }
@@ -555,7 +556,7 @@ public class CardManager : MonoBehaviour
         }
     }
 
-    public bool ScoreSameTag(GameObject obj)
+    public bool ScoreSameTag(GameObject obj) //점수판에 오브젝트와 같은 태그의 카드가 있는지 확인
     {
         for (int i = 0; i < myHandScore.Count; i++)
         {
@@ -575,7 +576,7 @@ public class CardManager : MonoBehaviour
 
         return false;
     }
-    public void CheckSameCard(List<GameObject> cardList)
+    public void CheckSameCard(List<GameObject> cardList) // cardlist와 필드에 같은 카드가 있는지 체크
     {
         for (int i = 0; i < cardList.Count; i++)
         {
@@ -586,7 +587,8 @@ public class CardManager : MonoBehaviour
                     isSame = true;
                 }
             }
-            if (GetCardTagNum(cardList[i]) != 13)
+
+            if (GetCardTagNum(cardList[i]) != 13) // 보너스 카드나, 폭탄 카드가 아니라면
             {
                 cardList[i].transform.GetChild(0).gameObject.SetActive(isSame);
                 if (isSame)
@@ -620,7 +622,7 @@ public class CardManager : MonoBehaviour
         }
     }
 
-    public void DeleteOutline(GameObject obj)
+    public void DeleteOutline(GameObject obj) // 게임오브젝트의 테두리 안보이게 만듬
     {
         obj.transform.GetChild(0).gameObject.SetActive(false);
     }
@@ -637,8 +639,7 @@ public class CardManager : MonoBehaviour
             cardDeck.RemoveAt(i);
         }
 
-        CardInitialPosition(cardList);
-
+        ArrangeHandPosition(cardList);
     }
     public void DrawBombCard(List<GameObject> cardList)
     {
@@ -647,7 +648,7 @@ public class CardManager : MonoBehaviour
             cardList.Add(Instantiate(BombCard, parentDeck));
         }
 
-        CardInitialPosition(cardList);
+        ArrangeHandPosition(cardList);
     }
     public void FlipCard()
     {
@@ -665,7 +666,7 @@ public class CardManager : MonoBehaviour
         }
         cardDeck.RemoveAt(0);//카드 덱 삭제
     }
-    public void CardInitialPosition(List<GameObject> cardList)
+    public void ArrangeHandPosition(List<GameObject> cardList)
     {
         if (cardList == myHand)
         {

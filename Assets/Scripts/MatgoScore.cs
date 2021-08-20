@@ -11,22 +11,22 @@ public class MatgoScore : MonoBehaviour
     }
     #endregion
 
-    public static int myScore = 0;
-    public static int opScore = 0;
+    [HideInInspector] public static int myScore = 0;
+    [HideInInspector] public static int opScore = 0;
 
-    public int myGwangScore = 0;
-    public int myRedFlagScore = 0;
-    public int myBlueFlagScore = 0;
-    public int myNormalFlagScore = 0;
-    public int myAnimalScore = 0;
-    public int myPeeScore = 0;
+    [HideInInspector] public int myGwangScore = 0;
+    [HideInInspector] public int myRedFlagScore = 0;
+    [HideInInspector] public int myBlueFlagScore = 0;
+    [HideInInspector] public int myNormalFlagScore = 0;
+    [HideInInspector] public int myAnimalScore = 0;
+    [HideInInspector] public int myPeeScore = 0;
 
-    public int opponentGwangScore = 0;
-    public int opponentRedFlagScore = 0;
-    public int opponentBlueFlagScore = 0;
-    public int opponentNormalFlagScore = 0;
-    public int opponentAnimalScore = 0;
-    public int opponentPeeScore = 0;
+    [HideInInspector] public int opponentGwangScore = 0;
+    [HideInInspector] public int opponentRedFlagScore = 0;
+    [HideInInspector] public int opponentBlueFlagScore = 0;
+    [HideInInspector] public int opponentNormalFlagScore = 0;
+    [HideInInspector] public int opponentAnimalScore = 0;
+    [HideInInspector] public int opponentPeeScore = 0;
 
     private void Start()
     {

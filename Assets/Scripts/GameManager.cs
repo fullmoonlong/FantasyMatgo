@@ -24,24 +24,24 @@ public class GameManager : MonoBehaviour
     public GameObject ArtifactPanel;
     public GameObject AttackPanel;
 
-    public int maxTurnCount; // 현재까지 진행된 턴 수
-    public int artifactNumMe;
-    public int artifactNumOpponent;
-    public bool isMyTurn; // 턴을 판정하는 bool 변수
-    public bool isGameEnd = false;
-    public bool oneTime;
-    public bool first;
+    [HideInInspector] public int maxTurnCount; // 현재까지 진행된 턴 수
+    [HideInInspector] public int artifactNumMe;
+    [HideInInspector] public int artifactNumOpponent;
+    [HideInInspector] public bool isMyTurn; // 턴을 판정하는 bool 변수
+    [HideInInspector] public bool isGameEnd = false;
+    [HideInInspector] public bool oneTime;
+    [HideInInspector] public bool first;
 
-    public bool[] isMyArtifact;
-    public bool[] isOpArtifact;
+    [HideInInspector] public bool[] isMyArtifact;
+    [HideInInspector] public bool[] isOpArtifact;
 
-    public bool isSetting;
-    public bool isMoving;
-    public bool isBattle;
-    public bool isBonus;
-    public bool isShake;
-    public bool isChoice;
-    public bool isAttack;
+    [HideInInspector] public bool isSetting;
+    [HideInInspector] public bool isMoving;
+    [HideInInspector] public bool isBattle;
+    [HideInInspector] public bool isBonus;
+    [HideInInspector] public bool isShake;
+    [HideInInspector] public bool isChoice;
+    [HideInInspector] public bool isAttack;
 
     public Image[] artifactMe;
     public Image[] artifactOp;
@@ -129,7 +129,7 @@ public class GameManager : MonoBehaviour
                 if (isMyTurn)
                 {
                     //print("두번째");
-                    CardManager.instance.CardInitialPosition(CardManager.instance.myHand);
+                    CardManager.instance.ArrangeHandPosition(CardManager.instance.myHand);
                     CardManager.instance.DrawCard(CardManager.instance.myHand, 1);
                     oneTime = false;
                 }
@@ -137,7 +137,7 @@ public class GameManager : MonoBehaviour
                 else
                 {
                     //print("두번째");
-                    CardManager.instance.CardInitialPosition(CardManager.instance.opponentHand);
+                    CardManager.instance.ArrangeHandPosition(CardManager.instance.opponentHand);
                     CardManager.instance.DrawCard(CardManager.instance.opponentHand, 1);
                     oneTime = false;
                 }

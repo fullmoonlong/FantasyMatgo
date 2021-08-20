@@ -112,7 +112,7 @@ public class CardClick : MonoBehaviour
                         print(GameManager.instance.isShake + " + " + GameManager.instance.isChoice + " + " + GameManager.instance.isBonus);
                         if (!GameManager.instance.isShake && !GameManager.instance.isChoice && !GameManager.instance.isBonus)
                         {
-                            CardManager.instance.CardInitialPosition(CardManager.instance.myHand);
+                            CardManager.instance.ArrangeHandPosition(CardManager.instance.myHand);
 
                             GameManager.instance.ScoreCheck(true);
 
@@ -149,7 +149,7 @@ public class CardClick : MonoBehaviour
 
                         if (!GameManager.instance.isShake && !GameManager.instance.isChoice && !GameManager.instance.isBonus)
                         {
-                            CardManager.instance.CardInitialPosition(CardManager.instance.opponentHand);
+                            CardManager.instance.ArrangeHandPosition(CardManager.instance.opponentHand);
                             GameManager.instance.ScoreCheck(false);
 
                             if (!GameManager.instance.ArtifactPanel.activeSelf)
@@ -497,13 +497,7 @@ public class CardClick : MonoBehaviour
             MoveFieldScoreField(CardManager.instance.field[CardManager.instance.field.Count - 1], handscore); // 피로 옮김
 
             CardManager.instance.FlipCard();
-            //GameManager.instance.isBonus = true;
-            //CardManager.instance.ResetPosition(hand);
-
-            //CardManager.instance.DrawCard(hand, 1);
-            //GameManager.instance.oneTime = false;
-            //CardManager.instance.FlipCard();
-
+         
             FlipAction(hand, handscore);
         }
        
@@ -587,32 +581,32 @@ public class CardClick : MonoBehaviour
     }
     void FlipChoiceCard(GameObject obj)
     {
-        CardManager.instance.ChoiceObj.Clear();
+        CardManager.instance.choiceObj.Clear();
         for (int i = 0; i < CardManager.instance.field.Count - 1; i++) // 카운트에서 1빼는 이유 -> 비교할 태그가 있음
         {
             if (CardManager.instance.field[i].CompareTag(obj.tag))// 태그가 같을 때 
             {
-                CardManager.instance.ChoiceObj.Add(CardManager.instance.field[i]);
+                CardManager.instance.choiceObj.Add(CardManager.instance.field[i]);
             }
 
         }
-        CardManager.instance.ChoiceObj.Remove(obj);
+        CardManager.instance.choiceObj.Remove(obj);
 
         //print(CardManager.instance.ChoiceObj.Count);
         //같은 카드 다음 포지션은 같은 태그의 갯수 * 0.5 만큼 x축을 더해준다.
-        float max = CardManager.instance.ChoiceObj[0].transform.position.x;
-        for(int i=0;i<CardManager.instance.ChoiceObj.Count;i++)
+        float max = CardManager.instance.choiceObj[0].transform.position.x;
+        for(int i=0;i<CardManager.instance.choiceObj.Count;i++)
         {
-            if(CardManager.instance.ChoiceObj[i].transform.position.x > max)
+            if(CardManager.instance.choiceObj[i].transform.position.x > max)
             {
-                max = CardManager.instance.ChoiceObj[i].transform.position.x;
+                max = CardManager.instance.choiceObj[i].transform.position.x;
             }
         }
 
         //obj.transform.position = new Vector3(Math.Max(CardManager.instance.ChoiceObj[0].transform.position.x, CardManager.instance.ChoiceObj[1].transform.position.x) + 0.5f,
         //    CardManager.instance.ChoiceObj[0].transform.position.y, CardManager.instance.ChoiceObj[0].transform.position.z - 0.1f * 3);
 
-        obj.transform.position = new Vector3(max + 0.5f, CardManager.instance.ChoiceObj[0].transform.position.y, CardManager.instance.ChoiceObj[0].transform.position.z - 0.3f);
+        obj.transform.position = new Vector3(max + 0.5f, CardManager.instance.choiceObj[0].transform.position.y, CardManager.instance.choiceObj[0].transform.position.z - 0.3f);
     }
 
     void AfterFlipChoiceCard()
@@ -621,30 +615,30 @@ public class CardClick : MonoBehaviour
 
         OpenChoicePanel = GameObject.Find("Canvas").transform.Find("Panel").gameObject;
         OpenChoicePanel.SetActive(true);
-        OpenChoicePanel.transform.GetChild(1).GetComponent<Image>().sprite = CardManager.instance.ChoiceObj[0].GetComponent<SpriteRenderer>().sprite;
-        OpenChoicePanel.transform.GetChild(2).GetComponent<Image>().sprite = CardManager.instance.ChoiceObj[1].GetComponent<SpriteRenderer>().sprite;
+        OpenChoicePanel.transform.GetChild(1).GetComponent<Image>().sprite = CardManager.instance.choiceObj[0].GetComponent<SpriteRenderer>().sprite;
+        OpenChoicePanel.transform.GetChild(2).GetComponent<Image>().sprite = CardManager.instance.choiceObj[1].GetComponent<SpriteRenderer>().sprite;
     }
     GameObject[] FlipBombCard(GameObject obj)//뒤집은 카든
     {
-        CardManager.instance.BombObj.Clear();
+        CardManager.instance.bombObj.Clear();
 
         for (int i = 0; i < CardManager.instance.field.Count - 1; i++) // 카운트에서 1빼는 이유 -> 비교할 태그가 있음
         {
             if (CardManager.instance.field[i].CompareTag(obj.tag)) // 태그가 같을 때 
             {
-                CardManager.instance.BombObj.Add(CardManager.instance.field[i]);
+                CardManager.instance.bombObj.Add(CardManager.instance.field[i]);
             }
 
         }
-        if (CardManager.instance.BombObj.Contains(obj))
+        if (CardManager.instance.bombObj.Contains(obj))
         {
-            CardManager.instance.BombObj.Remove(obj);
+            CardManager.instance.bombObj.Remove(obj);
         }
 
         //print(obj.name);
 
-        obj.transform.position = new Vector3(Math.Max(Math.Max(CardManager.instance.BombObj[0].transform.position.x, CardManager.instance.BombObj[1].transform.position.x), CardManager.instance.BombObj[2].transform.position.x) + 0.5f,
-                                                                                    CardManager.instance.BombObj[0].transform.position.y, CardManager.instance.BombObj[0].transform.position.z - 0.1f * 3);// 필드에 먼저 놔둠
+        obj.transform.position = new Vector3(Math.Max(Math.Max(CardManager.instance.bombObj[0].transform.position.x, CardManager.instance.bombObj[1].transform.position.x), CardManager.instance.bombObj[2].transform.position.x) + 0.5f,
+                                                                                    CardManager.instance.bombObj[0].transform.position.y, CardManager.instance.bombObj[0].transform.position.z - 0.1f * 3);// 필드에 먼저 놔둠
         //obj.transform.DOMove(new Vector3(Math.Max(Math.Max(BombObj[0].transform.position.x, BombObj[1].transform.position.x), BombObj[2].transform.position.x) + 0.5f,
         //                                                                            BombObj[0].transform.position.y, BombObj[0].transform.position.z - 0.1f * 3), 0.5f).SetEase(Ease.OutQuint);// 필드에 먼저 놔둠
 
@@ -652,7 +646,7 @@ public class CardClick : MonoBehaviour
 
         for (int i = 0; i < temp.Length; i++)
         {
-            temp[i] = CardManager.instance.BombObj[i];
+            temp[i] = CardManager.instance.bombObj[i];
         }
 
         return temp;
@@ -758,7 +752,7 @@ public class CardClick : MonoBehaviour
 
     }
 
-    public void EmptyFieldPosition(GameObject obj)
+    public void EmptyFieldPosition(GameObject obj) //받은 게임오브젝트의 필드 자리를 비워줌
     {
         int index = Array.IndexOf(CardManager.instance.fieldPosition, obj.transform.position);
 
@@ -771,11 +765,6 @@ public class CardClick : MonoBehaviour
         }
 
         CardManager.instance.EmptyIndexSort();//빈곳 인덱스 오름차순 정렬
-        for (int i=0;i<CardManager.instance.emptyIndex.Count;i++)
-        {
-            //print("남은 카드 인덱스 " + i + " : " + CardManager.instance.emptyIndex[i]);
-        }
-
     }
 
     GameObject OrignFieldPosition(GameObject[] obj)
@@ -802,15 +791,15 @@ public class CardClick : MonoBehaviour
 
         GameObject[] temp = new GameObject[2];
 
-        for (int i = 0; i < CardManager.instance.ChoiceObj.Count; i++)
+        for (int i = 0; i < CardManager.instance.choiceObj.Count; i++)
         {
-            temp[i] = CardManager.instance.ChoiceObj[i];
+            temp[i] = CardManager.instance.choiceObj[i];
         }
 
         if (GameManager.instance.isMyTurn)
         {
-            MoveFieldScoreField(CardManager.instance.ChoiceObj[num], CardManager.instance.myHandScore);
-            CardManager.instance.CardInitialPosition(CardManager.instance.myHand);
+            MoveFieldScoreField(CardManager.instance.choiceObj[num], CardManager.instance.myHandScore);
+            CardManager.instance.ArrangeHandPosition(CardManager.instance.myHand);
 
             GameManager.instance.ScoreCheck(true);
 
@@ -828,8 +817,8 @@ public class CardClick : MonoBehaviour
 
         else
         {
-            MoveFieldScoreField(CardManager.instance.ChoiceObj[num], CardManager.instance.opponentHandScore);
-            CardManager.instance.CardInitialPosition(CardManager.instance.opponentHand);
+            MoveFieldScoreField(CardManager.instance.choiceObj[num], CardManager.instance.opponentHandScore);
+            CardManager.instance.ArrangeHandPosition(CardManager.instance.opponentHand);
 
             GameManager.instance.ScoreCheck(false);
 
@@ -846,12 +835,12 @@ public class CardClick : MonoBehaviour
 
         }
 
-        CardManager.instance.ChoiceObj[1 - num].transform.position = OrignFieldPosition(temp).transform.position;
+        CardManager.instance.choiceObj[1 - num].transform.position = OrignFieldPosition(temp).transform.position;
 
-        CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(CardManager.instance.ChoiceObj[num])]--;
-        CardManager.instance.field.Remove(CardManager.instance.ChoiceObj[num]);
+        CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(CardManager.instance.choiceObj[num])]--;
+        CardManager.instance.field.Remove(CardManager.instance.choiceObj[num]);
 
-        CardManager.instance.ChoiceObj.Clear();
+        CardManager.instance.choiceObj.Clear();
       
         GameManager.instance.isChoice = false;
     }
@@ -940,7 +929,7 @@ public class CardClick : MonoBehaviour
     }
     public void EndArrange(List<GameObject> hand, bool isPlayer)
     {
-        CardManager.instance.CardInitialPosition(hand);
+        CardManager.instance.ArrangeHandPosition(hand);
         if (GameManager.instance.first)
         {
             print("first in ");

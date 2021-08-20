@@ -1,8 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using DG.Tweening;
 public class BattleSystem : MonoBehaviour
 {
 
@@ -26,25 +24,22 @@ public class BattleSystem : MonoBehaviour
     public GameObject player;
     public GameObject op;
 
-    public bool isKingCacled = false;
-    public int damage;
-    public int playerTotalDamage;
-    public int opponentTotalDamage;
+    [HideInInspector] public int damage;
+    [HideInInspector] public int playerTotalDamage;
+    [HideInInspector] public int opponentTotalDamage;
 
     //public GameObject startPanel;
 
     public BattleHUD playerHUD;
     public BattleHUD opHUD;
 
-    int attackCount;
+    [HideInInspector] public bool[] kingAttack;
+    [HideInInspector] public bool[] flagAttack;
+    [HideInInspector] public bool[] animalAttack;
 
-    public bool[] kingAttack;
-    public bool[] flagAttack;
-    public bool[] animalAttack;
-
-    public bool[] enemyKingAttack;
-    public bool[] enemyFlagAttack;
-    public bool[] enemyAnimalAttack;
+    [HideInInspector] public bool[] enemyKingAttack;
+    [HideInInspector] public bool[] enemyFlagAttack;
+    [HideInInspector] public bool[] enemyAnimalAttack;
     // Start is called before the first frame update
     // Update is called once per frame
 
@@ -247,7 +242,6 @@ public class BattleSystem : MonoBehaviour
                 opponentTotalDamage += 2;
                 Debug.Log("총단갯수6개 2뎀축적(적)");
             }
-            //print("result");
         }
 
         if (result == 7)
@@ -346,8 +340,6 @@ public class BattleSystem : MonoBehaviour
         {
             attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreEnemyThingPosition[2], Quaternion.identity));
         }
-
-        print(damage);
     }
     public void SoldierAttack(int soldier)
     {
