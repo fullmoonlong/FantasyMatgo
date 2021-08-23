@@ -292,34 +292,21 @@ public class CardManager : MonoBehaviour
         PrefabToCard(); // 프리팹 폴더에 존재하는 카드를 리스트에 담아 생성준비를 한다.
         CreateDeck(); // 플레이어가 준비한 카드 12장, 적이 준비한 카드 12장 을 더해 총 48장의 카드를 덱에 넣는다.
         ShuffleDeck(); //덱을 섞는다
-
+        //DrawBonusCard();
         DrawCard(myHand, 6); // 내손에 6장 씩 뽑는다.
 
         DrawCard(opponentHand, 6);  // 상대손에 6장 씩 뽑는다.
 
         DrawCard(field, 8);
 
-        FieldSameCard();
-        CheckSameCard(myHand);
-        CheckSameCard(opponentHand);
+        FieldSameCard(); // 필드에 같은 십이지신이 있는지 체크 있다면 겹치기
+        CheckSameCard(myHand); // 내손 카드 sort
+        CheckSameCard(opponentHand); // 상대 카드 sort
 
-        Invoke("FieldBonusCard", 0.5f);
+        Invoke("FieldBonusCard", 0.5f); // 0.5초 후에 필드에 보너스 카드가 있는지 체크
 
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            MatgoScore.instance.myGwangScore = 6;
-        }
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            MatgoScore.instance.opponentGwangScore = 6;
-        }
-    }
-
-    
     public int GetCardTagNum(GameObject obj) //가지고 있는 태그(십이지신)를 0~11로 표시
     {
         switch (obj.tag)
@@ -368,7 +355,7 @@ public class CardManager : MonoBehaviour
 
     void FieldSameCard() // 필드에 같은 태그를 가진 카드들이 존재하면 겹쳐줌
     {
-        //<필드에서 가지고 있는 태그(십이지신) storage에 넣기>
+        //<필드에서 가지고 있는 모든 태그(십이지신) 종류 storage에 넣기>
         for (int j = 0; j < 12; j++) // 태그 12개 다 돌리기
         {
             for (int i = 0; i < field.Count; i++) // 필드 돌리기
@@ -376,7 +363,7 @@ public class CardManager : MonoBehaviour
                 if (j == GetCardTagNum(field[i])) // 필드 i의 태그가 j와 같다면
                 {
                     sameTagCount[j]++; // 태그 값 더하기
-                    if (sameTagCount[j] == 1) // 필드 태그가 하나일 때
+                    if (sameTagCount[j] == 1) // 필드 태그가 하나일 때만
                     {
                         storage.Add(field[i]);
                     }
@@ -409,7 +396,20 @@ public class CardManager : MonoBehaviour
 
         EmptyIndexSort(); // 빈 자리 정렬
     }
+    public void DrawBonusCard()
+    {
 
+        for (int i = 0; i < cardDeck.Count; i++)
+        {
+            if (cardDeck[i].tag == "Bonus")
+            {
+                print("Bonus");
+                field.Add(cardDeck[i]);
+                cardDeck.RemoveAt(i);
+            }
+        }
+
+    }
     void FieldBonusCard() //필드에 보너스 카드가 있을 때
     {
         Sequence mysequence = DOTween.Sequence();
@@ -423,107 +423,30 @@ public class CardManager : MonoBehaviour
             if (field[i].tag == "Bonus") // 필드에 보너스 카드가 있으면
             {
                 index.Add(i); //인덱스에 몇번째 위치인지 넣어줌
+                break;
             }
 
             i++;
         }
 
-        int eIndex = emptyIndex[0];
-
-        switch (index.Count) // 보너스 카드 개수에 따라
+        if(index.Count > 0)
         {
+            CardClick.instance.EmptyFieldPosition(field[index[0]]); //보너스 카드의 필드 포지션을 지워줌
+            mysequence.Append(field[index[0]].transform.DOMove(scoreSoldierPosition[soldierEmptyIndex], 0.5f).SetEase(Ease.OutQuint)); //첫번째 사람의 피 점수 포지션으로 보너스 카드를 옮김
+            soldierEmptyIndex++; // 피위치 ++
+            myHandScore.Add(field[index[0]]); // 점수에 더해주기 
+            field.Remove(field[index[0]]); // 필드에서 지우기
 
-            case 1:
-                {
-                    CardClick.instance.EmptyFieldPosition(field[index[0]]); //보너스 카드의 필드 포지션을 지워줌
-                    mysequence.Append(field[index[0]].transform.DOMove(scoreSoldierPosition[soldierEmptyIndex], 0.5f).SetEase(Ease.OutQuint)); //첫번째 사람의 피 점수 포지션으로 보너스 카드를 옮김
-                    soldierEmptyIndex++; // 피위치 ++
-                    myHandScore.Add(field[index[0]]); // 점수에 더해주기 
-                    field.Remove(field[index[0]]); // 필드에서 지우기
+            FlipCard(); // 카드를 뒤집음
 
-                    FlipCard(); // 카드를 뒤집음
+            FlipSameCard();
 
-                    emptyIndex.RemoveAt(0); // 첫번째 빈자리 사용
+            emptyIndex.RemoveAt(0); // 첫번째 빈자리 사용
 
-                    EmptyIndexSort();//빈곳 인덱스 오름차순 정렬
+            EmptyIndexSort();//빈곳 인덱스 오름차순 정렬
 
-                    for (int j = 0; j < field.Count - 1; j++)
-                    {
-                        if (field[j].tag == field[field.Count - 1].tag) //만약 뒤집은 카드랑 필드에 같은 카드가 있으면 옆에 겹쳐줌
-                        {
-                            field[field.Count - 1].transform.position = new Vector3(field[j].transform.position.x + 0.5f, field[j].transform.position.y, field[j].transform.position.z - 0.1f);
-                            emptyIndex.Add(eIndex); //자리 비워줌 
-                            EmptyIndexSort(); // 정렬
-                        }
-
-                    }
-
-                    FieldBonusCard(); // 플립한 카드가 보너스 카드일 수도 있어서 한번 더 체크
-
-                    break;
-                }
-
-            case 2:
-                {
-                    CardClick.instance.EmptyFieldPosition(field[index[0]]);
-                    mysequence.Append(field[index[0]].transform.DOMove(scoreSoldierPosition[soldierEmptyIndex], 0.5f).SetEase(Ease.OutQuint));// 둘다 옮기기
-                    soldierEmptyIndex++;
-                    CardClick.instance.EmptyFieldPosition(field[index[1]]);
-                    mysequence.Append(field[index[1]].transform.DOMove(scoreSoldierPosition[soldierEmptyIndex], 0.5f).SetEase(Ease.OutQuint));
-                    soldierEmptyIndex++;
-                    myHandScore.Add(field[index[0]]); // 점수에 더해주기
-                    myHandScore.Add(field[index[1]]);
-
-
-                    field.Remove(field[index[0]]); // 필드에서 지우기
-                    field.Remove(field[index[1] - 1]);
-
-                    FlipCard();
-
-                    emptyIndex.RemoveAt(0);
-
-                    EmptyIndexSort();//빈곳 인덱스 오름차순 정렬
-
-                    //맞췄을 때
-
-                    for (int j = 0; j < field.Count - 1; j++)
-                    {
-                        if (field[j].tag == field[field.Count - 1].tag)
-                        {
-                            print("같은게있음");
-                            field[field.Count - 1].transform.position = new Vector3(field[j].transform.position.x + 0.5f, field[j].transform.position.y, field[j].transform.position.z - 0.1f);
-                            emptyIndex.Add(eIndex);
-                            EmptyIndexSort();
-                        }
-                    }
-
-                    FlipCard();
-
-                    eIndex = emptyIndex[0];
-
-                    emptyIndex.RemoveAt(0);
-
-                    EmptyIndexSort();//빈곳 인덱스 오름차순 정렬
-
-                    for (int j = 0; j < field.Count - 1; j++)
-                    {
-                        if (field[j].tag == field[field.Count - 1].tag)
-                        {
-                            print("같은게있음");
-                            field[field.Count - 1].transform.position = new Vector3(field[j].transform.position.x + 0.5f, field[j].transform.position.y, field[j].transform.position.z - 0.1f);
-                            emptyIndex.Add(eIndex);
-                            EmptyIndexSort();
-                        }
-                    }
-                    break;
-                }
-            default:
-                break;
-
+            FieldBonusCard(); // 플립한 카드가 보너스 카드일 수도 있어서 한번 더 체크
         }
-
-        GameManager.instance.oneTime = false;
-
     }
     public void ShuffleDeck()
     {
@@ -650,8 +573,31 @@ public class CardManager : MonoBehaviour
 
         ArrangeHandPosition(cardList);
     }
+    public void FlipSameCard()
+    {
+        Sequence mysequence = DOTween.Sequence();
+
+        bool SameTag = false;
+
+        for (int j = 0; j < field.Count - 1; j++)
+        {
+            if (field[j].tag == field[field.Count - 1].tag) //만약 뒤집은 카드랑 필드에 같은 카드가 있으면 옆에 겹쳐줌
+            {
+                field[field.Count - 1].transform.position = new Vector3(field[j].transform.position.x + 0.5f, field[j].transform.position.y, field[j].transform.position.z - 0.1f);
+                emptyIndex.Add(emptyIndex[0]); //자리 비워줌 
+                EmptyIndexSort(); // 정렬
+                SameTag = true;
+            }
+        }
+
+        if(!SameTag)
+        {
+            mysequence.Append(field[field.Count - 1].transform.DOMove(fieldPosition[emptyIndex[0]], 0.5f)); //마지막 포지션은 비어있는 필드 포지션
+        }
+    }
     public void FlipCard()
     {
+        
         if (cardDeck.Count == 0)
         {
             isFlip = false;
@@ -659,11 +605,12 @@ public class CardManager : MonoBehaviour
         }
         isFlip = true;
         field.Add(cardDeck[0]);// 뒤집기
-        field[field.Count - 1].transform.position = fieldPosition[emptyIndex[0]]; //마지막 포지션은 비어있는 필드 포지션
+
         if (GetCardTagNum(field[field.Count - 1]) < 13)
         {
             sameTagCount[GetCardTagNum(field[field.Count - 1])]++;
         }
+
         cardDeck.RemoveAt(0);//카드 덱 삭제
     }
     public void ArrangeHandPosition(List<GameObject> cardList)

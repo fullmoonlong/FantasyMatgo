@@ -174,7 +174,33 @@ public class GameManager : MonoBehaviour
                 isking[i] = true;
             }
 
-            int flag = 0;
+        }
+
+        if (!isanimal[0] && animal == 3)
+        {
+            isAttack = true;
+            //print("동물 공격");
+            BattleSystem.instance.GoDoRiAttack();
+            isanimal[0] = true;
+        }
+
+        int result = animal + thing;
+
+        for (int i = 0; i < 5; i++)
+        {
+            if (!isanimal[i + 1] && result == i + 5)
+            {
+                isAttack = true;
+                BattleSystem.instance.ResultAnimal(result);
+                isanimal[i + 1] = true;
+            }
+        }
+
+
+        int flag = 0;
+
+        for (int i=0;i<3;i++)
+        {
             switch (i)
             {
                 case 0:
@@ -189,7 +215,6 @@ public class GameManager : MonoBehaviour
                 default:
                     break;
             }
-
             if (!isflag[i] && flag == 3)
             {
                 isAttack = true;
@@ -198,8 +223,8 @@ public class GameManager : MonoBehaviour
                 isflag[i] = true;
             }
         }
+        result = red + blue + normal;
 
-        int result = red + blue + normal;
         for (int i = 0; i < 5; i++)
         {
             if (!isflag[i + 3] && result == i + 6)
@@ -207,26 +232,6 @@ public class GameManager : MonoBehaviour
                 isAttack = true;
                 BattleSystem.instance.ResultFlag(result);
                 isflag[i + 3] = true;
-            }
-        }
-
-        if (!isanimal[0] && animal == 3)
-        {
-            isAttack = true;
-            //print("동물 공격");
-            BattleSystem.instance.GoDoRiAttack();
-            isanimal[0] = true;
-        }
-
-        result = animal + thing;
-
-        for(int i=0;i<5;i++)
-        {
-            if (!isanimal[i + 1] && result == i + 5) 
-            {
-                isAttack = true;
-                BattleSystem.instance.ResultAnimal(result);
-                isanimal[i + 1] = true;
             }
         }
 
@@ -248,8 +253,6 @@ public class GameManager : MonoBehaviour
     }
     public IEnumerator AttackAction(GameObject who, PlayerScript ui, BattleHUD hud)
     {
-        //AttackPanel.SetActive(true);
-
         GameObject[] fireObj = GameObject.FindGameObjectsWithTag("fire");
 
         for (int i = 0; i < fireObj.Length; i++)
