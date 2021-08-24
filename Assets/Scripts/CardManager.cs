@@ -73,7 +73,7 @@ public class CardManager : MonoBehaviour
 
     private List<GameObject> storage; 
   
-    [HideInInspector] public int myCardCount;
+    [HideInInspector] public int hitCardCount;
  
     [HideInInspector] public GameObject curObj; // 클릭한 게임 오브젝트
     
@@ -81,20 +81,6 @@ public class CardManager : MonoBehaviour
 
     bool isSame; //손에서 필드에 같은 (맞출) 카드가 있는지 체크
     #region SCORE
-    // my
-    [HideInInspector] public int gwangCount;
-    [HideInInspector] public int redFlagCount;
-    [HideInInspector] public int blueFlagCount;
-    [HideInInspector] public int normalFlagCount;
-    [HideInInspector] public int animalCount;
-    [HideInInspector] public int peeCount;
-    // op
-    [HideInInspector] public int enemyGwangCount;
-    [HideInInspector] public int enemyRedFlagCount;
-    [HideInInspector] public int enemyBlueFlagCount;
-    [HideInInspector] public int enemyNormalFlagCount;
-    [HideInInspector] public int enemyAnimalCount;
-    [HideInInspector] public int enemyPeeCount;
     // my
     [HideInInspector] public bool isGwang3 = true;
     [HideInInspector] public bool isGwang4 = true;
@@ -156,7 +142,7 @@ public class CardManager : MonoBehaviour
 
         isFlip = false;
 
-        myCardCount = 0;
+        hitCardCount = 0;
 
         isSame = false;
         //PlayerPrefs.DeleteAll();
@@ -441,10 +427,6 @@ public class CardManager : MonoBehaviour
 
             FlipSameCard();
 
-            emptyIndex.RemoveAt(0); // 첫번째 빈자리 사용
-
-            EmptyIndexSort();//빈곳 인덱스 오름차순 정렬
-
             FieldBonusCard(); // 플립한 카드가 보너스 카드일 수도 있어서 한번 더 체크
         }
     }
@@ -584,7 +566,7 @@ public class CardManager : MonoBehaviour
             if (field[j].tag == field[field.Count - 1].tag) //만약 뒤집은 카드랑 필드에 같은 카드가 있으면 옆에 겹쳐줌
             {
                 field[field.Count - 1].transform.position = new Vector3(field[j].transform.position.x + 0.5f, field[j].transform.position.y, field[j].transform.position.z - 0.1f);
-                emptyIndex.Add(emptyIndex[0]); //자리 비워줌 
+                emptyIndex.Add(emptyIndex[0]); //자리 비워줌
                 EmptyIndexSort(); // 정렬
                 SameTag = true;
             }
@@ -598,11 +580,12 @@ public class CardManager : MonoBehaviour
     public void FlipCard()
     {
         
-        if (cardDeck.Count == 0)
+        if (cardDeck.Count == 0) // 카드덱에 카드가 없다면
         {
             isFlip = false;
             return;
         }
+
         isFlip = true;
         field.Add(cardDeck[0]);// 뒤집기
 
