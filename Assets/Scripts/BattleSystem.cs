@@ -16,7 +16,7 @@ public class BattleSystem : MonoBehaviour
     public GameObject attackImage;
     public GameObject flyAttackImage;
     public List<GameObject> attackMotionImage;
-    public GameObject startPanel;
+    public GameObject actionPanel;
 
     public PlayerScript playerInfo;
     public PlayerScript opponentInfo;
@@ -27,8 +27,6 @@ public class BattleSystem : MonoBehaviour
     [HideInInspector] public int damage;
     [HideInInspector] public int playerTotalDamage;
     [HideInInspector] public int opponentTotalDamage;
-
-    //public GameObject startPanel;
 
     public BattleHUD playerHUD;
     public BattleHUD opHUD;

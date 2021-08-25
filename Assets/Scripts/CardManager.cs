@@ -579,7 +579,6 @@ public class CardManager : MonoBehaviour
     }
     public void FlipCard()
     {
-        
         if (cardDeck.Count == 0) // 카드덱에 카드가 없다면
         {
             isFlip = false;
@@ -603,7 +602,7 @@ public class CardManager : MonoBehaviour
             cardList = cardList.OrderBy(x => GetCardTagNum(x)).ToList();
             for (int i = 0; i < cardList.Count; i++)
             {
-                cardList[i].transform.DOMove(myHandPosition[i], 1f).SetEase(Ease.OutQuint);
+                cardList[i].transform.DOMove(myHandPosition[i], 1f).SetEase(Ease.OutQuint).OnComplete(()=> CardClick.instance.OnOffPanel(false));
             }
             CheckSameCard(cardList);
             CheckSameCard(opponentHand);
@@ -613,7 +612,7 @@ public class CardManager : MonoBehaviour
             cardList = cardList.OrderBy(x => GetCardTagNum(x)).ToList();
             for (int i = 0; i < cardList.Count; i++)
             {
-                cardList[i].transform.DOMove(opponentHandPosition[i], 1f).SetEase(Ease.OutQuint);
+                cardList[i].transform.DOMove(opponentHandPosition[i], 1f).SetEase(Ease.OutQuint).OnComplete(() => CardClick.instance.OnOffPanel(false));
             }
             CheckSameCard(cardList);
             CheckSameCard(myHand);
