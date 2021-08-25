@@ -431,7 +431,8 @@ public class CardClick : MonoBehaviour
 
                     MoveBombFieldScoreField(temp, clickObj, handscore);
 
-                    EmptyFieldPosition(OrignFieldPosition(temp));
+                    int index = CheckEmptyPosition(OrignFieldPosition(temp));
+                    EmptyFieldPosition(index);
                     CardManager.instance.FlipCard();
                     StartCoroutine(FlipCardHit(clickObj, hand, handscore));
 
@@ -526,7 +527,8 @@ public class CardClick : MonoBehaviour
 
 
                         MoveBombFieldScoreField(temp, CardManager.instance.field[CardManager.instance.field.Count - 1], handscore);
-                        EmptyFieldPosition(OrignFieldPosition(temp));
+                        int index = CheckEmptyPosition(OrignFieldPosition(temp));
+                        EmptyFieldPosition(index);
                         break;
                     }
 
@@ -633,7 +635,8 @@ public class CardClick : MonoBehaviour
         StartCoroutine(GameManager.instance.CompleteMoving());
 
         GameManager.instance.isMoving = true;
-        clickObj.transform.DOMove(CardManager.instance.ScoreField(clickObj, score), 0.5f).SetEase(Ease.OutQuint).OnComplete(()=> EmptyFieldPosition(clickObj)); // 점수판위치로 이동
+        int index = CheckEmptyPosition(clickObj);
+        clickObj.transform.DOMove(CardManager.instance.ScoreField(clickObj, score), 0.5f).SetEase(Ease.OutQuint).OnComplete(()=> EmptyFieldPosition(index)); // 점수판위치로 이동
         StartCoroutine(GameManager.instance.CompleteMoving());
 
         score.Add(CardManager.instance.field[CardManager.instance.field.Count - 1]);
@@ -654,7 +657,8 @@ public class CardClick : MonoBehaviour
         }
         
         GameManager.instance.isMoving = true;
-        moveObj.transform.DOMove(CardManager.instance.ScoreField(moveObj, score), 0.5f).SetEase(Ease.OutQuint).OnComplete(()=> EmptyFieldPosition(moveObj)); // 점수판 위치 이동
+        int index = CheckEmptyPosition(moveObj);
+        moveObj.transform.DOMove(CardManager.instance.ScoreField(moveObj, score), 0.5f).SetEase(Ease.OutQuint).OnComplete(()=> EmptyFieldPosition(index)); // 점수판 위치 이동
         StartCoroutine(GameManager.instance.CompleteMoving());
         //print(score.Count);
         score.Add(moveObj); // 점수에 더해주기 
@@ -706,19 +710,24 @@ public class CardClick : MonoBehaviour
 
     }
 
-    public void EmptyFieldPosition(GameObject obj) //받은 게임오브젝트의 필드 자리를 비워줌
+    public int CheckEmptyPosition(GameObject obj) //받은 게임오브젝트의 필드 자리를 비워줌
     {
         int index = Array.IndexOf(CardManager.instance.fieldPosition, obj.transform.position);
 
+        return index;
+    }
+
+    public void EmptyFieldPosition(int index)
+    {
         if (!CardManager.instance.emptyIndex.Contains(index)) // 원래 가지고 있는 값이 아니면 // 값이 없으면 음수로 들어가서 음수는 빼줘야함
         {
             if (index >= 0)
             {
                 CardManager.instance.emptyIndex.Add(index);
+                CardManager.instance.EmptyIndexSort();//빈곳 인덱스 오름차순 정렬
             }
         }
 
-        CardManager.instance.EmptyIndexSort();//빈곳 인덱스 오름차순 정렬
     }
 
     GameObject OrignFieldPosition(GameObject[] obj)

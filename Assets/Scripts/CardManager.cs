@@ -417,7 +417,8 @@ public class CardManager : MonoBehaviour
 
         if(index.Count > 0)
         {
-            CardClick.instance.EmptyFieldPosition(field[index[0]]); //보너스 카드의 필드 포지션을 지워줌
+            int check = CardClick.instance.CheckEmptyPosition(field[index[0]]);
+            CardClick.instance.EmptyFieldPosition(check); //보너스 카드의 필드 포지션을 지워줌
             mysequence.Append(field[index[0]].transform.DOMove(scoreSoldierPosition[soldierEmptyIndex], 0.5f).SetEase(Ease.OutQuint)); //첫번째 사람의 피 점수 포지션으로 보너스 카드를 옮김
             soldierEmptyIndex++; // 피위치 ++
             myHandScore.Add(field[index[0]]); // 점수에 더해주기 
