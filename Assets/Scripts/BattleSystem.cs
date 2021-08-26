@@ -107,7 +107,7 @@ public class BattleSystem : MonoBehaviour
             case 3:
                 damage += 3;
 
-                if (GameManager.instance.isMyTurn == false)
+                if (GameManager.instance.isMyTurn)
                 {
                     playerTotalDamage += 3;
 
@@ -124,7 +124,7 @@ public class BattleSystem : MonoBehaviour
 
             case 4:
                 damage += 4;
-                if (GameManager.instance.isMyTurn == false)
+                if (GameManager.instance.isMyTurn)
                 {
                     playerTotalDamage += 4;
                 
@@ -142,7 +142,7 @@ public class BattleSystem : MonoBehaviour
             case 5:
                 damage += 5;
 
-                if (GameManager.instance.isMyTurn == false)
+                if (GameManager.instance.isMyTurn)
                 {
                     playerTotalDamage += 5;
               
@@ -173,7 +173,7 @@ public class BattleSystem : MonoBehaviour
         if (red == 3)
         {
             damage += 3;
-            if (GameManager.instance.isMyTurn == false)
+            if (GameManager.instance.isMyTurn)
             {
                 playerTotalDamage += 3;
             
@@ -190,7 +190,7 @@ public class BattleSystem : MonoBehaviour
         if (blue == 3)
         {
             damage += 3;
-            if (GameManager.instance.isMyTurn == false)
+            if (GameManager.instance.isMyTurn)
             {
                 playerTotalDamage += 3;
              
@@ -208,7 +208,7 @@ public class BattleSystem : MonoBehaviour
         if (brown >= 3)
         {
             damage += 3;
-            if (GameManager.instance.isMyTurn == false)
+            if (GameManager.instance.isMyTurn)
             {
                 playerTotalDamage += 3;
                
@@ -230,7 +230,7 @@ public class BattleSystem : MonoBehaviour
         if (result == 6)
         {
             damage += 2;
-            if (GameManager.instance.isMyTurn == false)
+            if (GameManager.instance.isMyTurn)
             {
                 playerTotalDamage += 2;
             }
@@ -243,7 +243,7 @@ public class BattleSystem : MonoBehaviour
         if (result == 7)
         {
             damage += 3;
-            if (GameManager.instance.isMyTurn == false)
+            if (GameManager.instance.isMyTurn)
             {
                 playerTotalDamage += 3;
             }
@@ -259,7 +259,7 @@ public class BattleSystem : MonoBehaviour
             for (int i = 7; i < result; i++)
             {
                 damage++;
-                if (GameManager.instance.isMyTurn == false)
+                if (GameManager.instance.isMyTurn)
                 {
                     playerTotalDamage++;
                 }
@@ -271,12 +271,12 @@ public class BattleSystem : MonoBehaviour
         }
 
 
-        if (GameManager.instance.isMyTurn == false)
+        if (GameManager.instance.isMyTurn)
         {
             attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreBlueFlagPosition[1], Quaternion.identity));
         }
 
-        if (GameManager.instance.isMyTurn)
+        if (!GameManager.instance.isMyTurn)
         {
             attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreEnemyBlueFlagPosition[1], Quaternion.identity));
         }
@@ -286,7 +286,7 @@ public class BattleSystem : MonoBehaviour
     public void GoDoRiAttack()
     {
         damage += 5;
-        if (GameManager.instance.isMyTurn == false)
+        if (GameManager.instance.isMyTurn)
         {
             playerTotalDamage += 5;
 
@@ -308,7 +308,7 @@ public class BattleSystem : MonoBehaviour
             for (int i = 4; i < result; i++)
             {
                 damage++;
-                if (GameManager.instance.isMyTurn == false)
+                if (GameManager.instance.isMyTurn)
                 {
                     playerTotalDamage++;
                 }
@@ -320,29 +320,15 @@ public class BattleSystem : MonoBehaviour
         }
 
 
-        if (GameManager.instance.isMyTurn == false)
+        if (GameManager.instance.isMyTurn)
         {
             attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreThingPosition[2], Quaternion.identity));
         }
 
-        if (GameManager.instance.isMyTurn)
+        if (!GameManager.instance.isMyTurn)
         {
             attackMotionImage.Add(Instantiate(flyAttackImage, CardManager.instance.scoreEnemyThingPosition[2], Quaternion.identity));
         }
     }
-    public void SoldierAttack(int soldier)
-    {
-        if (soldier >= 10)
-        {
-            if (GameManager.instance.isMyTurn == false)
-            {
-                playerTotalDamage += (CardManager.instance.soldierEmptyIndex - 9);
-            }
-            else
-            {
-                opponentTotalDamage += (CardManager.instance.enemySoldierEmptyIndex - 9);
-            }
-        }
-
-    }
+   
 }

@@ -73,38 +73,21 @@ public class CardClick : MonoBehaviour
 
     public void OnMouseUp()
     {
+        
         if (!EventSystem.current.IsPointerOverGameObject())
         {
-            if (GameManager.instance.isSetting && !GameManager.instance.isMoving) // 셋팅이 끝나고 카드 움직이 끝났을 때 시작
+            if (GameManager.instance.isSetting) // 셋팅이 끝나고 카드 움직이 끝났을 때 시작
             {
                 #region PlayerTurn	
                 if (GameManager.instance.isMyTurn == true)//만약 플레이어 턴이면	
                 {
                     if(CardManager.instance.myHand.Contains(gameObject)) // 내손에 내가 클릭한 게임오브젝트가 있어야함
                     {
-                        WhoTurn(CardManager.instance.myHand, CardManager.instance.myHandScore); // 턴 진행
+                        OnOffPanel(true);
+                        CardManager.instance.curHand = CardManager.instance.myHand;
+                        CardManager.instance.curHandScore = CardManager.instance.myHandScore;
 
-                        if (!GameManager.instance.isShake && !GameManager.instance.isChoice && !GameManager.instance.isBonus) //흔들기, 선택, 보느스 카드가 아닐때만
-                        {
-                            CardManager.instance.ArrangeHandPosition(CardManager.instance.myHand); // 내손에 있는 카드 포지션 sort
-
-                            GameManager.instance.ScoreCheck(true); // 점수 체크 뒤 아티팩트 on off 결정
-
-                            if (!GameManager.instance.ArtifactPanel.activeSelf) // 만약 아티팩트창이 안 켜져 있다면
-                            {
-                                GameManager.instance.AttackPanel.SetActive(true); // 공격 판넬 띄움 -> 공격하는 도중에는 클릭을 ui로 막으려고 판넬 on 
-                             
-                                StartCoroutine(GameManager.instance.FixedMade(CardManager.instance.kingEmptyIndex, CardManager.instance.enemyKingEmptyIndex, 
-                                    CardManager.instance.redFlagEmptyIndex, CardManager.instance.blueFlagEmptyIndex, CardManager.instance.normalFlagEmptyIndex,
-                                CardManager.instance.animalEmptyIndex, CardManager.instance.thingEmptyIndex, 
-                                BattleSystem.instance.kingAttack, BattleSystem.instance.flagAttack, BattleSystem.instance.animalAttack, 
-                                BattleSystem.instance.op, BattleSystem.instance.opponentInfo, BattleSystem.instance.opHUD)); // 고정 데미지 주기
-
-                                EndArrange(CardManager.instance.myHand, false); // 턴 넘김
-                            }
-                        }
-
-                        GameManager.instance.isBonus = false;
+                        WhoTurn(CardManager.instance.curHand, CardManager.instance.curHandScore); // 턴 진행
                     }
 
                     else
@@ -120,29 +103,12 @@ public class CardClick : MonoBehaviour
                 {
                     if (CardManager.instance.opponentHand.Contains(gameObject)) // 내손에 이 게임오브젝트가 있을 때
                     {
-                        WhoTurn(CardManager.instance.opponentHand, CardManager.instance.opponentHandScore);
+                        OnOffPanel(true);
+                        CardManager.instance.curHand = CardManager.instance.opponentHand;
+                        CardManager.instance.curHandScore = CardManager.instance.opponentHandScore;
+
+                        WhoTurn(CardManager.instance.curHand, CardManager.instance.curHandScore);
                
-                        if (!GameManager.instance.isShake && !GameManager.instance.isChoice && !GameManager.instance.isBonus)
-                        {
-                            CardManager.instance.ArrangeHandPosition(CardManager.instance.opponentHand);
-                            GameManager.instance.ScoreCheck(false);
-
-                            if (!GameManager.instance.ArtifactPanel.activeSelf)
-                            {
-                                GameManager.instance.AttackPanel.SetActive(true);
-                               
-                                StartCoroutine(GameManager.instance.FixedMade(CardManager.instance.enemyKingEmptyIndex, CardManager.instance.kingEmptyIndex, 
-                                    CardManager.instance.enemyRedFlagEmptyIndex, CardManager.instance.enemyBlueFlagEmptyIndex, 
-                                    CardManager.instance.enemyNormalFlagEmptyIndex, CardManager.instance.enemyAnimalEmptyIndex, 
-                                    CardManager.instance.enemyThingEmptyIndex, BattleSystem.instance.enemyKingAttack, 
-                                    BattleSystem.instance.enemyFlagAttack, BattleSystem.instance.enemyAnimalAttack, 
-                                    BattleSystem.instance.player, BattleSystem.instance.playerInfo, BattleSystem.instance.playerHUD));
-
-                                EndArrange(CardManager.instance.opponentHandScore, true);
-                            }
-
-                        }
-                        GameManager.instance.isBonus = false;
                     }
 
                     else
@@ -162,9 +128,46 @@ public class CardClick : MonoBehaviour
     {
         BattleSystem.instance.actionPanel.SetActive(status);
     }
+
+    public void FixedSetting()
+    {
+        if (!GameManager.instance.isShake && !GameManager.instance.isChoice && !GameManager.instance.isBonus) //흔들기, 선택, 보느스 카드가 아닐때만
+        {
+            GameManager.instance.ScoreCheck(GameManager.instance.isMyTurn); // 점수 체크 뒤 아티팩트 on off 결정
+
+            if (!GameManager.instance.ArtifactPanel.activeSelf) // 만약 아티팩트창이 안 켜져 있다면
+            {
+                GameManager.instance.AttackPanel.SetActive(true); // 공격 판넬 띄움 -> 공격하는 도중에는 클릭을 ui로 막으려고 판넬 on 
+
+                if (GameManager.instance.isMyTurn)
+                {
+                    StartCoroutine(GameManager.instance.FixedMade(CardManager.instance.kingEmptyIndex, CardManager.instance.enemyKingEmptyIndex,
+                    CardManager.instance.redFlagEmptyIndex, CardManager.instance.blueFlagEmptyIndex, CardManager.instance.normalFlagEmptyIndex,
+                    CardManager.instance.animalEmptyIndex, CardManager.instance.thingEmptyIndex,
+                    BattleSystem.instance.kingAttack, BattleSystem.instance.flagAttack, BattleSystem.instance.animalAttack,
+                    BattleSystem.instance.op, BattleSystem.instance.opponentInfo, BattleSystem.instance.opHUD)); // 고정 데미지 주기
+
+                }
+
+                else
+                {
+                    StartCoroutine(GameManager.instance.FixedMade(CardManager.instance.enemyKingEmptyIndex, CardManager.instance.kingEmptyIndex,
+                                   CardManager.instance.enemyRedFlagEmptyIndex, CardManager.instance.enemyBlueFlagEmptyIndex,
+                                   CardManager.instance.enemyNormalFlagEmptyIndex, CardManager.instance.enemyAnimalEmptyIndex,
+                                   CardManager.instance.enemyThingEmptyIndex, BattleSystem.instance.enemyKingAttack,
+                                   BattleSystem.instance.enemyFlagAttack, BattleSystem.instance.enemyAnimalAttack,
+                                   BattleSystem.instance.player, BattleSystem.instance.playerInfo, BattleSystem.instance.playerHUD));
+
+                }
+            }
+        }
+
+        GameManager.instance.isBonus = false;
+    }
     void WhoTurn(List<GameObject> hand, List<GameObject> handscore)
     {
-        BattleSystem.instance.actionPanel.SetActive(true);
+        CardManager.instance.curObj = gameObject;
+
         if (gameObject.name == "Bomb(Clone)") // 선택한 카드가 폭탄 카드일 때
         {
             CardManager.instance.hitCardCount = 1;
@@ -173,9 +176,7 @@ public class CardClick : MonoBehaviour
 
             CardAction(gameObject, hand, handscore);
 
-            GameManager.instance.isMoving = true;
-            gameObject.transform.DOMove(new Vector3(-1f, 0f, 0f), 0.5f).SetEase(Ease.OutQuint).OnComplete(()=> OnOffPanel(false)); //맞춘 오브젝트 옆으로 이동
-            StartCoroutine(GameManager.instance.CompleteMoving()); // 오브젝트 이동하는 동안 코루틴 켜서 클릭 못하게 만듬
+            gameObject.transform.DOMove(new Vector3(-1f, 0f, 0f), 0.5f).SetEase(Ease.OutQuint); //맞춘 오브젝트 옆으로 이동
         }
 
         else if(gameObject.tag == "Bonus") // 선택한 카드가 보너스 카드일 때
@@ -215,162 +216,6 @@ public class CardClick : MonoBehaviour
      
     }
 
-    IEnumerator FlipCardHit(GameObject clickObj, List<GameObject> hand, List<GameObject> handscore)
-    {
-        yield return new WaitForSeconds(1f);
-
-        switch (CardManager.instance.hitCardCount)
-        {
-            case 1:
-                {
-                    if (!CardManager.instance.isFlip) // 플립할 카드가 없다면 멈춤
-                    {
-                        break;
-                    }
-
-                    else
-                    {
-                        if (CardManager.instance.field[CardManager.instance.field.Count - 1].CompareTag(clickObj.tag)) // 뒤집은 카드랑 내가 냈던 카드랑 같으면
-                        {
-                            print("쪽");
-                            CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(clickObj)]--; // 내가 낸 카드
-                            CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(CardManager.instance.field[CardManager.instance.field.Count - 1])]--; //뒤집은 카드 필드에서 빼기 //뒤집은 카드랑
-
-                            Chu(clickObj, handscore); //쪽 함수 실행
-                            break;
-                        }
-
-                        else
-                        {
-                            print("태그가 다름");
-                            FlipAction(hand, handscore);
-                        }
-                    }
-                    break;
-                }
-
-            case 2:
-                {
-                    if (!CardManager.instance.isFlip)
-                    {
-                        CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(hittedCard)]--;
-                        CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(clickObj)]--;
-
-                        StartCoroutine(MoveFieldScoreField(hittedCard, handscore));
-                        StartCoroutine(MoveFieldScoreField(clickObj, handscore));
-                        
-                        //EmptyFieldPosition(hittedCard);
-                        break;
-                    }
-
-                    else
-                    {
-                        if (CardManager.instance.field[CardManager.instance.field.Count - 1].CompareTag(clickObj.tag)) // 같은거 맞음
-                        {
-                            //뻑
-                            CardManager.instance.DeleteOutline(clickObj);
-                            SetNextPosition(clickObj, CardManager.instance.field[CardManager.instance.field.Count - 1]);
-                            //clickObj.transform.DOMove(new Vector3(CardManager.instance.field[CardManager.instance.field.Count - 1].transform.position.x + 0.5f, CardManager.instance.field[CardManager.instance.field.Count - 1].transform.position.y, CardManager.instance.field[CardManager.instance.field.Count - 1].transform.position.z - 0.1f), 0.5f).OnComplete(() => CardManager.instance.DeleteOutline(clickObj));
-
-                            print("뻑");
-                            break;
-                        }
-
-                        else
-                        {
-                            if (HandCheck(hand, clickObj).Length == 2) // 내손에 같은 카드가 3장일 때 
-                            {
-                                GameObject[] temp = HandCheck(hand, clickObj);
-
-                                hand.Remove(temp[0]);
-                                hand.Remove(temp[1]);
-
-                                SetNextPosition(clickObj, temp[0]);
-                                SetNextPosition(temp[0], temp[1]);
-
-                                CardManager.instance.field.Add(temp[0]);
-                                CardManager.instance.field.Add(temp[1]);
-
-                                StartCoroutine(MoveFieldScoreField(temp[0], handscore));
-                                StartCoroutine(MoveFieldScoreField(temp[1], handscore));
-
-                                CardManager.instance.DrawBombCard(hand);
-                            }
-
-
-                            CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(hittedCard)]--;
-                            CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(clickObj)]--;
-
-                            StartCoroutine(MoveFieldScoreField(hittedCard, handscore));
-                            StartCoroutine(MoveFieldScoreField(clickObj, handscore));
-
-                            //EmptyFieldPosition(hittedCard);
-
-                            FlipAction(hand, handscore);
-                        }
-                    }
-
-                    break;
-                }
-
-            case 3:
-                {
-                    if (!CardManager.instance.isFlip)
-                    {
-                        StartCoroutine(MoveFieldScoreField(clickObj, handscore));
-                        AfterFlipChoiceCard();
-                        break;
-                    }
-
-                    else
-                    {
-                        if (CardManager.instance.field[CardManager.instance.field.Count - 1].CompareTag(clickObj.tag)) // 같은거 맞음
-                        {
-                            //폭탄
-                            print("폭탄입니다.");
-
-                            GameObject[] temp = new GameObject[3];
-                            temp = FlipBombCard(CardManager.instance.field[CardManager.instance.field.Count - 1]);
-
-                            MoveBombFieldScoreField(temp, CardManager.instance.field[CardManager.instance.field.Count - 1], handscore);
-                            
-                            //EmptyFieldPosition(OrignFieldPosition(temp));
-                            break;
-                        }
-
-                        else
-                        {
-                            print("2개중 하나 고름");
-                            StartCoroutine(MoveFieldScoreField(clickObj, handscore));
-                            AfterFlipChoiceCard();
-
-                            FlipAction(hand, handscore);
-                        }
-                        break;
-                    }
-                }
-
-            case 4:
-                {
-                    if (!CardManager.instance.isFlip)
-                    {
-                        break;
-                    }
-
-                    else
-                    {
-                        if (!(CardManager.instance.field[CardManager.instance.field.Count - 1].CompareTag(clickObj.tag))) // 다른거 맞음
-                        {
-                            FlipAction(hand, handscore);
-                        }
-
-                        break;
-                    }
-                }
-        }
-        
-        
-    }
     void CardAction(GameObject clickObj, List<GameObject> hand, List<GameObject> handscore) // 맞춘 카드마다 다른 행동
     {
         switch (CardManager.instance.hitCardCount) // 2, 3, 4개 맞췄을 시 다름
@@ -387,7 +232,7 @@ public class CardClick : MonoBehaviour
                     {
                         NoMatchField(clickObj);
                     }
-                    
+
                     CardManager.instance.FlipCard();
 
                     StartCoroutine(FlipCardHit(clickObj, hand, handscore));
@@ -432,24 +277,193 @@ public class CardClick : MonoBehaviour
                     MoveBombFieldScoreField(temp, clickObj, handscore);
 
                     int index = CheckEmptyPosition(OrignFieldPosition(temp));
-                    EmptyFieldPosition(index);
+                    //EmptyFieldPosition(index);
                     CardManager.instance.FlipCard();
                     StartCoroutine(FlipCardHit(clickObj, hand, handscore));
 
                     break;
                 }
-
         }
     }
 
+    IEnumerator FlipCardHit(GameObject clickObj, List<GameObject> hand, List<GameObject> handscore)
+    {
+        yield return new WaitForSeconds(1f);
 
+        switch (CardManager.instance.hitCardCount)
+        {
+            case 1:
+                {
+                    if (!CardManager.instance.isFlip) // 플립할 카드가 없다면 멈춤
+                    {
+                        break;
+                    }
+
+                    else
+                    {
+                        if (CardManager.instance.field[CardManager.instance.field.Count - 1].CompareTag(clickObj.tag)) // 뒤집은 카드랑 내가 냈던 카드랑 같으면
+                        {
+                            print("쪽");
+                            CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(clickObj)]--; // 내가 낸 카드
+                            CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(CardManager.instance.field[CardManager.instance.field.Count - 1])]--; //뒤집은 카드 필드에서 빼기 //뒤집은 카드랑
+
+                            Chu(clickObj, handscore); //쪽 함수 실행
+                            break;
+                        }
+
+                        else
+                        {
+                            print("태그가 다름");
+                            FlipAction(hand, handscore);
+                        }
+                    }
+                    break;
+                }
+
+            case 2:
+                {
+                    if (!CardManager.instance.isFlip)
+                    {
+                        CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(hittedCard)]--;
+                        CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(clickObj)]--;
+
+                        CardManager.instance.addEmptyIndex.Add(CheckEmptyPosition(hittedCard));
+
+                        StartCoroutine(MoveFieldScoreField(hittedCard, handscore));
+                        StartCoroutine(MoveFieldScoreField(clickObj, handscore));
+                        
+                        //EmptyFieldPosition(hittedCard);
+                        break;
+                    }
+
+                    else
+                    {
+                        if (CardManager.instance.field[CardManager.instance.field.Count - 1].CompareTag(clickObj.tag)) // 같은거 맞음
+                        {
+                            //뻑
+                            CardManager.instance.DeleteOutline(clickObj);
+                            SetNextPosition(clickObj, CardManager.instance.field[CardManager.instance.field.Count - 1]);
+                            //clickObj.transform.DOMove(new Vector3(CardManager.instance.field[CardManager.instance.field.Count - 1].transform.position.x + 0.5f, CardManager.instance.field[CardManager.instance.field.Count - 1].transform.position.y, CardManager.instance.field[CardManager.instance.field.Count - 1].transform.position.z - 0.1f), 0.5f).OnComplete(() => CardManager.instance.DeleteOutline(clickObj));
+
+                            print("뻑");
+
+                            FixedSetting();
+                            break;
+                        }
+
+                        else
+                        {
+                            if (HandCheck(hand, clickObj).Length == 2) // 내손에 같은 카드가 3장일 때 
+                            {
+                                GameObject[] temp = HandCheck(hand, clickObj);
+
+                                hand.Remove(temp[0]);
+                                hand.Remove(temp[1]);
+
+                                SetNextPosition(clickObj, temp[0]);
+                                SetNextPosition(temp[0], temp[1]);
+
+                                CardManager.instance.field.Add(temp[0]);
+                                CardManager.instance.field.Add(temp[1]);
+
+                                StartCoroutine(MoveFieldScoreField(temp[0], handscore));
+                                StartCoroutine(MoveFieldScoreField(temp[1], handscore));
+
+                                CardManager.instance.DrawBombCard(hand);
+                            }
+
+
+                            CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(hittedCard)]--;
+                            CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(clickObj)]--;
+
+                            CardManager.instance.addEmptyIndex.Add(CheckEmptyPosition(hittedCard));
+
+                            StartCoroutine(MoveFieldScoreField(hittedCard, handscore));
+                            StartCoroutine(MoveFieldScoreField(clickObj, handscore));
+
+                            //EmptyFieldPosition(hittedCard);
+
+                            FlipAction(hand, handscore);
+                        }
+                    }
+
+                    break;
+                }
+
+            case 3:
+                {
+                    if (!CardManager.instance.isFlip)
+                    {
+                        //StartCoroutine(MoveFieldScoreField(clickObj, handscore));
+                        AfterFlipChoiceCard();
+                        break;
+                    }
+
+                    else
+                    {
+                        if (CardManager.instance.field[CardManager.instance.field.Count - 1].CompareTag(clickObj.tag)) // 같은거 맞음
+                        {
+                            //폭탄
+                            print("폭탄입니다.");
+
+                            GameObject[] temp = new GameObject[3];
+                            temp = FlipBombCard(CardManager.instance.field[CardManager.instance.field.Count - 1]);
+
+                            CardManager.instance.addEmptyIndex.Add(CheckEmptyPosition(OrignFieldPosition(temp)));
+
+                            MoveBombLastScoreField(temp, CardManager.instance.field[CardManager.instance.field.Count - 1], handscore);
+                            
+                            //EmptyFieldPosition(OrignFieldPosition(temp));
+                            break;
+                        }
+
+                        else
+                        {
+                            print("2개중 하나 고름");
+                            //StartCoroutine(MoveFieldScoreField(clickObj, handscore));
+                            AfterFlipChoiceCard();
+                            CardManager.instance.beforeFlip = true;
+                        }
+                        break;
+                    }
+                }
+
+            case 4:
+                {
+                    if (!CardManager.instance.isFlip)
+                    {
+                        break;
+                    }
+
+                    else
+                    {
+                        if (!(CardManager.instance.field[CardManager.instance.field.Count - 1].CompareTag(clickObj.tag))) // 다른거 맞음
+                        {
+                            FlipAction(hand, handscore);
+                        }
+
+                        break;
+                    }
+                }
+        }
+        
+        
+    }
 
     void NoMatchField(GameObject obj)
     {
-        GameManager.instance.isMoving = true;
         obj.transform.DOMove(CardManager.instance.fieldPosition[CardManager.instance.emptyIndex[0]], 0.5f).SetEase(Ease.OutQuint); // 마지막 필드포지션은 빈곳에 넣음
-        StartCoroutine(GameManager.instance.CompleteMoving());
+       
+        CardManager.instance.emptyIndex.RemoveAt(0);
 
+        CardManager.instance.EmptyIndexSort();//빈곳 인덱스 오름차순 정렬
+    }
+
+    void FlipNoMatchField(GameObject obj)
+    {
+       
+        obj.transform.DOMove(CardManager.instance.fieldPosition[CardManager.instance.emptyIndex[0]], 0.5f).SetEase(Ease.OutQuint).OnComplete(() => FixedSetting());// 마지막 필드포지션은 빈곳에 넣음
+       
         CardManager.instance.emptyIndex.RemoveAt(0);
 
         CardManager.instance.EmptyIndexSort();//빈곳 인덱스 오름차순 정렬
@@ -461,7 +475,6 @@ public class CardClick : MonoBehaviour
         {
             //print("bonus card!");
             NoMatchField(CardManager.instance.field[CardManager.instance.field.Count - 1]); //빈공간에 내가 둘 카드 둠
-
 
             StartCoroutine(MoveFieldScoreField(CardManager.instance.field[CardManager.instance.field.Count - 1], handscore)); // 피로 옮김
             
@@ -479,7 +492,7 @@ public class CardClick : MonoBehaviour
                 case 1:
                     {
                         print("+ 뒤집은것도 안맞음");
-                        NoMatchField(CardManager.instance.field[CardManager.instance.field.Count - 1]); //빈공간에 내가 둘 카드 둠
+                        FlipNoMatchField(CardManager.instance.field[CardManager.instance.field.Count - 1]); //빈공간에 내가 둘 카드 둠
                         break;//턴 넘기기
                     }
 
@@ -488,15 +501,15 @@ public class CardClick : MonoBehaviour
                         print(" + 뒤집은거 맞음");
                         /*다른거 두개 맞았을 때 -> 무조건 같은 태그 오브젝트 1개 존재*/
                         hittedCard = GetHitCard(CardManager.instance.field[CardManager.instance.field.Count - 1]); // 뒤집은 카드와 맞은 카드 찾음
-                        //print(hittedCard.name);
-
+                                                                                                                   //print(hittedCard.name);
+                        CardManager.instance.addEmptyIndex.Add(CheckEmptyPosition(hittedCard));
 
                         CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(hittedCard)]--;
                         CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(CardManager.instance.field[CardManager.instance.field.Count - 1])]--;
 
                         //점수판으로 위치 옮기기
                         StartCoroutine(MoveFieldScoreField(hittedCard, handscore));
-                        StartCoroutine(MoveFieldScoreField(CardManager.instance.field[CardManager.instance.field.Count - 1], handscore));
+                        StartCoroutine(MoveLastScoreField(CardManager.instance.field[CardManager.instance.field.Count - 1], handscore));
                         //EmptyFieldPosition(hittedCard);
                         
                         break;
@@ -510,7 +523,7 @@ public class CardClick : MonoBehaviour
 
                         CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(CardManager.instance.field[CardManager.instance.field.Count - 1])]--;
 
-                        StartCoroutine(MoveFieldScoreField(CardManager.instance.field[CardManager.instance.field.Count - 1], handscore));
+                        //StartCoroutine(MoveFieldScoreField(CardManager.instance.field[CardManager.instance.field.Count - 1], handscore));
 
                         AfterFlipChoiceCard();
                         break;
@@ -526,9 +539,9 @@ public class CardClick : MonoBehaviour
                         temp = FlipBombCard(CardManager.instance.field[CardManager.instance.field.Count - 1]);
 
 
-                        MoveBombFieldScoreField(temp, CardManager.instance.field[CardManager.instance.field.Count - 1], handscore);
-                        int index = CheckEmptyPosition(OrignFieldPosition(temp));
-                        EmptyFieldPosition(index);
+                        MoveBombLastScoreField(temp, CardManager.instance.field[CardManager.instance.field.Count - 1], handscore);
+                        CardManager.instance.addEmptyIndex.Add(CheckEmptyPosition(OrignFieldPosition(temp)));
+                        //EmptyFieldPosition(index);
                         break;
                     }
 
@@ -581,15 +594,7 @@ public class CardClick : MonoBehaviour
         obj.transform.position = new Vector3(max + 0.5f, CardManager.instance.choiceObj[0].transform.position.y, CardManager.instance.choiceObj[0].transform.position.z - 0.3f);
     }
 
-    void AfterFlipChoiceCard()
-    {
-        GameManager.instance.isChoice = true;
-
-        OpenChoicePanel = GameObject.Find("Canvas").transform.Find("Panel").gameObject;
-        OpenChoicePanel.SetActive(true);
-        OpenChoicePanel.transform.GetChild(1).GetComponent<Image>().sprite = CardManager.instance.choiceObj[0].GetComponent<SpriteRenderer>().sprite;
-        OpenChoicePanel.transform.GetChild(2).GetComponent<Image>().sprite = CardManager.instance.choiceObj[1].GetComponent<SpriteRenderer>().sprite;
-    }
+  
     GameObject[] FlipBombCard(GameObject obj)//뒤집은 카든
     {
         CardManager.instance.bombObj.Clear();
@@ -611,9 +616,7 @@ public class CardClick : MonoBehaviour
 
         obj.transform.position = new Vector3(Math.Max(Math.Max(CardManager.instance.bombObj[0].transform.position.x, CardManager.instance.bombObj[1].transform.position.x), CardManager.instance.bombObj[2].transform.position.x) + 0.5f,
                                                                                     CardManager.instance.bombObj[0].transform.position.y, CardManager.instance.bombObj[0].transform.position.z - 0.1f * 3);// 필드에 먼저 놔둠
-        //obj.transform.DOMove(new Vector3(Math.Max(Math.Max(BombObj[0].transform.position.x, BombObj[1].transform.position.x), BombObj[2].transform.position.x) + 0.5f,
-        //                                                                            BombObj[0].transform.position.y, BombObj[0].transform.position.z - 0.1f * 3), 0.5f).SetEase(Ease.OutQuint);// 필드에 먼저 놔둠
-
+       
         GameObject[] temp = new GameObject[3];
 
         for (int i = 0; i < temp.Length; i++)
@@ -626,28 +629,41 @@ public class CardClick : MonoBehaviour
 
     void Chu(GameObject clickObj, List<GameObject> score)
     {
-        GameManager.instance.isMoving = true;
+       
         CardManager.instance.field[CardManager.instance.field.Count - 1].transform.DOMove(new Vector3(clickObj.transform.position.x + 0.5f, clickObj.transform.position.y, clickObj.transform.position.z - 0.1f), 0.5f).SetEase(Ease.OutQuint); //맞춘 오브젝트 옆으로 이동
-        StartCoroutine(GameManager.instance.CompleteMoving());
-
-        GameManager.instance.isMoving = true;
+       
         CardManager.instance.field[CardManager.instance.field.Count - 1].transform.DOMove(CardManager.instance.ScoreField(CardManager.instance.field[CardManager.instance.field.Count - 1], score), 0.5f).SetEase(Ease.OutQuint); // 점수판위치로 이동
-        StartCoroutine(GameManager.instance.CompleteMoving());
 
-        GameManager.instance.isMoving = true;
-        int index = CheckEmptyPosition(clickObj);
-        clickObj.transform.DOMove(CardManager.instance.ScoreField(clickObj, score), 0.5f).SetEase(Ease.OutQuint).OnComplete(()=> EmptyFieldPosition(index)); // 점수판위치로 이동
-        StartCoroutine(GameManager.instance.CompleteMoving());
+        CardManager.instance.addEmptyIndex.Add(CheckEmptyPosition(clickObj));
 
+        clickObj.transform.DOMove(CardManager.instance.ScoreField(clickObj, score), 0.5f).SetEase(Ease.OutQuint).OnComplete(()=> FixedSetting()); // 점수판위치로 이동
+      
         score.Add(CardManager.instance.field[CardManager.instance.field.Count - 1]);
         CardManager.instance.field.Remove(CardManager.instance.field[CardManager.instance.field.Count - 1]);
 
         score.Add(clickObj);
         
-        
         CardManager.instance.field.Remove(clickObj);
     }
+    public IEnumerator MoveLastScoreField(GameObject moveObj, List<GameObject> score)
+    {
+        yield return new WaitForSeconds(0.5f);
+        if (CardManager.instance.GetCardTagNum(moveObj) != 13)
+        {
+            CardManager.instance.DeleteOutline(moveObj);
+        }
 
+        int index = CheckEmptyPosition(moveObj);
+        moveObj.transform.DOMove(CardManager.instance.ScoreField(moveObj, score), 0.5f).SetEase(Ease.OutQuint).OnComplete(() => FixedSetting());// 점수판 위치 이동
+      
+        //print(score.Count);
+        score.Add(moveObj); // 점수에 더해주기 
+
+        if (CardManager.instance.field.Contains(moveObj))
+        {
+            CardManager.instance.field.Remove(moveObj); // 필드에서 지우기
+        }
+    }
     public IEnumerator MoveFieldScoreField(GameObject moveObj, List<GameObject> score)
     {
         yield return new WaitForSeconds(0.5f);
@@ -656,35 +672,25 @@ public class CardClick : MonoBehaviour
             CardManager.instance.DeleteOutline(moveObj);
         }
         
-        GameManager.instance.isMoving = true;
         int index = CheckEmptyPosition(moveObj);
-        moveObj.transform.DOMove(CardManager.instance.ScoreField(moveObj, score), 0.5f).SetEase(Ease.OutQuint).OnComplete(()=> EmptyFieldPosition(index)); // 점수판 위치 이동
-        StartCoroutine(GameManager.instance.CompleteMoving());
-        //print(score.Count);
+        moveObj.transform.DOMove(CardManager.instance.ScoreField(moveObj, score), 0.5f).SetEase(Ease.OutQuint); // 점수판 위치 이동
+        
         score.Add(moveObj); // 점수에 더해주기 
 
-        //for (int i = 0; i < CardManager.instance.fieldPosition.Length; i++)
-        //{
-        //    if(moveObj.transform.position  == CardManager.instance.fieldPosition[i]) // 오리지널 포지션이라면
-        //    {
-                
-        //    }
-        //}
 
         if (CardManager.instance.field.Contains(moveObj))
         {
             CardManager.instance.field.Remove(moveObj); // 필드에서 지우기
         }
     }
-
     void MoveBombFieldScoreField(GameObject[] bombObj, GameObject card, List<GameObject> score)
     {
         for (int i = 0; i < bombObj.Length; i++)
         {
             CardManager.instance.DeleteOutline(bombObj[i]);
-            GameManager.instance.isMoving = true;
+           
             bombObj[i].transform.DOMove(CardManager.instance.ScoreField(bombObj[i], score), 0.5f).SetEase(Ease.OutQuint); // 점수 필드로 위치 옮김
-            StartCoroutine(GameManager.instance.CompleteMoving());
+        
             //내 점수리스트 add 
             score.Add(bombObj[i]);//내 점수필드 리스트에 추가
 
@@ -698,9 +704,40 @@ public class CardClick : MonoBehaviour
             CardManager.instance.DeleteOutline(card);
         }
 
-        GameManager.instance.isMoving = true;
         card.transform.DOMove(CardManager.instance.ScoreField(card, score), 0.5f).SetEase(Ease.OutQuint);
-        StartCoroutine(GameManager.instance.CompleteMoving());
+    
+        //내 점수리스트 add 
+        score.Add(card);//내 점수필드 리스트에 추가
+
+        //필드에서 삭제
+        CardManager.instance.field.Remove(card);//필드에서 제거
+        CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(card)]--;//필드에서 제거
+
+    }
+
+    void MoveBombLastScoreField(GameObject[] bombObj, GameObject card, List<GameObject> score)
+    {
+        for (int i = 0; i < bombObj.Length; i++)
+        {
+            CardManager.instance.DeleteOutline(bombObj[i]);
+          
+            bombObj[i].transform.DOMove(CardManager.instance.ScoreField(bombObj[i], score), 0.5f).SetEase(Ease.OutQuint); // 점수 필드로 위치 옮김
+         
+            //내 점수리스트 add 
+            score.Add(bombObj[i]);//내 점수필드 리스트에 추가
+
+            //필드에서 삭제
+            CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(bombObj[i])]--;//필드에서 제거
+            CardManager.instance.field.Remove(bombObj[i]);//필드에서 제거
+        }
+
+        if (CardManager.instance.GetCardTagNum(card) != 13)
+        {
+            CardManager.instance.DeleteOutline(card);
+        }
+
+        card.transform.DOMove(CardManager.instance.ScoreField(card, score), 0.5f).SetEase(Ease.OutQuint).OnComplete(() => FixedSetting());
+    
         //내 점수리스트 add 
         score.Add(card);//내 점수필드 리스트에 추가
 
@@ -717,17 +754,21 @@ public class CardClick : MonoBehaviour
         return index;
     }
 
-    public void EmptyFieldPosition(int index)
+    public void EmptyFieldPosition(List<int> index)
     {
-        if (!CardManager.instance.emptyIndex.Contains(index)) // 원래 가지고 있는 값이 아니면 // 값이 없으면 음수로 들어가서 음수는 빼줘야함
+        for(int i=0;i<index.Count;i++)
         {
-            if (index >= 0)
+            if (!CardManager.instance.emptyIndex.Contains(index[i])) // 원래 가지고 있는 값이 아니면 // 값이 없으면 음수로 들어가서 음수는 빼줘야함
             {
-                CardManager.instance.emptyIndex.Add(index);
-                CardManager.instance.EmptyIndexSort();//빈곳 인덱스 오름차순 정렬
+                if (index[i] >= 0)
+                {
+                    CardManager.instance.emptyIndex.Add(index[i]);
+                    CardManager.instance.EmptyIndexSort();//빈곳 인덱스 오름차순 정렬
+                }
             }
         }
 
+        CardManager.instance.addEmptyIndex.Clear();
     }
 
     GameObject OrignFieldPosition(GameObject[] obj)
@@ -746,9 +787,20 @@ public class CardClick : MonoBehaviour
         }
         return obj[index];
     }
+    void AfterFlipChoiceCard()
+    {
+        OnOffPanel(false);
+        GameManager.instance.isChoice = true;
+
+        OpenChoicePanel = GameObject.Find("Canvas").transform.Find("Panel").gameObject;
+        OpenChoicePanel.SetActive(true);
+        OpenChoicePanel.transform.GetChild(1).GetComponent<Image>().sprite = CardManager.instance.choiceObj[0].GetComponent<SpriteRenderer>().sprite;
+        OpenChoicePanel.transform.GetChild(2).GetComponent<Image>().sprite = CardManager.instance.choiceObj[1].GetComponent<SpriteRenderer>().sprite;
+    }
 
     public void SelectNum(int num)
     {
+        OnOffPanel(true);
         OpenChoicePanel = GameObject.Find("Canvas").transform.Find("Panel").gameObject;
         OpenChoicePanel.SetActive(false);
 
@@ -759,53 +811,28 @@ public class CardClick : MonoBehaviour
             temp[i] = CardManager.instance.choiceObj[i];
         }
 
-        if (GameManager.instance.isMyTurn)
+        if (CardManager.instance.beforeFlip)
         {
-            StartCoroutine(MoveFieldScoreField(CardManager.instance.choiceObj[num], CardManager.instance.myHandScore));
-            CardManager.instance.ArrangeHandPosition(CardManager.instance.myHand);
-
-            GameManager.instance.ScoreCheck(true);
-
-            if (!GameManager.instance.ArtifactPanel.activeSelf)
-            {
-                print("panel no");
-                GameManager.instance.AttackPanel.SetActive(true);
-                StartCoroutine(GameManager.instance.FixedMade(CardManager.instance.kingEmptyIndex, CardManager.instance.enemyKingEmptyIndex, CardManager.instance.redFlagEmptyIndex, CardManager.instance.blueFlagEmptyIndex, CardManager.instance.normalFlagEmptyIndex,
-                CardManager.instance.animalEmptyIndex, CardManager.instance.thingEmptyIndex, BattleSystem.instance.kingAttack, BattleSystem.instance.flagAttack, BattleSystem.instance.animalAttack, BattleSystem.instance.op, BattleSystem.instance.opponentInfo, BattleSystem.instance.opHUD));
-
-                EndArrange(CardManager.instance.myHand, false);
-            }
-
+            StartCoroutine(MoveFieldScoreField(CardManager.instance.curObj, CardManager.instance.curHandScore));
+            StartCoroutine(MoveFieldScoreField(CardManager.instance.choiceObj[num], CardManager.instance.curHandScore));
+            FlipAction(CardManager.instance.curHand, CardManager.instance.curHandScore);
+            CardManager.instance.beforeFlip = false;
         }
 
         else
         {
-            StartCoroutine(MoveFieldScoreField(CardManager.instance.choiceObj[num], CardManager.instance.opponentHandScore));
-            CardManager.instance.ArrangeHandPosition(CardManager.instance.opponentHand);
-
-            GameManager.instance.ScoreCheck(false);
-
-
-            if (!GameManager.instance.ArtifactPanel.activeSelf)
-            {
-                print("panel no");
-                GameManager.instance.AttackPanel.SetActive(true);
-                StartCoroutine(GameManager.instance.FixedMade(CardManager.instance.enemyKingEmptyIndex, CardManager.instance.kingEmptyIndex, CardManager.instance.enemyRedFlagEmptyIndex, CardManager.instance.enemyBlueFlagEmptyIndex, CardManager.instance.enemyNormalFlagEmptyIndex,
-                CardManager.instance.enemyAnimalEmptyIndex, CardManager.instance.enemyThingEmptyIndex, BattleSystem.instance.enemyKingAttack, BattleSystem.instance.enemyFlagAttack, BattleSystem.instance.enemyAnimalAttack, BattleSystem.instance.player, BattleSystem.instance.playerInfo, BattleSystem.instance.playerHUD));
-
-                EndArrange(CardManager.instance.opponentHand, true);
-            }
-
+            StartCoroutine(MoveFieldScoreField(CardManager.instance.field[CardManager.instance.field.Count - 1], CardManager.instance.curHandScore));
+            StartCoroutine(MoveLastScoreField(CardManager.instance.choiceObj[num], CardManager.instance.curHandScore));
         }
-
         CardManager.instance.choiceObj[1 - num].transform.position = OrignFieldPosition(temp).transform.position;
 
         CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(CardManager.instance.choiceObj[num])]--;
         CardManager.instance.field.Remove(CardManager.instance.choiceObj[num]);
 
         CardManager.instance.choiceObj.Clear();
-      
+
         GameManager.instance.isChoice = false;
+
     }
 
     private GameObject[] HandCheck(List<GameObject> hand, GameObject obj)
@@ -844,64 +871,21 @@ public class CardClick : MonoBehaviour
         //흔들기 전투력 증가
         ShakePanel.SetActive(false);
 
-        if (GameManager.instance.isMyTurn)
-        {
-            //print(CardManager.instance.curObj.name);
-            
-            CardManager.instance.myHand.Remove(CardManager.instance.curObj);//내손에서 지우기
-            CardAction(CardManager.instance.curObj, CardManager.instance.myHand, CardManager.instance.myHandScore);
+        CardManager.instance.myHand.Remove(CardManager.instance.curObj);//내손에서 지우기
+        CardAction(CardManager.instance.curObj, CardManager.instance.curHand, CardManager.instance.curHandScore);
 
-            GameManager.instance.ScoreCheck(true);
+        FixedSetting();
 
-            if (!GameManager.instance.ArtifactPanel.activeSelf)
-            {
-                print("panel no");
-                GameManager.instance.AttackPanel.SetActive(true);
-
-                StartCoroutine(GameManager.instance.FixedMade(CardManager.instance.kingEmptyIndex, CardManager.instance.enemyKingEmptyIndex, CardManager.instance.redFlagEmptyIndex, CardManager.instance.blueFlagEmptyIndex, CardManager.instance.normalFlagEmptyIndex,
-                CardManager.instance.animalEmptyIndex, CardManager.instance.thingEmptyIndex, BattleSystem.instance.kingAttack, BattleSystem.instance.flagAttack, BattleSystem.instance.animalAttack, BattleSystem.instance.op, BattleSystem.instance.opponentInfo, BattleSystem.instance.opHUD));
-                
-                EndArrange(CardManager.instance.myHand, false);
-            }
-
-            
-        }
-
-        else
-        {
-            //print(CardManager.instance.curObj.name);
-            CardManager.instance.opponentHand.Remove(CardManager.instance.curObj);//내손에서 지우기
-            CardAction(CardManager.instance.curObj, CardManager.instance.opponentHand, CardManager.instance.opponentHandScore);
-
-            GameManager.instance.ScoreCheck(false);
-
-            if (!GameManager.instance.ArtifactPanel.activeSelf)
-            {
-                print("panel no");
-                GameManager.instance.AttackPanel.SetActive(true);
-
-                StartCoroutine(GameManager.instance.FixedMade(CardManager.instance.enemyKingEmptyIndex, CardManager.instance.kingEmptyIndex, CardManager.instance.enemyRedFlagEmptyIndex, CardManager.instance.enemyBlueFlagEmptyIndex, CardManager.instance.enemyNormalFlagEmptyIndex,
-                CardManager.instance.enemyAnimalEmptyIndex, CardManager.instance.enemyThingEmptyIndex, BattleSystem.instance.enemyKingAttack, BattleSystem.instance.enemyFlagAttack, BattleSystem.instance.enemyAnimalAttack, BattleSystem.instance.player, BattleSystem.instance.playerInfo, BattleSystem.instance.playerHUD));
-
-                EndArrange(CardManager.instance.opponentHand, true);
-            }
-
-           
-        }
         GameManager.instance.isShake = false;
     }
     public void EndArrange(List<GameObject> hand, bool isPlayer)
     {
-        CardManager.instance.ArrangeHandPosition(hand);
-        if (GameManager.instance.first)
-        {
-            print("first in ");
-            CardManager.instance.DrawCard(hand, 1);
-            GameManager.instance.first = false;
-        } // 처음만
-
         GameManager.instance.isMyTurn = isPlayer;
-        GameManager.instance.oneTime = true;
+
+        GameManager.instance.NextTurnDraw();
+
+        EmptyFieldPosition(CardManager.instance.addEmptyIndex);
+        
     }
     
 }

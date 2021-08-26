@@ -36,7 +36,6 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public bool[] isOpArtifact;
 
     [HideInInspector] public bool isSetting;
-    [HideInInspector] public bool isMoving;
     [HideInInspector] public bool isBattle;
     [HideInInspector] public bool isBonus;
     [HideInInspector] public bool isShake;
@@ -72,7 +71,7 @@ public class GameManager : MonoBehaviour
         }
 
         isSetting = false;
-        isMoving = false;
+     
 
         maxTurnCount = 7;
 
@@ -120,31 +119,6 @@ public class GameManager : MonoBehaviour
 
             Invoke("GotoMain", 1f);
         }
-
-
-        if (oneTime)
-        {
-            if (maxTurnCount > 0)
-            {
-                if (isMyTurn)
-                {
-                    //print("두번째");
-                    CardManager.instance.ArrangeHandPosition(CardManager.instance.myHand);
-                    CardManager.instance.DrawCard(CardManager.instance.myHand, 1);
-                    oneTime = false;
-                }
-
-                else
-                {
-                    //print("두번째");
-                    CardManager.instance.ArrangeHandPosition(CardManager.instance.opponentHand);
-                    CardManager.instance.DrawCard(CardManager.instance.opponentHand, 1);
-                    oneTime = false;
-                }
-
-                maxTurnCount -= 1;
-            }
-        }
     }
 
     public IEnumerator CompleteSetting()
@@ -153,12 +127,37 @@ public class GameManager : MonoBehaviour
         isSetting = true;
     }
 
-    public IEnumerator CompleteMoving()
+    public void NextTurnDraw()
     {
-        yield return new WaitForSeconds(1f);
-        isMoving = false;
-    }
+        if (first)
+        {
+            print("first in ");
+            CardManager.instance.DrawCard(CardManager.instance.myHand, 1);
+            first = false;
+        }
 
+        if (maxTurnCount > 0)
+        {
+            if(CardManager.instance.curHand == CardManager.instance.myHand)
+            {
+                CardManager.instance.ArrangeHandPosition(CardManager.instance.opponentHand);
+                CardManager.instance.DrawCard(CardManager.instance.opponentHand, 1);
+
+            }
+
+            if (CardManager.instance.curHand == CardManager.instance.opponentHand)
+            {
+                CardManager.instance.ArrangeHandPosition(CardManager.instance.myHand);
+                CardManager.instance.DrawCard(CardManager.instance.myHand, 1);
+
+            }
+            maxTurnCount -= 1;
+        }
+        else
+        {
+            CardClick.instance.OnOffPanel(false);
+        }
+    }
     public IEnumerator FixedMade(int king, int opking, int red, int blue, int normal, int animal,int thing, bool[] isking, bool[] isflag, bool[] isanimal, GameObject who, PlayerScript ui, BattleHUD hud)
     {
         yield return new WaitForSeconds(1f);
@@ -239,6 +238,11 @@ public class GameManager : MonoBehaviour
         {
             AttackMotion(who, ui, hud);
         }
+
+        else
+        {
+            CardClick.instance.EndArrange(CardManager.instance.curHand, !isMyTurn);
+        }
     }
     public void AttackMotion(GameObject who, PlayerScript ui, BattleHUD hud)
     {
@@ -278,6 +282,8 @@ public class GameManager : MonoBehaviour
 
         AttackPanel.SetActive(false);
         isAttack = false;
+        CardClick.instance.EndArrange(CardManager.instance.curHand, !isMyTurn);
+        //NextTurnDraw();
     }
 
     public void ScoreCheck(bool isPlayer)
@@ -369,6 +375,10 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        if(ArtifactPanel.activeSelf)
+        {
+            CardClick.instance.OnOffPanel(false);
+        }
     }
 
     public void ApplyMyArtifact(int num)
@@ -433,13 +443,13 @@ public class GameManager : MonoBehaviour
             {
                 StartCoroutine(FixedMade(CardManager.instance.kingEmptyIndex, CardManager.instance.enemyKingEmptyIndex, CardManager.instance.redFlagEmptyIndex, CardManager.instance.blueFlagEmptyIndex, CardManager.instance.normalFlagEmptyIndex,
                 CardManager.instance.animalEmptyIndex, CardManager.instance.thingEmptyIndex, BattleSystem.instance.kingAttack, BattleSystem.instance.flagAttack, BattleSystem.instance.animalAttack, BattleSystem.instance.op, BattleSystem.instance.opponentInfo, BattleSystem.instance.opHUD));
-                CardClick.instance.EndArrange(CardManager.instance.myHand, false);
+                //CardClick.instance.EndArrange(CardManager.instance.myHand, false);
             }
             else
             {
                 StartCoroutine(FixedMade(CardManager.instance.enemyKingEmptyIndex, CardManager.instance.kingEmptyIndex, CardManager.instance.enemyRedFlagEmptyIndex, CardManager.instance.enemyBlueFlagEmptyIndex, CardManager.instance.enemyNormalFlagEmptyIndex,
                 CardManager.instance.enemyAnimalEmptyIndex, CardManager.instance.enemyThingEmptyIndex, BattleSystem.instance.enemyKingAttack, BattleSystem.instance.enemyFlagAttack, BattleSystem.instance.enemyAnimalAttack, BattleSystem.instance.player, BattleSystem.instance.playerInfo, BattleSystem.instance.playerHUD));
-                CardClick.instance.EndArrange(CardManager.instance.opponentHand, true);
+                //CardClick.instance.EndArrange(CardManager.instance.opponentHand, true);
             }
         }
 

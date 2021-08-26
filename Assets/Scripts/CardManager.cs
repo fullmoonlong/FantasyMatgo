@@ -18,11 +18,13 @@ public class CardManager : MonoBehaviour
  
     [HideInInspector] public List<GameObject> myHand; // 플레이어 자신의 패 리스트
     [HideInInspector] public List<GameObject> opponentHand; // 상대의 패 리스트
+    [HideInInspector] public List<GameObject> curHand;
     [HideInInspector] public List<GameObject> field; // 필드 리스트
    
     [HideInInspector] public List<GameObject> myHandScore; // 내 점수 리스트
     [HideInInspector] public List<GameObject> opponentHandScore; // 상대 점수 리스트
- 
+    [HideInInspector] public List<GameObject> curHandScore;
+
     [HideInInspector] public List<Vector3> myHandPosition; // 자신 패의 위치
     [HideInInspector] public List<Vector3> opponentHandPosition; // 상대 패의 위치
     [HideInInspector] public Vector3[] fieldPosition; // 카드를 내려놓을 필드 위치
@@ -62,9 +64,13 @@ public class CardManager : MonoBehaviour
     #endregion
 
     [HideInInspector] public bool isFlip; // 플립할게 있는지 없는지 체크
-  
+
+    [HideInInspector] public bool beforeFlip; // 플립전인지 체크
+
     [HideInInspector] public List<int> emptyIndex; //필드에 남은 자리 위치 번호
- 
+
+    [HideInInspector] public List<int> addEmptyIndex; // 빈 필드
+
     [HideInInspector] public List<int> sameTagCount; //필드안에 존재하는 십이지신 별 개수
    
     [HideInInspector] public List<GameObject> choiceObj; // 선택 할 카드
@@ -100,7 +106,7 @@ public class CardManager : MonoBehaviour
     [HideInInspector] public bool isOpAnimal = true;
     [HideInInspector] public bool isOpPee = true;
     #endregion
-
+    List<int> index = new List<int>();
 
     private void Awake()
     {
@@ -118,8 +124,10 @@ public class CardManager : MonoBehaviour
         opponentHandScore = new List<GameObject>(); // 점수 리스트 할당
 
         emptyIndex = new List<int>(6) { 8, 9, 10, 11, 12 };
+        
+        addEmptyIndex = new List<int>();
 
-        kingEmptyIndex = 0;
+         kingEmptyIndex = 0;
         enemyKingEmptyIndex = 0;
         animalEmptyIndex = 0;
         thingEmptyIndex = 0;
@@ -145,7 +153,8 @@ public class CardManager : MonoBehaviour
         hitCardCount = 0;
 
         isSame = false;
-        //PlayerPrefs.DeleteAll();
+
+        
         scoreSoldierPosition = new Vector3[26];
         scoreEnemySoldierPosition = new Vector3[26];
 
@@ -415,10 +424,10 @@ public class CardManager : MonoBehaviour
             i++;
         }
 
-        if(index.Count > 0)
+        if (index.Count > 0)
         {
-            int check = CardClick.instance.CheckEmptyPosition(field[index[0]]);
-            CardClick.instance.EmptyFieldPosition(check); //보너스 카드의 필드 포지션을 지워줌
+            addEmptyIndex.Add(CardClick.instance.CheckEmptyPosition(field[index[0]]));
+            CardClick.instance.EmptyFieldPosition(addEmptyIndex); //보너스 카드의 필드 포지션을 지워줌
             mysequence.Append(field[index[0]].transform.DOMove(scoreSoldierPosition[soldierEmptyIndex], 0.5f).SetEase(Ease.OutQuint)); //첫번째 사람의 피 점수 포지션으로 보너스 카드를 옮김
             soldierEmptyIndex++; // 피위치 ++
             myHandScore.Add(field[index[0]]); // 점수에 더해주기 
@@ -603,7 +612,17 @@ public class CardManager : MonoBehaviour
             cardList = cardList.OrderBy(x => GetCardTagNum(x)).ToList();
             for (int i = 0; i < cardList.Count; i++)
             {
-                cardList[i].transform.DOMove(myHandPosition[i], 1f).SetEase(Ease.OutQuint).OnComplete(()=> CardClick.instance.OnOffPanel(false));
+                if(i == cardList.Count -1)
+                {
+                    print("okay;");
+                    cardList[i].transform.DOMove(myHandPosition[i], 1f).SetEase(Ease.OutQuint).OnComplete(()=> CardClick.instance.OnOffPanel(false));
+
+                }
+                else
+                {
+                    cardList[i].transform.DOMove(myHandPosition[i], 1f).SetEase(Ease.OutQuint);
+
+                }
             }
             CheckSameCard(cardList);
             CheckSameCard(opponentHand);
@@ -613,7 +632,16 @@ public class CardManager : MonoBehaviour
             cardList = cardList.OrderBy(x => GetCardTagNum(x)).ToList();
             for (int i = 0; i < cardList.Count; i++)
             {
-                cardList[i].transform.DOMove(opponentHandPosition[i], 1f).SetEase(Ease.OutQuint).OnComplete(() => CardClick.instance.OnOffPanel(false));
+                if (i == cardList.Count - 1)
+                {
+                    cardList[i].transform.DOMove(opponentHandPosition[i], 1f).SetEase(Ease.OutQuint).OnComplete(() => CardClick.instance.OnOffPanel(false));
+
+                }
+                else
+                {
+                    cardList[i].transform.DOMove(opponentHandPosition[i], 1f).SetEase(Ease.OutQuint);
+
+                }
             }
             CheckSameCard(cardList);
             CheckSameCard(myHand);
