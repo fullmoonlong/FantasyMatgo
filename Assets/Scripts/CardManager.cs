@@ -391,6 +391,8 @@ public class CardManager : MonoBehaviour
 
         EmptyIndexSort(); // 빈 자리 정렬
     }
+
+    //치트코드용 보너스 카드 뽑음
     public void DrawBonusCard()
     {
 
@@ -692,7 +694,6 @@ public class CardManager : MonoBehaviour
             {
                 if(i == cardList.Count -1)
                 {
-                    print("okay;");
                     cardList[i].transform.DOMove(myHandPosition[i], 1f).SetEase(Ease.OutQuint).OnComplete(()=> CardClick.instance.OnOffPanel(false));
 
                 }

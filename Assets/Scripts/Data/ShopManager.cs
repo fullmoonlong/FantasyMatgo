@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using System;
-using UnityEngine.SceneManagement;
 [System.Serializable]
 public class Serialization<T>
 {
@@ -61,7 +59,7 @@ public class ShopManager : MonoBehaviour
     public GameObject CanBuyPanel;
 
     public Sprite[] AllShopSprite;
-    // Start is called before the first frame update
+
     void Start()
     {
         string[] shopline = ShopDatabase.text.Substring(0, ShopDatabase.text.Length - 1).Split('\n');

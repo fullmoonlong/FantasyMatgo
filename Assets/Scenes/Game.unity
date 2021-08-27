@@ -1921,7 +1921,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.2264151, g: 0.2264151, b: 0.2264151, a: 0}
+  m_BackGroundColor: {r: 0.45624596, g: 0.45122823, b: 0.5660378, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -2945,9 +2945,11 @@ MonoBehaviour:
   cardDeck: []
   myHand: []
   opponentHand: []
+  curHand: []
   field: []
   myHandScore: []
   opponentHandScore: []
+  curHandScore: []
   myHandPosition: []
   opponentHandPosition: []
   fieldPosition: []
@@ -2989,7 +2991,9 @@ MonoBehaviour:
   thingEmptyIndex: 0
   enemyThingEmptyIndex: 0
   isFlip: 0
+  beforeFlip: 0
   emptyIndex: 
+  addEmptyIndex: 
   sameTagCount: 
   choiceObj: []
   bombObj: []
@@ -4264,7 +4268,6 @@ MonoBehaviour:
   isMyArtifact: 
   isOpArtifact: 
   isSetting: 0
-  isMoving: 0
   isBattle: 0
   isBonus: 0
   isShake: 0

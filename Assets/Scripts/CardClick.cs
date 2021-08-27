@@ -169,7 +169,7 @@ public class CardClick : MonoBehaviour
 
         CardManager.instance.curObj = gameObject;
 
-        CardManager.instance.DeleteOutline(CardManager.instance.curObj);
+        CardManager.instance.DeleteOutline(CardManager.instance.curObj); // 오브젝트의 아웃라인을 제거함
 
         if (gameObject.name == "Bomb(Clone)") // 선택한 카드가 폭탄 카드일 때
         {
@@ -284,7 +284,7 @@ public class CardClick : MonoBehaviour
             case 3:
                 {
                     print("2개중 고르기");
-                    FlipChoiceCard(clickObj);
+                    GetHitTwoCard(clickObj);
                     CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(clickObj)]--;
 
                     CardManager.instance.FlipCard();
@@ -301,11 +301,10 @@ public class CardClick : MonoBehaviour
 
                     temp = FlipBombCard(clickObj);
 
+                    CardManager.instance.addEmptyIndex.Add(CheckEmptyPosition(OrignFieldPosition(temp)));
 
                     MoveBombFieldScoreField(temp, clickObj, handscore);
 
-                    int index = CheckEmptyPosition(OrignFieldPosition(temp));
-                    //EmptyFieldPosition(index);
                     CardManager.instance.FlipCard();
                     StartCoroutine(FlipCardHit(clickObj, hand, handscore));
 
@@ -402,7 +401,7 @@ public class CardClick : MonoBehaviour
                     if (!CardManager.instance.isFlip)
                     {
                         //StartCoroutine(MoveFieldScoreField(clickObj, handscore));
-                        AfterFlipChoiceCard();
+                        OpenChoiceCardPanel();
                         break;
                     }
 
@@ -428,7 +427,7 @@ public class CardClick : MonoBehaviour
                         {
                             print("2개중 하나 고름");
                             //StartCoroutine(MoveFieldScoreField(clickObj, handscore));
-                            AfterFlipChoiceCard();
+                            OpenChoiceCardPanel();
                             CardManager.instance.beforeFlip = true;
                         }
                         break;
@@ -533,13 +532,11 @@ public class CardClick : MonoBehaviour
                     {
                         /*다른거 세개 맞았을 때 -> 무조건 2개 존재*/
                         print(" + 둘 중 하나 고름"); ;
-                        FlipChoiceCard(CardManager.instance.field[CardManager.instance.field.Count - 1]);
+                        GetHitTwoCard(CardManager.instance.field[CardManager.instance.field.Count - 1]);
 
                         CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(CardManager.instance.field[CardManager.instance.field.Count - 1])]--;
 
-                        //StartCoroutine(MoveFieldScoreField(CardManager.instance.field[CardManager.instance.field.Count - 1], handscore));
-
-                        AfterFlipChoiceCard();
+                        OpenChoiceCardPanel();
                         break;
                     }
 
@@ -564,6 +561,8 @@ public class CardClick : MonoBehaviour
       
       
     }
+
+    //카드를 맞추는 함수
     GameObject GetHitCard(GameObject obj)
     {
         int index = 0;
@@ -581,7 +580,9 @@ public class CardClick : MonoBehaviour
 
         return CardManager.instance.field[index];
     }
-    void FlipChoiceCard(GameObject obj)
+
+    // 2개 있는 카드옆으로 게임 오브젝트를 이동시키는 함수
+    void GetHitTwoCard(GameObject obj)
     {
         CardManager.instance.choiceObj.Clear();
 
@@ -608,7 +609,7 @@ public class CardClick : MonoBehaviour
         obj.transform.position = new Vector3(max + 0.5f, CardManager.instance.choiceObj[0].transform.position.y, CardManager.instance.choiceObj[0].transform.position.z - 0.3f);
     }
 
-  
+
     GameObject[] FlipBombCard(GameObject obj)//뒤집은 카든
     {
         CardManager.instance.bombObj.Clear();
@@ -641,6 +642,7 @@ public class CardClick : MonoBehaviour
         return temp;
     }
 
+    //쪽 함수 맞춘 카드를 점수패로 이동시킴
     void Chu(GameObject clickObj, List<GameObject> score)
     {
        
@@ -659,25 +661,8 @@ public class CardClick : MonoBehaviour
         
         CardManager.instance.field.Remove(clickObj);
     }
-    public IEnumerator MoveLastScoreField(GameObject moveObj, List<GameObject> score)
-    {
-        yield return new WaitForSeconds(0.5f);
-        if (CardManager.instance.GetCardTagNum(moveObj) != 13)
-        {
-            CardManager.instance.DeleteOutline(moveObj);
-        }
-
-        int index = CheckEmptyPosition(moveObj);
-        moveObj.transform.DOMove(CardManager.instance.ScoreField(moveObj, score), 0.5f).SetEase(Ease.OutQuint).OnComplete(() => FixedSetting());// 점수판 위치 이동
-      
-        //print(score.Count);
-        score.Add(moveObj); // 점수에 더해주기 
-
-        if (CardManager.instance.field.Contains(moveObj))
-        {
-            CardManager.instance.field.Remove(moveObj); // 필드에서 지우기
-        }
-    }
+   
+    //게임오브젝트를 점수필드로 이동시키는 함수
     public IEnumerator MoveFieldScoreField(GameObject moveObj, List<GameObject> score)
     {
         yield return new WaitForSeconds(0.5f);
@@ -697,11 +682,34 @@ public class CardClick : MonoBehaviour
             CardManager.instance.field.Remove(moveObj); // 필드에서 지우기
         }
     }
+
+    //MoveFieldScoreField와 거의 같음, 플립이 끝나면 턴을 종료해주기 위해 .OnComplete(() => FixedSetting()); 만 추가
+    public IEnumerator MoveLastScoreField(GameObject moveObj, List<GameObject> score)
+    {
+        yield return new WaitForSeconds(0.5f);
+        if (CardManager.instance.GetCardTagNum(moveObj) != 13)
+        {
+            CardManager.instance.DeleteOutline(moveObj);
+        }
+
+        //int index = CheckEmptyPosition(moveObj);
+
+        moveObj.transform.DOMove(CardManager.instance.ScoreField(moveObj, score), 0.5f).SetEase(Ease.OutQuint).OnComplete(() => FixedSetting());// 점수판 위치 이동
+
+        //print(score.Count);
+        score.Add(moveObj); // 점수에 더해주기 
+
+        if (CardManager.instance.field.Contains(moveObj))
+        {
+            CardManager.instance.field.Remove(moveObj); // 필드에서 지우기
+        }
+    }
+    //폭탄인 4개의 카드를 모두 점수패로 옮기는 함수
     void MoveBombFieldScoreField(GameObject[] bombObj, GameObject card, List<GameObject> score)
     {
         for (int i = 0; i < bombObj.Length; i++)
         {
-            CardManager.instance.DeleteOutline(bombObj[i]);
+            CardManager.instance.DeleteOutline(bombObj[i]); // 아웃라인 삭제
            
             bombObj[i].transform.DOMove(CardManager.instance.ScoreField(bombObj[i], score), 0.5f).SetEase(Ease.OutQuint); // 점수 필드로 위치 옮김
         
@@ -713,9 +721,9 @@ public class CardClick : MonoBehaviour
             CardManager.instance.field.Remove(bombObj[i]);//필드에서 제거
         }
 
-        if (CardManager.instance.GetCardTagNum(card) != 13)
+        if (CardManager.instance.GetCardTagNum(card) != 13) // 보너스카드나 밤 카드가 아닐 때만
         {
-            CardManager.instance.DeleteOutline(card);
+            CardManager.instance.DeleteOutline(card);  // 아웃라인 삭제
         }
 
         card.transform.DOMove(CardManager.instance.ScoreField(card, score), 0.5f).SetEase(Ease.OutQuint);
@@ -729,6 +737,7 @@ public class CardClick : MonoBehaviour
 
     }
 
+    //MoveBombFieldScoreField와 거의 같음, 플립이 끝나면 턴을 종료해주기 위해 .OnComplete(() => FixedSetting()); 만 추가
     void MoveBombLastScoreField(GameObject[] bombObj, GameObject card, List<GameObject> score)
     {
         for (int i = 0; i < bombObj.Length; i++)
@@ -761,6 +770,7 @@ public class CardClick : MonoBehaviour
 
     }
 
+    //게임 오브젝트의 포지션이 필드포지션과 같다면 필드 포지션 인덱스를 리턴
     public int CheckEmptyPosition(GameObject obj) //받은 게임오브젝트의 필드 자리를 비워줌
     {
         int index = Array.IndexOf(CardManager.instance.fieldPosition, obj.transform.position);
@@ -768,6 +778,7 @@ public class CardClick : MonoBehaviour
         return index;
     }
 
+    //가지고 있는 인덱스들의 자리를 비워줌
     public void EmptyFieldPosition(List<int> index)
     {
         for(int i=0;i<index.Count;i++)
@@ -785,6 +796,7 @@ public class CardClick : MonoBehaviour
         CardManager.instance.addEmptyIndex.Clear();
     }
 
+    //게임 오브젝트가 필드 포지션과 같다면 포지션을 리턴함
     GameObject OrignFieldPosition(GameObject[] obj)
     {
         int index = -1;
@@ -801,7 +813,9 @@ public class CardClick : MonoBehaviour
         }
         return obj[index];
     }
-    void AfterFlipChoiceCard()
+
+    //카드를 선택할 판넬을 켜는 함수
+    void OpenChoiceCardPanel()
     {
         OnOffPanel(false);
         GameManager.instance.isChoice = true;
@@ -812,10 +826,13 @@ public class CardClick : MonoBehaviour
         OpenChoicePanel.transform.GetChild(2).GetComponent<Image>().sprite = CardManager.instance.choiceObj[1].GetComponent<SpriteRenderer>().sprite;
     }
 
+    //카드 두개중 하나를 고른 뒤 진행할 함수
     public void SelectNum(int num)
     {
         OnOffPanel(true);
+
         OpenChoicePanel = GameObject.Find("Canvas").transform.Find("Panel").gameObject;
+
         OpenChoicePanel.SetActive(false);
 
         GameObject[] temp = new GameObject[2];
@@ -827,30 +844,29 @@ public class CardClick : MonoBehaviour
 
         GameManager.instance.isChoice = false;
 
-        if (CardManager.instance.beforeFlip)
+        if (CardManager.instance.beforeFlip) // flipaction을 하기 전 이면
         {
             StartCoroutine(MoveFieldScoreField(CardManager.instance.curObj, CardManager.instance.curHandScore));
-            StartCoroutine(MoveFieldScoreField(CardManager.instance.choiceObj[num], CardManager.instance.curHandScore));
-            FlipAction(CardManager.instance.curHand, CardManager.instance.curHandScore);
+            StartCoroutine(MoveFieldScoreField(CardManager.instance.choiceObj[num], CardManager.instance.curHandScore)); // 냈던 오브젝트와 선택한 카드만 점수패로 이동
+            FlipAction(CardManager.instance.curHand, CardManager.instance.curHandScore); // flipaction 실행
             CardManager.instance.beforeFlip = false;
         }
 
         else
         {
             StartCoroutine(MoveFieldScoreField(CardManager.instance.field[CardManager.instance.field.Count - 1], CardManager.instance.curHandScore));
-            StartCoroutine(MoveLastScoreField(CardManager.instance.choiceObj[num], CardManager.instance.curHandScore));
+            StartCoroutine(MoveLastScoreField(CardManager.instance.choiceObj[num], CardManager.instance.curHandScore));// 냈던 오브젝트와 선택한 카드만 점수패로 이동
         }
-        CardManager.instance.choiceObj[1 - num].transform.position = OrignFieldPosition(temp).transform.position;
+        CardManager.instance.choiceObj[1 - num].transform.position = OrignFieldPosition(temp).transform.position; // 선택 안한 카드는 오리진 필드 포지션으로 이동
 
         CardManager.instance.sameTagCount[CardManager.instance.GetCardTagNum(CardManager.instance.choiceObj[num])]--;
         CardManager.instance.field.Remove(CardManager.instance.choiceObj[num]);
 
         CardManager.instance.choiceObj.Clear();
-
-       
     }
 
-    private GameObject[] HandCheck(List<GameObject> hand, GameObject obj)
+    // 손에 게임오브젝트와 같은 태그가 몇개 있는지 셈
+    private GameObject[] HandCheck(List<GameObject> hand, GameObject obj) 
     {
         List<GameObject> temp = new List<GameObject>();
         foreach (GameObject checkObj in hand)
@@ -880,10 +896,13 @@ public class CardClick : MonoBehaviour
         obj.transform.position = new Vector3(baseObj.transform.position.x + 0.5f, baseObj.transform.position.y, baseObj.transform.position.z - 0.1f);
     }
 
+    ///흔들기 버튼을 클릭했을 때 함수
     public void ApplyShake()
     {
         ShakePanel = GameObject.Find("Canvas").transform.Find("ShakePanel").gameObject;
+        
         //흔들기 전투력 증가
+
         ShakePanel.SetActive(false);
 
         CardManager.instance.curHand.Remove(CardManager.instance.curObj);//내손에서 지우기
@@ -893,14 +912,15 @@ public class CardClick : MonoBehaviour
         CardAction(CardManager.instance.curObj, CardManager.instance.curHand, CardManager.instance.curHandScore);
 
     }
+
+    //<마지막 정리 함수>
     public void EndArrange(List<GameObject> hand, bool isPlayer)
     {
-        GameManager.instance.isMyTurn = isPlayer;
+        GameManager.instance.isMyTurn = isPlayer; // 턴 바꾸기
 
-        GameManager.instance.NextTurnDraw();
+        GameManager.instance.NextTurnDraw(); // 다음 턴 사람 드로우
 
-        EmptyFieldPosition(CardManager.instance.addEmptyIndex);
-        
+        EmptyFieldPosition(CardManager.instance.addEmptyIndex);  // 비울 필드 인덱스 비워주기
     }
     
 }
